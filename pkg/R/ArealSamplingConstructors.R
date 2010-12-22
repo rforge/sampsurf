@@ -1,0 +1,108 @@
+#---------------------------------------------------------------------------
+#
+#   This file holds the S4 definition for the constructor methods of the
+#   ArealSampling class & subclasses...
+#
+#   The methods include...
+#     1. a constructor for 'circularPlot'
+#
+#   Note that the sp package should be loaded for the complete functionality. 
+#
+#Author...									Date: 20-Aug-2010
+#	Jeffrey H. Gove
+#	USDA Forest Service
+#	Northern Research Station
+#	271 Mast Road
+#	Durham, NH 03824
+#	jhgove@unh.edu
+#	phone: 603-868-7667	fax: 603-868-7604
+#---------------------------------------------------------------------------
+#   generic definition...
+#
+if (!isGeneric("circularPlot")) 
+  setGeneric('circularPlot',  
+             function(radius, ...) standardGeneric('circularPlot'),
+             signature = c('radius')
+            )
+
+          
+#================================================================================
+#  method for functions and class circularPlot...
+#
+setMethod('circularPlot',
+          signature(radius = 'numeric'),
+function(radius,
+         units = 'metric',
+         spUnits = CRS(projargs=as.character(NA)),
+         centerPoint = c(x=0, y=0),   #centerPoint
+         description = 'fixed area circular plot',
+         nptsPerimeter = 100,
+         spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
+         #spID = paste('cp',format(runif(1,0,10000),digits=8),sep='.'),
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   make sure the center is a named vector of length 2...
+#
+    if(any(is.na(match(c('x','y'),names(centerPoint)))))
+      stop('Please use names x and y for centerPoint vector')
+    if(length(centerPoint) != 2)
+      stop('Please supply one set of (x,y) coordinates for the plot center location.')
+    
+  
+#
+#   some other checks...
+#
+    if(radius <= 0)
+      stop('radius must be positive!')
+
+    area = pi*radius*radius
+
+    location = centerPoint
+
+#
+#   left half of the circle, then right...
+#
+    circ =  seq(0, 2*pi, len=nptsPerimeter)
+
+#
+#   make the plot outline...
+#
+    circPlot = matrix(c(centerPoint['x'] + radius*cos(circ),
+                        centerPoint['y'] + radius*sin(circ), rep(1,nptsPerimeter) ), nrow=nptsPerimeter)  
+    
+#    
+#   any little difference between start & end pts with identical() can mess up the
+#   the sp package Polygon routine, so set the end point exactly to start, then transform...
+#
+    circPlot = rbind(circPlot, circPlot[1,])
+    
+#    circPlot = circPlot %*% trMat
+    dimnames(circPlot) = list(NULL,c('x','y','hc'))
+    
+
+#
+#   and make a SpatialPolygons object if sp is available...
+#
+    pgCircPlot = Polygon(circPlot[,-3])                             #sans hc
+    pgsCircPlot = Polygons(list(circPlot=pgCircPlot), ID=spID)
+    spCircPlot = SpatialPolygons(list(pgsCircPlot=pgsCircPlot))      #takes a list of Polygons objects
+  
+#
+#   no id for center point, but it can be added to be the same as spID when
+#   we make a container class for the center points elsewhere...
+#
+    loc = matrix(centerPoint, nrow=1)
+    colnames(loc) = names(centerPoint)
+    location = SpatialPoints(loc, proj4string = spUnits)
+
+    cp = new('circularPlot', radius=radius, area=area, perimeter=spCircPlot,
+             description=description, units=units,
+             location = location, spID=spID, spUnits=spUnits )
+
+    return(cp)
+}   #circularPlot constructor
+)   #setMethod
+    
