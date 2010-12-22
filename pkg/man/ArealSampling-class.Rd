@@ -1,0 +1,85 @@
+\name{ArealSampling-class}
+\Rdversion{1.1}
+\docType{class}
+\alias{ArealSampling-class}
+\alias{plot,ArealSampling,missing-method}
+\alias{show,ArealSampling-method}
+\alias{summary,ArealSampling-method}
+
+\title{Class "ArealSampling"}
+\description{
+This virtual class facilitates the definition of subclasses
+that will encapsulate the basic information required to define
+individual areal sampling methods used in forestry.
+
+For example, as detailed in \dQuote{The ArealSampling Class} vignette,
+we may define subclasses based on whether the sampling methods are for
+standing trees or downed logs. Other classes, like fixed-area plots,
+could span these two main subclasses.
+}
+\section{Objects from the Class}{A virtual Class: No objects may be created from it.}
+\section{Slots}{
+  \describe{
+    \item{\code{description}:}{Object of class \code{"character"}: Some
+	  descriptive text about this class.}
+	
+    \item{\code{units}:}{Object of class \code{"character"}: A character
+	  string specifying the units of measure. Legal values are \dQuote{English}
+	  and \dQuote{metric.}  }
+	
+    \item{\code{location}:}{Object of class \code{"SpatialPoints"}: This
+      is a \dQuote{SpatialPoints} representation of the location of the
+      object. For example, in the "\code{\linkS4class{circularPlot}}"
+      class, this is the fixed-radius plot center. It will often
+      correspond to the location slot in the "\code{\linkS4class{Stem}}"
+      object under sampling surface simulations. But there are
+      exceptions: for example, under the \sQuote{standup} method, it
+      will be at the large-end of the log, while under the
+      \sQuote{chainsaw} method, it will be some point within the
+      \dQuote{sausag}” shaped inclusion zone for protocol 1 in (Gove and
+      Van Deusen, 2011).  }
+
+    \item{\code{spID}:}{Object of class \code{"character"}: A unique
+      identifier that will be used in the eventual “SpatialPolygons”
+      representation of the object.  }
+	
+    \item{\code{spUnits}:}{Object of class \code{"CRS"}: A valid string
+      of class “CRS” denoting the spatial units coordinate system (?CRS
+      for more information) as in package sp.  }
+
+  }
+}
+
+\section{Methods}{
+  \describe{
+    \item{plot}{\code{signature(x = "ArealSampling", y = "missing")}: Graphical
+	  display of the object. Minimal display is the object
+	  \code{location}. }
+	
+    \item{show}{\code{signature(object = "ArealSampling")}: Show main components or
+	  summary of an object. }
+	
+    \item{summary}{\code{signature(object = "ArealSampling")}:  Concise summary of
+	  the object. }
+	 }
+}
+\references{
+Gove, J. H. and Van Deusen, P. C. 2011. On fixed-area plot sampling for
+downed coarse woody debris. \emph{Forestry}. (Accepted).\cr
+}
+\author{
+Jeffrey H. Gove %, \email{jhgove@unh.edu}
+}
+\note{
+%%  ~~further notes~~
+}
+
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+ Subclass "\code{\linkS4class{circularPlot}}" for a circular plot subclass.
+}
+\examples{
+showClass("ArealSampling")
+}
+\keyword{classes}

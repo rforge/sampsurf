@@ -1,0 +1,75 @@
+\name{chainSawIZ-class}
+\Rdversion{1.1}
+\docType{class}
+\alias{chainSawIZ-class}
+\alias{izGrid,chainSawIZ,Tract-method}
+\alias{perimeter,chainSawIZ-method}
+\alias{plot,chainSawIZ,missing-method}
+\alias{summary,chainSawIZ-method}
+
+\title{Class "chainSawIZ"}
+
+\description{This class holds the inclusion zone definition for the
+\sQuote{chainsaw} method (Gove and Van Deusen, 2011) for sampling down
+coarse woody debris.}
+
+\section{Objects from the Class}{ Objects can be created by calls of the
+form \code{new("chainSawIZ", ...)}.  However, this is not recommended
+because the objects are fairly complex. Instead, one can use the object
+constructor \code{\link{chainSawIZ}} to create new objects.  }
+
+\section{Slots}{ 
+  Most of the slots are described in the superclasses
+  (see below), please see their help pages for more information. This
+  class adds only three slots to the "downLogIZ" class specification.
+  
+  
+  \describe{
+	
+    \item{\code{circularPlot}:}{Object of class \code{"circularPlot"}:
+	  Object of class \code{"circularPlot"}: An object from the
+	  "\code{\linkS4class{ArealSampling}}" subclass
+	  "\code{\linkS4class{circularPlot}}".  }
+	
+    \item{\code{sliver}:}{Object of class \code{"SpatialPolygons"}: A
+      “\code{\linkS4class{SpatialPolygons}}” object representing the
+      intersection (sliver) between the circular plot and the log.  }
+	
+    \item{\code{bolt}:}{Object of class \code{"list"}: A list defining
+      the ‘minimal bounding bolt’ within the log that fully encompases
+      the sliver. The list is described in \emph{The InclusionZone
+      Class} vignette.}
+
+  }
+}
+
+\section{Extends}{
+Class \code{"\linkS4class{downLogIZ}"}, directly.
+Class \code{"\linkS4class{InclusionZone}"}, by class "downLogIZ", distance 2.
+}
+
+\section{Methods}{
+  \describe{
+    \item{izGrid}{\code{signature(izObject = "chainSawIZ", tract = "Tract")}: ... }
+    \item{perimeter}{\code{signature(object = "chainSawIZ")}: ... }
+    \item{plot}{\code{signature(x = "chainSawIZ", y = "missing")}: ... }
+    \item{summary}{\code{signature(object = "chainSawIZ")}: ... }
+	 }
+}
+\references{
+Gove, J. H. and Van Deusen, P. C. 2011. On fixed-area plot sampling for
+downed coarse woody debris. \emph{Forestry}. (Accepted).\cr
+}
+\author{
+Jeffrey H. Gove %, \email{jhgove@unh.edu}
+}
+
+
+\seealso{
+  \code{\linkS4class{standUpIZ}}, \code{\linkS4class{sausageIZ}}; and
+  the \code{\linkS4class{downLogIZs}} container class.
+}
+\examples{
+showClass("chainSawIZ")
+}
+\keyword{classes}
