@@ -1,0 +1,45 @@
+
+import(methods)
+importFrom(graphics, plot)
+import(sp)
+#importFrom("sp", bbox, Spatial, SpatialGrid, SpatialGridDataFrame, plot)
+import(raster)
+#import(gpclib)
+importFrom("gpclib", intersect)  #this takes care of the plot warning
+
+
+#exportPattern("^[[:alpha:]]+")
+
+
+export(.StemEnv)            #for now, eventually hide it <<*******
+
+export(sampleLogs, bboxCheck, bboxToPoly)
+
+export(izGridConstruct) #for now, eventually hide it?
+export(gridCellEnhance) #ibid
+
+exportClasses(Stem, downLog, downLogs)
+exportClasses(ArealSampling, circularPlot)
+exportClasses(Tract, bufferedTract)
+exportClasses(InclusionZone, InclusionZoneGrid, csFullInclusionZoneGrid,
+              downLogIZ, standUpIZ, sausageIZ, downLogIZs, chainSawIZ)
+exportClasses(sampSurf)
+
+#export required for all methods with external generics...
+exportMethods(plot, summary, show)
+exportMethods(bbox, perimeter, plot3D)
+
+#and evidently for all internal methods/generics...
+exportMethods(downLog, downLogs)
+exportMethods(circularPlot)
+exportMethods(standUpIZ, sausageIZ, downLogIZs, chainSawIZ)
+exportMethods(Tract, bufferedTract)
+exportMethods(izGrid, izGridCSFull)
+exportMethods(heapIZ)
+exportMethods(sampSurf)
+#exportMethods(Plot)
+
+
+
+
+

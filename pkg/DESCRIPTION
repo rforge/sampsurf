@@ -1,0 +1,37 @@
+Package: sampSurf
+Type: Package
+Title: Sampling Surface Simulation for Areal Sampling Methods
+Version: 0.5
+Date: 2010-08-12
+Author: J. H. Gove
+Maintainer: J. H. Gove <jgove@fs.fed.us>
+Depends: R (>= 2.11.0), methods(>= 2.11.0), sp(>= 0.9-56), raster(>= 1.1.7), gpclib(>= 1.5.1)
+Suggests: rgl
+Description: Contains the base classes and routines for sampling surface generation
+             in addition to stem piece class definitions
+License: GPL (>= 3)
+LazyLoad: yes
+LazyData: yes
+Collate: zzz.R bboxCheck.R bboxToPoly.R defStemEnv.R transfMatrix.R initRandomSeed.R
+         transparentColorBase.R
+         sampleLogs.R 
+         sampSurfClassUnions.R
+         chainsawSliver.R
+         StemClass.R  
+         TractClass.R TractConstructors.R 
+         downLog.R downLogs.R downLogIZs.R 
+         ArealSamplingClass.R ArealSamplingConstructors.R
+         InclusionZoneClass.R InclusionZoneConstructors.R
+         InclusionZoneGridClass.R InclusionZoneGridConstructors.R izGridConstruct.R
+         sampSurfClass.R sampSurfConstructors.R
+         plotStem.R plotArealSampling.R plotInclusionZone.R plotInclusionZoneGrid.R plotTract.R
+         plotSampSurf.R
+         showArealSampling.R showInclusionZone.R showInclusionZoneGrid.R showStem.R showTract.R
+         showSampSurf.R
+         summaryStem.R summaryArealSampling.R summaryInclusionZone.R
+         summaryInclusionZoneGrid.R summaryTract.R summarySampSurf.R
+         setAsStem.R
+         bbox.R perimeter.R
+         heapIZ.R
+         gridCellEnhance.R
+         plot3D.R
