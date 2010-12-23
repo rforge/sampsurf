@@ -12,8 +12,8 @@ Description: Contains the base classes and routines for sampling surface generat
 License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
-Collate: zzz.R bboxCheck.R bboxToPoly.R defStemEnv.R transfMatrix.R initRandomSeed.R
-         transparentColorBase.R
+Collate: zzz.R transparentColorBase.R initRandomSeed.R
+         bboxCheck.R bboxToPoly.R defStemEnv.R transfMatrix.R         
          sampleLogs.R 
          sampSurfClassUnions.R
          chainsawSliver.R
