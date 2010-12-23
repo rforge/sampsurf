@@ -12,6 +12,7 @@ importFrom("gpclib", intersect)  #this takes care of the plot warning
 
 
 export(.StemEnv)            #for now, eventually hide it <<*******
+export(initRandomSeed, transparentColorBase)
 
 export(sampleLogs, bboxCheck, bboxToPoly)
 
