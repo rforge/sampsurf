@@ -2,9 +2,9 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{standUpIZ-class}
-\alias{izGrid,standUpIZ,Tract-method}
-\alias{perimeter,standUpIZ-method}
-\alias{plot,standUpIZ,missing-method}
+%\alias{izGrid,standUpIZ,Tract-method}
+%\alias{perimeter,standUpIZ-method}
+%\alias{plot,standUpIZ,missing-method}
 \alias{summary,standUpIZ-method}
 
 \title{Class "standUpIZ"}
@@ -39,10 +39,13 @@ Class \code{"\linkS4class{InclusionZone}"}, by class "downLogIZ", distance 2.
 
 \section{Methods}{
   \describe{
-    \item{izGrid}{\code{signature(izObject = "standUpIZ", tract = "Tract")}: ... }
-    \item{perimeter}{\code{signature(object = "standUpIZ")}: ... }
-    \item{plot}{\code{signature(x = "standUpIZ", y = "missing")}: ... }
-    \item{summary}{\code{signature(object = "standUpIZ")}: ... }
+    \item{izGrid}{\code{signature(izObject = "standUpIZ", tract =
+      "Tract")}: \dQuote{InclusionZoneGrid} generic constructor } 
+    \item{perimeter}{\code{signature(object = "standUpIZ")}: Return the
+      object perimeter }
+    \item{plot}{\code{signature(x = "standUpIZ", y = "missing")}: Plot
+      the object  }
+    \item{summary}{\code{signature(object = "standUpIZ")}: Object summary }
 	 }
 }
 
@@ -55,9 +58,6 @@ downed coarse woody debris. \emph{Forestry}. (Accepted).\cr
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
-\note{
-%%  ~~further notes~~
-}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 

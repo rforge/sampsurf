@@ -2,8 +2,8 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{bufferedTract-class}
-\alias{downLogs,numeric,bufferedTract-method}
-\alias{plot,bufferedTract,missing-method}
+%\alias{downLogs,numeric,bufferedTract-method}
+%\alias{plot,bufferedTract,missing-method}
 \alias{show,bufferedTract-method}
 
 \title{Class "bufferedTract"}
@@ -47,9 +47,13 @@ Class \code{"\linkS4class{BasicRaster}"}, by class "Tract", distance 4.
 
 \section{Methods}{
   \describe{
-    \item{downLogs}{\code{signature(object = "numeric", container = "bufferedTract")}: ... }
-    \item{plot}{\code{signature(x = "bufferedTract", y = "missing")}: ... }
-    \item{show}{\code{signature(object = "bufferedTract")}: ... }
+    \item{downLogs}{\code{signature(object = "numeric", container =
+		"bufferedTract")}: Create downlogs }
+	
+    \item{plot}{\code{signature(x = "bufferedTract", y = "missing")}:
+      Plot the logs }
+	
+    \item{show}{\code{signature(object = "bufferedTract")}: Show the object }
 	 }
 }
 %\references{

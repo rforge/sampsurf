@@ -31,17 +31,14 @@ bboxToPoly(object, ...)
 }
 
 \author{
-%%  ~~who you are~~
-}
-
-\seealso{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
 \examples{
 cp = circularPlot(10, center=c(x=20,y=20))
-plot(perimeter(cp), axes=TRUE, lty='dashed')   #the perimeter of the plot
-plot(bboxToPoly(cp), add=TRUE, border='blue')  #the bounding box
+cp.perim = perimeter(cp)
+plot(cp.perim, axes=TRUE, lty='dashed')              #the perimeter of the plot
+plot(bboxToPoly(cp.perim), add=TRUE, border='blue')  #the bounding box
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

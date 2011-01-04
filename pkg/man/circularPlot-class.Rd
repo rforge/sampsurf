@@ -3,8 +3,8 @@
 \docType{class}
 \alias{circularPlot-class}
 \alias{bbox,circularPlot-method}
-\alias{perimeter,circularPlot-method}
-\alias{plot,circularPlot,missing-method}
+%\alias{perimeter,circularPlot-method}
+%\alias{plot,circularPlot,missing-method}
 \alias{summary,circularPlot-method}
 
 \title{Class "circularPlot": Fixed-area Circular Plots}
@@ -34,7 +34,7 @@ the spatial representation correct. Rather, one should therefore use the
       the plot in the correct units.  }
 	
     \item{\code{perimeter}:}{Object of class \code{"SpatialPolygons"}:
-      The \code{“SpatialPolygons”} object corresponding to the perimeter of the
+      The \code{"SpatialPolygons"} object corresponding to the perimeter of the
       fixed-radius plot.}
 
   }

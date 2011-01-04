@@ -3,8 +3,8 @@
 \docType{class}
 \alias{downLogs-class}
 \alias{bbox,downLogs-method}
-\alias{perimeter,downLogs-method}
-\alias{plot,downLogs,missing-method}
+%\alias{perimeter,downLogs-method}
+%\alias{plot,downLogs,missing-method}
 \alias{show,downLogs-method}
 \alias{summary,downLogs-method}
 
@@ -95,7 +95,7 @@ Jeffrey H. Gove
 
 \examples{
 showClass("downLogs")
-buff = matrix(c(0,100,0,100), nrow=2, byrow=T,
+buff = matrix(c(0,100,0,100), nrow=2, byrow=TRUE,
               dimnames=list(c('x','y'),c('min','max')))
 sl = sampleLogs(10, buttDiam = c(10,25), sampleRect = buff)
 dls = downLogs(sl)

@@ -22,16 +22,16 @@ izGridConstruct(izObject, tract, description = "sausageIZ inclusion zone grid ob
 	"\code{\linkS4class{InclusionZone}}", with the exceptions stated
 	above.}
 		 
-  \item{\code{tract}:}{ An object of class "Tract" or subclass.}
+  \item{tract}{ An object of class "Tract" or subclass.}
 		 
-  \item{\code{description}:}{ A description of the object as a character
+  \item{description}{ A description of the object as a character
 	string.} 
 		 
-  \item{\code{wholeIZ}:}{ \code{TRUE}: make a background grid covering
+  \item{wholeIZ}{ \code{TRUE}: make a background grid covering
 	the entire object including the stem and the inclusion zone;
 	\code{FALSE}: make the grid cover just the inclusion zone. }
 	  
-  \item{\dots :}{ Other arguments to be passed along (not currently used).}
+  \item{\dots}{ Other arguments to be passed along (not currently used).}
 
 }
 

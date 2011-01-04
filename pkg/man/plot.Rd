@@ -5,7 +5,7 @@
 \title{ Plot objects within package `sampSurf'}
 
 \description{ Each different class of object in this package has a plot
-  method associated with it that is based on \R's \code{\link[graphics]{plot}}
+  method associated with it that is based on \R's graphics::\code{plot}
   generic. These all have the same form for the first signature
   arguments as shown below, but many have different arguments beyond
   those normmaly found in \code{plot} to add some flexibility to the
@@ -50,7 +50,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 tr = Tract(c(x=25,y=25), cellSize=0.5)
 btr = bufferedTract(5, tr)
 dlogs = downLogs(20, btr, buttDiams=c(25,35),logLens=c(3,10))
-plot(btr, axes=TRUE, col='lightblue')
+plot(btr, axes=TRUE, bufferColor='lightblue')
 plot(dlogs, add=TRUE, showLogCenter=TRUE, logCenterColor='grey30', cex=2)
 }
 

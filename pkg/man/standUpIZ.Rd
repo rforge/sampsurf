@@ -48,9 +48,6 @@ downed coarse woody debris. \emph{Forestry}. (Accepted).\cr
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
-\note{
-%%  ~~further notes~~
-}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 

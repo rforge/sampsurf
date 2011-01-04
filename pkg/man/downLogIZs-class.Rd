@@ -2,8 +2,9 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{downLogIZs-class}
-\alias{plot,downLogIZs,missing-method}
-\alias{sampSurf,downLogIZs,Tract-method}
+\alias{bbox,downLogIZs-method}
+%\alias{plot,downLogIZs,missing-method}
+%\alias{sampSurf,downLogIZs,Tract-method}
 \alias{show,downLogIZs-method}
 \alias{summary,downLogIZs-method}
 

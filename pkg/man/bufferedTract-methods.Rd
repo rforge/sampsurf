@@ -16,8 +16,10 @@ There is only one existing method available for the
 \describe{
 
 \item{\strong{\code{signature(bufferWidth = "numeric", tract =
-	  "Tract")}}}{\cr This method takes the form shown below\ldots}
+	  "Tract")}}}{%\cr
   
+      This method takes the form shown below\ldots}
+
   \item{}{\bold{usage\ldots}
     \preformatted{function(bufferWidth,
          tract,

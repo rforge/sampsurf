@@ -2,9 +2,9 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{sausageIZ-class}
-\alias{izGrid,sausageIZ,Tract-method}
-\alias{perimeter,sausageIZ-method}
-\alias{plot,sausageIZ,missing-method}
+%\alias{izGrid,sausageIZ,Tract-method}
+%\alias{perimeter,sausageIZ-method}
+%\alias{plot,sausageIZ,missing-method}
 \alias{summary,sausageIZ-method}
 
 \title{Class "sausageIZ"}
@@ -40,11 +40,11 @@ constructor \code{\link{sausageIZ}} to create new objects.  }
       of the inclusion zone.  }
 	
     \item{\code{perimeter}:}{Object of class \code{"SpatialPolygons"} This is the
-      inclusion zone perimeter as a “SpatialPolygons” object.   }
+      inclusion zone perimeter as a \dQuote{SpatialPolygons} object.   }
    
    \item{\code{pgSausageArea}:}{Object of class \code{"numeric"}: This
      is the area of the sausage inclusion zone as calculated from the
-     polygon in the perimeter slot using the “SpatialPolygons”
+     polygon in the perimeter slot using the \dQuote{SpatialPolygons}
      object. As such, it is an approximation of the true area of the
      inclusion zone, which is given in the area slot. This just enables
      us to see how close the graphic representation is to the real area.
@@ -60,10 +60,16 @@ Class \code{"\linkS4class{InclusionZone}"}, by class "downLogIZ", distance 2.
 
 \section{Methods}{
   \describe{
-    \item{izGrid}{\code{signature(izObject = "sausageIZ", tract = "Tract")}: ... }
-    \item{perimeter}{\code{signature(object = "sausageIZ")}: ... }
-    \item{plot}{\code{signature(x = "sausageIZ", y = "missing")}: ... }
-    \item{summary}{\code{signature(object = "sausageIZ")}: ... }
+    \item{izGrid}{\code{signature(izObject = "sausageIZ", tract =
+		"Tract")}: \dQuote{InclusionZoneGrid} generic constructor }
+	
+    \item{perimeter}{\code{signature(object = "sausageIZ")}: Return the
+      object perimeter }
+	
+    \item{plot}{\code{signature(x = "sausageIZ", y = "missing")}: Plot
+      the object }
+	
+    \item{summary}{\code{signature(object = "sausageIZ")}: Object summary }
 	 }
 }
 \references{

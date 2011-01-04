@@ -18,7 +18,9 @@
 \describe{
 
 \item{\strong{\code{signature(izObject = "standUpIZ", tract =
-	  "Tract")}}}{\cr This constructor is for the stand-up protocol.}
+	  "Tract")}}}{%\cr
+
+  This constructor is for the stand-up protocol.}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(izObject,
@@ -45,32 +47,37 @@
  } %item
 
 \item{\strong{\code{signature(izObject = "sausageIZ", tract =
-	  "Tract")}}}{\cr This constructor is for the sausage method of
-	  sampling down logs. Everything is the same here as for the
-	  stand-up method above, with the exception of the first argument,
-	  which must be an object of class
-	  "\code{\linkS4class{sausageIZ}}". }
+	  "Tract")}}}{%\cr
+
+      This constructor is for the sausage method of sampling down
+	  logs. Everything is the same here as for the stand-up method
+	  above, with the exception of the first argument, which must be an
+	  object of class "\code{\linkS4class{sausageIZ}}". }
 
 \item{\strong{\code{signature(izObject = "chainSawIZ", tract =
-	  "Tract")}}}{\cr This constructor is for the chainsaw method of
-	  sampling down logs. Everything is the same here as for the
-	  stand-up method above, with the exception of the first argument,
-	  which must be an object of class
-	  "\code{\linkS4class{chainSawIZ}}". Now, one important thing to
-	  keep in mind is that the inclusion zone for the chainsaw method is
-	  a point (within a grid cell), so setting \code{wholeIZ=FALSE} here
-	  will give just the one grid cell that corresponds to the plot
-	  center point as a background grid. \emph{Note:} If you want to
-	  enumerate all cells withing a sausage-shaped inclusion zone under
-	  the chainsaw method, see instead the
-	  "\code{\linkS4class{csFullInclusionZoneGrid}}" class. }
+	  "Tract")}}}{%\cr
+
+      This constructor is for the chainsaw method of sampling down
+	  logs. Everything is the same here as for the stand-up method
+	  above, with the exception of the first argument, which must be an
+	  object of class "\code{\linkS4class{chainSawIZ}}". Now, one
+	  important thing to keep in mind is that the inclusion zone for the
+	  chainsaw method is a point (within a grid cell), so setting
+	  \code{wholeIZ=FALSE} here will give just the one grid cell that
+	  corresponds to the plot center point as a background
+	  grid. \emph{Note:} If you want to enumerate all cells withing a
+	  sausage-shaped inclusion zone under the chainsaw method, see
+	  instead the "\code{\linkS4class{csFullInclusionZoneGrid}}"
+	  class. }
 
 \item{\strong{\code{signature(izObject = "matrix", tract =
-	  "Tract")}}}{\cr There is no need to use this constructor unless
-	  you are perhaps developing a new sampling method for the
-	  package. It is a helper function with some standard code that is
-	  required for most methods. It is used to construct the
-	  encompassing background grid object. }
+	  "Tract")}}}{%\cr
+
+      There is no need to use this constructor unless you are perhaps
+	  developing a new sampling method for the package. It is a helper
+	  function with some standard code that is required for most
+	  methods. It is used to construct the encompassing background grid
+	  object. }
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(izObject,  

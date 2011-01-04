@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{ArealSampling-class}
-\alias{plot,ArealSampling,missing-method}
+%\alias{plot,ArealSampling,missing-method}
 \alias{show,ArealSampling-method}
 \alias{summary,ArealSampling-method}
 
@@ -36,15 +36,15 @@ could span these two main subclasses.
       exceptions: for example, under the \sQuote{standup} method, it
       will be at the large-end of the log, while under the
       \sQuote{chainsaw} method, it will be some point within the
-      \dQuote{sausag}” shaped inclusion zone for protocol 1 in (Gove and
+      \dQuote{sausag} shaped inclusion zone for protocol 1 in (Gove and
       Van Deusen, 2011).  }
 
     \item{\code{spID}:}{Object of class \code{"character"}: A unique
-      identifier that will be used in the eventual “SpatialPolygons”
+      identifier that will be used in the eventual \dQuote{SpatialPolygons}
       representation of the object.  }
 	
     \item{\code{spUnits}:}{Object of class \code{"CRS"}: A valid string
-      of class “CRS” denoting the spatial units coordinate system (?CRS
+      of class \dQuote{CRS} denoting the spatial units coordinate system (?CRS
       for more information) as in package sp.  }
 
   }
@@ -70,9 +70,9 @@ downed coarse woody debris. \emph{Forestry}. (Accepted).\cr
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
-\note{
+%\note{
 %%  ~~further notes~~
-}
+%}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 

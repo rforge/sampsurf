@@ -32,7 +32,7 @@ found in \emph{"The InclusionZoneGrid Class"} vignette.
 
 	\item{\code{chiz}:}{Object of class \code{"list"}: This is a list
       object containing \code{NA}s for cells outside the inclusion zone,
-      but containing the full set of “InclusionZoneGrid” objects
+      but containing the full set of \dQuote{InclusionZoneGrid} objects
       corresponding to each grid cell within the inclusion zone. The
       grid cell center is used as the center point of the circular plot
       that defines the chainsaw intersection of the plot with the log

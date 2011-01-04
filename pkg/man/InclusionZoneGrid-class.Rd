@@ -3,9 +3,9 @@
 \docType{class}
 \alias{InclusionZoneGrid-class}
 \alias{bbox,InclusionZoneGrid-method}
-\alias{heapIZ,InclusionZoneGrid,Tract-method}
-\alias{izGridCSFull,InclusionZoneGrid,Tract-method}
-\alias{plot,InclusionZoneGrid,missing-method}
+%\alias{heapIZ,InclusionZoneGrid,Tract-method}
+%\alias{izGridCSFull,InclusionZoneGrid,Tract-method}
+%\alias{plot,InclusionZoneGrid,missing-method}
 \alias{show,InclusionZoneGrid-method}
 \alias{summary,InclusionZoneGrid-method}
 
@@ -53,12 +53,12 @@ found in \emph{"The InclusionZoneGrid Class"} vignette.
 	
     \item{\code{data}:}{Object of class \code{"data.frame"}: A data
 	  frame holding the values for each of the per unit area estimates
-	  available in the “InclusionZone” object in the columns, with rows
+	  available in the \dQuote{InclusionZone} object in the columns, with rows
 	  matching grid cells. }
 	
     \item{\code{bbox}:}{Object of class \code{"matrix"}: The overall
 	  bounding box for the object, which includes the inclusion zone and
-	  the “Stem” subclass object plus the grid. Sometimes the inclusion
+	  the \dQuote{Stem} subclass object plus the grid. Sometimes the inclusion
 	  zone itself includes the stem (e.g., the sausage method), but
 	  other times it does not (e.g., chainsaw method). This is used
 	  primarily in graphing the object. }
@@ -68,12 +68,23 @@ found in \emph{"The InclusionZoneGrid Class"} vignette.
 
 \section{Methods}{
   \describe{
-    \item{bbox}{\code{signature(obj = "InclusionZoneGrid")}: ... }
-    \item{heapIZ}{\code{signature(izgObject = "InclusionZoneGrid", tract = "Tract")}: ... }
-    \item{izGridCSFull}{\code{signature(izGridSausage = "InclusionZoneGrid", tract = "Tract")}: ... }
-    \item{plot}{\code{signature(x = "InclusionZoneGrid", y = "missing")}: ... }
-    \item{show}{\code{signature(object = "InclusionZoneGrid")}: ... }
-    \item{summary}{\code{signature(object = "InclusionZoneGrid")}: ... }
+    \item{bbox}{\code{signature(obj = "InclusionZoneGrid")}: Get
+      encompasing bbox }
+	
+    \item{heapIZ}{\code{signature(izgObject = "InclusionZoneGrid", tract
+		= "Tract")}: Heap to form a sampling surface }
+	
+    \item{izGridCSFull}{\code{signature(izGridSausage =
+		"InclusionZoneGrid", tract = "Tract")}: Full chainsaw method }
+	
+    \item{plot}{\code{signature(x = "InclusionZoneGrid", y =
+		"missing")}: Plot the grid }
+	
+    \item{show}{\code{signature(object = "InclusionZoneGrid")}: Show
+      object information }
+	
+    \item{summary}{\code{signature(object = "InclusionZoneGrid")}: Show
+      grid summary }
 	 }
    }
    

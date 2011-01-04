@@ -3,7 +3,7 @@
 \docType{class}
 \alias{InclusionZone-class}
 \alias{bbox,InclusionZone-method}
-\alias{plot,InclusionZone,missing-method}
+%\alias{plot,InclusionZone,missing-method}
 \alias{show,InclusionZone-method}
 \alias{summary,InclusionZone-method}
 
@@ -29,8 +29,8 @@
       descriptive text about this class. }
 	
     \item{\code{units}:}{Object of class \code{"character"}: A character
-	  string specifying the units of measure. Legal values are “English”
-	  and “metric.” }
+	  string specifying the units of measure. Legal values are \dQuote{English}
+	  and \dQuote{metric.} }
 
     \item{\code{bbox}:}{Object of class \code{"matrix"}: The bounding
       box enclosing the overall object and its inclusion zone. } 
@@ -44,7 +44,7 @@
 	  depending upon the units of measure. }
 	
     \item{\code{puaEstimates}:}{Object of class \code{"list"}: A list of
-	  estimates for per unit area quantities associated with the “Stem”
+	  estimates for per unit area quantities associated with the \dQuote{Stem}
 	  component of the object.  }
 	
     \item{\code{userExtra}:}{Object of class \code{"ANY"}: This can be
@@ -58,10 +58,16 @@
 
 \section{Methods}{
   \describe{
-    \item{bbox}{\code{signature(obj = "InclusionZone")}: ... }
-    \item{plot}{\code{signature(x = "InclusionZone", y = "missing")}: ... }
-    \item{show}{\code{signature(object = "InclusionZone")}: ... }
-    \item{summary}{\code{signature(object = "InclusionZone")}: ... }
+    \item{bbox}{\code{signature(obj = "InclusionZone")}: Return the
+	  bounding box }
+	
+    \item{plot}{\code{signature(x = "InclusionZone", y = "missing")}:
+      Plot the object }
+	
+    \item{show}{\code{signature(object = "InclusionZone")}: Show the
+      object }
+	
+    \item{summary}{\code{signature(object = "InclusionZone")}: Object summary }
 	 }
    }
    

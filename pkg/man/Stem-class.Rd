@@ -2,7 +2,8 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{Stem-class}
-\alias{plot,Stem,missing-method}
+%\alias{plot,Stem,missing-method}
+\alias{show,Stem-method}
 \alias{summary,Stem-method}
 
 \title{Class "Stem" for building tree and log like subclasses}

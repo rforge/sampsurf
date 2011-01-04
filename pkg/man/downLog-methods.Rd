@@ -16,19 +16,20 @@
 \section{Methods}{
 \describe{
 
-  \item{\code{signature(object = "missDF")}}{\cr The "missDF" class is a
-    class union of "data.frame" and "missing." If \code{object} is a
-    data.frame, then it is assumed that the data frame contains the taper
-    data in the form of diameters and lengths (as columns with labels
-    "diameter" and "length", respectively), with diameters in the
-    \emph{same} units as length. If object is \code{\link{missing}},
-    the taper data is generated from the internal taper function between
-    the \code{buttDiam} and \code{topDiam} diameters specified, in
-    \code{nSegs} sections. The taper function used is documented in \emph{\dQuote{The
-    Stem Class}} vignette and references for "\code{\linkS4class{downLog}}." The
-    following arguments are part of the function call; all arguments
-    with the same names as class slots are defined in the class
-    definition.}
+  \item{\strong{\code{signature(object = "missDF")}}}{%\cr
+
+	The "missDF" class is a class union of "data.frame" and "missing."
+    If \code{object} is a data.frame, then it is assumed that the data
+    frame contains the taper data in the form of diameters and lengths
+    (as columns with labels "diameter" and "length", respectively), with
+    diameters in the \emph{same} units as length. If object is
+    \code{\link{missing}}, the taper data is generated from the internal
+    taper function between the \code{buttDiam} and \code{topDiam}
+    diameters specified, in \code{nSegs} sections. The taper function
+    used is documented in \emph{\dQuote{The Stem Class}} vignette and
+    references for "\code{\linkS4class{downLog}}." The following
+    arguments are part of the function call; all arguments with the same
+    names as class slots are defined in the class definition.}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(object,

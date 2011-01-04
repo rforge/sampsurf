@@ -46,7 +46,7 @@ surface roughness, and so methods can also be compared visually.
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
+Version: \tab 0.5\cr
 Date: \tab 2010-11-09\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
@@ -102,28 +102,28 @@ more detail, including slot and argument definitions.
 
   \tabular{ll}{
 	\code{\linkS4class{Stem}}: \tab The stem class is virtual, but
-	from it subclasses are defined for logs and trees\cr
+	  from it subclasses are defined for logs and trees\cr
 	\code{\linkS4class{downLog}}: \tab A class for down logs\cr
 	\code{\linkS4class{downLogs}}: \tab Container class for a population
-	of down log objects\cr
+	  of down log objects\cr
 	\code{\linkS4class{Tract}}: \tab A class structure for the land area
-	which holds the population of individuals \cr
+	  which holds the population of individuals \cr
 	\code{\linkS4class{bufferedTract}}: \tab A \dQuote{Tract} subclass
-	with a buffer \cr
+	  with a buffer \cr
 	\code{\linkS4class{ArealSampling}}: \tab A class structure for describing
-	areal sampling methods \cr
+	  areal sampling methods \cr
     \code{\linkS4class{circularPlot}}: \tab A subclass of
-	\dQuote{ArealSampling} for circular plot construction\cr
+	  \dQuote{ArealSampling} for circular plot construction\cr
 	\code{\linkS4class{InclusionZone}}: \tab Classes for combining the
-	sampling method with the individual down log or tree objects\cr
+	  sampling method with the individual down log or tree objects\cr
 	\code{\linkS4class{downLogIZs}}: \tab A container class to hold a
-	population of inclusion zone objects associated with down logs \cr
+	  population of inclusion zone objects associated with down logs \cr
 	\code{\linkS4class{InclusionZoneGrid}}: \tab Not for general use, see
-	documentation for details \cr
+	  documentation for details \cr
 	\code{\linkS4class{csFullInclusionZoneGrid}}: \tab Not for general
-	use, see documentation for details \cr
+	  use, see documentation for details \cr
 	\code{\linkS4class{sampSurf}}: \tab The class structure for the final
-	sampling surface simulation \cr
+	  sampling surface simulation \cr
   } %tabular
 
   Again, many of these classes will only be of interest to someone
@@ -167,7 +167,7 @@ more detail, including slot and argument definitions.
 	  object\cr
 	\code{\link{izGridCSFull}}: \tab Creates an \dQuote{csFullInclusionZoneGrid}
 	  object\cr
-	\code{\link{sampSurf}}: \tab	Constructor for \dQuote{sampSurf}
+	\code{\link{sampSurf}}: \tab Constructor for \dQuote{sampSurf}
 	  objects\cr 
   } %tabular
 	
@@ -271,36 +271,36 @@ more detail, including slot and argument definitions.
 \author{
 Jeffrey H. Gove
 }
-\references{
-The first two references describe the sampling surface method in
-detail. The rest provide some examples of its use and are not
+
+\references{ The first two references describe the sampling surface
+method in detail. The rest provide some examples of its use and are not
 exhaustive.
 
 \describe{
 %
 \item{}{Williams, M. S. 2001. New approach to areal sampling in ecological
-surveys. \emph{Forest Ecology and Management} \bold{154}:11--22.} 
+  surveys. \emph{Forest Ecology and Management} \bold{154}:11--22.} 
 %
 \item{}{Williams, M. S. 2001. Nonuniform random sampling: an alternative method
-of variance reduction for forest surveys. \emph{Canadian Journal of Forest
+  of variance reduction for forest surveys. \emph{Canadian Journal of Forest
   Research} \bold{31}: 2080--2088.}
 %
 \item{}{Williams, M. S. and Gove, J. H. 2003. Perpendicular distance sampling:
-an alternative method for sampling downed coarse woody
-debris. \emph{Canadian Journal of Forest Research}
-\bold{33}:1564--1579.}
+  an alternative method for sampling downed coarse woody
+  debris. \emph{Canadian Journal of Forest Research}
+  \bold{33}:1564--1579.}
 %
-\item{}{Gove, J. H., Williams, M. S., Ståhl, G., and Ducey, M. J. 2005. Critical
-point relascope sampling for unbiased volume estimation of downed coarse
-woody debris. \emph{Forestry} \bold{78}:417--431.}
+\item{}{Gove, J. H., Williams, M. S., Stahl, G., and Ducey, M. J. 2005. Critical
+  point relascope sampling for unbiased volume estimation of downed coarse
+  woody debris. \emph{Forestry} \bold{78}:417--431.}
 %
-\item{}{Ståhl, G., Gove, J. H., Williams, M. S., and Ducey, M. J. 2010. Critical
-length sampling: a method to estimate the volume of downed coarse woody
-debris. \emph{European Journal of Forest Research}
-\bold{129}:993--1000.}  
+\item{}{Stahl, G., Gove, J. H., Williams, M. S., and Ducey, M. J. 2010. Critical
+  length sampling: a method to estimate the volume of downed coarse woody
+  debris. \emph{European Journal of Forest Research}
+  \bold{129}:993--1000.}  
 %
 \item{}{Gove, J. H. and Van Deusen, P. C. 2011. On fixed-area plot sampling for
-downed coarse woody debris. \emph{Forestry}. (Accepted).}
+  downed coarse woody debris. \emph{Forestry}. (In press).}
 }
 }
 
@@ -308,6 +308,6 @@ downed coarse woody debris. \emph{Forestry}. (Accepted).}
 \seealso{
 \code{\link{sp}}, \code{\link[raster:raster-package]{raster}}
 }
-\examples{
+%\examples{
 
-}
+%}

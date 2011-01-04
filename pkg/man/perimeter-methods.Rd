@@ -23,31 +23,40 @@
 \section{Methods}{
 \describe{
 
-\item{\strong{\code{signature(object = "downLog")}}}{ \cr Returns the
-  spatial object associated with the perimeter of the down log.}
+  \item{\strong{\code{signature(object = "downLog")}}}{%\cr
 
-\item{\strong{\code{signature(object = "downLogs")}}}{ \cr Returns the
-  spatial object associated with the bounding box for the collection of
-  \dQuote{downLog} objects.}
+	Returns the spatial object associated with the perimeter of the down
+    log.}
 
-\item{\strong{\code{signature(object = "circularPlot")}}}{ \cr Returns the
-  spatial object associated with the perimeter of the circular plot. }
+  \item{\strong{\code{signature(object = "downLogs")}}}{ %\cr
 
-\item{\strong{\code{signature(object = "downLogIZs")}}}{ \cr Returns the
-  spatial object associated with the bounding box for the collection of
-  \dQuote{downLogIZ} objects.}
+	Returns the spatial object associated with the bounding box for the
+    collection of \dQuote{downLog} objects.}
 
-\item{\strong{\code{signature(object = "sausageIZ")}}}{ \cr  Returns the
-  spatial object associated with the perimeter of the sausage-shaped
-  inclusion zone. }
+  \item{\strong{\code{signature(object = "circularPlot")}}}{ %\cr
 
-\item{\strong{\code{signature(object = "standUpIZ")}}}{ \cr Returns the
-  spatial object associated with the perimeter of the circular-shaped
-  inclusion zone. }
+	Returns the spatial object associated with the perimeter of the
+    circular plot. }
 
-\item{\strong{\code{signature(object = "chainSawIZ")}}}{ \cr This will
-  return different inclusion zone objects based on the second argument
-  below\dots }
+  \item{\strong{\code{signature(object = "downLogIZs")}}}{% \cr
+
+	Returns the spatial object associated with the bounding box for the
+    collection of \dQuote{downLogIZ} objects.}
+
+  \item{\strong{\code{signature(object = "sausageIZ")}}}{ %\cr
+
+	Returns the spatial object associated with the perimeter of the
+    sausage-shaped inclusion zone. }
+
+  \item{\strong{\code{signature(object = "standUpIZ")}}}{ %\cr
+
+	Returns the spatial object associated with the perimeter of the
+    circular-shaped inclusion zone. }
+
+  \item{\strong{\code{signature(object = "chainSawIZ")}}}{ %\cr
+
+	This will return different inclusion zone objects based on the
+    second argument below\dots }
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(object, 
@@ -65,12 +74,15 @@
 	} %itemize
  } %item
 
-\item{\strong{\code{signature(object = "Tract")}}}{ \cr  Returns the
-  spatial object associated with the perimeter of the \dQuote{Tract}. }
+ \item{\strong{\code{signature(object = "Tract")}}}{ %\cr
 
-\item{\strong{\code{signature(object = "sampSurf")}}}{\cr Returns the
-  spatial object associated with the perimeter of the \code{tract} slot
-  in the object.}
+   Returns the spatial object associated with the perimeter of the
+   \dQuote{Tract}. }
+
+ \item{\strong{\code{signature(object = "sampSurf")}}}{%\cr
+
+   Returns the spatial object associated with the perimeter of the
+   \code{tract} slot in the object.}
 
 }}
 \keyword{methods}

@@ -15,7 +15,9 @@
 \describe{
 
 \item{\strong{\code{signature(object = "downLogIZs", tract =
-	  "Tract")}}}{\cr This constructor will allow the most
+	  "Tract")}}}{%\cr
+
+      This constructor will allow the most
 	  flexibility. One can create all of the individual objects from
 	  generating a population of "Stem" objects up through the
 	  corresponding collection of inclusion zones and give the latter,
@@ -58,7 +60,9 @@
 
 	  
 \item{\strong{\code{signature(object = "numeric", tract =
-	  "Tract")}}}{\cr This constructor masks much of the job of creating
+	  "Tract")}}}{%\cr
+
+      This constructor masks much of the job of creating
 	  a sampling surface. Just specify the number of stems and a tract
 	  for signature arguments along with any options to generate a
 	  surface. All arguments except those listed below are as in the

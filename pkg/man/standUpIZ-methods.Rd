@@ -16,7 +16,7 @@
 \describe{
 
 \item{\strong{\code{signature(downLog = "downLog", plotRadius =
-	  "numeric")}}}{\cr} 
+	  "numeric")}}}{} 
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(downLog,

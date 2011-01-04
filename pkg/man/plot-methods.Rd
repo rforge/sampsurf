@@ -60,17 +60,19 @@ argument definition for the most part.
 
 
 %-------------------------------------------------------------------------
-\section{\cr\emph{The \dQuote{ArealSampling} Class}}{
+\section{ \emph{The \dQuote{ArealSampling} Class}}{
 
 \describe{
 
-\item{\strong{\code{signature(x = "ArealSampling", y = "missing")}}}{\cr The
-    base method for this class, it only plots the \code{location} slot of
-    subclass objects. Note that since \dQuote{ArealSampling} is a virtual class,
-    this method just provides very generic capabilities that will
-    eventually be shared among all subclasses and will never therefore
-    be called outright based on its signature (but only through
-    \code{\link{callNextMethod}}).}
+\item{\strong{\code{signature(x = "ArealSampling", y =
+	  "missing")}}}{%\cr 
+
+    The base method for this class, it only plots the \code{location}
+    slot of subclass objects. Note that since \dQuote{ArealSampling} is
+    a virtual class, this method just provides very generic capabilities
+    that will eventually be shared among all subclasses and will never
+    therefore be called outright based on its signature (but only
+    through \code{\link{callNextMethod}}).}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(x, 
@@ -95,8 +97,9 @@ argument definition for the most part.
  
 
 
-\item{\strong{\code{signature(x = "circularPlot", y = "missing")}}}{\cr This adds
-    the necessary functionality to plot objects of class
+ \item{\strong{\code{signature(x = "circularPlot", y = "missing")}}}{%\cr
+
+    This adds the necessary functionality to plot objects of class
     "\code{\linkS4class{circularPlot}}".}
   
   \item{}{\bold{usage\ldots}
@@ -154,12 +157,13 @@ argument definition for the most part.
 
 
 %-------------------------------------------------------------------------
-\section{\cr\emph{The \dQuote{InclusionZone} Class}}{
+\section{\emph{The \dQuote{InclusionZone} Class}}{
 
 \describe{
 
   
-\item{\strong{\code{signature(x = "InclusionZone", y = "missing")}}}{\cr
+\item{\strong{\code{signature(x = "InclusionZone", y = "missing")}}}{%\cr
+
     The base method for this class, it does not plot anything visible
     other than axes if desired; its role is to set up the extents of the
     plot from a subclass object's bounding box. Note that since
@@ -184,7 +188,8 @@ argument definition for the most part.
  } %item
 		 
 
-\item{\strong{\code{signature(x = "standUpIZ", y = "missing")}}}{\cr
+\item{\strong{\code{signature(x = "standUpIZ", y = "missing")}}}{%\cr
+
     This adds the necessary functionality to plot objects of class
     "\code{\linkS4class{standUpIZ}}". }
   
@@ -220,7 +225,8 @@ argument definition for the most part.
 
   
 
-\item{\strong{\code{signature(x = "sausageIZ", y = "missing")}}}{\cr
+\item{\strong{\code{signature(x = "sausageIZ", y = "missing")}}}{%\cr
+
     This adds the necessary functionality to plot objects of class
     "\code{\linkS4class{sausageIZ}}".}
   
@@ -257,7 +263,8 @@ argument definition for the most part.
 
   
 
-\item{\strong{\code{signature(x = "chainSawIZ", y = "missing")}}}{\cr
+\item{\strong{\code{signature(x = "chainSawIZ", y = "missing")}}}{%\cr
+
     This adds the necessary functionality to plot objects of class
     "\code{\linkS4class{chainSawIZ}}".}
   
@@ -321,7 +328,8 @@ argument definition for the most part.
  } %item
 
 
-\item{\strong{\code{signature(x = "downLogIZs", y = "missing")}}}{\cr
+\item{\strong{\code{signature(x = "downLogIZs", y = "missing")}}}{%\cr
+
     This adds the necessary functionality to plot objects of container
     class "\code{\linkS4class{downLogIZs}}". Note that arguments passed
     in this call that are destined for individual \dQuote{downLogIZ} or
@@ -360,16 +368,18 @@ argument definition for the most part.
 
 
 %-------------------------------------------------------------------------
-\section{\cr\emph{The \dQuote{InclusionZoneGrid} Class}}{
+\section{\emph{The \dQuote{InclusionZoneGrid} Class}}{
 
 \describe{
 
 \item{\strong{\code{signature(x = "InclusionZoneGrid", y =
-	  "missing")}}}{\cr The base method for this class, it actually
-	  supplies all of the functionality for all existing subclasses,
-	  since the internal \dQuote{InclusionZone} object will have its own
-	  plotting method (see above), which will automatically be used, and
-	  this object is all that really differentiates the objects of class
+	  "missing")}}}{%\cr
+
+      The base method for this class, it actually supplies all of the
+	  functionality for all existing subclasses, since the internal
+	  \dQuote{InclusionZone} object will have its own plotting method
+	  (see above), which will automatically be used, and this object is
+	  all that really differentiates the objects of class
 	  "\code{\linkS4class{InclusionZoneGrid}}". }
   
   \item{}{\bold{usage\ldots}
@@ -444,15 +454,17 @@ argument definition for the most part.
   
 
 %-------------------------------------------------------------------------
-\section{\cr\emph{The \dQuote{sampSurf} Class}}{
+\section{\emph{The \dQuote{sampSurf} Class}}{
 
 \describe{
 
-\item{\strong{\code{signature(x = "sampSurf", y = "missing")}}}{\cr This
-  is the only extant method for plotting objects of class
-  "\code{\linkS4class{sampSurf}}." It makes use of many of the plotting
-  methods for the other objects in the \pkg{sampSurf} package, some of
-  which also rely on plot methods from the \pkg{raster} package.  }
+  \item{\strong{\code{signature(x = "sampSurf", y = "missing")}}}{%\cr
+
+	This is the only extant method for plotting objects of class
+    "\code{\linkS4class{sampSurf}}." It makes use of many of the
+    plotting methods for the other objects in the \pkg{sampSurf}
+    package, some of which also rely on plot methods from the
+    \pkg{raster} package.  }
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(x, 
@@ -490,14 +502,15 @@ argument definition for the most part.
   
 
 %-------------------------------------------------------------------------
-\section{\cr\emph{The \dQuote{Stem} Class}}{
+\section{\emph{The \dQuote{Stem} Class}}{
 
 \describe{
 
-  \item{\strong{\code{signature(x = "Stem", y = "missing")}}}{\cr The
-    base method for this class, it only plots the \code{location} slot of
-    subclass objects. Note that since \dQuote{Stem} is a virtual class,
-    this method just provides very generic capabilities that will
+  \item{\strong{\code{signature(x = "Stem", y = "missing")}}}{%\cr
+
+	The base method for this class, it only plots the \code{location}
+    slot of subclass objects. Note that since \dQuote{Stem} is a virtual
+    class, this method just provides very generic capabilities that will
     eventually be shared among all subclasses and will never therefore
     be called outright based on its signature (but only through
     \code{\link{callNextMethod}}). }
@@ -526,8 +539,9 @@ argument definition for the most part.
 
 	
   
-  \item{\strong{\code{signature(x = "downLog", y = "missing")}}}{\cr This adds
-    the necessary functionality to plot objects of class
+ \item{\strong{\code{signature(x = "downLog", y = "missing")}}}{%\cr
+
+   This adds the necessary functionality to plot objects of class
     "\code{\linkS4class{downLog}}".}
   
   \item{}{\bold{usage\ldots}
@@ -575,10 +589,11 @@ argument definition for the most part.
   } %item
 
 
-\item{\strong{\code{signature(x = "downLogs", y = "missing")}}}{\cr This
-    adds the necessary functionality to plot objects of container class
-    "\code{\linkS4class{downLogs}}". Note that arguments passed in this
-    call that are destined for individual \dQuote{downLog} objects
+  \item{\strong{\code{signature(x = "downLogs", y = "missing")}}}{%\cr
+
+	This adds the necessary functionality to plot objects of container
+    class "\code{\linkS4class{downLogs}}". Note that arguments passed in
+    this call that are destined for individual \dQuote{downLog} objects
     within the collection will apply to \emph{all} logs within the
     collection.}
   
@@ -609,15 +624,16 @@ argument definition for the most part.
   
 
 %-------------------------------------------------------------------------
-\section{\cr\emph{The \dQuote{Tract} Class}}{
+\section{\emph{The \dQuote{Tract} Class}}{
 
 \describe{
 
-\item{\strong{\code{signature(x = "Tract", y = "missing")}}}{\cr This
-  method is the base plot method for objects of class
-  "\code{\linkS4class{Tract}}" and subclasses. Because \dQuote{Tract}
-  objects are a subclass of "\code{\linkS4class{RasterLayer}}," all of
-  the plotting is done through calls to those methods. }
+  \item{\strong{\code{signature(x = "Tract", y = "missing")}}}{%\cr
+
+	This method is the base plot method for objects of class
+    "\code{\linkS4class{Tract}}" and subclasses. Because \dQuote{Tract}
+    objects are a subclass of "\code{\linkS4class{RasterLayer}}," all of
+    the plotting is done through calls to those methods. }
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(x,
@@ -657,11 +673,12 @@ argument definition for the most part.
 
 
 
-\item{\strong{\code{signature(x = "bufferedTract", y = "missing")}}}{\cr
+\item{\strong{\code{signature(x = "bufferedTract", y = "missing")}}}{%\cr
+
   This is the plot method for objects of class
   "\code{\linkS4class{bufferedTract}}" and subclasses. It essentially
   calls the bas \dQuote{Tract} method for all of the work and adds the
-  buffer. } 
+  buffer. }
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(x,

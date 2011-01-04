@@ -2,9 +2,9 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{chainSawIZ-class}
-\alias{izGrid,chainSawIZ,Tract-method}
-\alias{perimeter,chainSawIZ-method}
-\alias{plot,chainSawIZ,missing-method}
+%\alias{izGrid,chainSawIZ,Tract-method}
+%\alias{perimeter,chainSawIZ-method}
+%\alias{plot,chainSawIZ,missing-method}
 \alias{summary,chainSawIZ-method}
 
 \title{Class "chainSawIZ"}
@@ -32,11 +32,11 @@ constructor \code{\link{chainSawIZ}} to create new objects.  }
 	  "\code{\linkS4class{circularPlot}}".  }
 	
     \item{\code{sliver}:}{Object of class \code{"SpatialPolygons"}: A
-      “\code{\linkS4class{SpatialPolygons}}” object representing the
+      "\code{\linkS4class{SpatialPolygons}}" object representing the
       intersection (sliver) between the circular plot and the log.  }
 	
     \item{\code{bolt}:}{Object of class \code{"list"}: A list defining
-      the ‘minimal bounding bolt’ within the log that fully encompases
+      the sQuote{minimal bounding bolt} within the log that fully encompases
       the sliver. The list is described in \emph{The InclusionZone
       Class} vignette.}
 
@@ -50,10 +50,17 @@ Class \code{"\linkS4class{InclusionZone}"}, by class "downLogIZ", distance 2.
 
 \section{Methods}{
   \describe{
-    \item{izGrid}{\code{signature(izObject = "chainSawIZ", tract = "Tract")}: ... }
-    \item{perimeter}{\code{signature(object = "chainSawIZ")}: ... }
-    \item{plot}{\code{signature(x = "chainSawIZ", y = "missing")}: ... }
-    \item{summary}{\code{signature(object = "chainSawIZ")}: ... }
+    \item{izGrid}{\code{signature(izObject = "chainSawIZ", tract =
+		"Tract")}: \dQuote{InclusionZoneGrid} generic constructor }
+	
+    \item{perimeter}{\code{signature(object = "chainSawIZ")}: Return the
+      object perimeter}
+	
+    \item{plot}{\code{signature(x = "chainSawIZ", y = "missing")}: Plot
+      the object }
+	
+    \item{summary}{\code{signature(object = "chainSawIZ")}: Summary of
+      the object }
 	 }
 }
 \references{

@@ -2,12 +2,12 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{sampSurf-class}
-%\alias{bbox,sampSurf-method}
+\alias{bbox,sampSurf-method}
 %\alias{perimeter,sampSurf-method}
-%\alias{plot3D,sampSurf-method}
+\alias{plot3D,sampSurf-method}
 %\alias{plot,sampSurf,missing-method}
-%\alias{show,sampSurf-method}
-%\alias{summary,sampSurf-method}
+\alias{show,sampSurf-method}
+\alias{summary,sampSurf-method}
 
 \title{Class "sampSurf"}
 

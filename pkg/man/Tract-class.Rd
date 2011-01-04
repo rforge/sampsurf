@@ -3,17 +3,18 @@
 \docType{class}
 \alias{Tract-class}
 \alias{bbox,Tract-method}
-\alias{bufferedTract,numeric,Tract-method}
-\alias{heapIZ,InclusionZoneGrid,Tract-method}
-\alias{izGridCSFull,InclusionZoneGrid,Tract-method}
-\alias{izGrid,chainSawIZ,Tract-method}
-\alias{izGrid,matrix,Tract-method}
-\alias{izGrid,sausageIZ,Tract-method}
-\alias{izGrid,standUpIZ,Tract-method}
-\alias{perimeter,Tract-method}
-\alias{plot,Tract,missing-method}
-\alias{sampSurf,downLogIZs,Tract-method}
-\alias{sampSurf,numeric,Tract-method}
+%\alias{bufferedTract,numeric,Tract-method}
+%\alias{heapIZ,InclusionZoneGrid,Tract-method}
+%\alias{izGridCSFull,InclusionZoneGrid,Tract-method}
+%\alias{izGrid,chainSawIZ,Tract-method}
+%\alias{izGrid,matrix,Tract-method}
+%\alias{izGrid,sausageIZ,Tract-method}
+%\alias{izGrid,standUpIZ,Tract-method}
+%\alias{perimeter,Tract-method}
+%\alias{plot,Tract,missing-method}
+\alias{plot3D,Tract-method}
+%\alias{sampSurf,downLogIZs,Tract-method}
+%\alias{sampSurf,numeric,Tract-method}
 \alias{show,Tract-method}
 \alias{summary,Tract-method}
 
@@ -57,20 +58,45 @@ Class \code{"\linkS4class{BasicRaster}"}, by class "RasterLayer", distance 3.
 
 \section{Methods}{
   \describe{
-    \item{bbox}{\code{signature(obj = "Tract")}: ... }
-    \item{bufferedTract}{\code{signature(bufferWidth = "numeric", tract = "Tract")}: ... }
-    \item{heapIZ}{\code{signature(izgObject = "InclusionZoneGrid", tract = "Tract")}: ... }
-    \item{izGridCSFull}{\code{signature(izGridSausage = "InclusionZoneGrid", tract = "Tract")}: ... }
-    \item{izGrid}{\code{signature(izObject = "chainSawIZ", tract = "Tract")}: ... }
-    \item{izGrid}{\code{signature(izObject = "matrix", tract = "Tract")}: ... }
-    \item{izGrid}{\code{signature(izObject = "sausageIZ", tract = "Tract")}: ... }
-    \item{izGrid}{\code{signature(izObject = "standUpIZ", tract = "Tract")}: ... }
-    \item{perimeter}{\code{signature(object = "Tract")}: ... }
-    \item{plot}{\code{signature(x = "Tract", y = "missing")}: ... }
-    \item{sampSurf}{\code{signature(object = "downLogIZs", tract = "Tract")}: ... }
-    \item{sampSurf}{\code{signature(object = "numeric", tract = "Tract")}: ... }
-    \item{show}{\code{signature(object = "Tract")}: ... }
-    \item{summary}{\code{signature(object = "Tract")}: ... }
+    \item{bbox}{\code{signature(obj = "Tract")}: Return object bounding
+	  box }
+	
+    \item{bufferedTract}{\code{signature(bufferWidth = "numeric", tract
+		= "Tract")}: Object constructor }
+	
+    \item{heapIZ}{\code{signature(izgObject = "InclusionZoneGrid", tract
+		= "Tract")}: Heap into a sampling surface }
+	
+    \item{izGridCSFull}{\code{signature(izGridSausage =
+      "InclusionZoneGrid", tract = "Tract")}: Full chainsaw
+      InclusionZoneGrid }
+
+    \item{izGrid}{\code{signature(izObject = "chainSawIZ", tract =
+		"Tract")}: \dQuote{InclusionZoneGrid} generic constructor }
+	
+    \item{izGrid}{\code{signature(izObject = "matrix", tract =
+		"Tract")}: ... }
+	
+    \item{izGrid}{\code{signature(izObject = "sausageIZ", tract =
+		"Tract")}: ... }
+	
+    \item{izGrid}{\code{signature(izObject = "standUpIZ", tract =
+		"Tract")}: ... }
+	
+    \item{perimeter}{\code{signature(object = "Tract")}: Returns object perimeter }
+	
+    \item{plot}{\code{signature(x = "Tract", y = "missing")}: Plot the
+      object }
+	
+    \item{sampSurf}{\code{signature(object = "downLogIZs", tract =
+		"Tract")}: Generate a sampling surface }
+	
+    \item{sampSurf}{\code{signature(object = "numeric", tract =
+		"Tract")}: ... }
+	
+    \item{show}{\code{signature(object = "Tract")}: Show/print the object }
+	
+    \item{summary}{\code{signature(object = "Tract")}: Object summary }
 	 }
 }
 %\references{

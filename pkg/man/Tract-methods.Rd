@@ -19,10 +19,11 @@
 \section{Methods}{
 \describe{
 	
-\item{\strong{\code{signature(object = "missing")}}}{\cr Several of the
-	constructors listed below end up calling this one for final object
-	construction, so it could be considered the base constructor. It is
-	patterned after the construction of a
+  \item{\strong{\code{signature(object = "missing")}}}{%\cr
+
+	Several of the constructors listed below end up calling this one for
+	final object construction, so it could be considered the base
+	constructor. It is patterned after the construction of a
 	\code{"\linkS4class{GridTopology}"} object in the
 	\sQuote{\code{\link{sp}}} package. Please note that it is best to
 	either explicitly name the arguments when using this constructor, or
@@ -86,11 +87,13 @@
 
 	
 
-\item{\strong{\code{signature(object = "numeric")}}}{\cr In this second
-  constructor, the \code{object} argument should be a numeric vector
-  specifying the \emph{maximum extents} of the tract. The tract minimum
-  is always assumed to be at (0,0) for this method. If some other minima
-  is desired, use one of the other constructors.}
+  \item{\strong{\code{signature(object = "numeric")}}}{%\cr
+
+	In this second constructor, the \code{object} argument should be a
+    numeric vector specifying the \emph{maximum extents} of the
+    tract. The tract minimum is always assumed to be at (0,0) for this
+    method. If some other minima is desired, use one of the other
+    constructors.}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(object = c(x=10, y=10),
@@ -120,9 +123,10 @@
 
   
   
-\item{\strong{\code{signature(object = "matrix")}}}{\cr This
-  construtor allows creation of a \dQuote{Tract} object using a bounding
-  box specification.}
+  \item{\strong{\code{signature(object = "matrix")}}}{%\cr
+
+	This construtor allows creation of a \dQuote{Tract} object using a
+    bounding box specification.}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(object, 
@@ -148,8 +152,10 @@
 
 
   
-\item{\strong{\code{signature(object = "RasterLayer")}}}{\cr Finally
-  this constructor takes an object of class \dQuote{RasterLayer}.}
+  \item{\strong{\code{signature(object = "RasterLayer")}}}{%\cr
+
+	Finally this constructor takes an object of class
+    \dQuote{RasterLayer}.}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(object, 

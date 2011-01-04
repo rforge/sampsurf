@@ -68,7 +68,9 @@ tr3 = Tract(bb, 0.5)
 #RasterLayer constructor...
 ex = extent(tr3)
 rl = raster(ex, nrow=10, ncols=10, crs=NA)
+\dontrun{
 tr4 = Tract(rl)  #error: non-square grid cells
+}
 rl = raster(ex, nrow=22, ncol=10, crs=NA)
 tr4 = Tract(rl)  #okay, square cells
 }

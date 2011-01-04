@@ -14,7 +14,10 @@
 \section{Methods}{
 \describe{
 
-\item{\strong{\code{signature(downLog = "downLog", plotRadius = "numeric")}}}{\cr }
+\item{\strong{\code{signature(downLog = "downLog", plotRadius =
+	  "numeric")}}}{%\cr
+
+     }%for space
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(downLog,

@@ -13,8 +13,10 @@
 \describe{
 
 \item{\strong{\code{signature(izgObject = "InclusionZoneGrid", tract =
-	"Tract")}}}{\cr Heap or pile attribute values within an
-	\dQuote{InclusionZoneGrid} object onto a \dQuote{Tract} object\dots }
+	  "Tract")}}}{%\cr
+
+    Heap or pile attribute values within an \dQuote{InclusionZoneGrid}
+	object onto a \dQuote{Tract} object\dots }
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(izgObject,
