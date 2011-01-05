@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 
 \title{
-Generate Objects of Class "\code{\linkS4class{standUpIZ}}"
+Generate Objects of Class "\code{\linkS4class{bufferedTract}}"
 }
 
 \description{

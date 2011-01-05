@@ -94,7 +94,21 @@ function(object,
     else {
       buttDiam = .StemEnv$cm2m * buttDiam
       topDiam =  .StemEnv$cm2m * topDiam
-    }            
+    }
+
+#
+#   check to make sure but and top diameters are the same as in the taper data
+#   frame if it was passed; same for length...
+#
+    if(!missing(object)) {
+      nr = nrow(object)
+      #identical is too strong here...
+      if(!isTRUE(all.equal(buttDiam, object[1,'diameter'])) ||
+         !isTRUE(all.equal(topDiam, object[nr,'diameter'])) )
+        stop('buttDiam and topDiam must be equal to their respective measurements in the taper data!')
+      if(!isTRUE(all.equal(logLen, object[nr,'length']-object[1,'length'])))
+        stop('logLen must be equal to the total log length in taper data!')
+    }
 
     
 #
