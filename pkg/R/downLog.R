@@ -62,7 +62,7 @@ setMethod('downLog',
           signature(object = 'data.frame'),
 function(object,
          solidType = NULL,             #defaults to null for passed taper
-         logAngle = 0,                 #identity
+         logAngle = 0,                 #canonical
          logVol = NULL,
          centerOffset = c(x=0, y=0),   #log center offset
          species = '',
