@@ -5,55 +5,48 @@
 
 \title{  Methods for "downLog" Object Construction}
 \description{
- There is currently only one available method for the generic
- \code{\link{downLog}}. This method generates objects of class
+ There are currently two available methods for the generic
+ \code{\link{downLog}}. This methods generates objects of class
  "\code{\linkS4class{downLog}}" that are legal objects. This is the
  preferred method for generating such objects instead of using
- \code{\link{new}}. Other constructors could be added by extention to this
- primary method.
+ \code{\link{new}}.
 }
 
 \section{Methods}{
 \describe{
 
-  \item{\strong{\code{signature(object = "missDF")}}}{%\cr
+  \item{\strong{\code{signature(object = "missing")}}}{%\cr
 
-	The "missDF" class is a class union of "data.frame" and "missing."
-    If \code{object} is a data.frame, then it is assumed that the data
-    frame contains the taper data in the form of diameters and lengths
-    (as columns with labels "diameter" and "length", respectively), with
-    diameters in the \emph{same} units as length. If object is
-    \code{\link{missing}}, the taper data is generated from the internal
-    taper function between the \code{buttDiam} and \code{topDiam}
-    diameters specified, in \code{nSegs} sections. The taper function
-    used is documented in \emph{\dQuote{The Stem Class}} vignette and
-    references for "\code{\linkS4class{downLog}}." The following
-    arguments are part of the function call; all arguments with the same
-    names as class slots are defined in the class definition.}
+	The constructor will be used when the signature argument is
+    "missing."  When \code{object} is \code{\link{missing}}, the taper
+    data is generated from the internal taper function between the
+    \code{buttDiam} and \code{topDiam} diameters specified, in
+    \code{nSegs} sections. The taper function used is documented in
+    \emph{\dQuote{The Stem Class}} vignette and references for
+    "\code{\linkS4class{downLog}}." The following arguments are part of
+    the function call; all arguments with the same names as class slots
+    are defined in the class definition.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         buttDiam = 5,
-         topDiam = 0,
-         logLen = 5,
+    \preformatted{function(
+         buttDiam = 5,                 #cm
+         topDiam = 0,                  #cm
+         logLen = 5,                   #meters
          nSegs = 20,
-         solidType = NULL,
-         logAngle = 0,
+         solidType = 3,                #defaults to 3  
+         logAngle = 0,                 #canonical position
          logVol = NULL,
-         centerOffset = c(x=0, y=0),
+         centerOffset = c(x=0, y=0),   #log center offset
          species = '',
-         logID = paste('log',format(runif(1),digits=5),sep=':'),
+         logID = paste('log',format(runif(1),digits=6),sep=':'),
          description = NULL,
          userExtra = NULL,
          units = 'metric',
-         spUnits = CRS(projargs=as.character(NA)),        % wantPlot = FALSE,
-         runQuiet = FALSE,
+         spUnits = CRS(projargs=as.character(NA)),
+         runQuiet = TRUE,
          ...)}
 	   
     \itemize{
-		 
-	  \item{\code{object}:}{ A data frame (see note below) or missing as
-        described above keying on taper generation.}
 	  
       \item{\code{buttDiam}:}{ The large-end diameter. For object
         creation, units are in either \emph{inches} or
@@ -105,6 +98,9 @@
 	  
 	  \item{\code{userExtra}:}{ Anything else that one wants to carry
         along with the log.}
+
+	  \item{\code{units}:}{ Either \dQuote{English} or \dQuote{metric}. These
+	    must be conformable with the projection in \code{spUnits}.}
 	  
 	  \item{\code{spUnits}:}{ A valid \code{\link{CRS}} object
         specifying the Coordinate Reference System. This defaults to
@@ -112,16 +108,60 @@
         system, say for a sample plot where the log has been located in
         the field.}
 	  
-	  %\item{\code{wantPlot}:}{ \code{TRUE}: show the graphics plot; \code{FALSE}: just
-	  %		return the object.}
-	  
 	  \item{\code{runQuiet}:}{ \code{TRUE}: no feedback during object creation;
         \code{FALSE}: prints some information along the way.}
 	  
+	  \item{... :}{ Other arguments to be passed along.}
+	  
 	} %itemize
   } %item
-	   
+
+
+  \item{\strong{\code{signature(object = "data.frame")}}}{%\cr
+
+	When \code{object} is a "data.frame," then it is assumed that the
+    data frame contains the taper data in the form of diameters and
+    lengths (as columns with labels "diameter" and "length",
+    respectively), with diameters in the \emph{same} units as
+    length. All arguments except those listed below are the same as in
+    the previous constructor\ldots}
   
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(object
+         solidType = NULL,             #defaults to null for passed taper
+         logAngle = 0,                 #canonical
+         logVol = NULL,
+         centerOffset = c(x=0, y=0),   #log center offset
+         species = '',
+         logID = paste('log',format(runif(1),digits=6),sep=':'),
+         description = NULL,
+         userExtra = NULL,
+         units = 'metric',
+         spUnits = CRS(projargs=as.character(NA)),
+         runQuiet = TRUE,
+         ...)}
+	   
+    \itemize{
+		 
+	  \item{\code{object}:}{ A data frame (see note below).}
+	  
+	  \item{\code{solidType}:}{ \code{NULL} is the default, because it
+        is assumed that the taper data are from field measurements or
+        have been generated from a different taper equation where this
+        would not be a meaningful parameter. One can therefore have an
+        educated guess about the genesis of taper data within an object
+        by querying this slot in the completed object.}
+	  
+	  \item{\code{logVol}:}{ The log volume if precomputed, otherwise, if
+        \code{NULL}, the log volume will be computed from the taper
+        data frame using Smalian's method. }
+
+	  
+	} %itemize
+  } %item
+
+	   
   } %describe
 } %section
 

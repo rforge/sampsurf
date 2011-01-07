@@ -5,9 +5,12 @@
 #
 #   The methods key off the argument 'data', which can be one of...
 #     1. a data frame: for observed taper
-#     2. a function: so one could pass one's own taper and volume functions
-#     3. numeric: the butt and tip diameters & length?????????
-#   **2. & 3. are not implemented, and may not need to be since a user can
+#     2. measured variables like butt diameter, etc.; this will construct
+#        a valid taper data frame and then call method 1 for the rest
+#
+#     3. a function: so one could pass one's own taper and volume functions
+#     4. numeric: the butt and tip diameters & length?????????
+#   **3. & 4. are not implemented, and may not need to be since a user can
 #     make a data frame themselves from taper equations
 #
 #   The log's canonical position is centered at (0,0) with tip pointing east.
@@ -15,7 +18,14 @@
 #   particular that the log base/butt is not at (0,0), its center in (x,y)
 #   is at (0,0).
 #
-#   Note that the sp package should be loaded for the complete functionality. 
+#   Note that the sp package should be loaded for the complete functionality.
+#
+#   One little interesting idiosyncrasy is that when the tempfile() function
+#   is used to generate log IDs for spatial polygons, they will not be keyed
+#   to the .GlobalEnv random number stream, and so any comparison with identical
+#   will yield FALSE for two given objects that were generated with the same
+#   initial stream; therefore, I have elected to go back to simple random number
+#   IDs below...
 #
 #Author...									Date: 6-Aug-2010
 #	Jeffrey H. Gove
@@ -36,28 +46,32 @@
 
 
 
+
+
+
+
+
+
+
+
           
 #================================================================================
-#  method for functions and class downLog...
+#  1. method for taper data frame object construction of class downLog...
 #
 setMethod('downLog',
-          signature(object = 'missDF'),
+          signature(object = 'data.frame'),
 function(object,
-         buttDiam = 5,                 #cm
-         topDiam = 0,                  #cm
-         logLen = 5,                   #meters
-         nSegs = 20,
-         solidType = NULL,             #defaults to 3  
+         solidType = NULL,             #defaults to null for passed taper
          logAngle = 0,                 #identity
          logVol = NULL,
          centerOffset = c(x=0, y=0),   #log center offset
          species = '',
+         #logID = unlist(strsplit(tempfile('log:',''),'\\/'))[2],
          logID = paste('log',format(runif(1),digits=6),sep=':'),
          description = NULL,
          userExtra = NULL,
          units = 'metric',
          spUnits = CRS(projargs=as.character(NA)),
-         #wantPlot = FALSE,
          runQuiet = TRUE,
          ...
         )
@@ -66,14 +80,29 @@ function(object,
 #
 #   some initial checks...
 #
-    if(nSegs < 1)
-      stop('A log must have at least one segment!')
     if(any(is.na(match(c('x','y'),names(centerOffset)))))
       stop('Please use names x and y for centerOffset vector')
     if(length(centerOffset) < 2 || length(centerOffset) > 3)
       stop('Please supply one set of x,y[,z] coordinates for the object location.')
     if(is.na(match(units, .StemEnv$msrUnits)))
       stop('Illegal measurement units!')
+    
+#
+#   check for a valid data frame since it will be required below, even though it
+#   is redundantly checked in class validity checking...
+#
+    taper = object
+    taperNames = match(colnames(taper), c('diameter','length'))
+    if(any(is.na(taperNames)))
+      stop('bad taper names--should be: "diameter" and "length"')
+    nSegs = nrow(taper) - 1
+    if(nSegs < 1)
+      stop('there must be at least 2 rows in the taper data frame!')
+    if(!isTRUE(all.equal(taper[1,'length'], 0.0)))
+      stop('The bottom taper measurement of the log should have length=0')
+    logLen = taper[nSegs+1,'length'] - taper[1,'length']
+    if(logLen <= 0)
+      stop('log length must be greater than zero!')
 
 #
 #   description field...
@@ -83,72 +112,34 @@ function(object,
     else
       description = as.character(description)
 
-
 #
-#   convert diameters to meters or feet as appropriate...
+#   assign diameters, length, etc...
 #
-    if(units == .StemEnv$msrUnits$English) {
-      buttDiam = .StemEnv$in2ft * buttDiam
-      topDiam = .StemEnv$in2ft * topDiam
-    }
-    else {
-      buttDiam = .StemEnv$cm2m * buttDiam
-      topDiam =  .StemEnv$cm2m * topDiam
-    }
-
-#
-#   check to make sure but and top diameters are the same as in the taper data
-#   frame if it was passed; same for length...
-#
-    if(!missing(object)) {
-      nr = nrow(object)
-      #identical is too strong here...
-      if(!isTRUE(all.equal(buttDiam, object[1,'diameter'])) ||
-         !isTRUE(all.equal(topDiam, object[nr,'diameter'])) )
-        stop('buttDiam and topDiam must be equal to their respective measurements in the taper data!')
-      if(!isTRUE(all.equal(logLen, object[nr,'length']-object[1,'length'])))
-        stop('logLen must be equal to the total log length in taper data!')
-    }
-
+    buttDiam = taper[1, 'diameter']
+    topDiam = taper[nSegs+1, 'diameter']
+    #logLen = taper[nSegs+1, 'length']
+    solidType = solidType   
     
-#
-#   solid type is irrelevant (NULL) if both the taper and log volume are passed;
-#   otherwise, one or both are estimated below, so we must have a valid
-#   parameter value for the equations...
-#
-    if(!missing(object) && !is.null(logVol) && !is.na(logVol)) {
-      solidType = NULL
-      if(!runQuiet)
-          cat('\nNote: taper and volume supplied, solidType set to', solidType)
-    }
-    else {
-      if(is.null(solidType)) {
-        solidType = 3   #default
-        if(!runQuiet)
-          cat('\nNote: either taper or volume are missing, solidType set to default value of', solidType)
-      }
-    }
   
-
 #
-#   first just check the simple variables with dummy variables for taper, etc...
+#   first use the object's validity check to check diameters, length, etc.
+#   with dummy taper for now, etc...
 #
-    if(missing(object))
-      taper = data.frame(diameter=rep(NA,2), length=rep(NA,2))
-    else
-      taper = object
     log = new('downLog', buttDiam=buttDiam, topDiam=topDiam, logLen=logLen,
               logAngle=logAngle, solidType=solidType, taper=taper, species=species
              )
 
 #
-#   okay, valid object to here, just get the taper in terms of diameter and height
-#   if it is missing...
+#   okay, valid object to here, if the user passed log taper (solidType=NULL), then
+#   use Smalian's to calculate volume if it is missing; otherwise, if solidType is
+#   available, assume the taper came from the built-in equation...
 #   
-    if(missing(object))
-      taper = .StemEnv$wbTaper(buttDiam, topDiam, logLen, nSegs, solidType)
-    if(is.null(logVol) || is.na(logVol))
-      logVol = .StemEnv$wbVolume(buttDiam, topDiam, logLen, solidType)
+    if(is.null(logVol) || is.na(logVol)) {
+      if(is.null(solidType))                         #user-defined taper
+        logVol = .StemEnv$SmalianVolume(taper)
+      else                                           #from default taper equation
+        logVol = .StemEnv$wbVolume(buttDiam, topDiam, logLen, solidType)
+    }
     
     
 #
@@ -223,18 +214,103 @@ function(object,
               description=description, userExtra = userExtra, species = species
              )
 
-#
-#   plot it if desired; uses class-specific method for plot generic...
-#
-    #if(wantPlot) 
-     # plot(log, ...)
-
     if(!runQuiet)
       cat('\n')
     
     return(log)
 }   #downLog method for data.frames
 )   #setMethod
+
+
+
+
+
+
+          
+#================================================================================
+#  2. method for using simple measurements in constructing class downLog...
+#
+#  This method just sets up the taper data frame from the measured variables and
+#  passes things on to the data frame constructor from there...
+#
+setMethod('downLog',
+          signature(object = 'missing'),
+function(#object,
+         buttDiam = 5,                 #cm
+         topDiam = 0,                  #cm
+         logLen = 5,                   #meters
+         nSegs = 20,
+         solidType = 3,                #defaults to 3  
+         logAngle = 0,                 #canonical position
+         logVol = NULL,
+         centerOffset = c(x=0, y=0),   #log center offset
+         species = '',
+         #logID = unlist(strsplit(tempfile('log:',''),'\\/'))[2],
+         logID = paste('log',format(runif(1),digits=6),sep=':'),
+         description = NULL,
+         userExtra = NULL,
+         units = 'metric',
+         spUnits = CRS(projargs=as.character(NA)),
+         runQuiet = TRUE,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   some initial checks...
+#
+    if(nSegs < 1)
+      stop('A log must have at least one segment!')
+
+#
+#   convert diameters to meters or feet as appropriate...
+#
+    if(units == .StemEnv$msrUnits$English) {
+      buttDiam = .StemEnv$in2ft * buttDiam
+      topDiam = .StemEnv$in2ft * topDiam
+    }
+    else {
+      buttDiam = .StemEnv$cm2m * buttDiam
+      topDiam =  .StemEnv$cm2m * topDiam
+    }
+
+    
+#
+#   first use the object's validity check to check diameters, length, etc.
+#   with dummy taper for now, etc...
+#
+    taper = data.frame(diameter=c(buttDiam, topDiam), length=c(0, logLen))
+    log = new('downLog', buttDiam=buttDiam, topDiam=topDiam, logLen=logLen,
+              logAngle=logAngle, solidType=solidType, taper=taper, species=species
+             )
+
+#
+#   okay, valid object to here, just get the taper in terms of diameter and height
+#   if it is missing...
+#   
+    taper = .StemEnv$wbTaper(buttDiam, topDiam, logLen, nSegs, solidType)
+    if(is.null(logVol) || is.na(logVol))
+      logVol = .StemEnv$wbVolume(buttDiam, topDiam, logLen, solidType)
+
+
+#
+#   all other checks will be made in the data frame constructor or during
+#   validity checking on the proposed object...
+#
+    theLog = downLog(taper, logAngle = logAngle, logVol = logVol, solidType=solidType, 
+                     centerOffset = centerOffset, species = species,
+                     logID = logID, description = description,
+                     userExtra = userExtra, units = units,
+                     spUnits = spUnits, runQuiet = runQuiet,
+                     ...
+                    )
+
+    return(theLog)
+}   #downLog method for measured variables
+)   #setMethod
+
+ 
+
 
 
 #showMethods('downLog')

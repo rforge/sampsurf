@@ -4,13 +4,13 @@
 \title{
 Generate Objects of Class "\code{\linkS4class{downLog}}"
 }
-\description{
-This generic function has methods based on the signature formal argument
-\code{object}. It is used as a constructor function for objects that are
-of class "\code{\linkS4class{downLog}}". This 
-method should be used in preference to \code{\link{new}} to insure a valid
-object.
-}
+
+\description{ This generic function has methods based on the signature
+formal argument \code{object}. It is used as a constructor function for
+objects that are of class "\code{\linkS4class{downLog}}". There are two
+methods that should be used in preference to \code{\link{new}} to insure
+a valid object.  }
+
 \usage{
 downLog(object, ...)
 }
@@ -21,13 +21,15 @@ downLog(object, ...)
   \item{\dots}{ Formal arguments that are different for each method, see
 	those for details. }
 }
+
 \details{
 \code{downLog} is defined completely with respect to the
 signature of its methods \code{\link{downLog-methods}}. Methods
-are available for \code{\link{data.frame}},  and \code{missing}
+are available for \code{\link{data.frame}},  and \code{\link{missing}}
 signatures.  Other methods can obviously be added for other signatures
 as necessary.
 }
+
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use

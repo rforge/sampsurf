@@ -54,6 +54,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
 \examples{
+\dontrun{
 tr = Tract(c(x=20,y=20), cellSize=0.5)
 btr = bufferedTract(5, tr)
 dlogs = downLogs(1, btr@bufferRect, logLen=c(4,6))
@@ -62,6 +63,7 @@ izg.sa = izGrid(iz.sa, btr)
 izgFCS = izGridCSFull(izg.sa, btr)
 plot(izgFCS, axes=TRUE)
 summary(izgFCS)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

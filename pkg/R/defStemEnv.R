@@ -126,6 +126,11 @@
                              'x', 'y', 'logAngle', 'logAngle.D')
 
 
+#
+#   taper/volume stuff...
+#
+.StemEnv$solidTypes = c(1,10)  #range for valid solidType in log taper/volume
+
 
 
 #================================================================================
@@ -146,11 +151,16 @@
 #    isLog = TRUE: a down log, so use "length" in taper; FALSE: a standing tree
 #            so use "hgt" in taper
 #
-#   Note: no error checking has been added yet!!!!
+#   Note: little error checking has been added yet!!!!
 #
 wbTaper = function(botDiam, topDiam, logLen, nSegs=20, solidType, hgt=NULL, isLog=TRUE) {
-    nSegs = nSegs + 1
+    if(nSegs < 1)
+      stop('Must have positive number of log segments for taper!')
+    nSegs = nSegs + 1               #becomes the number of diameters required for taper
+    if(is.null(solidType) || solidType < .StemEnv$solidTypes[1] || solidType > .StemEnv$solidTypes[2])
+      stop('solidType=',solidType,' out of range, must be in: (',solidType[1],',',solidType[2],')')
     r = solidType
+    
     if(is.null(hgt))
       hgt = seq(0, logLen, length.out=nSegs)
     diameter = topDiam + (botDiam - topDiam) * ((logLen - hgt)/logLen)^(2/r)
@@ -174,6 +184,8 @@ rm(wbTaper)                                           #and remove from .GlobalEn
 #  so k just represents taking squared diameter to squared radius...
 #
 wbVolume = function(botDiam, topDiam, logLen, solidType, boltLen=NULL) {
+    if(is.null(solidType) || solidType < .StemEnv$solidTypes[1] || solidType > .StemEnv$solidTypes[2])
+      stop('solidType=',solidType,' out of range, must be in: (',solidType[1],',',solidType[2],')')
     r = solidType
     k = 1/4                              #diameter to radius; diam to length units conversion==1
     if(is.null(boltLen))
@@ -192,6 +204,43 @@ environment(.StemEnv$wbVolume) = .StemEnv                  #assign its environme
 rm(wbVolume)                                               #and remove from .GlobalEnv
 
 
+
+
+#================================================================================
+#
+#  Smalian's volume function for passed taper...
+#
+#  k is the conversion factor that takes diameter to radius and puts it into the
+#  same units as length. But diameters should be in length units for downLogs,
+#  so k just represents taking squared diameter to squared radius...
+#
+SmalianVolume = function(taper, isLog=TRUE) {
+    k = 1/4                              #diameter to radius; diam to length units conversion==1
+    nSegs = nrow(taper) - 1
+    if(nSegs < 1)
+      stop("Must have positive number of log segments for Smalian's!")
+    if(isLog)
+      hgtName = 'length'
+    else
+      hgtName = 'hgt'
+    vol = 0
+    diam = taper[,'diameter']
+    csArea = diam^2
+    length = taper[,hgtName]
+    for(i in 1:nSegs) {
+      sectLen = length[i+1] - length[i]
+      if(isTRUE(all.equal(diam[i+1],0.0)))
+        vol = vol + pi*k*csArea[i+1]*sectLen/3                 #cone for tip
+      else
+        vol = vol + pi*k*(csArea[i] + csArea[i+1])*sectLen/2   #Smalian's
+    }
+    return(vol)
+}   #SmalianVolume
+assign('SmalianVolume', SmalianVolume, envir=.StemEnv)     #move to .StemEnv
+environment(.StemEnv$SmalianVolume) = .StemEnv             #assign its environment
+rm(SmalianVolume)                                          #and remove from .GlobalEnv
+
+  
 
 
 

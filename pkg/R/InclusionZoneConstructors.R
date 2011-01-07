@@ -134,6 +134,15 @@ function(downLog,
 #   unless someone tries to use this for some other purpose, it will not matter.
 #------------------------------------------------------------------------------
 #
+#   the only way to do chainsaw is with the built-in taper equation, because we
+#   must be able to calculate the sliver, bounding bolt, etc.; so if the log's
+#   taper comes from some other source is.null(solidType), then we can not
+#   proceed with this method...
+#
+    if(is.null(downLog@solidType))
+      stop('Log taper must come from the built-in taper equation to use the chainsaw method')
+  
+#
 #   get bbox from the downLog object...
 #
     downLog.bbox = bbox(downLog@spLog)

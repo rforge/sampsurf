@@ -76,12 +76,6 @@ chainsawSliver = function(downLog,
 #
 #---------------------------------------------------------------------------
 # 
-#   we need the sp package for plotting...
-#
-   # if(!require(sp))
-   #   stop('***>sp package must be loaded to make a valid "chainSawIZ" object!')
-   # if(!require(gpclib))
-   #   stop('***>gpclib package must be loaded!')
     if(!(is(downLog,'downLog') || !validObject(downLog)) )
        stop('***>Invalid "downLog" object passed!')
     
@@ -95,6 +89,8 @@ chainsawSliver = function(downLog,
     buttDiam = downLog@buttDiam
     topDiam = downLog@topDiam
     solidType = downLog@solidType
+    if(is.null(solidType))
+      stop('***>chainSaw method requires use of the built-in taper function for log: solidType must be non-NULL!')
 
 #    
 #   transform log back so it is laying east with butt at x=0...
