@@ -1,7 +1,8 @@
 \name{downLog-methods}
 \docType{methods}
 \alias{downLog-methods}
-\alias{downLog,missDF-method}
+\alias{downLog,missing-method}
+\alias{downLog,data.frame-method}
 
 \title{  Methods for "downLog" Object Construction}
 \description{

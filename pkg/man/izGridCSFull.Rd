@@ -54,6 +54,9 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
 \examples{
+#
+# cut and paste the following into R to run, takes a few minutes...
+#
 \dontrun{
 tr = Tract(c(x=20,y=20), cellSize=0.5)
 btr = bufferedTract(5, tr)

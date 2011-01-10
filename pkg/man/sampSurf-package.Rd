@@ -22,7 +22,7 @@ individual. The sample point can be the center of a circular fixed-area
 plot, an actual point as in horizontal point sampling, or say, the
 midpoint of a line in line intersect sampling.
 
-In general we are interested in determing the properties of various
+In general we are interested in determining the properties of various
 sampling methods mentioned above when applied to fixed objects such as
 standing trees or down logs. The \pkg{sampSurf} package will allow
 generation of log or tree populations within a fixed tract area. The
