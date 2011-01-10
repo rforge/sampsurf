@@ -51,7 +51,7 @@ The sampSurf package can be used to construct sampling surface simulations for d
 </p>
 
 <p>
-In general we are interested in determing the properties of various sampling methods mentioned above when applied to fixed objects such as standing trees or down logs. The sampSurf package will allow generation of log or tree populations within a fixed tract area. The surface generated from the intersection of inclusion zones applied to the individuals in the population for a given attribute (e.g., cubic volume, number of individuals, etc.) are represented by the "sampSurf" class and can be displayed graphically. Estimator variance is directly associated with the sampling surface roughness, and so methods can also be compared visually. An example of a graphical depiction of a sampling surface using the "sausage" method may be viewed <a href="./ssExample.pdf">here</a>.
+In general we are interested in determining the properties of various sampling methods mentioned above when applied to fixed objects such as standing trees or down logs. The sampSurf package will allow generation of log or tree populations within a fixed tract area. The surface generated from the intersection of inclusion zones applied to the individuals in the population for a given attribute (e.g., cubic volume, number of individuals, etc.) are represented by the "sampSurf" class and can be displayed graphically. Estimator variance is directly associated with the sampling surface roughness, and so methods can also be compared visually. An example of a graphical depiction of a sampling surface using the "sausage" method may be viewed <a href="./ssExample.pdf">here</a>.
 </p>
 
 <p>
