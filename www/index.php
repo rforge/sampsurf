@@ -55,6 +55,10 @@ In general we are interested in determining the properties of various sampling m
 </p>
 
 <p>
+There are several vignettes associated with the package that provide detailed explanation and examples of the design and use of the various components. A good place to start is with <em>The sampSurf Package Overview</em> vignette, which provides an overview of the class structure, etc. The vignettes are all available from the package index help page once the package has been installed and loaded using library(). Another overview of the package in the help system can be found by issuing "package?sampSurf" (without the quotes) at the R command line. This help page will provide links to all of the built-in class structure, generics with associated methods, and helper functions. Running the examples (with R's example() command) will also provide some help in getting started. 
+</p>
+
+<p>
 Please note that sampSurf is functional, but at the present only has support for down logs sampled on fixed-area plots (which include the ‘stand-up,’ ‘sausage,’ and ‘chainsaw’ methods or protocols). The class structure is designed to support additions with relative ease, however, so more will appear in future releases (hopefully with some contributed by users).
 </p>
 
