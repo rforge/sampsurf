@@ -36,6 +36,26 @@ the spatial representation correct. Rather, one should therefore use the
     \item{\code{perimeter}:}{Object of class \code{"SpatialPolygons"}:
       The \code{"SpatialPolygons"} object corresponding to the perimeter of the
       fixed-radius plot.}
+	
+    \item{\code{location}:}{Object of class \code{"SpatialPoints"}: This
+      is a \dQuote{SpatialPoints} representation of the location of the
+      object. In the "\code{\linkS4class{circularPlot}}"
+      class, this is the fixed-radius plot center. It will often
+      correspond to the location slot in the "\code{\linkS4class{Stem}}"
+      object under sampling surface simulations. But there are
+      exceptions: for example, under the \sQuote{standup} method, it
+      will be at the large-end of the log, while under the
+      \sQuote{chainsaw} method, it will be some point within the
+      \dQuote{sausage} shaped inclusion zone for protocol 1 in (Gove and
+      Van Deusen, 2011).  }
+
+    \item{\code{spID}:}{Object of class \code{"character"}: A unique
+      identifier that will be used in the eventual \dQuote{SpatialPolygons}
+      representation of the object.  }
+	
+    \item{\code{spUnits}:}{Object of class \code{"CRS"}: A valid string
+      of class \dQuote{CRS} denoting the spatial units coordinate system (?CRS
+      for more information) as in package sp.  }
 
   }
 }

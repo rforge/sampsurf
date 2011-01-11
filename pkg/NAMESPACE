@@ -20,7 +20,7 @@ export(izGridConstruct) #for now, eventually hide it?
 export(gridCellEnhance) #ibid
 
 exportClasses(Stem, downLog, downLogs)
-exportClasses(ArealSampling, circularPlot)
+exportClasses(ArealSampling, circularPlot, pointRelascope)
 exportClasses(Tract, bufferedTract)
 exportClasses(InclusionZone, InclusionZoneGrid, csFullInclusionZoneGrid,
               downLogIZ, standUpIZ, sausageIZ, downLogIZs, chainSawIZ)
@@ -32,7 +32,7 @@ exportMethods(bbox, perimeter, plot3D)
 
 #and evidently for all internal methods/generics...
 exportMethods(downLog, downLogs)
-exportMethods(circularPlot)
+exportMethods(circularPlot, pointRelascope)
 exportMethods(standUpIZ, sausageIZ, downLogIZs, chainSawIZ)
 exportMethods(Tract, bufferedTract)
 exportMethods(izGrid, izGridCSFull)

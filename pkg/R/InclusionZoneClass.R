@@ -83,6 +83,11 @@ setClass('InclusionZone',
                    return('slot bbox colnames must be "min", "max"!')
                  if(any( apply(object@bbox,1,function(x) if(x['min'] >= x['max']) TRUE else FALSE) ))
                    return('in slot bbox, "min" must be less than "max" for x and y!')
+
+                 if(!is.na(object@spUnits@projargs) && object@spUnits@projargs == '+proj=longlat')
+                   return(paste('spUnits must be commensurate with units,',
+                                'please convert to non-geographic coordinate system!')
+                         )
                    
                  return(TRUE)
                } #validity check

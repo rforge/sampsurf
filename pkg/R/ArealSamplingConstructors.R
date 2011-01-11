@@ -5,6 +5,7 @@
 #
 #   The methods include...
 #     1. a constructor for 'circularPlot'
+#     2. a constructor for 'pointRelascope'
 #
 #   Note that the sp package should be loaded for the complete functionality. 
 #
@@ -19,15 +20,21 @@
 #---------------------------------------------------------------------------
 #   generic definition...
 #
-if (!isGeneric("circularPlot")) 
+if(!isGeneric("circularPlot")) 
   setGeneric('circularPlot',  
              function(radius, ...) standardGeneric('circularPlot'),
              signature = c('radius')
             )
 
+if(!isGeneric("pointRelascope")) 
+  setGeneric('pointRelascope',  
+             function(angleDegrees, ...) standardGeneric('pointRelascope'),
+             signature = c('angleDegrees')
+            )
+
           
 #================================================================================
-#  method for functions and class circularPlot...
+#  1. method for functions and class circularPlot...
 #
 setMethod('circularPlot',
           signature(radius = 'numeric'),
@@ -37,8 +44,8 @@ function(radius,
          centerPoint = c(x=0, y=0),   #centerPoint
          description = 'fixed area circular plot',
          nptsPerimeter = 100,
-         spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
-         #spID = paste('cp',format(runif(1,0,10000),digits=8),sep='.'),
+         #spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
+         spID = paste('cp',format(runif(1,0,10000),digits=8),sep=':'),
          ...
         )
 {
@@ -106,3 +113,46 @@ function(radius,
 }   #circularPlot constructor
 )   #setMethod
     
+
+
+
+
+          
+#================================================================================
+#  2. constructor method for class pointRelascope...
+#
+setMethod('pointRelascope',
+          signature(angleDegrees = 'numeric'),
+function(angleDegrees,
+         units = 'metric',
+         spUnits = CRS(projargs=as.character(NA)),
+         #centerPoint = c(x=0, y=0),   #centerPoint
+         description = 'point relascope method',
+         #nptsPerimeter = 100,
+         spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
+         #spID = paste('cp',format(runif(1,0,10000),digits=8),sep='.'),
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#
+    angleRadians = .StemEnv$deg2Rad(angleDegrees)
+    phi = (pi - angleRadians + sin(angleRadians)*cos(angleRadians))/(2*sin(angleRadians)*sin(angleRadians))
+
+    if(units=='metric')
+      slFactor = .StemEnv$smpHectare/phi
+    else
+      slFactor = .StemEnv$sfpAcre/phi
+
+    rwFactor = 1/tan(angleRadians/2)
+
+    prs = new('pointRelascope', angleDegrees=angleDegrees, angleRadians=angleRadians,
+              phi=phi, slFactor=slFactor, rwFactor=rwFactor,
+              description=description, units=units
+             )
+
+    return(prs)
+}   #pointRelascope constructor
+)   #setMethod
+       

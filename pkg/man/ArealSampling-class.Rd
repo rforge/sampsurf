@@ -26,26 +26,6 @@ could span these two main subclasses.
     \item{\code{units}:}{Object of class \code{"character"}: A character
 	  string specifying the units of measure. Legal values are \dQuote{English}
 	  and \dQuote{metric.}  }
-	
-    \item{\code{location}:}{Object of class \code{"SpatialPoints"}: This
-      is a \dQuote{SpatialPoints} representation of the location of the
-      object. For example, in the "\code{\linkS4class{circularPlot}}"
-      class, this is the fixed-radius plot center. It will often
-      correspond to the location slot in the "\code{\linkS4class{Stem}}"
-      object under sampling surface simulations. But there are
-      exceptions: for example, under the \sQuote{standup} method, it
-      will be at the large-end of the log, while under the
-      \sQuote{chainsaw} method, it will be some point within the
-      \dQuote{sausag} shaped inclusion zone for protocol 1 in (Gove and
-      Van Deusen, 2011).  }
-
-    \item{\code{spID}:}{Object of class \code{"character"}: A unique
-      identifier that will be used in the eventual \dQuote{SpatialPolygons}
-      representation of the object.  }
-	
-    \item{\code{spUnits}:}{Object of class \code{"CRS"}: A valid string
-      of class \dQuote{CRS} denoting the spatial units coordinate system (?CRS
-      for more information) as in package sp.  }
 
   }
 }
@@ -77,7 +57,11 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
- Subclass "\code{\linkS4class{circularPlot}}" for a circular plot subclass.
+ Subclass "\code{\linkS4class{circularPlot}}" for a circular plot
+ subclass.\cr
+% 
+ Subclass "\code{\linkS4class{pointRelascope}}" for the point relascope
+ sampling subclass.
 }
 \examples{
 showClass("ArealSampling")

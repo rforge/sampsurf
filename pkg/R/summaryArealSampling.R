@@ -37,11 +37,6 @@ function(object,
 
     cat('\nArealSampling...')
     cat('\n  units of measurement: ', object@units)
-    cat('\n  spatial units: ', object@spUnits@projargs)
-    cat('\n  spatial ID:', object@spID)
-    cat('\n  location...')
-    cat('\n    x coord: ', coordinates(object@location)[,'x'])
-    cat('\n    y coord: ', coordinates(object@location)[,'y'])
 
     cat('\n')
     
@@ -78,6 +73,11 @@ function(object,
       cat('\n  area = ', object@area, ' square feet', sep='')
       cat(' (', format(object@area/.StemEnv$sfpAcre, digits=4), ' acres)', sep='')
     }
+    cat('\n  spatial units: ', object@spUnits@projargs)
+    cat('\n  spatial ID:', object@spID)
+    cat('\n  location...')
+    cat('\n    x coord: ', coordinates(object@location)[,'x'])
+    cat('\n    y coord: ', coordinates(object@location)[,'y'])
 
 #
 #   important check to see if any valid SpatialPolygon exists for the object...
@@ -94,3 +94,39 @@ function(object,
     return(invisible())
 }   #summary for 'circularPlot'
 ) #setMethod
+
+
+
+
+
+
+
+
+#================================================================================
+# method for class "pointRelascope"...
+#
+setMethod('summary',
+          signature(object = 'pointRelascope'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'ArealSampling' method for 'pointRelascope'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+
+    cat('\npointRelascope...')
+    cat('\n  Angle (nu) in degrees =', object@angleDegrees)
+    cat('\n  Angle (nu) in radians =', object@angleRadians)
+    cat('\n  PRS area factor (phi) =', object@phi)
+    cat('\n  PRS squared-length factor (L) =', object@slFactor)
+    cat('\n  This angle has a ',format(object@rwFactor,digits=3),':1 reach:width factor',sep='')
+
+    cat('\n')
+        
+    return(invisible())
+}   #summary for 'pointRelascope'
+) #setMethod
+
+    
