@@ -62,15 +62,35 @@ There are several vignettes associated with the package that provide detailed ex
 Please note that sampSurf is functional, but at the present only has support for down logs sampled on fixed-area plots (which include the ‘stand-up,’ ‘sausage,’ and ‘chainsaw’ methods or protocols). The class structure is designed to support additions with relative ease, however, so more will appear in future releases (hopefully with some contributed by users).
 </p>
 
-<<<<<<< .mine
 <br>
 
-=======
+<h4>A Note OnInstallation</h4>
 
 
-<br><br>
+<p>
+On the project pages, you will note that you can install the package directly from R-Forge using...<br>
 
->>>>>>> .r16
+install.packages("sampSurf", repos="http://R-Forge.R-project.org")<br>
+
+and can include the dep=TRUE argument if you want the packages that sampSurf is dependent upon to also be installed. Unfortunately, installing the dependencies in this way may be a little difficult. First, I believe that the dependencies are only searched for on R-Forge, and not CRAN (you could add more repos to the list to compensate). Since raster and rgl are both R-Forge projects, they will be found. But gpclib, for example, is not on R-Forge and therefore R will complain that it can not find it. Second, the packages that are available on R-Forge could be in some intermediate stage of update, so it is better to install the required packages from CRAN, with what is known to be a stable release. The dependencies are listed in the DESCRIPTION file for sampSurf; they are: sp, raster, gpclib, with rgl suggested but not necessary unless you want to look at the sampling surfaces in 3D. Therefore, I would recommend that you use the normal install.packages() on the all these so that you get the latest stable version from CRAN. Here is what I would try (in this order)...<br>
+
+install.packages("sp")
+install.packages("raster")
+install.packages("gpclib")
+install.packages("sampSurf", repos="http://R-Forge.R-project.org")<br>
+
+This should do it and get the correct stable releases from CRAN prior to installing samplSurf. Please note the limited use license restriction on gpclib (see this package on CRAN).
+</p>
+
+
+
+<p>
+Finally, on Linux, the rgl package requires system dependencies. The freeglut and mesa libraries must be installed. But in addition, the <em>development</em> versions of freeglut and libpng must also be install for rgl to run. On Fedora 12, these were freeglut-devel and libpng-devel which could be installed with yum prior to installing rgl within R. If you use windows, unfortunately, you are on your own (but please let me know so I can post instructions here for others if there is anything extra one has to do).
+</p>
+
+
+
+
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
 </body>
