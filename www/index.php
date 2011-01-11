@@ -62,10 +62,15 @@ There are several vignettes associated with the package that provide detailed ex
 Please note that sampSurf is functional, but at the present only has support for down logs sampled on fixed-area plots (which include the ‘stand-up,’ ‘sausage,’ and ‘chainsaw’ methods or protocols). The class structure is designed to support additions with relative ease, however, so more will appear in future releases (hopefully with some contributed by users).
 </p>
 
+<<<<<<< .mine
+<br>
+
+=======
 
 
 <br><br>
 
+>>>>>>> .r16
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
 </body>
