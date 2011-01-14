@@ -16,7 +16,7 @@ construction. It is detailed below. }
   \item{\strong{\code{signature(radius = "numeric")}}}{%\cr
 
 	This method takes the plot radius as the signature argument along
-    with other optioinal aruments described as follows\ldots }
+    with other optional aruments described as follows\ldots }
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(radius,

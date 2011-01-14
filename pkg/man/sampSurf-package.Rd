@@ -114,6 +114,8 @@ more detail, including slot and argument definitions.
 	  areal sampling methods \cr
     \code{\linkS4class{circularPlot}}: \tab A subclass of
 	  \dQuote{ArealSampling} for circular plot construction\cr
+	\code{\linkS4class{pointRelascope}}: \tab A subclass of
+	  \dQuote{ArealSampling} for point relascope sampling\cr
 	\code{\linkS4class{InclusionZone}}: \tab Classes for combining the
 	  sampling method with the individual down log or tree objects\cr
 	\code{\linkS4class{downLogIZs}}: \tab A container class to hold a
@@ -154,6 +156,8 @@ more detail, including slot and argument definitions.
 	\code{\link{bufferedTract}}: \tab Constructs a
 	  \dQuote{bufferedTract} object\cr
     \code{\link{circularPlot}}: \tab Constructs a circular plot object
+	  \cr
+    \code{\link{pointRelascope}}: \tab Constructs a point relascope object
 	  \cr
 	\code{\link{standUpIZ}}: \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{stand-up} method \cr

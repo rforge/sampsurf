@@ -20,7 +20,7 @@ circularPlot(radius, ...)
   \item{radius}{ This is the signature argument: The fixed-plot
       radius in the correct units}
 	
-  \item{\dots}{ Arguments that are defined in \code{\link{circularPlot-methods}}.
+  \item{\dots}{ Arguments that are defined in \code{\link{circularPlot-methods}}
   }
   
 }

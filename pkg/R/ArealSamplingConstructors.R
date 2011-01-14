@@ -125,21 +125,20 @@ setMethod('pointRelascope',
           signature(angleDegrees = 'numeric'),
 function(angleDegrees,
          units = 'metric',
-         spUnits = CRS(projargs=as.character(NA)),
-         #centerPoint = c(x=0, y=0),   #centerPoint
          description = 'point relascope method',
-         #nptsPerimeter = 100,
-         spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
-         #spID = paste('cp',format(runif(1,0,10000),digits=8),sep='.'),
          ...
         )
 {
 #------------------------------------------------------------------------------
 #
+#   get the angle in radians and area factor...
 #
     angleRadians = .StemEnv$deg2Rad(angleDegrees)
     phi = (pi - angleRadians + sin(angleRadians)*cos(angleRadians))/(2*sin(angleRadians)*sin(angleRadians))
 
+#
+#   squared-length and reach:width factors...
+#
     if(units=='metric')
       slFactor = .StemEnv$smpHectare/phi
     else
