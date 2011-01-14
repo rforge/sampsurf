@@ -9,13 +9,15 @@
 #   Classes...
 #     1. InclusionZone: virtual for all 'ArealSampling' methods and Stem
 #                       classes
-#     2. downLogIZ: virtual for all 'ArealSampling' mehtods and 'downLog'
+#     2. downLogIZ: virtual for all 'ArealSampling' methods and 'downLog'
 #                   subclasses
 #     3. standUpIZ: the standup method of sampling down cwd
 #     4. chainSawIZ; the chain saw method for sampling down cwd
 #     5. sausageIZ: the sausage method of sampling down cwd
-#     6. downLogIZs: a container class for multiple objects of any subclass
-#                  of 'downLogIZ'
+#     6. pointRelascopeIZ: the point relascope method for sampling down cwd
+#
+#     7. downLogIZs: a container class for multiple objects of any subclass
+#                    of 'downLogIZ'
 #
 #Author...									Date: 20-Aug-2010
 #	Jeffrey H. Gove
@@ -227,9 +229,46 @@ setClass('sausageIZ',
 
 
 #=================================================================================================
+#
+#  6. the pointRelascope class is a direct descendant of 'InclusionZone'...
+#
+#     I'll call the "mastercard" double circle area a blob for now...
+#     added: 13-Jan-2011
+#
+setClass('pointRelascopeIZ',
+    representation(blob = 'matrix',                 #holds the blob perimeter in matrix form
+                   radius = 'numeric',              #radius for each of the half blobs
+                   area = 'numeric',                #exact area of the inclusion zone
+                   perimeter = 'SpatialPolygons',   #blob perimeter in 'SpatialPolygons' form
+                   pgBlobArea = 'numeric'           #polygon blob area approximation
+                  ),
+    contains = 'downLogIZ',                         #a subclass of the 'downLogIZ' class
+    validity = function(object) {
+                 if(object@radius <= 0 || is.na(object@radius))
+                   return('plot radius must be positive non-missing!')
+
+                 if(object@area < 0 || is.na(object@area))
+                   return('object has negative or missing inlusion zone area!')
+
+                 if(object@pgBlobArea < 0 || is.na(object@pgBlobArea))
+                   return('object has negative or missing polygon area!')
+                 
+                 return(TRUE)
+               } #validity check
+) #class pointRelascopeIZ 
+
+
+
+
+
+
+
+
+
+#=================================================================================================
 #=================================================================================================
 #
-#  6. the downLogIZs class (plural) is a container class for an number of "downLogIZ" objects...
+#  7. the downLogIZs class (plural) is a container class for an number of "downLogIZ" objects...
 #
 setClass('downLogIZs',
     representation(iZones = 'list',                    #list of some subclass of "downLogIZ"

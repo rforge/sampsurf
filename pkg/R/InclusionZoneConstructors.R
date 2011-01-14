@@ -25,22 +25,28 @@
 #---------------------------------------------------------------------------
 #   generic definition...
 #
-#if (!isGeneric("standUpIZ")) 
+#if(!isGeneric("standUpIZ")) 
   setGeneric('standUpIZ',  
              function(downLog, plotRadius, ...) standardGeneric('standUpIZ'),
              signature = c('downLog', 'plotRadius')
             )
 
-#if (!isGeneric("chainSawIZ")) 
+#if(!isGeneric("chainSawIZ")) 
   setGeneric('chainSawIZ',  
              function(downLog, plotRadius, ...) standardGeneric('chainSawIZ'),
              signature = c('downLog', 'plotRadius')
             )
 
-#if (!isGeneric("sausageIZ")) 
+#if(!isGeneric("sausageIZ")) 
   setGeneric('sausageIZ',  
              function(downLog, plotRadius, ...) standardGeneric('sausageIZ'),
              signature = c('downLog', 'plotRadius')
+            )
+
+#if(!isGeneric("pointRelascopeIZ")) 
+  setGeneric('pointRelascopeIZ',  
+             function(downLog, prs, ...) standardGeneric('pointRelascopeIZ'),
+             signature = c('downLog', 'prs')
             )
 
    
@@ -333,5 +339,132 @@ function(downLog,
 
     return(sausIZ)
 }   #sausageIZ constructor
+)   #setMethod
+    
+
+
+
+
+    
+
+
+       
+#================================================================================
+#  method for functions and class pointRelascopeIZ...
+#
+setMethod('pointRelascopeIZ',
+          signature(downLog = 'downLog', prs = 'pointRelascope'),
+function(downLog,
+         prs,
+         nptsCircle = 50,          #number of points in each  circle
+         description = 'inclusion zone for dowed log point relascope sampling method',
+         #spID = unlist(strsplit(tempfile('prsIZ:',''),'\\/'))[2],
+         spID = paste('prs',format(runif(1,0,10000),digits=8),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   Note that we make the blob as if it were centered at (0,0), then translate
+#   and rotate to the same specs as the downLog.
+#
+#   transformation matrix...
+#
+    centerOffset = coordinates(downLog@location)
+    logAngle = downLog@logAngle
+    trMat = transfMatrix(logAngle, centerOffset)
+    
+#
+#   direct calculation of the inclusion zone area and blowup factor...
+#
+    logLen = downLog@logLen
+    izArea = prs@phi*logLen*logLen 
+    halfLen = logLen/2
+
+#
+#   per unit area estimates...
+#
+    unitArea = ifelse(downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
+    puaBlowup = unitArea/izArea 
+    puaEstimates = list(downLog@logVol*puaBlowup, puaBlowup)
+    names(puaEstimates) = .StemEnv$puaEstimates[c('cubicVolume', 'Density')]
+  
+#
+#   make sure things are even...
+#
+    if(nptsCircle > 10)
+      npts = nptsCircle
+    else
+      npts = 50
+    
+    if(npts%%2 > 0)             #augment if odd
+      npts = npts+1
+
+#
+#   common radius,
+#
+    nu = prs@angleRadians
+    R = halfLen/sin(nu)
+    a = R*cos(nu)
+    blobCenter = c(0,a)
+
+    
+#
+#   get the circular points for the top half of the blob...
+#
+    halfBlob = seq(0-(pi/2-nu), 3*pi/2-nu, len=npts)
+
+    blob = matrix(NA, nrow=2*npts+1, ncol=3)             #matrix of the blob coordinates
+    
+#   top part of blob...    
+    x = R*cos(halfBlob)
+    y = a + R*sin(halfBlob)
+    hc = rep(1,2*npts)
+#   duplicate it for the bottom half...
+    xx = c(x, rev(x))
+    yy = c(y, rev(-y))
+    blob[1:(2*npts),] = cbind(xx, yy, hc)
+
+
+#    
+#   any little difference between start & end pts with identical() can mess up the
+#   the sp package Polygon routine, so set the end point exactly to start, then transform...
+#
+    blob[2*npts+1,] = blob[1,]
+    
+    blob = blob %*% trMat
+    dimnames(blob) = list(NULL,c('x','y','hc'))
+
+
+#
+#   and make a SpatialPolygons object...
+#
+    pgBlob = Polygon(blob[,-3])                             #sans hc
+    pgsBlob = Polygons(list(blob=pgBlob), ID=spID)
+    spBlob = SpatialPolygons(list(pgsBlob=pgsBlob),        #takes a list of Polygons objects
+                             proj4string = spUnits                       
+                            )
+    pgBlobArea = pgBlob@area
+
+#
+#   create the object...
+#
+    prsIZ = new('pointRelascopeIZ', downLog=downLog,
+                 blob = blob,                        #matrix representation of perimeter
+                 perimeter = spBlob,                 #SpatialPolygons perimeter
+                 pgBlobArea = pgBlobArea,            #area of SpatialPolygons blob: approximate
+                 spUnits = spUnits,                  #CRS units
+                 description = description,          #a comment
+                 units = downLog@units,              #units of measure
+                 area = izArea,                      #exact inclusion zone area
+                 puaBlowup = puaBlowup,              #sausage per unit area blowup factor
+                 puaEstimates = puaEstimates,        #per unit area estimates
+                 radius = R,                         #plot radius for each half blob
+                 bbox = bbox(spBlob)                 #overall bounding box--redundant here
+                )
+
+    return(prsIZ)
+}   #pointRelascopeIZ constructor
 )   #setMethod
     
