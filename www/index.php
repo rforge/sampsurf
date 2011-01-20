@@ -81,6 +81,16 @@ This should do it and get the correct stable releases from CRAN prior to install
 </p>
 
 
+<p>
+One other thing that some R users may not be getting the full advantage of is the html help system. This really should be set up to work correctly in your .Rprofile file to get help via your web browser, using the local help file installation for each package (not just sampSurf). This will also enable you to see all of the vignette files for this package, which provide extensive documentation in PDF format. With the new dynamic help system that came in version 2.10.0, add these lines (with appropriate browser) to your .Rprofile...<br><br>
+
+options(help_type = 'html')<br>
+options(browser='firefox')<br><br>
+
+That should do it on linux, I have not tested this on other platforms, but it probably will work. Now when you do something like "package?sampSurf" (without the quotes) at the R command line, you will get the response in your browser with hyper links to other useful pages. 
+</p>
+
+
 <h5>rgl Installation</h5>
 <p>
 Finally, on Linux, the rgl package requires system dependencies. The freeglut and mesa libraries must be installed. But in addition, the <em>development</em> versions of freeglut and libpng must also be install for rgl to run. On Fedora 12, these were freeglut-devel and libpng-devel which could be installed with yum prior to installing rgl within R. If you use windows, unfortunately, you are on your own (but please let me know so I can post instructions here for others if there is anything extra one has to do).

@@ -64,6 +64,8 @@ function(object,
         sp[[i]] = object[[i]]@circularPlot@perimeter@polygons$pgsCircPlot
       else if(class == 'sausageIZ')
         sp[[i]] = object[[i]]@perimeter@polygons$pgsSausage
+      else if(class == 'pointRelascopeIZ')
+        sp[[i]] = object[[i]]@perimeter@polygons$pgsPRS
       else
         if(!is(object[[i]], 'downLogIZ'))     #catch objects that may not be in the correct form
           stop('All list elements must be a subclass of "downLogIZ"!')

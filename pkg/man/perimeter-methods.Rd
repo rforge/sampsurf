@@ -9,6 +9,7 @@
 \alias{perimeter,sampSurf-method}
 \alias{perimeter,sausageIZ-method}
 \alias{perimeter,standUpIZ-method}
+\alias{perimeter,pointRelascopeIZ-method}
 \alias{perimeter,Tract-method}
 
 \title{ Methods for Function perimeter in Package `sampSurf' }
@@ -73,6 +74,11 @@
 	  \item{... :}{ Other arguments to be passed along--not used at present.}
 	} %itemize
  } %item
+
+  \item{\strong{\code{signature(object = "pointRelascopeIZ")}}}{ %\cr
+
+	Returns the spatial object associated with the perimeter of the
+    dual circle-shaped inclusion zone. }
 
  \item{\strong{\code{signature(object = "Tract")}}}{ %\cr
 

@@ -85,11 +85,10 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-  For subclasses, see:
-  \code{\linkS4class{downLogIZ}}, \code{\linkS4class{standUpIZ}},
-  \code{\linkS4class{chainSawIZ}}, \code{\linkS4class{sausageIZ}}; and
-  the  \code{\linkS4class{downLogIZs}} container class.
-}
+  For subclasses, see: \code{\linkS4class{downLogIZ}},
+  \code{\linkS4class{standUpIZ}}, \code{\linkS4class{chainSawIZ}},
+  \code{\linkS4class{sausageIZ}}, \code{\linkS4class{pointRelascopeIZ}};
+  and the \code{\linkS4class{downLogIZs}} container class.  }
 
 \examples{
 showClass("InclusionZone")

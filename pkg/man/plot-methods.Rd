@@ -12,6 +12,7 @@
 \alias{plot,InclusionZoneGrid,missing-method}
 \alias{plot,sampSurf,missing-method}
 \alias{plot,sausageIZ,missing-method}
+\alias{plot,pointRelascopeIZ,missing-method}
 \alias{plot,standUpIZ,missing-method}
 \alias{plot,Stem,missing-method}
 \alias{plot,Tract,missing-method}
@@ -327,6 +328,52 @@ argument definition for the most part.
 	} %itemize
  } %item
 
+  
+
+\item{\strong{\code{signature(x = "pointRelascopeIZ", y = "missing")}}}{%\cr
+
+    This adds the necessary functionality to plot objects of class
+    "\code{\linkS4class{pointRelascopeIZ}}".}
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x, 
+         axes = FALSE,    
+         showLog = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,    
+         asp = 1,
+         showDualCenters = FALSE, 
+         dcColor = .StemEnv$izBorderColor, 
+         ...
+        )
+}
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{pointRelascopeIZ} or
+	    any subclass that might be eventualy defined. } 
+		 
+	  \item{\code{showLog}:}{ \code{TRUE}: plot the log object;
+	    \code{FALSE}: do not show it.}
+		 		 
+	  \item{\code{izColor}:}{ An \R color for the interior of the
+	    inclusion zone.}
+		 
+	  \item{\code{izBorder}:}{ An \R color for the border/perimeter of
+	    the inclusion zone.}
+		 
+	  \item{\code{showDualCenters}:}{ TRUE: mark the dual circle
+	  centers; FALSE: nothing.}
+		 
+	  \item{\code{dcColor}:}{ An \R color for the dual circle centers. }
+	  
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+		\code{\link[graphics]{plot}}, or to the plot methods for the
+		individual objects.}
+	  
+	} %itemize
+ } %item
+ 
 
 \item{\strong{\code{signature(x = "downLogIZs", y = "missing")}}}{%\cr
 

@@ -71,10 +71,10 @@ in preference to \code{new}.  The constructor, \code{\link{downLogIZs}}, has onl
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
-\seealso{
-For subclasses of \code{\linkS4class{downLogIZ}}, see: \code{\linkS4class{standUpIZ}},
-  \code{\linkS4class{chainSawIZ}} and \code{\linkS4class{sausageIZ}}.
-}
+\seealso{ For subclasses of \code{\linkS4class{downLogIZ}}, see:
+\code{\linkS4class{standUpIZ}}, \code{\linkS4class{chainSawIZ}}, and
+\code{\linkS4class{sausageIZ}} and
+\code{\linkS4class{pointRelascopeIZ}}.  }
 
 \examples{
 showClass("downLogIZs")

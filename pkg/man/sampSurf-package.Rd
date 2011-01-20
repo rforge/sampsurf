@@ -159,14 +159,16 @@ more detail, including slot and argument definitions.
 	  \cr
     \code{\link{pointRelascope}}: \tab Constructs a point relascope object
 	  \cr
+	\code{\link{downLogIZs}}: \tab Holds a population of 
+      \dQuote{InclusionZone} objects for down logs\cr
 	\code{\link{standUpIZ}}: \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{stand-up} method \cr
 	\code{\link{sausageIZ}}: \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{sausage} method \cr
 	\code{\link{chainSawIZ}}: \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{chainsaw} method \cr
-	\code{\link{downLogIZs}}: \tab Holds a population of 
-      \dQuote{InclusionZone} objects for down logs\cr
+	\code{\link{pointRelascopeIZ}}: \tab Creates an \dQuote{InclusionZone}
+	  object for the \sQuote{pointRelascope} method \cr
 	\code{\link{izGrid}}: \tab Creates an \dQuote{InclusionZoneGrid}
 	  object\cr
 	\code{\link{izGridCSFull}}: \tab Creates an \dQuote{csFullInclusionZoneGrid}

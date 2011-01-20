@@ -7,7 +7,13 @@
 #   2. "StandUpIZ"
 #   3. "chainSawIZ"
 #   4. "sausageIZ"
-#   5. "downLogIZs"
+#   5. "pointRelascopeIZ"
+#
+#   6. "downLogIZs"
+#
+#   Note that the plot routines for methods like standup, sausage, PRS, etc.
+#   are all very similar, they could probably be collapsed sometime with a
+#   "base" function taking away much of the duplication. 18-Jan-2011
 #
 #   Note in the plotting of Spatial objects, the xlab and ylab arguments
 #   do not seem to be passed through to plot, so no labels will be shown
@@ -192,6 +198,53 @@ function(x,
 
 
 
+#================================================================================
+#  5. method for pointRelascopeIZ subclass (18-Jan-2011)...
+#
+setMethod('plot',
+          signature(x = 'pointRelascopeIZ', y='missing'),
+function(x, 
+         axes = FALSE,                     #not a par() so can't be passed to callNextMethod, so separate it
+         showLog = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,                           #add each IZ to overall plot if TRUE
+         asp = 1,
+         showDualCenters = FALSE,               #show centers of dual circles
+         dcColor = .StemEnv$izBorderColor,      #color for dual circle centers
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   plots the pointRelascopeIZ object...
+#
+#   note: the IZ center and log center coincide with PRS, if you want to
+#         show one of them, show the log center
+#------------------------------------------------------------------------------
+#
+    object = x
+
+    if(!add)
+      callNextMethod(object, axes=axes, asp=asp, ...)            #setup extents
+
+    suppressWarnings({                                #for object-specific parameters not in par() ...
+      plot(object@perimeter, col=izColor, border=izBorder, axes=axes, add=TRUE, ...)
+      if(showLog)
+        plot(object@downLog, add=TRUE, ...)
+    })
+
+    if(showDualCenters)
+      plot(SpatialPoints(object@dualCenters), add=TRUE, col=dcColor, ...)
+                     
+    return(invisible())
+}   #plot for 'pointRelascopeIZ'
+)   #setMethod
+
+
+
+
+
+
 
 
 
@@ -203,7 +256,7 @@ function(x,
 
 #================================================================================
 #================================================================================
-#  5. method for a "downLogIZs" collection/population...
+#  6. method for a "downLogIZs" collection/population...
 #
 setMethod('plot',
           signature(x = 'downLogIZs', y='missing'),

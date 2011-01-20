@@ -41,7 +41,8 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 
 \seealso{
 For subclasses of \code{\linkS4class{downLogIZ}}, see: \code{\linkS4class{standUpIZ}},
-  \code{\linkS4class{chainSawIZ}} and \code{\linkS4class{sausageIZ}}.
+  \code{\linkS4class{chainSawIZ}}, \code{\linkS4class{sausageIZ}} and
+  \code{\linkS4class{pointRelascopeIZ}}. 
 }
 
 \examples{

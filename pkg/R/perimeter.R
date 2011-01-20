@@ -97,6 +97,19 @@ function(object, ...)
 
 
 #================================================================================
+#  method for pointRelascopeIZ object...
+#
+setMethod('perimeter',
+          signature(object = 'pointRelascopeIZ'),
+function(object, ...)
+{
+    return(object@perimeter)
+}   #pointRelascope
+) #setMethod
+
+
+
+#================================================================================
 #  method for downLog object...
 #
 setMethod('perimeter',

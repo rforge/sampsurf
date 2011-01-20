@@ -201,6 +201,45 @@ function(object,
 
 
 
+#================================================================================
+#  method for class "pointRelascopeIZ"...
+#
+setMethod('summary',
+          signature(object = 'pointRelascopeIZ'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'InclusionZone' & 'downLogIZ' methods for 'pointRelascopeIZ'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+    
+    cat('\npointRelascopeIZ...')
+    cat('\n  Spatial ID:', object@perimeter@polygons$pgsPRS@ID)
+    if(object@units == .StemEnv$msrUnits$metric) {
+      cat('\n  dual circle radius = ', object@radius, ' meters',sep='')
+      cat('\n  area = ', object@area, ' square meters', sep='')
+      cat(' (', format(object@area/.StemEnv$smpHectare, digits=4), ' hectares)')
+    }
+    else {
+      cat('\n  dual circle radius = ', object@radius, ' feet',sep='')
+      cat('\n  area = ', object@area, ' square feet', sep='')
+      cat(' (', format(object@area/.StemEnv$sfpAcre, digits=4), ' acres)', sep='')
+    }
+    cat('\n  Number of perimeter points:', dim(object@dualCircle)[1], '(closed polygon)')
+
+
+    cat('\n')
+    
+    return(invisible())
+}   #summary for 'pointRelascopeIZ'
+) #setMethod
+
+
+
+
+
 
 
 

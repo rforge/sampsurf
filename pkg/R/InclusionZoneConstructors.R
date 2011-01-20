@@ -126,7 +126,7 @@ function(downLog,
          plotCenter = c(x=0, y=0),
          description = 'inclusion zone for "chainsaw" method',
          spID = unlist(strsplit(tempfile('cs:',''),'\\/'))[2],
-         #spID = paste('cp',format(runif(1,0,10000),digits=8),sep='.'),
+         #spID = paste('cs',format(runif(1,0,10000),digits=8),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
         )
@@ -241,7 +241,7 @@ function(downLog,
          nptsHalfCircle = 50,          #number of points in each end's half circle
          description = 'inclusion zone for dowed log "sausage" sampling method',
          spID = unlist(strsplit(tempfile('sausageIZ:',''),'\\/'))[2],
-         #spID = paste('cp',format(runif(1,0,10000),digits=8),sep='.'),
+         #spID = paste('sausageIZ',format(runif(1,0,10000),digits=8),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
         )
@@ -356,18 +356,19 @@ setMethod('pointRelascopeIZ',
           signature(downLog = 'downLog', prs = 'pointRelascope'),
 function(downLog,
          prs,
-         nptsCircle = 50,          #number of points in each  circle
-         description = 'inclusion zone for dowed log point relascope sampling method',
+         nptsCircle = 100,          #number of points in each dual circle
+         description = 'inclusion zone for down log point relascope sampling method',
          #spID = unlist(strsplit(tempfile('prsIZ:',''),'\\/'))[2],
-         spID = paste('prs',format(runif(1,0,10000),digits=8),sep=':'),
+         spID = paste('prsIZ',format(runif(1,0,10000),digits=8),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
         )
 {
 #------------------------------------------------------------------------------
 #
-#   Note that we make the blob as if it were centered at (0,0), then translate
-#   and rotate to the same specs as the downLog.
+#   Note that we make the blob as if it were centered at (0,0), with the top
+#   half in positive y, and bottom in negative y--this allows us to then translate
+#   and rotate to the same specs as the downLog quite easily
 #
 #   transformation matrix...
 #
@@ -396,7 +397,7 @@ function(downLog,
     if(nptsCircle > 10)
       npts = nptsCircle
     else
-      npts = 50
+      npts = 100
     
     if(npts%%2 > 0)             #augment if odd
       npts = npts+1
@@ -406,16 +407,20 @@ function(downLog,
 #
     nu = prs@angleRadians
     R = halfLen/sin(nu)
-    a = R*cos(nu)
-    blobCenter = c(0,a)
 
+#
+#   dual circle centers...
+#
+    a = R*cos(nu)
+    dualCenters = matrix(c(0,a,1, 0,-a,1), nrow=2, byrow=TRUE)
+    dualCenters = (dualCenters %*% trMat)[,-3]
+    dimnames(dualCenters) = list(NULL, c('x','y'))
     
 #
 #   get the circular points for the top half of the blob...
 #
-    halfBlob = seq(0-(pi/2-nu), 3*pi/2-nu, len=npts)
-
-    blob = matrix(NA, nrow=2*npts+1, ncol=3)             #matrix of the blob coordinates
+    halfBlob = seq(0-(pi/2-nu), 3*pi/2-nu, len=npts)     #begin/end points are easy to show
+    blob = matrix(NA, nrow=2*npts+1, ncol=3)             #matrix of the blob/dual circle coordinates
     
 #   top part of blob...    
     x = R*cos(halfBlob)
@@ -440,20 +445,22 @@ function(downLog,
 #
 #   and make a SpatialPolygons object...
 #
-    pgBlob = Polygon(blob[,-3])                             #sans hc
-    pgsBlob = Polygons(list(blob=pgBlob), ID=spID)
-    spBlob = SpatialPolygons(list(pgsBlob=pgsBlob),        #takes a list of Polygons objects
+    pgPRS = Polygon(blob[,-3])                             #sans hc
+    pgsPRS = Polygons(list(pgPRS=pgPRS), ID=spID)
+    spPRS = SpatialPolygons(list(pgsPRS=pgsPRS),        #takes a list of Polygons objects
                              proj4string = spUnits                       
                             )
-    pgBlobArea = pgBlob@area
+    pgPRSArea = pgPRS@area
 
 #
 #   create the object...
 #
     prsIZ = new('pointRelascopeIZ', downLog=downLog,
-                 blob = blob,                        #matrix representation of perimeter
-                 perimeter = spBlob,                 #SpatialPolygons perimeter
-                 pgBlobArea = pgBlobArea,            #area of SpatialPolygons blob: approximate
+                 prs = prs,                          #point realscope sampling object
+                 dualCircle = blob,                  #matrix representation of perimeter
+                 perimeter = spPRS,                  #SpatialPolygons perimeter
+                 pgDualArea = pgPRSArea,             #area of SpatialPolygons blob: approximate
+                 dualCenters = dualCenters,          #centers of each dual circle
                  spUnits = spUnits,                  #CRS units
                  description = description,          #a comment
                  units = downLog@units,              #units of measure
@@ -461,7 +468,7 @@ function(downLog,
                  puaBlowup = puaBlowup,              #sausage per unit area blowup factor
                  puaEstimates = puaEstimates,        #per unit area estimates
                  radius = R,                         #plot radius for each half blob
-                 bbox = bbox(spBlob)                 #overall bounding box--redundant here
+                 bbox = bbox(spPRS)                  #overall bounding box--redundant here
                 )
 
     return(prsIZ)

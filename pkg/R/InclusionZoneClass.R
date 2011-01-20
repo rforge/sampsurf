@@ -115,6 +115,12 @@ setClass('downLogIZ',
 
                  if(!validObject(object@downLog))
                    return('object in downLog slot is an invalid object!')
+
+                 if(!identical(object@downLog@units, object@units))
+                   return('measurement units do not match between downLog and IZ objects!')
+
+                 if(!identical(object@downLog@spUnits, object@spUnits))
+                   return('Spatial units do not match between downLog and IZ objects!')
                  
                  return(TRUE)
                } #validity check
@@ -232,15 +238,20 @@ setClass('sausageIZ',
 #
 #  6. the pointRelascope class is a direct descendant of 'InclusionZone'...
 #
-#     I'll call the "mastercard" double circle area a blob for now...
+#     I'll call the "mastercard" double/dual circle (blob) just "dual"...
+#
+#     below: hc = homogeneous coordinates
+#
 #     added: 13-Jan-2011
 #
 setClass('pointRelascopeIZ',
-    representation(blob = 'matrix',                 #holds the blob perimeter in matrix form
+    representation(prs = 'pointRelascope',          #point relascope sampling object
+                   dualCircle = 'matrix',           #holds the blob perimeter in matrix form w/ hc
                    radius = 'numeric',              #radius for each of the half blobs
                    area = 'numeric',                #exact area of the inclusion zone
                    perimeter = 'SpatialPolygons',   #blob perimeter in 'SpatialPolygons' form
-                   pgBlobArea = 'numeric'           #polygon blob area approximation
+                   pgDualArea = 'numeric',          #polygon blob area approximation
+                   dualCenters = 'matrix'           #centers of each dual circle, w/o hc
                   ),
     contains = 'downLogIZ',                         #a subclass of the 'downLogIZ' class
     validity = function(object) {
@@ -250,8 +261,11 @@ setClass('pointRelascopeIZ',
                  if(object@area < 0 || is.na(object@area))
                    return('object has negative or missing inlusion zone area!')
 
-                 if(object@pgBlobArea < 0 || is.na(object@pgBlobArea))
+                 if(object@pgDualArea < 0 || is.na(object@pgDualArea))
                    return('object has negative or missing polygon area!')
+
+                 if(!identical(object@prs@units, object@units))
+                   return('object units do not match the pointRelascope object units')
                  
                  return(TRUE)
                } #validity check

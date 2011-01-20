@@ -5,6 +5,7 @@
 \alias{izGrid,matrix,Tract-method}
 \alias{izGrid,sausageIZ,Tract-method}
 \alias{izGrid,standUpIZ,Tract-method}
+\alias{izGrid,pointRelascopeIZ,Tract-method}
 
 \title{ Methods for "InclusionZoneGrid" object construction in Package `sampSurf'}
 
@@ -69,6 +70,14 @@
 	  sausage-shaped inclusion zone under the chainsaw method, see
 	  instead the "\code{\linkS4class{csFullInclusionZoneGrid}}"
 	  class. }
+
+\item{\strong{\code{signature(izObject = "pointRelascopeIZ", tract =
+	  "Tract")}}}{%\cr
+
+      This constructor is for the point relascope method of sampling down
+	  logs. Everything is the same here as for the stand-up method
+	  above, with the exception of the first argument, which must be an
+	  object of class "\code{\linkS4class{pointRelascopeIZ}}". }
 
 \item{\strong{\code{signature(izObject = "matrix", tract =
 	  "Tract")}}}{%\cr

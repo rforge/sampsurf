@@ -11,6 +11,8 @@
 #     4. special, for the full chainSawIZ zone contained within a sausage
 #        shaped inclusion zone. No other protocol will have this mess.
 #
+#     5. for 'pointRelascopeIZ'
+#
 #   Of course, if chainSaw was not so strange, we would only require one
 #   method for every different technique!
 #
@@ -321,3 +323,29 @@ function(izGridSausage,
 )   #setMethod
 
                
+  
+
+  
+
+
+          
+#================================================================================
+#  method for 'pointRelascopeIZ' and 'Tract' classes...
+#
+setMethod('izGrid',
+          signature(izObject = 'pointRelascopeIZ', tract='Tract'),
+function(izObject,
+         tract,
+         description = 'pointRelascopeIZ inclusion zone grid object',
+         wholeIZ = TRUE,           #TRUE: grid the whole object; FALSE: just grid the IZ
+         ...
+        )
+{
+#---------------------------------------------------------------------------
+#
+#
+    griz = izGridConstruct(izObject=izObject, tract=tract, description=description,
+                           wholeIZ=wholeIZ, ...)
+    return(griz)
+}   #izGrid for'pointRelascopeIZ'
+)   #setMethod

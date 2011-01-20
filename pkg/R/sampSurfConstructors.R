@@ -143,7 +143,7 @@ setMethod('sampSurf',
           signature(object = 'numeric', tract='Tract'),
 function(object, 
          tract,
-         iZone = c('sausageIZ','standUpIZ'), 
+         iZone = c('sausageIZ', 'standUpIZ', 'pointRelascopeIZ'), 
          estimate = unlist(.StemEnv$puaEstimates),
          wantChainSaw = FALSE,               #always the exception
          description = 'sampling surface object',

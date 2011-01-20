@@ -42,13 +42,13 @@ constructor \code{\link{sausageIZ}} to create new objects.  }
     \item{\code{perimeter}:}{Object of class \code{"SpatialPolygons"} This is the
       inclusion zone perimeter as a \dQuote{SpatialPolygons} object.   }
    
-   \item{\code{pgSausageArea}:}{Object of class \code{"numeric"}: This
-     is the area of the sausage inclusion zone as calculated from the
-     polygon in the perimeter slot using the \dQuote{SpatialPolygons}
-     object. As such, it is an approximation of the true area of the
-     inclusion zone, which is given in the area slot. This just enables
-     us to see how close the graphic representation is to the real area.
-     }
+    \item{\code{pgSausageArea}:}{Object of class \code{"numeric"}: This
+      is the area of the sausage inclusion zone as calculated from the
+      polygon in the perimeter slot using the \dQuote{SpatialPolygons}
+      object. As such, it is an approximation of the true area of the
+      inclusion zone, which is given in the area slot. This just enables
+      us to see how close the graphic representation is to the real
+      area.  }
    
   }
 }
@@ -71,11 +71,13 @@ Class \code{"\linkS4class{InclusionZone}"}, by class "downLogIZ", distance 2.
 	
     \item{summary}{\code{signature(object = "sausageIZ")}: Object summary }
 	 }
-}
+   }
+   
 \references{
 Gove, J. H. and Van Deusen, P. C. 2011. On fixed-area plot sampling for
 downed coarse woody debris. \emph{Forestry}. (Accepted).\cr
 }
+
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }

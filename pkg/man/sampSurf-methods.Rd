@@ -73,7 +73,7 @@
   \item{}{\bold{usage\ldots}
     \preformatted{function(object, 
          tract,
-         iZone = c('sausageIZ','standUpIZ'), 
+         iZone = c('sausageIZ','standUpIZ','pointRelascopeIZ'), 
          estimate = unlist(.StemEnv$puaEstimates),
          wantChainSaw = FALSE,               
          description = 'sampling surface object',

@@ -116,11 +116,16 @@ function(object,
 #------------------------------------------------------------------------------
     callNextMethod()
 
+    if(object@units == .StemEnv$msrUnits$metric) 
+      slUnits = 'square meters per hectare'
+    else
+      slUnits = 'square feet per acre'
+    
     cat('\npointRelascope...')
     cat('\n  Angle (nu) in degrees =', object@angleDegrees)
     cat('\n  Angle (nu) in radians =', object@angleRadians)
     cat('\n  PRS area factor (phi) =', object@phi)
-    cat('\n  PRS squared-length factor (L) =', object@slFactor)
+    cat('\n  PRS squared-length factor (L) =', object@slFactor, slUnits)
     cat('\n  This angle has a ',format(object@rwFactor,digits=3),':1 reach:width factor',sep='')
 
     cat('\n')
