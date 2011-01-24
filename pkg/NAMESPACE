@@ -23,7 +23,7 @@ exportClasses(Stem, downLog, downLogs)
 exportClasses(ArealSampling, circularPlot, pointRelascope)
 exportClasses(Tract, bufferedTract)
 exportClasses(InclusionZone, InclusionZoneGrid, csFullInclusionZoneGrid,
-              downLogIZ, standUpIZ, sausageIZ, downLogIZs, chainSawIZ)
+              downLogIZ, standUpIZ, sausageIZ, downLogIZs, chainSawIZ, pointRelascopeIZ)
 exportClasses(sampSurf)
 
 #export required for all methods with external generics...
@@ -33,7 +33,7 @@ exportMethods(bbox, perimeter, plot3D)
 #and evidently for all internal methods/generics...
 exportMethods(downLog, downLogs)
 exportMethods(circularPlot, pointRelascope)
-exportMethods(standUpIZ, sausageIZ, downLogIZs, chainSawIZ)
+exportMethods(standUpIZ, sausageIZ, downLogIZs, chainSawIZ, pointRelascopeIZ)
 exportMethods(Tract, bufferedTract)
 exportMethods(izGrid, izGridCSFull)
 exportMethods(heapIZ)
