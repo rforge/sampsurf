@@ -7,11 +7,17 @@
 #     1. a constructor for 'standUpIZ'
 #     2. for 'chainSawIZ'
 #     3. for 'sausageIZ'
+#     4. for 'pointRelascopeIZ' (Jan 2011)
+#     5. for 'perpendicularDistanceIZ'  (Jan 2011)
+#     6. for 'omnibusPDSIZ' (Feb 2011)
+#     7. for 'distanceLimitedPDSIZ' (Feb-Mar 2011)
+#     8. for 'omnibusDLPDSIZ (Mar 2011)
+#     9. for 'distanceLimitedMCIZ (Mar 2011)
 #
 #   Note that the sp, raster, and gpclib packages must be loaded.
 #
 #   In each case, all estimated quatities are calculated for the object;
-#   i.e., cubicVolume & Density; whatever else might be desired should
+#   i.e., volume & Density; whatever else might be desired should
 #   be added later.
 #
 #Author...									Date: 23-Aug-2010
@@ -49,6 +55,35 @@
              signature = c('downLog', 'prs')
             )
 
+#if(!isGeneric("perpendicularDistanceIZ")) 
+  setGeneric('perpendicularDistanceIZ',  
+             function(downLog, pds, ...) standardGeneric('perpendicularDistanceIZ'),
+             signature = c('downLog', 'pds')
+            )
+
+#if(!isGeneric("omnibusPDSIZ")) 
+  setGeneric('omnibusPDSIZ',  
+             function(downLog, pds, ...) standardGeneric('omnibusPDSIZ'),
+             signature = c('downLog', 'pds')
+            )
+
+#if(!isGeneric("distanceLimitedPDSIZ")) 
+  setGeneric('distanceLimitedPDSIZ',  
+             function(downLog, pds, dls, ...) standardGeneric('distanceLimitedPDSIZ'),
+             signature = c('downLog', 'pds', 'dls')
+            )
+
+#if(!isGeneric("omnibusDLPDSIZ")) 
+  setGeneric('omnibusDLPDSIZ',  
+             function(downLog, pds, dls, ...) standardGeneric('omnibusDLPDSIZ'),
+             signature = c('downLog', 'pds', 'dls')
+            )
+
+#if(!isGeneric("distanceLimitedMCIZ")) 
+  setGeneric('distanceLimitedMCIZ',  
+             function(downLog, dls, ...) standardGeneric('distanceLimitedMCIZ'),
+             signature = c('downLog', 'dls')
+            )
    
 
 
@@ -62,8 +97,9 @@ setMethod('standUpIZ',
 function(downLog,
          plotRadius,
          description = 'inclusion zone for "standup" method',
-         spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
-         #spID = paste('cp',format(runif(1,0,10000),digits=8),sep='.'),
+         spID = paste('su',.StemEnv$randomID(),sep=':'),
+         #spID = unlist(strsplit(tempfile('saus:',''),'\\/'))[2],
+         #spID = paste('saus',format(runif(1,0,10000),digits=8),sep='.'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
         )
@@ -95,8 +131,14 @@ function(downLog,
 #
     unitArea = ifelse(downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
     puaBlowup = unitArea/circularPlot@area 
-    puaEstimates = list(downLog@logVol*puaBlowup, puaBlowup)
-    names(puaEstimates) = .StemEnv$puaEstimates[c('cubicVolume', 'Density')]
+    puaEstimates = list(downLog@logVol*puaBlowup, puaBlowup, downLog@logLen*puaBlowup,
+                        downLog@surfaceArea*puaBlowup, downLog@coverageArea*puaBlowup,
+                        downLog@biomass*puaBlowup, downLog@carbon*puaBlowup
+                       )
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                  'surfaceArea', 'coverageArea',
+                                                  'biomass', 'carbon'
+                                                )]
 
 #
 #   create the object...
@@ -125,7 +167,8 @@ function(downLog,
          plotRadius,
          plotCenter = c(x=0, y=0),
          description = 'inclusion zone for "chainsaw" method',
-         spID = unlist(strsplit(tempfile('cs:',''),'\\/'))[2],
+         spID = paste('cs',.StemEnv$randomID(),sep=':'),
+         #spID = unlist(strsplit(tempfile('cs:',''),'\\/'))[2],
          #spID = paste('cs',format(runif(1,0,10000),digits=8),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
@@ -145,8 +188,8 @@ function(downLog,
 #   taper comes from some other source is.null(solidType), then we can not
 #   proceed with this method...
 #
-    if(is.null(downLog@solidType))
-      stop('Log taper must come from the built-in taper equation to use the chainsaw method')
+    ##if(is.null(downLog@solidType))
+      ##stop('Log taper must come from the built-in taper equation to use the chainsaw method')
   
 #
 #   get bbox from the downLog object...
@@ -193,9 +236,14 @@ function(downLog,
 
     css = chainsawSliver(downLog, sect = mSect, gLog = gLog, ...)
 
-    puaEstimates = list(css$sectVol * puaBlowup, puaBlowup)
-    names(puaEstimates) = .StemEnv$puaEstimates[c('cubicVolume', 'Density')]
-
+    puaEstimates = list(css$sectVol*puaBlowup, puaBlowup, css$boltLen*puaBlowup,
+                        css$sectSA*puaBlowup, css$sectCA*puaBlowup,
+                        css$sectBms*puaBlowup, css$sectCarbon*puaBlowup
+                       )
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                  'surfaceArea', 'coverageArea',
+                                                  'biomass', 'carbon'
+                                                )]
 
 #
 #   and make a SpatialPolygons object out of the bolt...
@@ -239,8 +287,9 @@ setMethod('sausageIZ',
 function(downLog,
          plotRadius,
          nptsHalfCircle = 50,          #number of points in each end's half circle
-         description = 'inclusion zone for dowed log "sausage" sampling method',
-         spID = unlist(strsplit(tempfile('sausageIZ:',''),'\\/'))[2],
+         description = 'inclusion zone for downed log "sausage" sampling method',
+         spID = paste('saus',.StemEnv$randomID(),sep=':'),
+         #spID = unlist(strsplit(tempfile('sausageIZ:',''),'\\/'))[2],
          #spID = paste('sausageIZ',format(runif(1,0,10000),digits=8),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
@@ -266,8 +315,14 @@ function(downLog,
 #
     unitArea = ifelse(downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
     puaBlowup = unitArea/izArea 
-    puaEstimates = list(downLog@logVol*puaBlowup, puaBlowup)
-    names(puaEstimates) = .StemEnv$puaEstimates[c('cubicVolume', 'Density')]
+    puaEstimates = list(downLog@logVol*puaBlowup, puaBlowup, downLog@logLen*puaBlowup,
+                        downLog@surfaceArea*puaBlowup, downLog@coverageArea*puaBlowup,
+                        downLog@biomass*puaBlowup, downLog@carbon*puaBlowup
+                       )
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                  'surfaceArea', 'coverageArea',
+                                                  'biomass', 'carbon'
+                                                )]
   
 #
 #   make sure things are even...
@@ -358,8 +413,9 @@ function(downLog,
          prs,
          nptsCircle = 100,          #number of points in each dual circle
          description = 'inclusion zone for down log point relascope sampling method',
+         spID = paste('prs',.StemEnv$randomID(),sep=':'),
          #spID = unlist(strsplit(tempfile('prsIZ:',''),'\\/'))[2],
-         spID = paste('prsIZ',format(runif(1,0,10000),digits=8),sep=':'),
+         #spID = paste('prsIZ',format(runif(1,0,10000),digits=8),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
         )
@@ -388,8 +444,14 @@ function(downLog,
 #
     unitArea = ifelse(downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
     puaBlowup = unitArea/izArea 
-    puaEstimates = list(downLog@logVol*puaBlowup, puaBlowup)
-    names(puaEstimates) = .StemEnv$puaEstimates[c('cubicVolume', 'Density')]
+    puaEstimates = list(downLog@logVol*puaBlowup, puaBlowup, downLog@logLen*puaBlowup,
+                        downLog@surfaceArea*puaBlowup, downLog@coverageArea*puaBlowup,
+                        downLog@biomass*puaBlowup, downLog@carbon*puaBlowup
+                       )
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                  'surfaceArea', 'coverageArea',
+                                                  'biomass', 'carbon'
+                                                )]
   
 #
 #   make sure things are even...
@@ -474,4 +536,649 @@ function(downLog,
     return(prsIZ)
 }   #pointRelascopeIZ constructor
 )   #setMethod
+
     
+
+
+
+
+    
+
+
+       
+#================================================================================
+#  method for functions and class perpendicularDistanceIZ...
+#
+setMethod('perpendicularDistanceIZ',
+          signature(downLog = 'downLog', pds = 'perpendicularDistance'),
+function(downLog,
+         pds,
+         description = 'inclusion zone for down log perpendicular distance sampling',
+         spID = paste('pds',.StemEnv$randomID(),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         #pdsClass = c('perpendicularDistanceIZ', 'omnibusPDSIZ'),
+         pdsType = .StemEnv$pdsTypes,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   a quick check...
+#
+    if(downLog@units != pds@units)
+      stop('units are not the same for downLog and pds!')
+  
+#
+#   which kind of object do we build? And what PPS type in pds?
+#
+    #pdsClass = match.arg(pdsClass)
+    pdsType = match.arg(pdsType)
+  
+#
+#   put in a warning for number of points in taper data frame too few <20 for now<<<<<******
+#
+#   transformation matrix...
+#
+    centerOffset = coordinates(downLog@location)
+    logAngle = downLog@logAngle
+    trMat = transfMatrix(logAngle, centerOffset)
+    trMatInv = solve(trMat)
+    
+#
+#   direct calculation of the inclusion zone area and blowup factor...
+#
+    izArea = switch(pdsType,
+                    volume = 2*pds@kpds*downLog@logVol,
+                    surfaceArea = 2*pds@kpds*downLog@surfaceArea,
+                    coverageArea = 2*pds@kpds*downLog@coverageArea,
+                    stop('Illegal pdsType in perpendicularDistanceIZ!')
+                   )    
+
+#
+#   per unit area estimates...
+#
+    unitArea = ifelse(downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
+    puaBlowup = unitArea/izArea 
+    puaEstimates = list(downLog@logVol*puaBlowup, puaBlowup, downLog@logLen*puaBlowup,
+                        downLog@surfaceArea*puaBlowup, downLog@coverageArea*puaBlowup,
+                        downLog@biomass*puaBlowup, downLog@carbon*puaBlowup
+                       )
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                  'surfaceArea', 'coverageArea',
+                                                  'biomass', 'carbon'
+                                                )]
+
+#    
+#   back transform the log to canonical postion, then determine the inclusion zone perimeter...
+#
+    izPerim = downLog@rotLog
+    dn = dimnames(izPerim)
+    izPerim = izPerim  %*% trMatInv                                    #to canonical log position
+    dimnames(izPerim) = dn
+    izPerim[,'y'] = switch(pdsType,                                     #y==radius, already in feet or meters
+                           volume = {
+                                     sense = sign(izPerim[,'y'])        #preserve the sign in squaring...
+                                     sense*pds@kpds * pi*izPerim[,'y']*izPerim[,'y']
+                                    },
+                           surfaceArea = pds@kpds * 2*pi*izPerim[,'y'], #remember y=radius, not diameter
+                           coverageArea = pds@kpds * 2*izPerim[,'y']    #remember y=radius, not diameter
+                          )
+    izPerim = izPerim %*% trMat
+    dimnames(izPerim) = dn
+
+#
+#   and make a SpatialPolygons object...
+#
+    pg = Polygon(izPerim[,-3])                             #sans hc
+    pgs = Polygons(list(pg=pg), ID=spID)
+    spObj = SpatialPolygons(list(pgs=pgs), proj4string = spUnits)
+    pgArea = pg@area
+
+#
+#   create the object...
+#
+    #pdsIZ = new(pdsClass, downLog=downLog,
+    pdsIZ = new('perpendicularDistanceIZ', downLog=downLog,
+                 pds = pds,                          #pds sampling object
+                 pdsType = pdsType,                  #PPS version of PDS
+                 izPerim = izPerim,                  #matrix representation of perimeter
+                 perimeter = spObj,                  #SpatialPolygons perimeter
+                 pgArea = pgArea,                   #area of SpatialPolygons izone: approximate
+                 spUnits = spUnits,                  #CRS units
+                 description = description,          #a comment
+                 units = downLog@units,              #units of measure
+                 area = izArea,                      #exact inclusion zone area
+                 puaBlowup = puaBlowup,              #sausage per unit area blowup factor
+                 puaEstimates = puaEstimates,        #per unit area estimates
+                 bbox = bbox(spObj)                  #overall bounding box--redundant here
+                )
+
+    return(pdsIZ)
+}   #perpendicularDistanceIZ constructor
+)   #setMethod
+
+
+    
+
+
+
+
+    
+
+
+       
+#================================================================================
+#  method for class omnibusPDSIZ construction--just call parent method...
+#
+setMethod('omnibusPDSIZ',
+          signature(downLog = 'downLog', pds = 'perpendicularDistance'),
+function(downLog,
+         pds,
+         description = 'inclusion zone for down log omnibus perpendicular distance sampling',
+         spID = paste('opds',.StemEnv$randomID(),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         pdsType = .StemEnv$pdsTypes,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   create an object of the correct class...
+#
+    opdsIZ = perpendicularDistanceIZ(downLog, pds, description = description,
+                                     spID = spID, spUnits = spUnits,
+                                     #pdsClass = 'omnibusPDSIZ',
+                                     pdsType = pdsType,
+                                     ...
+                                    )
+    opdsIZ = as(opdsIZ, 'omnibusPDSIZ')   #cast
+
+#
+#   the omnibus pua estimates all depend on perpendicular diameter, so there are no
+#   overall estimates to assign...
+#
+    puaEstimates = as.list(rep(NA, 7))
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                     'surfaceArea', 'coverageArea',
+                                                     'biomass', 'carbon'
+                                                   )]
+    opdsIZ@puaEstimates = puaEstimates
+
+    return(opdsIZ)
+}   #omnibusPDSIZ constructor
+)   #setMethod
+
+
+    
+
+
+
+
+    
+
+    
+
+
+
+       
+#================================================================================
+#
+#  DLPDS...
+#
+#  method for class distanceLimitedPDSIZ construction using a "distanceLimited"
+#  object...
+#
+#================================================================================
+#
+setClassUnion('dlsNumeric',c('distanceLimited','numeric'))       #let this constructor handle both
+setMethod('distanceLimitedPDSIZ',
+          signature(downLog = 'downLog', pds = 'perpendicularDistance', dls='dlsNumeric'), 
+function(downLog,
+         pds,
+         dls,
+         description = 'inclusion zone for down log distance limited PDS',
+         spID = paste('dlpds',.StemEnv$randomID(),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         pdsType = .StemEnv$pdsTypes,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   The flow of this routine is as follows...
+#     1. Check to see if the DL affects the log, if not, just return a regular
+#        PDS object since that is what it reduces to
+#
+#        Note: If the DL is such that the entire log diameter is too small to
+#              have any distances beyond this, then we stop here as the entire
+#              log is regular PDS; the other slots are NULLs
+#        Otherwise...
+#
+#     2. Determine the part of the log that is affected by the distance limit
+#        and create a DLMCIZ object with this component
+#
+#        Note: the whole log can be under DL if both end diameters are large 
+#              enough, in that case, we stop here and fill other slots with
+#              NULLs
+#        Otherwise...
+#
+#     3. Determine the part of the log that is treated as a regular PDS object
+#        and create this object
+#     4. Merge the two components in steps 2 & 3 into an overall distance
+#        limited PDS object
+#
+#   8&10-Mar-2011
+#
+#------------------------------------------------------------------------------
+#  
+#   convert distance limit if necessary...
+#
+    if(is.numeric(dls))
+      dls = distanceLimited(dls, units=downLog@units, description=description, ...)
+    distanceLimit = dls@distanceLimit
+    pdsType = match.arg(pdsType)
+
+    
+#-------------------------------------------------------------------------------
+#   Step 1:   See if DLPDS is required...
+#
+#   first just see if the entire log is already in, if so, no further work is
+#   necessary, create a regular pds object...
+#
+    full.pdsIZ = perpendicularDistanceIZ(downLog, pds, description = description,
+                                         spID = spID, spUnits = spUnits,
+                                         pdsClass = 'perpendicularDistanceIZ',
+                                         pdsType = pdsType,
+                                         ...
+                                        )
+    kpds = pds@kpds
+    dl.diam = switch(pdsType,                                         #DL cutoff diameter
+                     volume = sqrt(4*distanceLimit/(kpds*pi)),   
+                     surfaceArea = distanceLimit/(kpds*pi),
+                     coverageArea = distanceLimit/kpds
+                    )
+#
+#   done if the whole log is pds, just set up the object...
+#
+    if(dl.diam > max(downLog@taper$diameter)) {        #off the large end--whole log is pds
+      dlpds = as(full.pdsIZ, 'distanceLimitedPDSIZ')   #cast object
+      dlpds@dls = dls
+      dlpds@dlsDiameter = dl.diam
+      dlpds@pdsPart = NULL
+      dlpds@dlsPart = NULL
+      dlpds@pdsFull = full.pdsIZ                       #just for consistency, does take more room
+      return(dlpds)
+    }
+
+    full.centerOffset = coordinates(downLog@location)[1,]    #for the full log
+    halfLen = downLog@logLen/2
+    logAngle = downLog@logAngle
+    trMat = transfMatrix(logAngle)
+
+
+
+#-------------------------------------------------------------------------------
+#   Step 2:    DL component...
+#
+#   now do the butt end of the log (or whole log), which has a rectangular
+#   inclusion zone...
+#
+    if(dl.diam <= min(downLog@taper$diameter)) {                    #off small end--whole log==DL inclusion zone
+      dl.taper = downLog@taper
+      dl.centerOffset = full.centerOffset
+      dl.length = downLog@logLen
+    }
+    else {                                                          #someplace on the log
+      dl.length = taperInterpolate(downLog,'length', dl.diam)       #length to DL cutoff
+      dl.taper = downLog@taper[downLog@taper$diameter >= dl.diam,]  #taper below DL cutoff
+      dl.taper = rbind(dl.taper, c(dl.diam, dl.length))             #with new "top"
+      os.len = halfLen - dl.length/2                                #offset length to new center point from old
+      dl.centerOffset = full.centerOffset - (matrix(c(os.len,0,1),nr=1) %*% trMat)[,-3]
+      names(dl.centerOffset) = c('x','y')
+    }
+
+    dl.dlog = downLog(dl.taper,
+                      solidType = NULL,                             #NULL for taper data
+                      logAngle = logAngle,
+                      vol2wgt = downLog@conversions[['volumeToWeight']],    #[[]]to avoid concatenating names
+                      wgt2carbon = downLog@conversions[['weightToCarbon']], #[[]]to avoid concatenating names
+                      centerOffset = dl.centerOffset,
+                      species = downLog@species,
+                      logID = downLog@spLog@polygons$pgsLog@ID,
+                      description = downLog@description,
+                      units = downLog@units,
+                      spUnits = downLog@spUnits,
+                      runQuiet=TRUE
+                     )
+
+      
+#
+#   now create just the distance limited component of the inclusion zone from this truncated
+#   smaller down log butt portion; this will be a distanceLimitedMCIZ object...
+#
+    dls = distanceLimited(distanceLimit, units=downLog@units)
+    dlIZ = distanceLimitedMCIZ(dl.dlog, dls, description = description,
+                             spID = spID, spUnits = spUnits, ...)
+
+#
+#   if the whole log is DL, then we are done, make the full object here and exit...
+#
+    if(dl.diam <= min(downLog@taper$diameter)) {        #off small end--whole log==DL inclusion zone
+      dlpdsIZ = new('distanceLimitedPDSIZ', downLog=downLog,
+                    pds = pds,                          #pds sampling object
+                    pdsType = pdsType,                  #PPS version of PDS
+                    izPerim = dlIZ@izPerim,             #matrix representation of perimeter
+                    perimeter = dlIZ@perimeter,         #SpatialPolygons perimeter
+                    pgArea = dlIZ@pgArea,               #area of SpatialPolygons izone: approximate
+                    spUnits = spUnits,                  #CRS units
+                    description = description,          #a comment
+                    units = downLog@units,              #units of measure
+                    area = dlIZ@area,                   #exact inclusion zone area
+                    puaBlowup = dlIZ@puaBlowup,         #NA per unit area blowup factor
+                    puaEstimates = dlIZ@puaEstimates,   #per unit area estimates
+                    bbox = bbox(dlIZ),                  #overall bounding box--redundant here
+                    dls = dls,                          #distanceLimited object
+                    dlsDiameter = dl.diam,              #the limiting diameter
+                    pdsPart = NULL,                     #pdsIZ component object
+                    dlsPart = dlIZ,                     #dlmcsIZ component object
+                    pdsFull = full.pdsIZ                #as if it were plain pdsIZ              
+                 ) 
+      return(dlpdsIZ)
+    }
+
+    
+#-------------------------------------------------------------------------------
+#   Step 3:   PDS component...
+#
+#   okay, if we got to here, then both components exist in the log; do the top (pds)
+#   portion here: create a downLog object from the top part...
+#
+    pds.taper = downLog@taper[downLog@taper$diameter < dl.diam,]    #taper to DL cutoff
+    pds.taper = rbind(c(dl.diam, dl.length), pds.taper)             #with new "butt"
+    pds.taper$length = pds.taper$length - dl.length                 #translate to butt at zero
+
+    os.len = dl.length + diff(range(pds.taper$length))/2 - halfLen #offset length to new center point from old
+    pds.centerOffset = full.centerOffset + (matrix(c(os.len,0,1),nr=1) %*% trMat)[,-3]
+    names(pds.centerOffset) = c('x','y')
+    pds.dlog = downLog(pds.taper,
+                       solidType = NULL, #downLog@solidType,
+                       logAngle = logAngle,
+                       vol2wgt = downLog@conversions[['volumeToWeight']],    #[[]]to avoid concatenating names
+                       wgt2carbon = downLog@conversions[['weightToCarbon']], #[[]]to avoid concatenating names
+                       centerOffset = pds.centerOffset,
+                       species = downLog@species,
+                       logID = downLog@spLog@polygons$pgsLog@ID,
+                       description = downLog@description,
+                       units = downLog@units,
+                       spUnits = downLog@spUnits,
+                       runQuiet=TRUE
+                      )
+ 
+#
+#   now create just the pds component of the inclusion zone from this truncated
+#   smaller down log...
+#
+    pdsIZ = perpendicularDistanceIZ(pds.dlog, pds, description = description,
+                                     spID = spID, spUnits = spUnits,
+                                     pdsClass = 'perpendicularDistanceIZ',
+                                     pdsType = pdsType,
+                                     ...
+                                    )
+    
+
+
+
+#-------------------------------------------------------------------------------
+#   Step 4:   Complete object...
+#
+#   Combine the two pieces into one IZ object...
+#
+#   direct calculation of the full inclusion zone area and blowup factor...
+#
+    izArea = pdsIZ@area + dlIZ@area                #for any pdsType
+    puaBlowup = NA_real_                           #no true, single blowup for dlpds
+    
+#
+#   per unit area estimates for the full log...
+#
+    #puaEstimates = as.list(unlist(pdsIZ@puaEstimates) + unlist(dlIZ@puaEstimates))  #not in general
+    puaEstimates = as.list(rep(NA, 7))             #all to NA to cover omnibusDLPDSIZ
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                  'surfaceArea', 'coverageArea',
+                                                  'biomass', 'carbon'
+                                                )]
+    
+#
+#   full perimeter is in two parts that must be joined together...
+#
+    nn = nrow(pdsIZ@izPerim)
+    pds.izPerim = pdsIZ@izPerim                     #already in correct orientation, etc.
+
+    izPerim = rbind(dlIZ@izPerim[1:2,], pds.izPerim[-nn,], dlIZ@izPerim[3:5,])  #without repeat in pds
+    dimnames(izPerim) = list(NULL,c('x','y','hc'))   
+
+#
+#   and make a SpatialPolygons object...
+#
+    pg = Polygon(izPerim[,-3])                             #sans hc
+    pgs = Polygons(list(pg=pg), ID=spID)
+    spObj = SpatialPolygons(list(pgs=pgs), proj4string = spUnits )
+    pgArea = pg@area
+
+#
+#   create the distance limited IZ object...
+#
+    dlpdsIZ = new('distanceLimitedPDSIZ', downLog=downLog,
+                  pds = pds,                          #pds sampling object
+                  pdsType = pdsType,                  #PPS version of PDS
+                  izPerim = izPerim,                  #matrix representation of perimeter
+                  perimeter = spObj,                  #SpatialPolygons perimeter
+                  pgArea = pgArea,                    #area of SpatialPolygons izone: approximate
+                  spUnits = spUnits,                  #CRS units
+                  description = description,          #a comment
+                  units = downLog@units,              #units of measure
+                  area = izArea,                      #exact inclusion zone area
+                  puaBlowup = puaBlowup,              #NA per unit area blowup factor
+                  puaEstimates = puaEstimates,        #per unit area estimates
+                  bbox = bbox(spObj),                 #overall bounding box--redundant here
+                  dls = dls,                          #distanceLimited object
+                  dlsDiameter = dl.diam,              #the limiting diameter
+                  pdsPart = pdsIZ,                    #pdsIZ component object
+                  dlsPart = dlIZ,                     #dlmcsIZ object
+                  pdsFull = full.pdsIZ                #as if it were plain pdsIZ              
+                 )
+    
+
+    
+    return(dlpdsIZ)
+}   #distanceLimitedPDSIZ constructor
+)   #setMethod
+
+    
+
+
+
+
+    
+
+
+       
+#================================================================================
+#  method for class omnibusDLPDSIZ construction--just call parent method...
+#
+setMethod('omnibusDLPDSIZ',
+          signature(downLog = 'downLog', pds = 'perpendicularDistance', dls = 'dlsNumeric'),
+function(downLog,
+         pds,
+         dls,
+         description = 'inclusion zone for down log omnibus distance limited PDS',
+         spID = paste('odlpds',.StemEnv$randomID(),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         pdsType = .StemEnv$pdsTypes,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   create an object of the correct class; note that we cannot use as() to
+#   directly coerce below because it chokes on the classUnions with NULL, so
+#   we can just create an object with new() instead...
+#
+    pdsType = match.arg(pdsType)
+    dlpdsIZ = distanceLimitedPDSIZ(downLog, pds, dls, description = description,
+                                     spID = spID, spUnits = spUnits,
+                                     pdsType = pdsType,
+                                     ...
+                                    )
+
+#
+#   this just mirrors what we have in omnibusPDSIZ without having to recreate everything...
+#
+    npua = length(dlpdsIZ@puaEstimates)
+    if(!is.null(dlpdsIZ@pdsPart)) {
+      pdsPart = as(dlpdsIZ@pdsPart, 'omnibusPDSIZ')   #cast/coerce
+      pdsPart@puaEstimates[1:npua] = rep(NA, npua)    #will keep names okay
+    }
+    else
+      pdsPart = NULL
+    if(!is.null(dlpdsIZ@pdsFull)) {
+      pdsFull = as(dlpdsIZ@pdsFull, 'omnibusPDSIZ')   #cast/coerce
+      pdsFull@puaEstimates[1:npua] = rep(NA, npua)    #will keep names okay
+    }
+    else
+      pdsFull = NULL
+
+#
+#   create the new object afresh...
+#
+    odlpdsIZ = new('omnibusDLPDSIZ', downLog=downLog,
+                   pds = pds,                            #pds sampling object
+                   pdsType = pdsType,                    #PPS version of PDS
+                   izPerim = dlpdsIZ@izPerim,            #matrix representation of perimeter
+                   perimeter = dlpdsIZ@perimeter,        #SpatialPolygons perimeter
+                   pgArea = dlpdsIZ@pgArea,              #area of SpatialPolygons izone: approximate
+                   spUnits = spUnits,                    #CRS units
+                   description = description,            #a comment
+                   units = dlpdsIZ@units,                #units of measure
+                   area = dlpdsIZ@area,                  #exact inclusion zone area
+                   puaBlowup = dlpdsIZ@puaBlowup,        #NA per unit area blowup factor
+                   puaEstimates = dlpdsIZ@puaEstimates,  #per unit area estimates
+                   bbox = dlpdsIZ@bbox,                  #overall bounding box--redundant here
+                   dls = dlpdsIZ@dls,                    #distanceLimited object
+                   dlsDiameter = dlpdsIZ@dlsDiameter,    #the limiting diameter
+                   pdsPart = pdsPart,                    #pdsIZ component object
+                   dlsPart = dlpdsIZ@dlsPart,            #DL component pdsIZ object
+                   pdsFull = pdsFull                     #as if it were plain pdsIZ
+                  )
+
+
+    return(odlpdsIZ)
+}   #omnibusDLPDSIZ constructor
+)   #setMethod
+
+
+
+
+
+
+
+
+
+
+
+       
+#================================================================================
+#  method for functions and class distanceLimitedMCIZ...
+#
+setMethod('distanceLimitedMCIZ',
+          signature(downLog = 'downLog', dls = 'distanceLimited'), #change second argument!!
+function(downLog,
+         dls,
+         description = 'inclusion zone for down log DLMC sampling',
+         spID = paste('dlmc',.StemEnv$randomID(),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   a quick check...
+#
+    if(downLog@units != dls@units)
+      stop('units are not the same for downLog and dls!')
+
+    
+#
+#   put in a warning for number of points in taper data frame too few <20 for now<<<<<******
+#
+#   transformation matrix...
+#
+    centerOffset = coordinates(downLog@location)
+    logAngle = downLog@logAngle
+    trMat = transfMatrix(logAngle, centerOffset)
+    trMatInv = solve(trMat)
+    
+#
+#   direct calculation of the inclusion zone area and blowup factor...
+#
+    distanceLimit = dls@distanceLimit
+    logLen = downLog@logLen
+    unitArea = ifelse(downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
+    izArea = 2*logLen*distanceLimit          #DL component
+    puaBlowup = unitArea/izArea * logLen     #<<<*****Note
+
+#
+#   per unit area estimates...
+#   most of the per unit area estimates for this component depend on the perpendicular
+#   diameter in some form, but a couple are constant...
+#
+    puaEstimates = as.list(rep(NA, 7))
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                  'surfaceArea', 'coverageArea',
+                                                  'biomass', 'carbon'
+                                                )]
+    puaEstimates$Density = puaBlowup/logLen
+    puaEstimates$Length = puaBlowup
+
+#    
+#   back transform the log to canonical postion, then determine the inclusion zone perimeter...
+#
+    halfLen = downLog@logLen/2
+    izPerim = matrix(c(-halfLen, distanceLimit, 1), nrow=1)          #left-most top point
+    izPerim = rbind(izPerim, c(halfLen, distanceLimit,1))            #right-most top point
+    izPerim = rbind(izPerim, c(halfLen, -distanceLimit,1))           #right-most bottom point
+    izPerim = rbind(izPerim, c(-halfLen, -distanceLimit,1))          #left-most bottom point
+    izPerim = rbind(izPerim, izPerim[1,])                            #closed polygon
+    trMat = transfMatrix(logAngle, centerOffset)
+    izPerim = izPerim %*% trMat
+    dimnames(izPerim) = dimnames(downLog@rotLog)
+
+
+#
+#   and make a SpatialPolygons object...
+#
+    pg = Polygon(izPerim[,-3])                             #sans hc
+    pgs = Polygons(list(pg=pg), ID=spID)
+    spObj = SpatialPolygons(list(pgs=pgs), proj4string = spUnits)
+    pgArea = pg@area
+
+#
+#   create the object...
+#
+    vpmcIZ = new('distanceLimitedMCIZ', downLog=downLog,
+                 dls = dls,                          #distanceLimited sampling object
+                 izPerim = izPerim,                  #matrix representation of perimeter
+                 perimeter = spObj,                  #SpatialPolygons perimeter
+                 pgArea = pgArea,                    #area of SpatialPolygons izone: approximate
+                 spUnits = spUnits,                  #CRS units
+                 description = description,          #a comment
+                 units = downLog@units,              #units of measure
+                 area = izArea,                      #exact inclusion zone area
+                 puaBlowup = puaBlowup,              #sausage per unit area blowup factor
+                 puaEstimates = puaEstimates,        #per unit area estimates
+                 bbox = bbox(spObj)                  #overall bounding box--redundant here
+                )
+
+    return(vpmcIZ)
+}   #distanceLimitedMCIZ constructor
+)   #setMethod

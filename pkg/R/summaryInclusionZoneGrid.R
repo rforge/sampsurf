@@ -36,22 +36,37 @@ function(object,
     cat('\n  units of measurement: ', object@iz@units)    
 
     grid = object@grid
-    cat('\n\nTract class:', class(grid))
-    cat('\nGrid cell values*...\n')
+    cat('\n\nGrid class:', class(grid))
+    cat('\nNumber of grid cells =', ncell(grid))
+    cat('\nCell dimensions: (nrows=',nrow(grid), ', ncol=',ncol(grid),')', sep='')
+    cat('\nGrid cell values**...\n')
     gridValues = getValues(grid)
     gvt = data.frame(table(gridValues, useNA='ifany'))
     print(gvt)
-    cat('\nNumber of grid cells =', ncell(grid))
-    cat('\nCell dimensions: (nrows=',nrow(grid), ', ncol=',ncol(grid),')', sep='')
+    cat('**Note: data slot values get swapped with zero-valued grid cells as necessary.\n')
 
-    cat('\nPer unit area estimates in data slot...\n')
-    df = data.frame(na.omit(cbind(gridValues, object@data)))[,-1]   #omit cells outside the inclusion zone
-    print(apply(df, 2, summary))                                    #only vary under full sausage-chainsaw
+    
+    cat('\nPer unit area estimates in the data slot (for cells inside IZ only)...\n')
+    idx = ifelse(is.na(gridValues), FALSE, TRUE)    #mask out background cells
+    df = object@data[idx,]
+    #NAs in biomass and carbon will create extra entries in summary, so delete them as necessary...
+    warnBC =FALSE
+    if(all(is.na(df[,'biomass']))) {
+      df = df[, -match('biomass', colnames(df))]
+      warnBC = TRUE
+    }
+    if(all(is.na(df[,'carbon']))) {
+      df = df[, -match('carbon', colnames(df))]
+      warnBC = TRUE
+    }
+    print(apply(df, 2, summary, digits=4))
+    if(warnBC) {
+      cat('--Note: either biomass or carbon (or both) had all NAs because no conversion')
+      cat('\n        factor was suppled, these columns have been deleted above.')
+    }
 
     cat('\n\n  Encapulating bounding box...\n')
     print(object@bbox)
-
-    cat('\n*Note: data slot values get swapped with zero-valued grid cells as necessary.')
     
     cat('\n')
     

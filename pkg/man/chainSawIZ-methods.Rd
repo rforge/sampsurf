@@ -31,7 +31,7 @@
 				
 	  \item{\code{downLog}:}{ An object of class
         "\code{\linkS4class{downLog}}" which the inclusion zone is to be
-        determined for under the stand-up method.}
+        determined for under the chainsaw method.}
 		
 	  \item{\code{plotRadius}:}{ The radius of the circular fixed-area
 	    plot in the correct units: feet for "English" and meters for

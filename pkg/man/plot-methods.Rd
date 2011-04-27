@@ -13,11 +13,14 @@
 \alias{plot,sampSurf,missing-method}
 \alias{plot,sausageIZ,missing-method}
 \alias{plot,pointRelascopeIZ,missing-method}
+\alias{plot,perpendicularDistanceIZ,missing-method}
+\alias{plot,distanceLimitedPDSIZ,missing-method}
+\alias{plot,distanceLimitedMCIZ,missing-method}
 \alias{plot,standUpIZ,missing-method}
 \alias{plot,Stem,missing-method}
 \alias{plot,Tract,missing-method}
 
-\title{ Methods for Function plot in Package `graphics' }
+\title{ Methods for Function \code{plot} in Package \sQuote{sampSurf} }
 
 \description{
   The methods described here are for the \code{\link[sampSurf]{plot}}
@@ -345,8 +348,7 @@ argument definition for the most part.
          asp = 1,
          showDualCenters = FALSE, 
          dcColor = .StemEnv$izBorderColor, 
-         ...
-        )
+         ... )
 }
 	\itemize{
 		 
@@ -373,7 +375,143 @@ argument definition for the most part.
 	  
 	} %itemize
  } %item
- 
+  
+
+\item{\strong{\code{signature(x = "perpendicularDistanceIZ", y = "missing")}}}{%\cr
+
+    This adds the necessary functionality to plot objects of class
+    "\code{\linkS4class{perpendicularDistanceIZ}}" and subclasses (e.g.,
+    "\code{\linkS4class{omnibusPDSIZ}}").}
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x, 
+         axes = FALSE,  
+         showLog = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,  
+         asp = 1,
+         ... )
+}
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{perpendicularDistanceIZ} or
+	    subclass. } 
+		 
+	  \item{\code{showLog}:}{ \code{TRUE}: plot the log object;
+	    \code{FALSE}: do not show it.}
+		 		 
+	  \item{\code{izColor}:}{ An \R color for the interior of the
+	    inclusion zone.}
+		 
+	  \item{\code{izBorder}:}{ An \R color for the border/perimeter of
+	    the inclusion zone.}
+		 	  
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+		\code{\link[graphics]{plot}}, or to the plot methods for the
+		individual objects.}
+	  
+	} %itemize
+ } %item
+  
+
+\item{\strong{\code{signature(x = "distanceLimitedPDSIZ", y = "missing")}}}{%\cr
+
+    This adds the necessary functionality to plot objects of class
+    "\code{\linkS4class{distanceLimitedPDSIZ}}" and subclasses (e.g.,
+    "\code{\linkS4class{omnibusDLPDSIZ}}"). Please note that the different
+    components of the inclusion zone can be displayed to show the
+    transition between protocols (if any). In addition, the overall
+    "\code{\linkS4class{perpendicularDistanceIZ}}" zone can also be
+    displayed, showing what the inclusion zone would look like if the
+    entire log were treated under the PDS protocol. }
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x, 
+         axes = FALSE,  
+         showLog = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,  
+         asp = 1,
+         showFullPDSIZ = FALSE,
+         showDLSPart = FALSE,
+         showPDSPart = FALSE,
+         ... )
+}
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{distanceLimitedPDSIZ} or
+	    subclass. } 
+		 
+	  \item{\code{showLog}:}{ \code{TRUE}: plot the log object;
+	    \code{FALSE}: do not show it.}
+		 		 
+	  \item{\code{izColor}:}{ An \R color for the interior of the
+	    inclusion zone.}
+		 
+	  \item{\code{izBorder}:}{ An \R color for the border/perimeter of
+	    the inclusion zone.}
+		 
+	  \item{\code{showFullPDSIZ}:}{ \code{TRUE}: display the full PDS
+	    inclusion zone (as if the log were sampled fully with PDS);
+	    \code{FALSE}: do not display it. }
+		 
+	  \item{\code{showDLSPart}:}{ \code{TRUE}: display the
+		  "\code{\linkS4class{distanceLimitedMCIZ}}" portion of the
+		  inclusion zone (if any); \code{FALSE}: do not display it. }
+		 
+	  \item{\code{showPDSPart}:}{ \code{TRUE}: display the
+		  "\code{\linkS4class{perpendicularDistanceIZ}}" portion of the
+		  inclusion zone (if any); \code{FALSE}: do not display it. }
+		  
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+		\code{\link[graphics]{plot}}, or to the plot methods for the
+		individual objects.}
+	  
+	} %itemize
+ } %item
+		 		 
+  
+
+\item{\strong{\code{signature(x = "distanceLimitedMCIZ", y = "missing")}}}{%\cr
+
+    This adds the necessary functionality to plot objects of class
+    "\code{\linkS4class{distanceLimitedMCIZ}}".}
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x, 
+         axes = FALSE,  
+         showLog = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,  
+         asp = 1,
+         ... )
+}
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{distanceLimitedMCIZ} or
+	    subclass. } 
+		 
+	  \item{\code{showLog}:}{ \code{TRUE}: plot the log object;
+	    \code{FALSE}: do not show it.}
+		 		 
+	  \item{\code{izColor}:}{ An \R color for the interior of the
+	    inclusion zone.}
+		 
+	  \item{\code{izBorder}:}{ An \R color for the border/perimeter of
+	    the inclusion zone.}
+		 	  
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+		\code{\link[graphics]{plot}}, or to the plot methods for the
+		individual objects.}
+	  
+	} %itemize
+ } %item
+
+
+	  
 
 \item{\strong{\code{signature(x = "downLogIZs", y = "missing")}}}{%\cr
 

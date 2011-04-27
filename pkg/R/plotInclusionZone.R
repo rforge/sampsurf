@@ -8,8 +8,11 @@
 #   3. "chainSawIZ"
 #   4. "sausageIZ"
 #   5. "pointRelascopeIZ"
+#   6. "perpendicularDistanceIZ"
+#   7. "distanceLimitedPDSIZ'
+#   8. "distanceLimitedMCIZ'
 #
-#   6. "downLogIZs"
+#   9. "downLogIZs"
 #
 #   Note that the plot routines for methods like standup, sausage, PRS, etc.
 #   are all very similar, they could probably be collapsed sometime with a
@@ -244,6 +247,147 @@ function(x,
 
 
 
+#================================================================================
+#  6. method for perpendicularDistnaceIZ subclass (18-Jan-2011)...
+#
+setMethod('plot',
+          signature(x = 'perpendicularDistanceIZ', y='missing'),
+function(x, 
+         axes = FALSE,                     #not a par() so can't be passed to callNextMethod, so separate it
+         showLog = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,                           #add each IZ to overall plot if TRUE
+         asp = 1,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   plots the perpendicularDistanceIZ object...
+#
+#   note: the IZ center and log center coincide with PDS, if you want to
+#         show one of them, show the log center
+#------------------------------------------------------------------------------
+#
+    object = x
+
+    if(!add)
+      callNextMethod(object, axes=axes, asp=asp, ...)            #setup extents
+
+    suppressWarnings({                                #for object-specific parameters not in par() ...
+      plot(object@perimeter, col=izColor, border=izBorder, axes=axes, add=TRUE, ...)
+      if(showLog)
+        plot(object@downLog, add=TRUE, ...)
+    })
+                     
+    return(invisible())
+}   #plot for 'perpendicularDistanceIZ'
+)   #setMethod
+
+
+
+
+#================================================================================
+#  7. method for distanceLimitedPDSIZ subclass (10-Mar-2011)...
+#
+setMethod('plot',
+          signature(x = 'distanceLimitedPDSIZ', y='missing'),
+function(x, 
+         axes = FALSE,                     #not a par() so can't be passed to callNextMethod, so separate it
+         showLog = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,                           #add each IZ to overall plot if TRUE
+         asp = 1,
+         showFullPDSIZ = FALSE,
+         showDLSPart = FALSE,
+         showPDSPart = FALSE,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   plots the distanceLimitedPDSIZ object...
+#
+#   note: the IZ center and log center coincide with PDS, if you want to
+#         show one of them, show the log center
+#------------------------------------------------------------------------------
+#
+    object = x
+
+#
+#   set up extents and plot the everything PDS...
+#
+    if(!add) 
+      if(showFullPDSIZ && !is.null(object@pdsFull))    #should never be NULL, but just in case
+        object@bbox = bbox(object@pdsFull)             #need more room for full inclusion zone to fit
+    
+    callNextMethod(object, axes=axes, asp=asp, showLog=showLog,  #will show the log if desired
+                   izColor=izColor, izBorder=izBorder,
+                   add=add, ...)                                #if add=T: don't re-adjust extents
+
+#
+#   the following will just plot the perimeters for clarity...
+#
+    suppressWarnings({                                 #for object-specific parameters not in par() ...
+      if(showPDSPart && !is.null(object@pdsPart))
+        plot(perimeter(object@pdsPart), col=NULL, border=izBorder, axes=axes, add=TRUE, ...)
+      if(showDLSPart && !is.null(object@dlsPart))
+        plot(perimeter(object@dlsPart), col=NULL, border=izBorder, axes=axes, add=TRUE, ...)
+      if(showFullPDSIZ && !is.null(object@pdsFull))
+        plot(perimeter(object@pdsFull), col=NULL, border=izBorder, axes=axes, add=TRUE, ...)
+     # if(showLog && !add)                              #only if not already shown above
+      #  plot(object@downLog, add=TRUE, ...)
+    })
+                     
+    return(invisible())
+}   #plot for 'distanceLimitedPDSIZ'
+)   #setMethod
+
+
+
+
+
+#================================================================================
+#  8. method for distanceLimitedMCIZ subclass (22-Mar-2011)...
+#
+setMethod('plot',
+          signature(x = 'distanceLimitedMCIZ', y='missing'),
+function(x, 
+         axes = FALSE,                     #not a par() so can't be passed to callNextMethod, so separate it
+         showLog = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,                           #add each IZ to overall plot if TRUE
+         asp = 1,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   plots the distanceLimitedMCIZ object...
+#
+#   note: the IZ center and log center coincide with VPMC, if you want to
+#         show one of them, show the log center
+#------------------------------------------------------------------------------
+#
+    object = x
+
+    if(!add)
+      callNextMethod(object, axes=axes, asp=asp, ...)            #setup extents
+
+    suppressWarnings({                                #for object-specific parameters not in par() ...
+      plot(object@perimeter, col=izColor, border=izBorder, axes=axes, add=TRUE, ...)
+      if(showLog)
+        plot(object@downLog, add=TRUE, ...)
+    })
+                     
+    return(invisible())
+}   #plot for 'distanceLimitedMCIZ'
+)   #setMethod
+
+
+
+
+
 
 
 
@@ -256,7 +400,7 @@ function(x,
 
 #================================================================================
 #================================================================================
-#  6. method for a "downLogIZs" collection/population...
+#  9. method for a "downLogIZs" collection/population...
 #
 setMethod('plot',
           signature(x = 'downLogIZs', y='missing'),

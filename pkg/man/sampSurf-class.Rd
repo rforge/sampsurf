@@ -24,7 +24,7 @@
   logs whose inclusion zones overlapped the grid cell center. In this
   way, the surface is constructed representing the samples at each
   point. One can think of the surface as a discrete approximation to the
-  actual continuous surface; the approximation getting better as the
+  actual continuous surface---the approximation getting better as the
   grid cell size goes to zero (grid resolution increases).
 
   Much of this is explained in far more detail in the references
@@ -32,25 +32,22 @@
   populations and average those surfaces to get a result that minimizes
   any possible irregularities in a particular sample draw of
   \dQuote{Stem} objects. This has not been built into the package yet,
-  but is simple enough to do, and can be added later.
+  but is simple enough to do, and can be added later. 
 
-  Note that only one attribute can be represented for a given sampling
-  surface. However, it is trivial to use the same population of logs and
-  inclusion zones to estimate a surface for a different attribute on the
-  same tract. It is also straightforward to use the same population of
-  logs and base tract extents to compare different sampling methods or
-  protocols. 
-}
+  Note that only one attribute (e.g., volume, surface area, etc.) can be
+  represented for a given sampling surface. However, it is trivial to
+  use the same population of logs and inclusion zones to estimate a
+  surface for a different attribute on the same tract. It is also
+  straightforward to use the same population of logs and base tract
+  extents to compare different sampling methods or protocols.  }
 
-\section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("sampSurf",
-  ...)}. However, this is not recommended
+\section{Objects from the Class}{ Objects can be created by calls of the
+form \code{new("sampSurf", ...)}. However, this is not recommended
 because the objects are fairly complex. Instead, one can use the object
 constructor \code{\link{sampSurf}} to create new objects. There is more
 than than one form of the function, so please refer to its methods for
-alternatives.  More details are
-found in \emph{"The sampSurf Class"} vignette.
-}
+alternatives.  More details are found in \emph{"The sampSurf Class"}
+vignette.  }
 
 \section{Slots}{
   \describe{
@@ -90,29 +87,32 @@ found in \emph{"The sampSurf Class"} vignette.
    }
    
 \references{
-Williams, M. S. 2001. New approach to areal sampling in ecological
-surveys. \emph{Forest Ecology and Management} \bold{154}:11--22. \cr
+\describe{
 %
-Williams, M. S. 2001. Nonuniform random sampling: an alternative method
+\item{}{Williams, M. S. 2001. New approach to areal sampling in ecological
+surveys. \emph{Forest Ecology and Management} \bold{154}:11--22. }
+%
+\item{}{Williams, M. S. 2001. Nonuniform random sampling: an alternative method
 of variance reduction for forest surveys. \emph{Canadian Journal of Forest
-  Research} \bold{31}: 2080--2088. \cr
+  Research} \bold{31}: 2080--2088. }
 %
-Gove, J. H. and Van Deusen, P. C. 2011. On fixed-area plot sampling for
-downed coarse woody debris. \emph{Forestry}. (Accepted).\cr
+\item{}{Gove, J. H. and Van Deusen, P. C. 2011. On fixed-area plot sampling for
+  downed coarse woody debris. \emph{Forestry}.  \bold{84}:109--117.}
+}
 }
 
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
-\note{ Some of the routines in the \pkg{raster} package automatically
-  subsample the grid for certain operations (I believe mostly plotting,
-  but I have to look into this). One must therefore make sure, if
-  combination of \dQuote{Tract} size and grid cell resolution is such
-  that the number of cells is more than 100,000, that this does not
-  affect the statistical results. Again, I need to check this further to
-  make sure it is not an issue with \code{\link{raster}}.
-}
+%\note{ Some of the routines in the \pkg{raster} package automatically
+%  subsample the grid for certain operations (I believe mostly plotting,
+%  but I have to look into this). One must therefore make sure, if
+%  combination of \dQuote{Tract} size and grid cell resolution is such
+%  that the number of cells is more than 100,000, that this does not
+%  affect the statistical results. Again, I need to check this further to
+%  make sure it is not an issue with \code{\link{raster}}.
+%}
 
 
 \seealso{

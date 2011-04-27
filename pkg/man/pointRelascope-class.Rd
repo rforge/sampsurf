@@ -4,7 +4,7 @@
 \alias{pointRelascope-class}
 \alias{summary,pointRelascope-method}
 
-\title{Class "pointRelascope": Point Relascope Sampling}
+\title{Class \code{"pointRelascope"}: Point Relascope Sampling}
 
 \description{
 A subclass of "\code{\linkS4class{ArealSampling}}" that can be used to

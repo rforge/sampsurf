@@ -86,8 +86,15 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 
 \seealso{
   For subclasses, see: \code{\linkS4class{downLogIZ}},
-  \code{\linkS4class{standUpIZ}}, \code{\linkS4class{chainSawIZ}},
-  \code{\linkS4class{sausageIZ}}, \code{\linkS4class{pointRelascopeIZ}};
+  \code{\linkS4class{standUpIZ}},
+  \code{\linkS4class{chainSawIZ}},
+  \code{\linkS4class{sausageIZ}},
+  \code{\linkS4class{pointRelascopeIZ}},
+  \code{\linkS4class{perpendicularDistanceIZ}},
+  \code{\linkS4class{omnibusPDSIZ}},
+  \code{\linkS4class{distanceLimitedPDSIZ}},
+  \code{\linkS4class{omnibusDLPDSIZ}}, 
+  \code{\linkS4class{distanceLimitedMCIZ}},  
   and the \code{\linkS4class{downLogIZs}} container class.  }
 
 \examples{

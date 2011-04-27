@@ -40,10 +40,12 @@ bboxCheck = function(bbox)
     if(nrow(bbox)!=2 || ncol(bbox)!=2)
       stop(paste(deparse(substitute(bbox)),': bbox must have only two rows and two columns!',sep=''))
 
-    if(any(is.na( match(rownames(bbox), bbox.rownames) )))
+    rn = rownames(bbox)
+    if(is.null(rn) || any(is.na( match(rn, bbox.rownames) )))
       stop(paste(deparse(substitute(bbox)),': bbox rownames must be "x", "y"!',sep=''))
     
-    if(any(is.na( match(colnames(bbox), bbox.colnames) )))
+    cn = colnames(bbox)
+    if(is.null(cn) || any(is.na( match(cn, bbox.colnames) )))
       stop(paste(deparse(substitute(bbox)),': bbox colnames must be "min", "max"!',sep=''))
 
     if(any( apply(bbox,1,function(x) if(x['min'] >= x['max']) TRUE else FALSE) ))

@@ -12,9 +12,14 @@
 #        shaped inclusion zone. No other protocol will have this mess.
 #
 #     5. for 'pointRelascopeIZ'
+#     6. for 'perpendicularDistanceIZ'
+#     7. for 'omnibusPDSIZ'
+#     8. for 'distanceLimitedPDSIZ'
+#     9. for 'distanceLimitedMCIZ'
 #
 #   Of course, if chainSaw was not so strange, we would only require one
-#   method for every different technique!
+#   method for every different technique! (Well except for omnibus, and
+#   other methods with varying height IZs.)
 #
 #Author...									Date: 17-Sept-2010
 #	Jeffrey H. Gove
@@ -70,7 +75,7 @@ function(izObject,  #a bbox object
     }
     else
       jj = extent(izObject)
-    
+
 #
 #   pad one extra cell on each side for good measure...
 #
@@ -165,7 +170,7 @@ function(izObject,
 
           
 #================================================================================
-#  method for 'chainSawIZ' and 'Tract' classes--of course chainsaw is wierd
+#  method for 'chainSawIZ' and 'Tract' classes--of course chainsaw is weird
 #  since it is really a point inclusion zone, so it must have a more involved
 #  constructor method...
 #
@@ -185,12 +190,11 @@ function(izObject,
     iz.bbox = bbox(izObject)                           #grid point plus log (always internal)    
     izg = izGrid(iz.bbox, tract)                       #get the minimal bounding grid
     cpt = perimeter(izObject, whatSense='point')       #circularplot centerpoint only
-    grid = pointsToRaster(izg,                         #bounding grid
-                          cpt,                         #plot center location
-                          values=1,                    #strange
-                          function(x) 0,               #value at x,y--anything other than NA
-                          background=NA                #all other values are zero
-                         )
+    grid = rasterize(cpt,                              #plot center location
+                     izg,                              #bounding grid
+                     fun = function(x,na.rm) 0,        #value at x,y--anything other than NA
+                     background = NA                   #all other values are zero
+                    )
 
 #
 #   now, if we are just interested in the single grid cell inclusion zone for the plot
@@ -349,3 +353,353 @@ function(izObject,
     return(griz)
 }   #izGrid for'pointRelascopeIZ'
 )   #setMethod
+
+               
+  
+
+  
+
+
+          
+#================================================================================
+#  method for 'perpendicularDistanceIZ' and 'Tract' classes...
+#
+setMethod('izGrid',
+          signature(izObject = 'perpendicularDistanceIZ', tract='Tract'),
+function(izObject,
+         tract,
+         description = 'perpendicularDistanceIZ inclusion zone grid object',
+         wholeIZ = TRUE,           #TRUE: grid the whole object; FALSE: just grid the IZ
+         ...
+        )
+{
+#---------------------------------------------------------------------------
+#
+#
+    griz = izGridConstruct(izObject=izObject, tract=tract, description=description,
+                           wholeIZ=wholeIZ, ...)
+    return(griz)
+}   #izGrid for'perpendicularDistanceIZ'
+)   #setMethod
+               
+  
+
+  
+
+
+          
+#================================================================================
+#  method for 'omnibusPDSIZ' and 'Tract' classes...  ******THIS WILL CHANGE*************
+#
+setMethod('izGrid',
+          signature(izObject = 'omnibusPDSIZ', tract='Tract'),
+function(izObject,
+         tract,
+         description = 'omnibusPDSIZ inclusion zone grid object',
+         wholeIZ = TRUE,           #TRUE: grid the whole object; FALSE: just grid the IZ
+         runQuiet = TRUE,
+         ...
+        )
+{
+#---------------------------------------------------------------------------
+#
+#   first get the overall PDS inclusion zone grid object to work with...
+#
+    griz = izGridConstruct(izObject=izObject, tract=tract, description=description,
+                           wholeIZ=wholeIZ, ...)
+    
+#
+#   get the transformation matrices...
+#
+    dlog = izObject@downLog
+    halfLen = dlog@logLen/2                                    #half length of log
+    centerOffset = coordinates(dlog@location)
+    logAngle = dlog@logAngle
+    trMat = transfMatrix(logAngle, centerOffset)
+    trMatInv = solve(trMat)
+
+    factor = izObject@pds@factor
+   
+#
+#   now we need to assign all internal grid cells the correct value based
+#   on a applying omnibus estimates to each cell...
+#
+    grid = griz@grid
+    numCells = ncell(grid)
+    mask = getValues(grid)                                   #vector valued (either NA or zero)
+    df = griz@data                                           #data frame of pua estimates
+    for(i in seq_len(numCells)) {
+      if(!runQuiet && identical(i%%10,0))
+        cat(i,', ',sep='')
+      if(!is.na(mask[i])) {
+        xy = cbind(xyFromCell(grid, i), 1)                          #1x3 matrix in hc
+        xy = xy %*% trMatInv                                        #transform back to canonical (names stripped)
+        xLength = xy[1,1] + halfLen                                 #shift so butt is at zero
+        #get log diameter at this grid point
+        if(!is.null(dlog@solidType))                                #use default taper equation
+          diam = .StemEnv$wbTaper(dlog@buttDiam, dlog@topDiam, dlog@logLen, nSegs=1,
+                                  solidType=dlog@solidType, hgt=xLength)$diameter
+        else                                                        #spline
+          diam = spline(dlog@taper$length, dlog@taper$diameter, xout=xLength)$y
+        diam = ifelse(identical(diam,0), 1e-04, diam)               #check for singularity point at tip
+        #omnibus estimates...
+        xsecArea = pi*diam^2/4
+        denom = switch(izObject@pdsType,
+                       volume = xsecArea, 
+                       surfaceArea = pi*diam,
+                       coverageArea = diam,
+                       stop('Illegal pdsType in izGrid!')
+                      )
+        df[i, 'volume'] = factor*xsecArea/denom
+        df[i, 'Density'] = factor/(denom * dlog@logLen)               #number of logs
+        df[i, 'Length'] = factor/denom                                #length of logs
+        df[i, 'surfaceArea'] = factor*pi*diam/denom                   #surface area of logs
+        df[i, 'coverageArea'] = factor*diam/denom                     #coverage area of logs
+        df[i, 'biomass'] = factor*dlog@conversions['volumeToWeight']*
+                                  xsecArea/denom                      #woody biomass
+        df[i, 'carbon'] = factor*dlog@conversions['volumeToWeight'] *
+                                 dlog@conversions['weightToCarbon'] *
+                                 xsecArea/denom                       #carbon content
+      }
+    }  #for
+    if(!runQuiet)
+      cat('\n')
+
+    griz@data = df
+    
+    return(griz)
+}   #izGrid for 'omnibusPDSIZ'
+)   #setMethod
+  
+
+
+
+
+
+
+          
+#================================================================================
+#  method for 'distanceLimitedPDSIZ' or 'omnibusDLPDSIZ' and 'Tract' classes...
+#
+#  Note that this will work for both of the above PDS classes "as is" since
+#  the first is a superclass of the second...
+#
+#  The routine is set up in 3 main steps...
+#  1. construct the entire dlpds izGrid object so that we have a bounding grid
+#     for the whole polygon--do not use the estimates here as they are not
+#     correct, just do this for the grid object
+#
+#  2. if it exists, compute and expand the dlsPart of the izGrid and substitute
+#     its values for the dummy values in step 1
+#
+#  3. if it exists, compute and expand the pdsPart of the izGrid and substitute
+#     its values for the dummy values in step 1
+#
+#================================================================================
+#
+setMethod('izGrid',
+          signature(izObject = 'distanceLimitedPDSIZ', tract='Tract'),
+function(izObject,
+         tract,
+         description = 'a distance limited PDSIZ inclusion zone grid object',
+         wholeIZ = TRUE,           #TRUE: grid the whole object; FALSE: just grid the IZ
+         runQuiet = TRUE,
+         ...
+        )
+{
+#---------------------------------------------------------------------------
+#
+#   1. first get the overall izGrid object to work with--DO NOT use these 
+#      puaEstimates as they are combined (if both DL and PDS in the same log)...
+#
+    griz = izGridConstruct(izObject=izObject, tract=tract, description=description,
+                           wholeIZ=wholeIZ, ...)
+
+
+#---------------------------------------------------------------------------
+#
+#   2. now, if there is a DL component (as a distanceLimitedMCIZ object),
+#      then we must find its portion of the above raster object via overlay, and
+#      finally assign the correct estimate values to the DL component grid cells...
+#
+    if(!is.null(izObject@dlsPart)) {
+      if(!runQuiet)
+        cat(' (dlsPart)')
+#     get the variable inclusion zone, hence the use of izGrid here...      
+      dlsgriz = izGrid(izObject=izObject@dlsPart, tract=tract, description=description,
+                       wholeIZ=wholeIZ, ...)
+      dlsgriz.vals = getValues(dlsgriz@grid)
+      dlsFrom.idx = which(!is.na(dlsgriz.vals))            #index of DL values to replace with
+      df = dlsgriz@data
+
+#     overlay dls part with above full izGrid to get the right cells with same extent as griz...      
+      izg = griz@grid
+      grid = rasterize(perimeter(izObject@dlsPart), izg, mask=TRUE, silent=TRUE) #same extent as griz
+
+      dls.vals = getValues(grid)   
+      dlsTo.idx = which(!is.na(dls.vals))                  #index of the DL values to be replaced
+      
+#
+#     replace the DLS portion of the grid for each [est]imate variable in the data frame;
+#     note that the dlsFrom.idx and dlsTo.idx index sets will differ unless the entire log
+#     is DL, but they will always have the same number of grid cells (length) to swap...
+#
+      if(length(dlsTo.idx > 0)) {
+        data = griz@data
+        #for(est in colnames(data)) 
+          est = colnames(data)
+          data[dlsTo.idx, est] = df[dlsFrom.idx, est]          
+
+        griz@data = data
+      }
+    }  #DL component
+
+    
+
+#---------------------------------------------------------------------------
+#
+#   3. similarly, if there is a PDS component, then we must find its portion of the above
+#      raster object via overlay, then assign the correct estimate values to the
+#      PDS component grid cells; note that we are call izGrid below for omnibus, so this
+#      will work for the variable surface in that method...
+#
+    if(!is.null(izObject@pdsPart)) {
+      if(!runQuiet)
+        cat(' (pdsPart)')
+      if(is(izObject@pdsPart, 'omnibusPDSIZ')) {
+#       get the variable omnibus inclusion zone from izGrid...      
+        pdsgriz = izGrid(izObject=izObject@pdsPart, tract=tract, description=description,
+                         wholeIZ=wholeIZ, ...)
+        pdsgriz.vals = getValues(pdsgriz@grid)
+        pdsFrom.idx = which(!is.na(pdsgriz.vals))            #index of PDS values to replace with
+        df = pdsgriz@data
+      } #omnibus only
+      
+#     overlay pds part with above full izGrid to get the right cells with same extent as griz...      
+      izg = griz@grid
+      grid = rasterize(perimeter(izObject@pdsPart), izg, mask=TRUE, silent=TRUE) #same extent as griz
+
+      pds.vals = getValues(grid)   
+      pdsTo.idx = which(!is.na(pds.vals))                  #index of the PDS values to be replaced
+      
+#
+#     replace the PDS portion of the grid for each [est]imate variable in the data frame;
+#     note that the pdsFrom.idx and pdsTo.idx index sets will differ unless the entire log
+#     is PDS, but they will always have the same number of grid cells (length) to swap...
+#
+      if(length(pdsTo.idx > 0)) {
+        data = griz@data
+#       this test must be first as it is also a 'perpendicularDistanceIZ' object...
+        if(is(izObject@pdsPart, 'omnibusPDSIZ')) {  
+            est = colnames(data)
+            data[pdsTo.idx, est] = df[pdsFrom.idx, est]                   #variable within each est
+          }
+          else
+            for(est in colnames(data)) 
+              data[pdsTo.idx, est] = izObject@pdsPart@puaEstimates[[est]] #constant for each est 
+
+        griz@data = data
+      }
+      
+    } #PDS component
+
+    
+#   ------------------------
+#   the estimates of density are both==1 if both methods are present,
+#   so we have to factor this down by half in this case...
+#
+    if( !is.null(izObject@dlsPart) && !is.null(izObject@pdsPart) )
+      griz@data[,'Density'] = griz@data[,'Density']*0.5
+    
+    return(griz)
+}   #izGrid for'distanceLimitedPDSIZ'
+)   #setMethod
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+          
+#================================================================================
+#  method for 'distanceLimitedMCIZ' and 'Tract' classes...
+#================================================================================
+#
+setMethod('izGrid',
+          signature(izObject = 'distanceLimitedMCIZ', tract='Tract'),
+function(izObject,
+         tract,
+         description = 'distanceLimitedMCIZ inclusion zone grid object',
+         wholeIZ = TRUE,           #TRUE: grid the whole object; FALSE: just grid the IZ
+         runQuiet = TRUE,
+         ...
+        )
+{
+#---------------------------------------------------------------------------
+#
+#   first get the overall izGrid object to work with...
+#
+    griz = izGridConstruct(izObject=izObject, tract=tract, description=description,
+                           wholeIZ=wholeIZ, ...)
+  
+#
+#   get the transformation matrices...
+#
+    dlog = izObject@downLog
+    halfLen = dlog@logLen/2                                    #half length of log
+    centerOffset = coordinates(dlog@location)
+    logAngle = dlog@logAngle
+    trMat = transfMatrix(logAngle, centerOffset)
+    trMatInv = solve(trMat)
+
+    puaBlowup = izObject@puaBlowup
+
+#
+#   now we need to assign all internal grid cells the correct value based
+#   on a applying omnibus estimates to each cell...
+#
+    grid = griz@grid
+    numCells = ncell(grid)
+    mask = getValues(grid)                                          #vector valued (either NA or zero)
+    df = griz@data                                                  #data frame of pua estimates
+    for(i in seq_len(numCells)) {
+      if(!runQuiet && identical(i%%10,0))
+        cat(i,', ',sep='')
+      if(!is.na(mask[i])) {
+        xy = cbind(xyFromCell(grid, i), 1)                          #1x3 matrix in hc
+        xy = xy %*% trMatInv                                        #transform back to canonical (names stripped)
+        xLength = xy[1,1] + halfLen                                 #shift so butt is at zero
+        #get log diameter at this grid point
+        if(!is.null(dlog@solidType))                                #use default taper equation
+          diam = .StemEnv$wbTaper(dlog@buttDiam, dlog@topDiam, dlog@logLen, nSegs=1,
+                                  solidType=dlog@solidType, hgt=xLength)$diameter
+        else                                                        #spline
+          diam = spline(dlog@taper$length, dlog@taper$diameter, xout=xLength)$y
+        diam = ifelse(identical(diam,0), 1e-04, diam)               #check for singularity point at tip
+        xsecArea = pi*diam^2/4
+        df[i, 'volume'] = xsecArea*puaBlowup 
+        df[i, 'Density'] = puaBlowup / dlog@logLen                                  #number of logs
+        df[i, 'Length'] = puaBlowup                                                 #length of logs
+        df[i, 'surfaceArea'] = puaBlowup*pi*diam                                    #surface area of logs
+        df[i, 'coverageArea'] = puaBlowup*diam                                      #coverage area of logs
+        df[i, 'biomass'] = df[i, 'volume']*dlog@conversions['volumeToWeight']       #woody biomass
+        df[i, 'carbon'] = df[i, 'biomass']*dlog@conversions['weightToCarbon']       #carbon content
+      }
+    }  #for loop
+
+    if(!runQuiet)
+      cat('\n')
+
+    griz@data = df
+    
+    return(griz)
+}   #izGrid for'distanceLimitedMCIZ'
+)   #setMethod
+  

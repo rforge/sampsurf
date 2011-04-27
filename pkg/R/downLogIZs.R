@@ -46,6 +46,9 @@ function(object,
 {
 #------------------------------------------------------------------------------
 #
+#   note that this code allows mixing of different objects within class "downLogIZ"
+#   but currently, the validation routines will subsequently flag this as an error,
+#   so we'll let it go here and deal with it later...
 #
     numIZs = length(object)
     if(numIZs < 1)
@@ -57,23 +60,51 @@ function(object,
 #   but currently, the validation routines will subsequently flag this as an error,
 #   so we'll let it go here and deal with it later...
 #
-    sp = vector('list', numIZs)
-    for(i in seq_len(numIZs)) {
-      class = class(object[[i]])
-      if(class == 'standUpIZ')
-        sp[[i]] = object[[i]]@circularPlot@perimeter@polygons$pgsCircPlot
-      else if(class == 'sausageIZ')
-        sp[[i]] = object[[i]]@perimeter@polygons$pgsSausage
-      else if(class == 'pointRelascopeIZ')
-        sp[[i]] = object[[i]]@perimeter@polygons$pgsPRS
-      else
-        if(!is(object[[i]], 'downLogIZ'))     #catch objects that may not be in the correct form
-          stop('All list elements must be a subclass of "downLogIZ"!')
-    }
+#    sp = vector('list', numIZs)
+#    for(i in seq_len(numIZs)) {
+#      if(!is(object[[i]], 'downLogIZ'))     #catch objects that may not be in the correct form
+#        stop('All list elements must be a subclass of "downLogIZ"!')
+#      class = class(object[[i]])
+#      if(class == 'standUpIZ')
+#        sp[[i]] = object[[i]]@circularPlot@perimeter@polygons$pgsCircPlot
+#      else if(class == 'sausageIZ')
+#        sp[[i]] = object[[i]]@perimeter@polygons$pgsSausage
+#      else if(class == 'pointRelascopeIZ')
+#        sp[[i]] = object[[i]]@perimeter@polygons$pgsPRS
+#      else                                  #all others should now be standard as...
+#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
+#      else if(class == 'perpendicularDistanceIZ')
+#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
+#      else if(class == 'omnibusPDSIZ')
+#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
+#      else if(class == 'distanceLimitedPDSIZ')
+#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
+#      else if(class == 'omnibusDLPDSIZ')
+#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
+#      else if(class == 'distanceLimitedMCIZ')
+#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
+#      else
+#        if(!is(object[[i]], 'downLogIZ'))     #catch objects that may not be in the correct form
+#          stop('All list elements must be a subclass of "downLogIZ"!')
+#    }
    
-    sps = SpatialPolygons(sp)
-    bbox = bbox(sps)
+#    sps = SpatialPolygons(sp)
+#    bbox = bbox(sps)
 
+#
+#   make an array of the perimeter bbox matrices for each IZ object, then determine their
+#   new overall extent...
+#
+    bboxArray = array(dim=c(2,2,numIZs))
+    for(i in seq_len(numIZs)) {
+      if(!is(object[[i]], 'downLogIZ'))     #catch objects that may not be in the correct form
+        stop('All list elements must be a subclass of "downLogIZ"!')
+      bboxArray[,,i] = bbox(perimeter(object[[i]]))
+    }
+    dimnames(bboxArray) = dimnames(bbox(object[[1]])) #page dim doesn't matter
+    bbox = bboxSum(bboxArray)                         #extend the bboxes to overall
+
+      
 #
 #   create the object...
 #    
@@ -83,58 +114,6 @@ function(object,
     return(dliz)
 }   #downLogIZs method for list
 )   #setMethod
-
-
-
-#********************************************************************************
-#** the following really breaks oop because it calls for a character name of
-#   a constructor, so for each new subclass added, we have to remember to change
-#   this routine as well--bad form.
-#================================================================================
-#  method for function for a previously made collection of 'downLogs', with a
-#  valid 'downLogIZ' subclass for object construction on each log...
-#
-#setMethod('downLogIZs',
-#          signature(object = 'downLogs', izClass='character'),
-#function(object,
-#         izClass = 'sausageIZ',
-#         plotRadius = 5,  #as more sampling methods are added, this may need to be more general
-#         description = '',
-#         ...
-#        )
-#{
-#------------------------------------------------------------------------------
-#
-#   we need the sp package for plotting...
-#
-#    if(!require(sp)) 
-#      stop('***>sp package must be loaded to make a valid "downLog" object!')
-
-#
-#   check on the object passed is redundant because of the signature, but
-#   a check on the character id class for the inclusion zone is necessary...
-#
-#    if(!(izClass %in% names(getClass('downLogIZ')@subclasses)) )
-#      stop('izClass must be a valid subclass of "downLogIZ"')
-
-#
-#   make a list and then use the list constructor for the object...
-#
-#    numLogs = length(object@logs)
-#    dliz = vector('list', numLogs)
-#    for(i in seq_len(numLogs))
-#      if(izClass == 'standUpIZ')
-#        dliz[[i]] = standUpIZ(object@logs[[i]], plotRadius)
-#      else if(izClass == 'sausageIZ')
-#        dliz[[i]] = sausageIZ(object@logs[[i]], plotRadius)
-
-    
- #   dliz = downLogIZs(dliz, description=description)
-    
-#    return(dliz)
-#}   #downLogIZs method for 'downLogs'
-#)   #setMethod
-
 
 
 

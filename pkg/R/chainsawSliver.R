@@ -16,7 +16,7 @@ chainsawSliver = function(downLog,
 #
 #   However, the above is controlled by the calling routine, so actually this
 #   will cut a slice out of the log for any intersection with the plot. Since
-#   the intersection is passed as an argument, it is up to the clling routine
+#   the intersection is passed as an argument, it is up to the calling routine
 #   again to make sure that in fact, there is an intersection to begin with!
 #
 #   The main idea here is summarized in the following steps...
@@ -38,6 +38,9 @@ chainsawSliver = function(downLog,
 #   volume. Update (17-June): It looks like this method works fine as it
 #   is unbiased when all plots within the inclusion zone are considered. Indeed,
 #   it is remarkably good.
+#
+#   24-Feb-2011: Added 'Length', 'surfaceArea', 'coverageArea' to the variables
+#                that can be estimated with CS method. 
 #
 #   Arguments...
 #     downLog = an object of class "downLog"
@@ -83,14 +86,14 @@ chainsawSliver = function(downLog,
 #   tansformation matrix and its inverse...
 #
     trMat = transfMatrix(downLog@logAngle, coordinates(downLog@location))
-    trMatInv = solve(trMat);
+    trMatInv = solve(trMat)
 
     logLen = downLog@logLen
     buttDiam = downLog@buttDiam
     topDiam = downLog@topDiam
     solidType = downLog@solidType
-    if(is.null(solidType))
-      stop('***>chainSaw method requires use of the built-in taper function for log: solidType must be non-NULL!')
+    #if(is.null(solidType))
+      #stop('***>chainSaw method requires use of the built-in taper function for log: solidType must be non-NULL!')
 
 #    
 #   transform log back so it is laying east with butt at x=0...
@@ -119,21 +122,25 @@ chainsawSliver = function(downLog,
 #   be introduced by the transformations, so we need to catch that or it could
 #   introduce NaNs...
 #    
-    r = solidType
     sectLens = range(sect[,'x'])                        #min/max lengths for bounding bolt
     if(sectLens[1] < 0)                                 #catch little rounding error
       sectLens[1] = 0
     if(sectLens[2] > logLen)                            #again
       sectLens[2] = logLen
+    boltLen = sectLens[2] - sectLens[1]                 #bounding bolt length
     length = seq(sectLens[1], sectLens[2], len=nSegs)   #lengths for the bolt section taper
-    #diam = topDiam + (buttDiam - topDiam) * ((logLen - length)/logLen)^(2/r)
-    taper = .StemEnv$wbTaper(buttDiam, topDiam, logLen, nSegs=nSegs, solidType, length)
-    diam = taper$diameter
-    length = taper$length
+    if(!is.null(solidType)) {
+      taper = .StemEnv$wbTaper(buttDiam, topDiam, logLen, nSegs=nSegs, solidType, length)
+      diameter = taper$diameter
+    }
+    else {
+      diameter = taperInterpolate(downLog, 'diameter', length)
+      taper = data.frame(diameter, length)
+    }
    
 #   from makeLog; get the entire bolt profile outline...    
-    rad = diam/2                                         #radius
-    profile = data.frame( rad = c(-rad, rev(rad)) )      #center at diam=x=0 
+    rad = diameter/2                                         #radius
+    profile = data.frame( rad = c(-rad, rev(rad)) )      #center at diameter=x=0 
     profile$length = c(length, rev(length))              #duplicate lengths too
     profile = rbind(profile, profile[1,])                #close the polygon
     np = nrow(profile)
@@ -167,9 +174,26 @@ chainsawSliver = function(downLog,
 #   calculate bolt and sliver section volume, the latter assuming volume gets apportioned
 #   the same as the sliver area w/r to the bolt...
 #
-    boltVol = .StemEnv$wbVolume(buttDiam, topDiam, logLen, solidType, sectLens[2]) -
-              .StemEnv$wbVolume(buttDiam, topDiam, logLen, solidType, sectLens[1])
+    if(!is.null(solidType)) { 
+      boltVol = .StemEnv$wbVolume(buttDiam, topDiam, logLen, solidType, sectLens[2]) -
+                .StemEnv$wbVolume(buttDiam, topDiam, logLen, solidType, sectLens[1])
+      boltSA = .StemEnv$wbSurfaceArea(buttDiam, topDiam, logLen, solidType,
+                                      sectLens[1], sectLens[2])
+      boltCA = .StemEnv$wbCoverageArea(buttDiam, topDiam, logLen, solidType, 
+                                       sectLens[1], sectLens[2])
+    }
+    else {
+      boltVol = .StemEnv$SmalianVolume(taper)$logVol           #note, logVol==whole bolt
+      boltSA = .StemEnv$splineSurfaceArea(taper, sectLens[1], sectLens[2])
+      boltCA = .StemEnv$splineCoverageArea(taper, sectLens[1], sectLens[2])
+    }
     sectVol = propArea*boltVol
+    sectSA = propArea*boltSA
+    sectCA = propArea*boltCA
+    boltBms = boltVol*downLog@conversions['volumeToWeight']
+    sectBms = propArea*boltBms
+    boltCarbon = boltBms*downLog@conversions['weightToCarbon']
+    sectCarbon = propArea*boltCarbon
     
 
     if(!runQuiet) {
@@ -180,12 +204,21 @@ chainsawSliver = function(downLog,
     }  
     
     z = list(#gBolt = gBolt,                #"gpc.polygon" object of the minimal bounding bolt
-             rotBolt = rotBolt,            #matrix outline of the minimal bounding bolt
-             boltVol = boltVol,            #bounding bolt volume
-             sectVol = sectVol,            #sliver section volume
-             area = c(propArea=propArea,   #proportion sliver is to bolt w/r to area
-                      boltArea=boltArea,   #bolt polygon area
-                      sectArea=sectArea)   #sliver polygon area
+             rotBolt = rotBolt,             #matrix outline of the minimal bounding bolt
+             boltVol = boltVol,             #bounding bolt volume
+             sectVol = sectVol,             #sliver section volume
+             area = c(propArea=propArea,    #proportion sliver is to bolt w/r to area
+                      boltArea=boltArea,    #bolt polygon area
+                      sectArea=sectArea),   #sliver polygon area
+             boltLen = boltLen,             #bolt length == section length
+             boltSA = boltSA,               #bolt surface area
+             sectSA = sectSA,               #sliver surface area
+             boltCA = boltCA,               #bolt coverage area
+             sectCA = sectCA,               #sliver coverage area
+             boltBms = boltBms,             #bolt woody biomass  (can be NA)
+             sectBms = sectBms,             #sliver woody biomass  (can be NA)
+             boltCarbon = boltCarbon,       #bolt carbon mass  (can be NA)
+             sectCarbon = sectCarbon        #sliver carbon  (can be NA)
             ) 
     return(z)
         

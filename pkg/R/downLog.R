@@ -50,10 +50,6 @@
 
 
 
-
-
-
-
           
 #================================================================================
 #  1. method for taper data frame object construction of class downLog...
@@ -64,10 +60,17 @@ function(object,
          solidType = NULL,             #defaults to null for passed taper
          logAngle = 0,                 #canonical
          logVol = NULL,
+         surfaceArea = NULL,
+         coverageArea = NULL,
+         biomass = NA,
+         vol2wgt = NA,
+         carbon = NA,
+         wgt2carbon = NA,
          centerOffset = c(x=0, y=0),   #log center offset
          species = '',
          #logID = unlist(strsplit(tempfile('log:',''),'\\/'))[2],
-         logID = paste('log',format(runif(1),digits=6),sep=':'),
+         #logID = paste('log',format(runif(1),digits=6),sep=':'),
+         logID = paste('log',.StemEnv$randomID(),sep=':'),
          description = NULL,
          userExtra = NULL,
          units = 'metric',
@@ -113,11 +116,10 @@ function(object,
       description = as.character(description)
 
 #
-#   assign diameters, length, etc...
+#   assign diameters, etc...
 #
     buttDiam = taper[1, 'diameter']
     topDiam = taper[nSegs+1, 'diameter']
-    #logLen = taper[nSegs+1, 'length']
     solidType = solidType   
     
   
@@ -136,11 +138,56 @@ function(object,
 #   
     if(is.null(logVol) || is.na(logVol)) {
       if(is.null(solidType))                         #user-defined taper
-        logVol = .StemEnv$SmalianVolume(taper)
+        logVol = .StemEnv$SmalianVolume(taper)$logVol
       else                                           #from default taper equation
         logVol = .StemEnv$wbVolume(buttDiam, topDiam, logLen, solidType)
     }
+
+#
+#   same type of test for surface area...
+#
+    if(is.null(surfaceArea) || is.na(surfaceArea)) {
+      if(is.null(solidType))                        #user-defined taper
+        surfaceArea = .StemEnv$splineSurfaceArea(taper, lenBot=0, lenTop=logLen)   #spline function
+      else                                          #default taper equation
+        surfaceArea = .StemEnv$wbSurfaceArea(buttDiam, topDiam, logLen, solidType, lenBot=0, lenTop=logLen)
+    }
+
+#
+#   and again for coverage area...
+#
+    if(is.null(coverageArea) || is.na(coverageArea)) {
+      if(is.null(solidType))                        #user-defined taper
+        coverageArea = .StemEnv$splineCoverageArea(taper, lenBot=0, lenTop=logLen)   #spline function
+      else                                          #default taper equation
+        coverageArea = .StemEnv$wbCoverageArea(buttDiam, topDiam, logLen, solidType, lenBot=0, lenTop=logLen)
+    }
     
+#
+#   biomass and carbon are a little different, they can be NA...
+#
+    if(is.na(biomass) && !is.na(vol2wgt))
+      biomass = logVol * vol2wgt
+    else if(!is.na(biomass) && is.na(vol2wgt))
+      vol2wgt = biomass/logVol
+    else if(is.na(biomass) && is.na(vol2wgt)) {   #cast to real NAs
+      biomass = NA_real_
+      vol2wgt = NA_real_
+    }
+    else if (!is.na(biomass) && !is.na(vol2wgt))
+      stop('Please specify either biomass or vol2wgt, but not both!')
+    if(!is.na(biomass) && is.na(carbon) && !is.na(wgt2carbon))
+      carbon = biomass * wgt2carbon
+    else if(!is.na(biomass) && !is.na(carbon) && is.na(wgt2carbon))
+      wgt2carbon = carbon/biomass
+    else if(is.na(carbon) && is.na(wgt2carbon)) {   #cast to real NAs
+      carbon = NA_real_
+      wgt2carbon = NA_real_
+    }
+    else if (!is.na(carbon) && !is.na(wgt2carbon))
+      stop('Please specify either carbon or wgt2carbon, but not both!')
+      
+
     
 #
 #   now, get the full profile for the outline as if the tree were standing upright
@@ -205,13 +252,29 @@ function(object,
 #
 #   now create it for real, it should be fine by this point...
 #
-    log = new('downLog', buttDiam=buttDiam, topDiam=topDiam, logLen=logLen,
-              logAngle=logAngle, solidType=solidType, logVol = logVol, 
-              taper=taper, profile=profile, rotLog = rotLog,
-              spLog = spLog, slNeedleAxis=slNeedleAxis,
-              units = units, spUnits = spUnits,
+    log = new('downLog',
+              buttDiam = buttDiam,
+              topDiam = topDiam,
+              logLen = logLen,
+              logAngle = logAngle,
+              solidType = solidType,
+              logVol = logVol,
+              surfaceArea = surfaceArea,
+              coverageArea = coverageArea,
+              biomass = biomass,
+              carbon = carbon,
+              conversions = c(volumeToWeight=vol2wgt, weightToCarbon=wgt2carbon),
+              taper = taper,
+              profile = profile,
+              rotLog = rotLog,
+              spLog = spLog,
+              slNeedleAxis = slNeedleAxis,
+              units = units,
+              spUnits = spUnits,
               location = location,
-              description=description, userExtra = userExtra, species = species
+              description = description,
+              userExtra = userExtra,
+              species = species
              )
 
     if(!runQuiet)
@@ -243,10 +306,17 @@ function(#object,
          solidType = 3,                #defaults to 3  
          logAngle = 0,                 #canonical position
          logVol = NULL,
+         surfaceArea = NULL,
+         coverageArea = NULL,
+         biomass = NA,
+         vol2wgt = NA,
+         carbon = NA,
+         wgt2carbon = NA,
          centerOffset = c(x=0, y=0),   #log center offset
          species = '',
          #logID = unlist(strsplit(tempfile('log:',''),'\\/'))[2],
-         logID = paste('log',format(runif(1),digits=6),sep=':'),
+         #logID = paste('log',format(runif(1),digits=6),sep=':'),
+         logID = paste('log',.StemEnv$randomID(),sep=':'),
          description = NULL,
          userExtra = NULL,
          units = 'metric',
@@ -297,7 +367,10 @@ function(#object,
 #   all other checks will be made in the data frame constructor or during
 #   validity checking on the proposed object...
 #
-    theLog = downLog(taper, logAngle = logAngle, logVol = logVol, solidType=solidType, 
+    theLog = downLog(taper, logAngle = logAngle, logVol = logVol, solidType=solidType,
+                     surfaceArea = surfaceArea, coverageArea = coverageArea,
+                     biomass = biomass, vol2wgt = vol2wgt,
+                     carbon = carbon, wgt2carbon = wgt2carbon,
                      centerOffset = centerOffset, species = species,
                      logID = logID, description = description,
                      userExtra = userExtra, units = units,

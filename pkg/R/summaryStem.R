@@ -72,16 +72,30 @@ function(object,
     if(object@units == .StemEnv$msrUnits$metric) {
       cat('\n  Butt diameter = ', object@buttDiam, ' meters (', object@buttDiam*.StemEnv$m2cm, ' cm)',sep='')
       cat('\n  Top diameter = ', object@topDiam, ' meters (', object@topDiam*.StemEnv$m2cm, ' cm)', sep='')
-      cat('\n  Log length = ', object@logLen, 'meters')
-      cat('\n  Log volume = ', object@logVol, 'cubic meters')
+      cat('\n  Log length =', object@logLen, 'meters')
+      cat('\n  Log volume =', object@logVol, 'cubic meters')
+      cat('\n  Log surface area =', object@surfaceArea, 'square meters')
+      cat('\n  Log coverage area =', object@coverageArea, 'square meters')
     }
     else {
       cat('\n  Butt diameter = ', object@buttDiam, ' feet (', object@buttDiam*.StemEnv$ft2in, ' in)',sep='')
       cat('\n  Top diameter = ', object@topDiam, ' feet (', object@topDiam*.StemEnv$ft2in, ' in)', sep='')
-      cat('\n  Log length = ', object@logLen, 'feet')
-      cat('\n  Log volume = ', object@logVol, 'cubic feet')
+      cat('\n  Log length =', object@logLen, 'feet')
+      cat('\n  Log volume =', object@logVol, 'cubic feet')
+      cat('\n  Log surface area =', object@surfaceArea, 'square feet')
+      cat('\n  Log coverage area =', object@coverageArea, 'square feet')
     }
-    cat('\n  Log angle of lie = ', object@logAngle, 'radians')
+    if(!is.na(object@biomass))
+      cat('\n  Log biomass =', object@biomass)
+    if(!is.na(object@carbon))
+      cat('\n  Log carbon =', object@carbon)
+    if(!is.na(object@conversions['volumeToWeight']))
+      cat('\n  Volume to weight conversion =', object@conversions['volumeToWeight'])
+    if(!is.na(object@conversions['weightToCarbon']))
+      cat('\n  Weight to carbon conversion =', object@conversions['weightToCarbon'])
+
+    
+    cat('\n  Log angle of lie =', object@logAngle, 'radians')
     cat(' (', .StemEnv$rad2Deg(object@logAngle), ' degrees)', sep='')
     #cat('\n  Log angle of lie = ', .StemEnv$rad2Deg(object@logAngle), 'degrees')
     cat('\n  Taper parameter = ', ifelse(is.null(object@solidType), 'NULL', object@solidType) )
@@ -130,19 +144,57 @@ function(object,
     cat('\n  There are',numLogs,'logs in the population')
     cat('\n  Units of measurement: ', object@units)
 
+#
+#   totals over all logs...
+#
     totVol = object@stats['total','volume']
-    avgVol = object@stats['mean','volume']
-    avgLen = object@stats['mean','length']
+    totSA = object@stats['total','surfaceArea']
+    totCA = object@stats['total','coverageArea']
+    totBms = object@stats['total','biomass']
+    totC = object@stats['total','carbon']
     if(object@logs[[1]]@units == .StemEnv$msrUnits$metric) {
       cat('\n  Population log volume = ', totVol, 'cubic meters')
-      cat('\n  Average volume/log= ', avgVol, 'cubic meters')
-      cat('\n  Average length/log= ', avgLen, 'meters')
+      cat('\n  Population log surface area = ', totSA, 'square meters')
+      cat('\n  Population log coverage area = ', totCA, 'square meters')
     }
     else {
       cat('\n  Population log volume = ', totVol, 'cubic feet')
-      cat('\n  Average volume/log= ', avgVol, 'cubic feet')
-      cat('\n  Average length/log= ', avgLen, 'feet')
+      cat('\n  Population log surface area = ', totSA, 'square feet')
+      cat('\n  Population log coverage area = ', totCA, 'square feet')
     }
+    if(!is.na(totBms))
+      cat('\n  Population log biomass = ', totBms)
+    if(!is.na(totC))
+      cat('\n  Population log carbon = ', totC)
+
+
+#
+#   averages per log...
+#
+    avgVol = object@stats['mean','volume']
+    avgSA = object@stats['mean','surfaceArea']
+    avgCA = object@stats['mean','coverageArea']
+    avgBms = object@stats['mean','biomass']
+    avgC = object@stats['mean','carbon']
+    avgLen = object@stats['mean','length']
+    if(object@logs[[1]]@units == .StemEnv$msrUnits$metric) {
+      cat('\n  Average volume/log = ', avgVol, 'cubic meters')
+      cat('\n  Average surface area/log = ', avgSA, 'square meters')
+      cat('\n  Average coverage area/log = ', avgCA, 'square meters')
+      cat('\n  Average length/log = ', avgLen, 'meters')
+    }
+    else {
+      cat('\n  Average volume/log = ', avgVol, 'cubic feet')
+      cat('\n  Average surface area/log = ', avgSA, 'square feet')
+      cat('\n  Average coverage area/log = ', avgCA, 'square feet')
+      cat('\n  Average length/log = ', avgLen, 'feet')
+    }
+    if(!is.na(avgBms))
+      cat('\n  Average biomass/log =', avgBms)
+    if(!is.na(avgC))
+      cat('\n  Average carbon/log =', avgC)
+    
+    cat('\n(**All statistics exclude NAs)')
     
 
     cat('\n\n  Encapulating bounding box...\n')

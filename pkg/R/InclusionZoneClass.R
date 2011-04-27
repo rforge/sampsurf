@@ -15,8 +15,13 @@
 #     4. chainSawIZ; the chain saw method for sampling down cwd
 #     5. sausageIZ: the sausage method of sampling down cwd
 #     6. pointRelascopeIZ: the point relascope method for sampling down cwd
+#     7. perpendicularDistanceIZ: normal PDS
+#     8. omnibusPDSIZ: for omnibus estimation under normal PDS
+#     9. distanceLimitedMCIZ: for variable plot MC
+#    10. distanceLimitedPDSIZ: for DLPDS
+#    11. omnibusDLPDSIZ: combines omnibus PDS component with DL component
 #
-#     7. downLogIZs: a container class for multiple objects of any subclass
+#    12. downLogIZs: a container class for multiple objects of any subclass
 #                    of 'downLogIZ'
 #
 #Author...									Date: 20-Aug-2010
@@ -65,7 +70,7 @@ setClass('InclusionZone',
 
                  if(length(object@puaBlowup) > 1)
                    return('puaBlowup must be a scalar!')
-                 if(object@puaBlowup < 0)
+                 if(!is.na(object@puaBlowup) && object@puaBlowup < 0)  #it can be NA for DLPDS total
                    return('puaBlowup factor must be non-negative!')
 
                  if(length(object@puaEstimates > 0)) {
@@ -135,14 +140,14 @@ setClass('downLogIZ',
 
 #=================================================================================================
 #
-#  3. the standup class is just a direct descendant of 'InclusionZone'...
+#  3. the standup class is just a direct descendant of 'downLogIZ'...
 #
 #
 setClass('standUpIZ',
     representation(circularPlot = 'circularPlot'              #circularPlot object
                   ),
-    prototype = list(#downLog = new('downLog'),         #some defaults for validity checking
-                    ),
+    #prototype = list(#downLog = new('downLog'),         #some defaults for validity checking
+    #                ),
     contains = 'downLogIZ',                             #a subclass of the virtual 'downLogIZ' class
     validity = function(object) {
 
@@ -164,7 +169,7 @@ setClass('standUpIZ',
 
 #=================================================================================================
 #
-#  4. the 'chainSawIZ' class is just a direct descendant of 'InclusionZone'...
+#  4. the 'chainSawIZ' class is just a direct descendant of 'downLogIZ'...
 #
 #
 setClass('chainSawIZ',
@@ -199,11 +204,11 @@ setClass('chainSawIZ',
 
 #=================================================================================================
 #
-#  5. the sausage class is a direct descendant of 'InclusionZone'...
+#  5. the sausage class is a direct descendant of 'downLogIZ'...
 #
 #
 setClass('sausageIZ',
-    representation(sausage = 'matrix',              #holds the sausage in matrix form
+    representation(sausage = 'matrix',              #holds the sausage incl zone in matrix form
                    radius = 'numeric',              #plot radius for sausage
                    area = 'numeric',                #exact area of the inclusion zone
                    perimeter = 'SpatialPolygons',   #sausage perimeter in 'SpatialPolygons' form
@@ -236,7 +241,7 @@ setClass('sausageIZ',
 
 #=================================================================================================
 #
-#  6. the pointRelascope class is a direct descendant of 'InclusionZone'...
+#  6. the pointRelascope class is a direct descendant of 'downLogIZ'...
 #
 #     I'll call the "mastercard" double/dual circle (blob) just "dual"...
 #
@@ -259,7 +264,7 @@ setClass('pointRelascopeIZ',
                    return('plot radius must be positive non-missing!')
 
                  if(object@area < 0 || is.na(object@area))
-                   return('object has negative or missing inlusion zone area!')
+                   return('object has negative or missing inclusion zone area!')
 
                  if(object@pgDualArea < 0 || is.na(object@pgDualArea))
                    return('object has negative or missing polygon area!')
@@ -280,9 +285,164 @@ setClass('pointRelascopeIZ',
 
 
 #=================================================================================================
+#
+#  7. the perpendicularDistanceIZ class is a direct descendant of 'downLogIZ'...
+#
+#
+#     below: hc = homogeneous coordinates
+#
+#     added: 26-Jan-2011
+#
+setClass('perpendicularDistanceIZ',
+    representation(pds = 'perpendicularDistance',   #perpendicular distance sampling object
+                   izPerim = 'matrix',              #holds the iz perimeter in matrix form w/ hc
+                   area = 'numeric',                #exact area of the inclusion zone
+                   perimeter = 'SpatialPolygons',   #izone perimeter in 'SpatialPolygons' form
+                   pgArea = 'numeric',              #polygon izone area approximation
+                   pdsType = 'character'            #protocol method: see validity below
+                  ),
+    contains = 'downLogIZ',                         #a subclass of the 'downLogIZ' class
+    validity = function(object) {
+                 if(object@area < 0 || is.na(object@area))
+                   return('object has negative or missing inclusion zone area!')
+
+                 if(object@pgArea < 0 || is.na(object@pgArea))
+                   return('object has negative or missing polygon area!')
+
+                 if(!identical(object@pds@units, object@units))
+                   return('object units do not match the perpendicularDistance object units')
+
+                 if(!object@pdsType %in% .StemEnv$pdsTypes)
+                   return('illegal pdsType requested!')
+
+                 if(object@pds@units != object@downLog@units)
+                   return('units for pds and downLog components incompatible!')
+                 
+                 return(TRUE)
+               } #validity check
+) #class perpendicularDistanceIZ 
+
+
+
+
+
+
+
+
+
 #=================================================================================================
 #
-#  7. the downLogIZs class (plural) is a container class for an number of "downLogIZ" objects...
+#  8. the omnibusPDSIZ class is a direct descendant of 'perpendicularDistanceIZ'...
+#
+#
+#     added: 4-Feb-2011
+#
+setClass('omnibusPDSIZ',
+    contains = 'perpendicularDistanceIZ'
+) #class omnibusPDSIZ 
+
+
+
+
+
+
+#=================================================================================================
+#
+#  9. the distanceLimitedMCIZ class is a direct descendant of 'downLogIZ'...
+#
+#
+#     below: hc = homogeneous coordinates
+#
+#     added: 22&23-Mar-2011
+#
+setClass('distanceLimitedMCIZ',
+    representation(dls = 'distanceLimited',         #the distanceLimited sampling object
+                   izPerim = 'matrix',              #holds the iz perimeter in matrix form w/ hc
+                   area = 'numeric',                #exact area of the inclusion zone
+                   perimeter = 'SpatialPolygons',   #izone perimeter in 'SpatialPolygons' form
+                   pgArea = 'numeric'               #polygon izone area approximation
+                  ),
+    contains = 'downLogIZ',                         #a subclass of the 'downLogIZ' class
+    validity = function(object) {
+                 if(object@area < 0 || is.na(object@area))
+                   return('object has negative or missing inclusion zone area!')
+
+                 if(object@pgArea < 0 || is.na(object@pgArea))
+                   return('object has negative or missing polygon area!')
+                 
+                 return(TRUE)
+               } #validity check
+) #class distanceLimitedMCIZ 
+
+
+
+
+
+
+
+#=================================================================================================
+#
+#  10. the distanceLimitedPDSIZ class is a direct descendant of 'InclusionZone'...
+#
+#
+#     added: 8&10-Mar-2011
+#
+setClassUnion('pdsIZNull', c('perpendicularDistanceIZ', 'omnibusPDSIZ', 'NULL')) #allow for omnibus
+setClassUnion('dlmcIZNull', c('distanceLimitedMCIZ', 'NULL'))
+setClass('distanceLimitedPDSIZ',
+    representation(dls = 'distanceLimited',               #the distanceLimited ArealSampling object
+                   dlsDiameter = 'numeric',               #limiting diameter
+                   pdsPart = 'pdsIZNull',                 #pds object for pds section of the log
+                   dlsPart = 'dlmcIZNull',                #distance limited component of the log
+                   pdsFull = 'pdsIZNull'                  #as if this were a full PDS object  (never NULL?)
+                  ),
+    contains = 'perpendicularDistanceIZ',
+         
+    validity = function(object) {
+
+                 if(object@dlsDiameter <= 0)
+                   return('distance limit diameter must be positive')
+                 
+                 return(TRUE)
+               } #validity check
+                  
+) #class distanceLimitedPDSIZ 
+
+
+
+
+
+
+
+
+#=================================================================================================
+#
+#  11. the omnibusDLPDSIZ class is a direct descendant of 'distanceLimitedPDSIZ'...
+#
+#      combines DL with omnibus PDS
+#
+#     added: 15-Mar-2011
+#
+setClass('omnibusDLPDSIZ',
+    contains = 'distanceLimitedPDSIZ'
+) #class omnibusDLPDSIZ 
+
+
+         
+
+
+
+         
+
+
+
+
+
+
+#=================================================================================================
+#=================================================================================================
+#
+#  12. the downLogIZs class (plural) is a container class for an number of "downLogIZ" objects...
 #
 setClass('downLogIZs',
     representation(iZones = 'list',                    #list of some subclass of "downLogIZ"
@@ -290,7 +450,7 @@ setClass('downLogIZs',
                    bbox = 'matrix',                    #overall bounding box
                    description = 'character'           #hmmm?
                   ),
-    prototype = list(logs = list(),                  #empty, zero-length list
+    prototype = list(iZones = list(),                  #empty, zero-length list
                      units = .StemEnv$msrUnits$metric,
                      bbox = matrix(rep(0,4), nrow=2, dimnames=list(c('x','y'), c('min','max'))),
                      description = ''
@@ -329,7 +489,7 @@ setClass('downLogIZs',
 #                consistent class check...
                  class = class(object@iZones[[1]])
                  for(i in seq_len(numIZs))
-                   if(class(object@iZones[[i]]) != class)
+                   if(class(object@iZones[[i]]) != class)  #could us is() for softer comparison w/ inheritance?
                      return('You can not mix inclusion classes in the population!')
 #                more...
                  #if(!extends(class, 'InclusionZone'))  #last test passed for all, so just check first

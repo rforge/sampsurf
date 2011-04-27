@@ -5,7 +5,9 @@
 #
 #   The methods include...
 #     1. a constructor for 'circularPlot'
-#     2. a constructor for 'pointRelascope'
+#     2. a constructor for 'pointRelascope' (Jan 2011)
+#     3. a constructor for 'perpendicularDistance' (Jan 2011)
+#     4. a constructor for 'distanceLimit' (Mar 2011)
 #
 #   Note that the sp package should be loaded for the complete functionality. 
 #
@@ -32,6 +34,18 @@ if(!isGeneric("pointRelascope"))
              signature = c('angleDegrees')
             )
 
+if(!isGeneric("perpendicularDistance")) 
+  setGeneric('perpendicularDistance',  
+             function(kpds, ...) standardGeneric('perpendicularDistance'),
+             signature = c('kpds')
+            )
+
+if(!isGeneric("distanceLimited")) 
+  setGeneric('distanceLimited',  
+             function(distanceLimit, ...) standardGeneric('distanceLimited'),
+             signature = c('distanceLimit')
+            )
+
           
 #================================================================================
 #  1. method for functions and class circularPlot...
@@ -45,7 +59,8 @@ function(radius,
          description = 'fixed area circular plot',
          nptsPerimeter = 100,
          #spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
-         spID = paste('cp',format(runif(1,0,10000),digits=8),sep=':'),
+         #spID = paste('cp',format(runif(1,0,10000),digits=8),sep=':'),
+         spID = paste('cp',.StemEnv$randomID(),sep=':'),
          ...
         )
 {
@@ -155,3 +170,64 @@ function(angleDegrees,
 }   #pointRelascope constructor
 )   #setMethod
        
+
+
+
+
+          
+#================================================================================
+#  3. constructor method for class perpendicularDistance...
+#
+setMethod('perpendicularDistance',
+          signature(kpds = 'numeric'),
+function(kpds,
+         units = 'metric',
+         description = 'perpendicular distance method',
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   get the volume, surface area, or coverage factor...
+#
+    if(units=='metric')
+      factor = .StemEnv$smpHectare/(2*kpds)
+    else
+      factor = .StemEnv$sfpAcre/(2*kpds)
+
+    pds = new('perpendicularDistance', kpds=kpds, factor=factor, units=units,
+              description=description
+             )
+
+    return(pds)
+}   #perpendicularDistance constructor
+)   #setMethod
+    
+
+
+
+
+          
+#================================================================================
+#  4. constructor method for class distanceLimited...
+#
+setMethod('distanceLimited',
+          signature(distanceLimit = 'numeric'),
+function(distanceLimit,
+         units = 'metric',
+         description = 'distance limited method',
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+    dl = new('distanceLimited',
+             distanceLimit=distanceLimit,
+             units=units,
+             description=description
+            )
+
+    return(dl)
+}   #distanceLimited constructor
+)   #setMethod
+    

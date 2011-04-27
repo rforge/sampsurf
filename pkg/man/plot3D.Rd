@@ -1,17 +1,25 @@
 \name{plot3D}
 \alias{plot3D}
 \alias{plot3D-method}
+%\alias{plot3D,sampSurf-method}  %in sampSurf-class.Rd
+%\alias{plot3D,Tract-method}     %in Tract-class.Rd
+\alias{plot3D,InclusionZoneGrid-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 
-\title{ Interactive 3D plot of objects from package \dQuote{sampSurf} }
+\title{ Interactive 3D Plot of Objects From Package \dQuote{sampSurf} }
 
-\description{
-  This routine uses the \dQuote{\code{rgl}} package to display objects of
-  class "\code{\linkS4class{Tract}}" or subclass, and
+\description{ This routine uses the \dQuote{\code{rgl}} package to
+  display objects of class "\code{\linkS4class{Tract}}" or subclass,
+  "\code{\linkS4class{InclusionZoneGrid}}" or subclass, and
   "\code{\linkS4class{sampSurf}}" objects in a three dimensional
-  representation of the surface.
-}
+  representation of the surface.  }
 
+%
+% the \usage below will create a warning in running a check on the
+% package because the generic is not here, but in base, so it says there
+% is a usage in Rd that is not in the code. I tried a number of things,
+% but settled on leaving it for now...
+%
 \usage{
 plot3D(x, ...)
 }
@@ -41,8 +49,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
   in the \dQuote{\code{rgl}} package. }
 
 \seealso{
-%raster::\code{\link[raster:plot3d]{plot3D}}
-raster::\code{plot3D}
+raster::\code{\link[raster]{plot3D}}, \code{\link[rgl]{r3d}} 
 }
 
 \examples{

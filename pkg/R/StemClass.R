@@ -7,6 +7,11 @@
 #   2. downLog -- for "normal" down logs
 #   3. downLogs -- container class for collections of downLog(s)
 #
+#   See page 361-362 in Chamgers (2008) for information on vlaidity checking--
+#   specifically, by the time the methods below are called, we can assume
+#   that all validity checks have been made on the object's slots and
+#   superclass constraints.
+#
 #Author...									Date: 6-Aug-2010
 #	Jeffrey H. Gove
 #	USDA Forest Service
@@ -75,8 +80,12 @@ setClass('downLog',
                    logLen = 'numeric',            #log length
                    logAngle = 'numeric',          #log lie angle from top pointing due East **RADIANS**
                    solidType = 'numericNULL',     #used in generic taper function
-                   #solidType = 'numeric',         #used in generic taper function
                    logVol = 'numeric',            #this would be total volume in cubic units
+                   surfaceArea = 'numeric',       #total log surface area
+                   coverageArea = 'numeric',      #projected coverage area
+                   biomass = 'numeric',           #total log biomass--green or dry as desired
+                   carbon = 'numeric',            #total log carbon
+                   conversions = 'numeric',       #biomass & carbon conversions
                    taper = 'data.frame',          #dbh and length values
                    profile = 'data.frame',        #log profile of both sides, lying North, not rotated
                    rotLog = 'matrix',             #same as profile, but rotated and translated as desired
@@ -88,7 +97,11 @@ setClass('downLog',
                      logLen = -1,
                      logAngle = 0,               #this is a valid angle
                      solidType = -1,
-                     logVol = -1
+                     logVol = -1,
+                     surfaceArea = -1,
+                     coverageArea = -1,
+                     biomass = -1,
+                     carbon = -1
                     ),
     contains='Stem',                         #a subclass of the virtual 'Stem' class
     validity = function(object) {
@@ -100,15 +113,37 @@ setClass('downLog',
 #                   return('log angle must be 0 <= logAngle <- 360 degrees')
                  if(object@logAngle <0 || object@logAngle > 2*pi)
                    return('log angle must be 0 <= logAngle <- 2*pi radians')
-                 if(!is.null(object@solidType) && (object@solidType <1 || object@solidType > 10))
-                   return('solidType must be 1<=solidType<=10')
+                 if(!is.null(object@solidType) && (object@solidType < .StemEnv$solidTypes[1] ||
+                                                   object@solidType > .StemEnv$solidTypes[2]))
+                   return( paste('solidType must be in: [', .StemEnv$solidTypes[1], ',',
+                                 .StemEnv$solidTypes[2], ']' ) )
+                 
                  taperNames = match(colnames(object@taper), c('diameter','length'))
                  if(any(is.na(taperNames)))
                    return('taper names bad--woops!')
                  if(nrow(object@taper) < 2 || ncol(object@taper) < 2)
                    return('taper data frame must have at least two rows and columns!')
+                 nr = nrow(object@taper)
+                 #identical is too strong here...
+                 if(!isTRUE(all.equal(object@buttDiam, object@taper[1,'diameter'])) ||
+                    !isTRUE(all.equal(object@topDiam, object@taper[nr,'diameter'])) )
+                   return('buttDiam and topDiam must be equal to their respective measurements in the taper data!')
+                 if(!isTRUE(all.equal(object@logLen, object@taper[nr,'length']-object@taper[1,'length'])))
+                   return('logLen must be equal to the total log length in taper data!')
                  if(object@logVol < 0)
-                   reuturn('negative logVol not allowed!')
+                   return('negative logVol not allowed!')
+                 if(object@surfaceArea < 0)
+                   return('negative surfaceArea not allowed!')
+                 if(object@coverageArea < 0)
+                   return('negative coverageArea not allowed!')
+                 if(!is.na(object@biomass) && object@biomass<0)
+                   return('negative biomass not allowed!')
+                 if(!is.na(object@carbon) && object@carbon<0)
+                   return('negative carbon not allowed!')                 
+                 conversionsNames = match(colnames(object@conversions), c('volumeToWeight','weightToCarbon'))
+                 if(any(is.na(conversionsNames)))
+                   return('profile names bad--woops!')
+                 
                  profileNames = match(colnames(object@profile), c('radius','length'))
                  if(any(is.na(profileNames)))
                    return('profile names bad--woops!')
@@ -120,7 +155,6 @@ setClass('downLog',
                    return(paste('spUnits must be commensurate with units,',
                                 'please convert to non-geographic coordinate system!')
                          )
-
 
                  
                  return(TRUE)
@@ -164,7 +198,21 @@ setMethod('initialize', 'downLog',
     colnames(taper) = c('diameter','length')
     .Object@taper = taper
 
-    .Object@logVol = .StemEnv$wbVolume(.Object@buttDiam, .Object@topDiam, .Object@logLen, .Object@solidType)
+    if(.Object@logVol < 0)
+      .Object@logVol = .StemEnv$wbVolume(.Object@buttDiam, .Object@topDiam, .Object@logLen, .Object@solidType)
+    if(.Object@surfaceArea < 0)
+      .Object@surfaceArea = .StemEnv$wbSurfaceArea(.Object@buttDiam, .Object@topDiam,
+                                                   .Object@logLen, .Object@solidType,
+                                                   0, .Object@logLen)
+    if(.Object@coverageArea < 0)
+      .Object@coverageArea = .StemEnv$wbCoverageArea(.Object@buttDiam, .Object@topDiam,
+                                                     .Object@logLen, .Object@solidType,
+                                                     0, .Object@logLen)
+    if(.Object@biomass < 0)
+      .Object@biomass = NA_real_
+
+    if(.Object@carbon < 0)
+      .Object@carbon = NA_real_
 
                
     callNextMethod(.Object, ...)

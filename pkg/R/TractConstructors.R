@@ -54,7 +54,7 @@ function(cellSize,
          data = 0,
          spUnits = CRS(projargs=as.character(NA)),
          description = 'object of class Tract',
-         runQuiet = FALSE,
+         runQuiet = TRUE,
          ...
         )
 {
@@ -64,7 +64,7 @@ function(cellSize,
 #     cellSize = the x,y cell size extents, uniform (square) in x,y ==> scalar
 #     cellDims = number of cells in x,y
 #     cellCenter = the origin cell's center x,y
-#     runQuiet = TRUE: no summary printin; FALSE: print some info
+#     runQuiet = TRUE: no summary printing; FALSE: print some info
 #     ... = to pass on or ignore
 #
 #
@@ -135,7 +135,7 @@ function(object = c(x=10, y=10),  #grid maximum extents
          data = 0,
          spUnits = CRS(projargs=as.character(NA)),
          description = 'object of class Tract',
-         runQuiet = FALSE,
+         runQuiet = TRUE,
          ...
         )
 {
@@ -144,7 +144,7 @@ function(object = c(x=10, y=10),  #grid maximum extents
 #   Arguments...
 #     object = the actual x,y extents of the tract with lower bounds (0,0) always
 #     cellSize = the x,y cell size extents, uniform (square) in x,y ==> scalar
-#     runQuiet = TRUE: no summary printin; FALSE: print some info
+#     runQuiet = TRUE: no summary printing; FALSE: print some info
 #     ... = to pass on or ignore
 #
 #
@@ -183,7 +183,7 @@ function(object,
          data = 0,
          spUnits = CRS(projargs=as.character(NA)),
          description = 'object of class Tract',
-         runQuiet = FALSE,
+         runQuiet = TRUE,
          ...
         )
 {
@@ -193,7 +193,7 @@ function(object,
 #     object = the bbox extents of the tract which can have lower limits that
 #              are not necessarily (0,0)
 #     cellSize = the x,y cell size extents, uniform (square) in x,y ==> scalar
-#     runQuiet = TRUE: no summary printin; FALSE: print some info
+#     runQuiet = TRUE: no summary printing; FALSE: print some info
 #     ... = to pass on or ignore
 #
 #
@@ -231,7 +231,7 @@ setMethod('Tract',
 function(object,
          units = 'metric',
          description = 'object of class Tract',
-         runQuiet = FALSE,
+         ##runQuiet = TRUE,
          ...
         )
 {
@@ -281,7 +281,7 @@ setMethod('bufferedTract',
           signature(bufferWidth = 'numeric', tract = 'Tract'),
 function(bufferWidth,
          tract,
-         runQuiet = FALSE,
+         ##runQuiet = TRUE,
          ...
         )
 {

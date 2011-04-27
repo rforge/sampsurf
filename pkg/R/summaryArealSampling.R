@@ -2,6 +2,9 @@
 #
 #   Methods for generic summary() for ArealSampling class...
 #     (1) circularPlot class
+#     (2) pointRelascope class
+#     (3) perpendicularDistance class
+#     (4) distanceLimited class
 #
 #Author...									Date: 20-Aug-2010
 #	Jeffrey H. Gove
@@ -60,7 +63,6 @@ function(object,
 #   add a little to 'ArealSampling' method for 'circularPlot'...
 #------------------------------------------------------------------------------
     callNextMethod()
-    cat('    (Above coordinates are for plot center)\n')
 
     cat('\ncircularPlot...')
     if(object@units == .StemEnv$msrUnits$metric) {
@@ -75,9 +77,10 @@ function(object,
     }
     cat('\n  spatial units: ', object@spUnits@projargs)
     cat('\n  spatial ID:', object@spID)
-    cat('\n  location...')
+    cat('\n  location (plot center)...')
     cat('\n    x coord: ', coordinates(object@location)[,'x'])
     cat('\n    y coord: ', coordinates(object@location)[,'y'])
+#    cat('\n    (Above coordinates are for plot center)')
 
 #
 #   important check to see if any valid SpatialPolygon exists for the object...
@@ -134,4 +137,75 @@ function(object,
 }   #summary for 'pointRelascope'
 ) #setMethod
 
+    
+
+
+
+
+
+#================================================================================
+# method for class "perpendicularDistance"...
+#
+setMethod('summary',
+          signature(object = 'perpendicularDistance'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'ArealSampling' method for 'perpendicularDistance'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+
+    if(object@units == .StemEnv$msrUnits$metric) {
+      factorUnits = 'cubic meters [square meters] per hectare'
+      kUnits = 'per meter [or dimensionless]'
+    }
+    else {
+      factorUnits = 'cubic feet [square feet] per acre'
+      kUnits = 'per foot [dimensionless]'
+    }
+    
+    cat('\nperpendicularDistance...')
+    cat('\n  kPDS factor =', object@kpds, kUnits, 'for volume [surface/coverage area]')
+    cat('\n  volume [surface/coverage area] factor =', object@factor, factorUnits)
+
+    cat('\n')
+        
+    return(invisible())
+}   #summary for 'perpendicularDistance'
+) #setMethod
+
+
+
+
+
+
+#================================================================================
+# method for class "distanceLimited"...
+#
+setMethod('summary',
+          signature(object = 'distanceLimited'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'ArealSampling' method for 'distanceLimited'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+
+    cat('\ndistanceLimited...')
+    if(object@units == .StemEnv$msrUnits$metric) 
+      dlUnits = 'meters'
+    else 
+      dlUnits = 'feet'
+
+    cat('\n  Distance limit =', object@distanceLimit, dlUnits)
+
+    cat('\n')
+        
+    return(invisible())
+}   #summary for 'distanceLimited'
+) #setMethod
     

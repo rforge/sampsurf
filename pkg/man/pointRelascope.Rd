@@ -22,7 +22,8 @@ pointRelascope(angleDegrees, ...)
 	angle in degrees.
 }
 
-  \item{\dots}{ Arguments that are defined in \code{\link{pointRelascope-methods}}
+  \item{\dots}{ Arguments that are defined in
+	\code{\link{pointRelascope-methods}}
 }
 }
 
@@ -43,7 +44,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 
 
 \seealso{
-\code{\link{pointRelascope-methods}}, the "\code{\linkS4class{ArealSampling}}" class.
+\code{\link{pointRelascope-methods}} and the "\code{\linkS4class{ArealSampling}}" class.
 
 }
 

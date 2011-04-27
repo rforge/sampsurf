@@ -3,6 +3,8 @@
 #   Methods for generic plot3D() rgl driver for class for "sampSurf" &
 #   "Tract" classes.
 #
+#   "InclusionZoneGrid" class added 18-Apr-2011
+#
 #   Note: the only reason to have a method below for "Tract" is so that
 #         the blue.colors() are used by default rather than terrain.colors(),
 #         which it would default to using the "RasterLayer" method, if an
@@ -62,5 +64,31 @@ function(x,
     return(invisible())
 
 }    #plot3D for 'Tract'
+) #setMethod
+
+
+
+#================================================================================
+#  method for class 'InclusionZoneGrid'...
+#
+setMethod('plot3D',
+          signature(x = 'InclusionZoneGrid'),
+function(x,
+         estimate = names(.StemEnv$puaEstimates),
+         col = .StemEnv$blue.colors, #pass the actual function here, not a call!
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+    estimate = match.arg(estimate)
+    x@grid = setValues(x@grid, x@data[,estimate]) 
+    suppressWarnings({                              #for non-plot arguments in ...    
+      plot3D(x@grid, col=col, ...)                  #no next method
+    })   
+
+    return(invisible())
+
+}    #plot3D for 'InclusionZoneGrid'
 ) #setMethod
 

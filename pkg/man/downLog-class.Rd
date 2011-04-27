@@ -54,13 +54,33 @@ methods to create the log objects.
 	  the needle would correspond to the pith if everything were
 	  perfect. }
 	
-    \item{\code{solidType}:}{Object of class \code{"numeric"}: The form
-	  parameter in the simple taper and volume equation presented in Van
-	  Deusen (1990) and Gove and Van Deusen (2011).}
+    \item{\code{solidType}:}{Object of class
+	  \code{"\linkS4class{numericNULL}"}: The form parameter in the
+	  simple taper and volume equation presented in Van Deusen (1990)
+	  and Gove and Van Deusen (2011).}
 	
     \item{\code{logVol}:}{Object of class \code{"numeric"}: The log's
       volume. }
 	
+    \item{\code{surfaceArea}:}{Object of class \code{"numeric"}: Total
+      log surface area in the appropriate units.}
+	
+    \item{\code{coverageArea}:}{Object of class \code{"numeric"}: Total
+      log coverage area in the appropriate units.}
+	
+    \item{\code{biomass}:}{Object of class \code{"numeric"}: Total log
+      biomass. This will be \code{NA} if no conversion was specified at
+      object creation.}
+	
+    \item{\code{carbon}:}{Object of class \code{"numeric"}: Total log
+      carbon content. This will be \code{NA} if no conversion was
+      specified at object creation.}
+	
+    \item{\code{conversions}:}{Object of class \code{"numeric"}: A
+      vector with names \code{c('volumeToWeight','weightToCarbon')}
+      specifying the conversion factors for woody biomass and carbon
+      content. }
+	  
     \item{\code{taper}:}{Object of class \code{"data.frame"}: The log's
 	  taper, either as specified from measurements, or as generated via
 	  \code{\link{downLog}}. }

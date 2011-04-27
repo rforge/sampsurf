@@ -3,7 +3,7 @@
 \alias{pointRelascope-methods}
 \alias{pointRelascope,numeric-method}
 
-\title{ Methods for "pointRelascope" Object Construction in package
+\title{ Methods for "pointRelascope" Object Construction in Package
   \sQuote{sampSurf}}
 
 \description{ There is currently only one method based on the
@@ -31,11 +31,10 @@ construction. It is detailed below.
 	\itemize{
 	  \item{\code{angleDegrees}:}{ The relascope angle in degrees.}
 
-	  \item{\code{units}:}{ Either \dQuote{English} or \dQuote{metric}. These
-	    must be conformable with the projection in \code{spUnits}.}
+	  \item{\code{units}:}{ Either \dQuote{English} or \dQuote{metric}.}
 
 	  \item{\code{description}:}{ A character vector description of the
-		tract.}
+		object.}
 	
 	} %itemize
   } %item

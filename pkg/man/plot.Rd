@@ -13,6 +13,13 @@
   \code{\link{plot-methods}}. 
 }
 
+
+%
+% the \usage below will create a warning in running a check on the
+% package because the generic is not here, but in base, so it says there
+% is a usage in Rd that is not in the code. I tried a number of things,
+% but settled on leaving it for now...
+%
 \usage{
 plot(x, y, ...)
 }

@@ -65,6 +65,17 @@ function(object,
     if(wantChainSaw && !is(object@iZones[[1]], 'sausageIZ'))
       stop('If you want the full chainsaw estimate, you must also specify sausage inclusion zones!')
 
+#
+#   throw a warning if any of the inclusion zones land outside the tract boundary...
+#
+    bb.iz = bbox(object)
+    bb.tr = bbox(tract)
+    if(any(bb.iz[,'min']<bb.tr[,'min']) || any(bb.iz[,'max']>bb.tr[,'max']))
+      warning('Some object incusion zones lie outside the tract--this will impart a bias!!')
+    
+#
+#   heap each inclusion zone in the collection...
+#
     estimate = match.arg(estimate)
     nLogs = length(object@iZones)
     if(!runQuiet) {
@@ -75,13 +86,14 @@ function(object,
       if(!runQuiet)
         cat(i,',',sep='')
       if(wantChainSaw && is(object@iZones[[1]], 'sausageIZ')) {   #need sausage inclusion zones for chainsaw
-         izg.sa = izGrid(object@iZones[[i]], tract)               #first: InclusionZoneGrid for sausage
-         izg = izGridCSFull(izg.sa, tract)                        #then: full chainsaw iz grid
-         description = paste(description,'(Full chainsaw inclusion zone)',sep='\n')
+        izg.sa = izGrid(object@iZones[[i]], tract)                #first: InclusionZoneGrid for sausage
+        izg = izGridCSFull(izg.sa, tract)                         #then: full chainsaw iz grid
+        if(i==1)
+          description = paste(description,'(Full chainsaw inclusion zone)',sep='\n')
       }
       else   
-        izg = izGrid(object@iZones[[i]], tract)           #InclusionZoneGrid
-      tract = heapIZ(izg, tract, estimate = estimate)     #heap it up
+        izg = izGrid(object@iZones[[i]], tract, ...)              #InclusionZoneGrid
+      tract = heapIZ(izg, tract, estimate = estimate, ...)        #heap it up
     }
 
 
@@ -90,10 +102,13 @@ function(object,
 #   or one acre...
 #
     unitArea = ifelse(object@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
-    areaAdjust = nrow(tract)*ncol(tract)*xres(tract)^2/unitArea
+    areaAdjust = tract@area/unitArea     
     
 #
-#   some surface stats...
+#   some surface stats--truth value is from the raw log quantities...
+#   note that it is possible for biomass and carbon to have logs with
+#   no estimates (NA), so we must account for that since these quantities are
+#   optional...
 #
     surfStats = list( mean=cellStats(tract, mean)*areaAdjust,
                       sum=cellStats(tract,sum)*areaAdjust,
@@ -103,8 +118,13 @@ function(object,
     surfStats$stDev = sqrt(surfStats$var)
     surfStats$se = surfStats$stDev/sqrt(surfStats$nc)
     truth = switch(estimate,
-                   cubicVolume = sum(sapply(object@iZones,function(x){x@downLog@logVol})),
+                   volume = sum(sapply(object@iZones,function(x){x@downLog@logVol})),
                    Density = nLogs,
+                   Length = sum(sapply(object@iZones,function(x){x@downLog@logLen})),
+                   surfaceArea = sum(sapply(object@iZones,function(x){x@downLog@surfaceArea})),
+                   coverageArea = sum(sapply(object@iZones,function(x){x@downLog@coverageArea})),
+                   biomass = sum(sapply(object@iZones,function(x){x@downLog@biomass}), na.rm=TRUE), #optional
+                   carbon = sum(sapply(object@iZones,function(x){x@downLog@carbon}), na.rm=TRUE),   #optional
                    NA
                   )
     surfStats$bias = surfStats$mean - truth     
@@ -139,11 +159,16 @@ function(object,
 #   Takes the number of logs and a "Tract" object, other arguments for, e.g.,
 #   downLogs, can be passed via "..."
 #
+#   Eventually, if standingTrees are added, we will have to change this to
+#   reflect generating these rather than downLog objects--could key off the kind
+#   of subclass passed in iZone below if we start with InclusionZone rather
+#   than downLog in the check below
+#
 setMethod('sampSurf',
           signature(object = 'numeric', tract='Tract'),
 function(object, 
          tract,
-         iZone = c('sausageIZ', 'standUpIZ', 'pointRelascopeIZ'), 
+         iZone,
          estimate = unlist(.StemEnv$puaEstimates),
          wantChainSaw = FALSE,               #always the exception
          description = 'sampling surface object',
@@ -162,7 +187,15 @@ function(object,
     nLogs = object
     if(nLogs<1)
       stop('You must specify a positive number of logs in "object"!')
-    iZone = match.arg(iZone)
+
+#
+#   make sure the inclusion zone constructor is a valid available type...
+#
+    papa = getClass('downLogIZ')
+    validNames = names(papa@subclasses)
+    if(is.na(match(iZone, validNames)))
+      stop('Invalid inclusion zone constructor name supplied: iZone = ',iZone)
+       
 
 #
 #   get the logs and the inclusion zones...

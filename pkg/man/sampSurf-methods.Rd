@@ -40,7 +40,8 @@
 	  \item{\code{tract}:}{ An object of class "Tract" or subclass.}
 		 
 	  \item{\code{estimate}:}{ A character variable corresponding to the
-	  desired estimate: either "cubicVolume" (default) or "Density" at present.}
+	  desired estimate; these include 'cubicVolume', 'Length',
+	  'Density', 'surfaceArea', and 'coverageArea'.}
 		
 	  \item{\code{wantChainSaw}:}{ \code{TRUE}: if the full chainsaw
 	    method is desired; \code{FALSE}: if not (default).}

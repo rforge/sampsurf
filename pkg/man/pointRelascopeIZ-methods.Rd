@@ -3,9 +3,8 @@
 \alias{pointRelascopeIZ-methods}
 \alias{pointRelascopeIZ,downLog,pointRelascope-method}
 
-\title{ Method for "pointRelascopeIZ" object construction in Package
-  `sampSurf'
-}
+\title{ Method for "pointRelascopeIZ" Object Construction in Package
+  \pkg{sampSurf} }
 
 \description{
  This is the one method for generic function \code{\link{pointRelascopeIZ}} in
@@ -31,8 +30,8 @@
     \itemize{
 				
 	  \item{\code{downLog}:}{ An object of class
-        "\code{\linkS4class{downLog}}" which the inclusion zone is to be
-        determined for under the stand-up method.}
+        "\code{\linkS4class{downLog}}" for which the inclusion zone is to be
+        determined.}
 		
 	  \item{\code{prs}:}{ An object of class
 	    "\code{\linkS4class{pointRelascope}}" that will contain the
@@ -47,7 +46,7 @@
 		object.}
 		
 	  \item{\code{spID}:}{ A unique identifier that will be used in
-	    displaying the spatial polygon for the circular plot component
+	    displaying the spatial polygon for the inclusion zone component
 	    of the object.}
 
 	  \item{\code{spUnits}:}{ A valid \code{\link{CRS}} object

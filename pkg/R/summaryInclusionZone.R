@@ -40,7 +40,7 @@ function(object,
     .StemEnv$underLine(60, prologue='')
 
     cat('\nInclusionZone...')
-    cat('\n  units of measurement: ', object@units)    
+    cat('\n  Units of measurement: ', object@units)    
     cat('\n  Per unit area blowup factor:', object@puaBlowup)
     cat(ifelse(object@units == .StemEnv$msrUnits$metric, ' per hectare', ' per acre'))
     cat('\n\n  Object bounding box...\n');print(object@bbox)
@@ -72,15 +72,25 @@ function(object,
 #------------------------------------------------------------------------------
     callNextMethod()
 
-    cat('\ndownLog component...')
+    cat('\ndownLog component estimates...')
     cat('\n  Spatial ID:', object@downLog@spLog@polygons$pgsLog@ID)
     if(object@units == .StemEnv$msrUnits$metric) {
-      cat('\n  Volume in cubic meters:', object@puaEstimates$cubicVolume, 'per hectare')
       cat('\n  Number of logs:', object@puaEstimates$Density, 'per hectare')
+      cat('\n  Volume:', object@puaEstimates$volume, 'cubic meters per hectare')
+      cat('\n  Surface area:', object@puaEstimates$surfaceArea, 'square meters per hectare')
+      cat('\n  Coverage area:', object@puaEstimates$coverageArea, 'square meters per hectare')
+      cat('\n  Length:', object@puaEstimates$Length, 'meters per hectare')
+      cat('\n  Biomass (woody):', object@puaEstimates$biomass, 'per hectare')
+      cat('\n  Carbon content:', object@puaEstimates$carbon, 'per hectare')
     }
     else {
-      cat('\n  Volume in cubic feet:', object@puaEstimates$cubicVolume, 'per acre')
       cat('\n  Number of logs:', object@puaEstimates$Density, 'per acre')
+      cat('\n  Volume:', object@puaEstimates$volume, 'cubic feet per acre')
+      cat('\n  Surface area:', object@puaEstimates$surfaceArea, 'square feet per acre')
+      cat('\n  Coverage area:', object@puaEstimates$coverageArea, 'square feet per acre')
+      cat('\n  Length:', object@puaEstimates$Length, 'feet per acre')
+      cat('\n  Biomass (woody):', object@puaEstimates$biomass, 'per acre')
+      cat('\n  Carbon content:', object@puaEstimates$carbon, 'per acre')
     }
 
     cat('\n')
@@ -135,18 +145,39 @@ function(object,
 #   add a little to 'InclusionZone' & 'downLogIZ' methods for 'chainSawIZ'...
 #------------------------------------------------------------------------------
     callNextMethod()
-    cat('  The above estimates are based on the expanded sliver portion.\n')
+    cat('  The above estimates are based on the expanded sliver portion.\n\n')
     cat('  The following are unexpanded...')
-    if(object@units == .StemEnv$msrUnits$metric)
+    if(object@units == .StemEnv$msrUnits$metric) {
       cu = 'cubic meters'
-    else
+      su = 'square meters'
+      lu = 'meters'
+    }
+    else {
       cu = 'cubic feet'
-    cat('\n    Total log volume:', object@downLog@logVol, cu)
-    cat('\n    Bounding bolt volume:',object@bolt$boltVol, cu)
-    cat('\n    Sliver volume:', object@bolt$sectVol, cu)
-    cat('\n    Sliver area is',object@bolt$area['propArea'],'of bounding bolt\n')
+      su = 'square feet'
+      lu = 'feet'
+    }
     
-    cat('\nchainSawIZ...')
+    cat('\n    Sliver area is',object@bolt$area['propArea'],'of bounding bolt')
+    cat('\n    Total log volume:', object@downLog@logVol, cu)
+    cat('\n      Bounding bolt volume:',object@bolt$boltVol, cu)
+    cat('\n      Sliver volume:', object@bolt$sectVol, cu)
+    cat('\n    Total log surface area:', object@downLog@surfaceArea, su)
+    cat('\n      Bounding bolt surface area:',object@bolt$boltSA, su)
+    cat('\n      Sliver surface area:', object@bolt$sectSA, su)
+    cat('\n    Total log coverage area:', object@downLog@coverageArea, su)
+    cat('\n      Bounding bolt coverage area:',object@bolt$boltCA, su)
+    cat('\n      Sliver coverage area:', object@bolt$sectCA, su)
+    cat('\n    Total log length:', object@downLog@logLen, lu)
+    cat('\n      Bounding bolt length:',object@bolt$boltLen, lu)
+    cat('\n    Total log biomass:', object@downLog@biomass)
+    cat('\n      Bounding bolt biomass:',object@bolt$boltBms)
+    cat('\n      Sliver biomass:', object@bolt$sectBms)
+    cat('\n    Total log carbon:', object@downLog@carbon)
+    cat('\n      Bounding bolt carbon:',object@bolt$boltCarbon)
+    cat('\n      Sliver carbon:', object@bolt$sectCarbon)
+    
+    cat('\n\nchainSawIZ...')
     cat('\n  use \"summary\" on the circularPlot slot for sample plot details')
     #summary(object@circularPlot)
 
@@ -239,7 +270,126 @@ function(object,
 
 
 
+#================================================================================
+#  method for class "perpendicularDistanceIZ"...
+#
+setMethod('summary',
+          signature(object = 'perpendicularDistanceIZ'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'InclusionZone' & 'downLogIZ' methods for 'perpendicularDistanceIZ'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+    
+    if(is(object, 'omnibusPDSIZ') || is(object, 'omnibusDLPDSIZ'))
+      cat('\nomnibusPDSIZ...')
+    else
+      cat('\nperpendicularDistanceIZ...')
+    cat('\n  PDS type:', object@pdsType)
+    cat('\n  Spatial ID:', object@perimeter@polygons$pgs@ID)
+    if(object@units == .StemEnv$msrUnits$metric) {
+      cat('\n  area = ', object@area, ' square meters', sep='')
+      cat(' (', format(object@area/.StemEnv$smpHectare, digits=4), ' hectares)',sep='')
+    }
+    else {
+      cat('\n  area = ', object@area, ' square feet', sep='')
+      cat(' (', format(object@area/.StemEnv$sfpAcre, digits=4), ' acres)', sep='')
+    }
+    cat('\n  Number of perimeter points:', dim(object@izPerim)[1], '(closed polygon)')
 
+
+    cat('\n')
+    
+    return(invisible())
+}   #summary for 'perpendicularDistanceIZ'
+) #setMethod
+
+
+
+
+
+#================================================================================
+#  method for class "distanceLimitedPDSIZ"...
+#
+setMethod('summary',
+          signature(object = 'distanceLimitedPDSIZ'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'InclusionZone' & 'downLogIZ' methods for 'distanceLimitedPDSIZ'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+    cat('  (The above summary is for the entire DLPDS region)\n')
+
+    if(is(object, 'omnibusDLPDSIZ'))
+      cat('\nomnibusDLPDSIZ...')
+    else   
+      cat('\ndistanceLimitedPDSIZ...')
+    if(object@units == .StemEnv$msrUnits$metric) {
+      cat('\n  distance limit = ', object@dls@distanceLimit, ' meters', sep='')
+      cat('\n  limiting diameter = ', object@dlsDiameter, ' meters', sep='')
+      cat(' (', format(object@dlsDiameter*.StemEnv$m2cm, digits=4), ' cm)',sep='')
+    }
+    else {
+      cat('\n  distance limit = ', object@dls@distanceLimit, ' feet', sep='')
+      cat('\n  limiting diameter = ', object@dlsDiameter, ' feet', sep='')
+      cat(' (', format(object@dlsDiameter*.StemEnv$ft2in, digits=4), ' in)',sep='')
+    }
+    cat('\n  distance limited component available =',ifelse(is.null(object@dlsPart),FALSE, TRUE)) 
+    cat('\n  PDS component available =',ifelse(is.null(object@pdsPart),FALSE, TRUE)) 
+    cat('\n  Summaries of individual DLPDS components can be viewed seperately')
+
+    cat('\n')
+    
+    return(invisible())
+}   #summary for 'distanceLimitedPDSIZ'
+) #setMethod
+
+
+
+
+
+#================================================================================
+#  method for class "distanceLimitedMCIZ"...
+#
+setMethod('summary',
+          signature(object = 'distanceLimitedMCIZ'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'InclusionZone' & 'downLogIZ' methods for 'distanceLimitedMCIZ'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+    cat('  (Note: NAs signify location-dependent attributes.)\n')
+    
+    cat('\ndistanceLimitedMCIZ...')
+    cat('\n  Spatial ID:', object@perimeter@polygons$pgs@ID)
+    if(object@units == .StemEnv$msrUnits$metric) {
+      cat('\n  distance limit = ', object@dls@distanceLimit, ' meters', sep='')
+      cat('\n  area = ', object@area, ' square meters', sep='')
+      cat(' (', format(object@area/.StemEnv$smpHectare, digits=4), ' hectares)',sep='')
+    }
+    else {
+      cat('\n  distance limit = ', object@dls@distanceLimit, ' feet', sep='')
+      cat('\n  area = ', object@area, ' square feet', sep='')
+      cat(' (', format(object@area/.StemEnv$sfpAcre, digits=4), ' acres)', sep='')
+    }
+    cat('\n  Number of perimeter points:', dim(object@izPerim)[1], '(closed polygon)')
+
+    cat('\n')
+    
+    return(invisible())
+}   #summary for 'distanceLimitedMCIZ'
+) #setMethod
+
+    
 
 
 

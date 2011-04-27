@@ -12,6 +12,12 @@
     #require(sp)
 	#require(raster)
     #.defStemEnv(moveMiscFunctions=TRUE)
+  
+#
+#   lock the environment and its bindings, otherwise, someone can make 
+#   changes to it since it is a reference object...
+#
+    lockEnvironment(.StemEnv, bindings=TRUE)
 }
 
 

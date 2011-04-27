@@ -21,13 +21,27 @@ bboxToPoly = function(object, ...)
 #	phone: 603-868-7667	fax: 603-868-7604
 #---------------------------------------------------------------------------
 #
-#   a check to make sure there is a bbox slot in this object first...
+#   a check to make sure the bbox is valid first...
 #
-    slotNames = names(getSlots(class(object)))
-    if(!length(grep('bbox', slotNames)))
-      stop('"object" does not have a bbox slot!')
-    bb = bbox(object)
+   # slotNames = names(getSlots(class(object)))
+   # if(!length(grep('bbox', slotNames)))
+   #   stop('"object" does not have a bbox slot!')
+
+    if(is.matrix(object)) 
+      bb = object
+    else
+      bb = bbox(object)
     stopifnot(bboxCheck(bb))
+
+#
+#   check for a matrix, things come out transposed if so, and someone (like me) is bound
+#   to pass this a mtrix sometime...
+#
+ #   if(is.matrix(object)) {
+ #     tmp = bb
+ #     bb = t(bb)
+ #     dimnames(bb) = dimnames(tmp)
+ #   }
 
 #
 #   now just do the conversion...
@@ -40,7 +54,7 @@ bboxToPoly = function(object, ...)
     colnames(sr) = c('x','y')
     rownames(sr) = 1:5
     pgSR = Polygon(sr)
-    perim.ID = unlist(strsplit(tempfile('perimeter:',''),'\\/'))[2]
+    perim.ID = paste('perimeter',.StemEnv$randomID(),sep=':')
     pgsSR = Polygons(list(sr=pgSR), ID=perim.ID)
     perimeter = SpatialPolygons(list(pgsSR=pgsSR)) 
   

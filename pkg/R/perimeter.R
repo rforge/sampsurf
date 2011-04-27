@@ -10,12 +10,15 @@
 #     2. chainSawIZ: either the circular plot location IZ or the sausage IZ
 #                    are possible returns
 #     3. sausageIZ
-#     4. downLog
-#     5. downLogs
-#     6. circularPlot of class ArealSampling
-#     7. Tract
-#     8. sampSurf
-#     9. downLogIZs
+#     4. pointRelascopeIZ
+#     5. perpendicularDistanceIZ (omnibusPDSIZ, distanceLimitedPDSIZ, omnibusDLPDSIZ)
+#     6. distanceLimitedMCIZ
+#     7. downLog
+#     8. downLogs
+#     9. circularPlot of class ArealSampling
+#    10. Tract
+#    11. sampSurf
+#    12. downLogIZs
 #
 #Author...									Date: 21-Sept-2010
 #	Jeffrey H. Gove
@@ -105,6 +108,33 @@ function(object, ...)
 {
     return(object@perimeter)
 }   #pointRelascope
+) #setMethod
+
+
+
+#================================================================================
+#  method for perpendicularDistanceIZ object or subclasses  (omnibusPDSIZ,
+#  distanceLimitedPDSIZ, omnibusDLPDSIZ)...
+#
+setMethod('perimeter',
+          signature(object = 'perpendicularDistanceIZ'),
+function(object, ...)
+{
+    return(object@perimeter)
+}   #perpendicularDistance
+) #setMethod
+
+
+
+#================================================================================
+#  method for distanceLimitedMCIZ object...
+#
+setMethod('perimeter',
+          signature(object = 'distanceLimitedMCIZ'),
+function(object, ...)
+{
+    return(object@perimeter)
+}   #distanceLimitedMCIZ
 ) #setMethod
 
 

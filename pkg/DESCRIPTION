@@ -1,8 +1,8 @@
 Package: sampSurf
 Type: Package
 Title: Sampling Surface Simulation for Areal Sampling Methods
-Version: 0.5
-Date: 2010-08-12
+Version: 0.51
+Date: 2011-04-27
 Author: J. H. Gove
 Maintainer: J. H. Gove <jgove@fs.fed.us>
 Depends: R (>= 2.11.0), methods(>= 2.11.0), sp(>= 0.9-56), raster(>= 1.1.7), gpclib(>= 1.5.1)
@@ -12,8 +12,9 @@ Description: Contains the base classes and routines for sampling surface generat
 License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
-Collate: zzz.R transparentColorBase.R initRandomSeed.R
-         bboxCheck.R bboxToPoly.R defStemEnv.R transfMatrix.R         
+Collate: zzz.R transparentColorBase.R initRandomSeed.R boltDimensions.R taperInterpolate.R
+         bboxCheck.R bboxToPoly.R bboxSum.R
+         defStemEnv.R transfMatrix.R         
          sampleLogs.R 
          sampSurfClassUnions.R
          chainsawSliver.R

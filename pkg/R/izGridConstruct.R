@@ -57,7 +57,8 @@ izGridConstruct = function(izObject,
 #
 #   grid with NAs outside the overlay region...
 #
-    grid = polygonsToRaster(perimeter(izObject), izg, mask=TRUE, silent=TRUE)
+    #grid = polygonsToRaster(perimeter(izObject), izg, mask=TRUE, silent=TRUE)  ##replaced by rasterize
+    grid = rasterize(perimeter(izObject), izg, mask=TRUE, silent=TRUE)
 
 #
 #   a data frame with each pua estimate...

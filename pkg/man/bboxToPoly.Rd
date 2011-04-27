@@ -2,21 +2,20 @@
 \alias{bboxToPoly}
 %- Also NEED an '\alias' for EACH other topic documented here.
 
-\title{ Function to Convert an Object's bbox to a
+\title{ Function to Convert a Valid "bbox" to a
   \dQuote{SpatialPolygons} Object}
 
-\description{ This simply grabs the \code{bbox} specification for an
-  object in the \pkg{sampSurf} package, if available, and translates it
-  into a spatial polygon object of class
-  "\code{\linkS4class{SpatialPolygons}}". 
-}
+\description{ This converts a valid bbox, or object with a \code{bbox}
+  specification in the \pkg{sampSurf} package, if available, into a
+  spatial polygon object of class
+  "\code{\linkS4class{SpatialPolygons}}".  }
 
 \usage{
 bboxToPoly(object, ...)
 }
 \arguments{
   \item{object}{ Some object with a valid \code{bbox} slot from one of
-	the classes in \pkg{sampSurf}.}
+	the classes in \pkg{sampSurf}, or a valid bbox matrix.}
   \item{\dots}{ Black hole for everything else.}
 }
 

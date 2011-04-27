@@ -10,6 +10,8 @@
 \alias{perimeter,sausageIZ-method}
 \alias{perimeter,standUpIZ-method}
 \alias{perimeter,pointRelascopeIZ-method}
+\alias{perimeter,perpendicularDistanceIZ-method}
+\alias{perimeter,distanceLimitedMCIZ-method}
 \alias{perimeter,Tract-method}
 
 \title{ Methods for Function perimeter in Package `sampSurf' }
@@ -68,7 +70,7 @@
 	  \item{\code{object}:}{ An object of one of class "chainSawIZ." }
 		 
 	  \item{\code{whatSense}:}{ 'point' returns the circular plot center
-	  point; 'plot' returns the perimeter ofthe circular plot; 'sausage'
+	  point; 'plot' returns the perimeter of the circular plot; 'sausage'
 	  returns the whole-log inclusion zone.}
 	  
 	  \item{... :}{ Other arguments to be passed along--not used at present.}
@@ -80,6 +82,16 @@
 	Returns the spatial object associated with the perimeter of the
     dual circle-shaped inclusion zone. }
 
+  \item{\strong{\code{signature(object = "perpendicularDistanceIZ")}}}{ %\cr
+
+	Returns the spatial object associated with the perimeter of the
+    inclusion zone---works on all subclasses. }
+
+  \item{\strong{\code{signature(object = "distanceLimitedMCIZ")}}}{ %\cr
+
+	Returns the spatial object associated with the perimeter of the
+    inclusion zone. }
+
  \item{\strong{\code{signature(object = "Tract")}}}{ %\cr
 
    Returns the spatial object associated with the perimeter of the
@@ -90,6 +102,6 @@
    Returns the spatial object associated with the perimeter of the
    \code{tract} slot in the object.}
 
-}}
+}} %describe + section
 \keyword{methods}
 \keyword{ ~~ other possible keyword(s) ~~ }

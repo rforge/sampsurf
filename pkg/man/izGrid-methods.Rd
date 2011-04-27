@@ -6,6 +6,10 @@
 \alias{izGrid,sausageIZ,Tract-method}
 \alias{izGrid,standUpIZ,Tract-method}
 \alias{izGrid,pointRelascopeIZ,Tract-method}
+\alias{izGrid,perpendicularDistanceIZ,Tract-method}
+\alias{izGrid,omnibusPDSIZ,Tract-method}
+\alias{izGrid,distanceLimitedPDSIZ,Tract-method}
+\alias{izGrid,distanceLimitedMCIZ,Tract-method}
 
 \title{ Methods for "InclusionZoneGrid" object construction in Package `sampSurf'}
 
@@ -78,6 +82,46 @@
 	  logs. Everything is the same here as for the stand-up method
 	  above, with the exception of the first argument, which must be an
 	  object of class "\code{\linkS4class{pointRelascopeIZ}}". }
+
+\item{\strong{\code{signature(izObject = "perpendicularDistanceIZ", tract =
+	  "Tract")}}}{%\cr
+
+      This constructor is for the canonical PDS method of sampling down
+	  logs. Everything is the same here as for the stand-up method
+	  above, with the exception of the first argument, which must be an
+	  object of class "\code{\linkS4class{perpendicularDistanceIZ}}". }
+
+\item{\strong{\code{signature(izObject = "omnibusPDSIZ", tract =
+	  "Tract")}}}{%\cr
+
+      This constructor is for the omnibus PDS method of sampling down
+	  logs. Everything is the same here as for the stand-up method
+	  above, with the exception of the first argument, which must be an
+	  object of class "\code{\linkS4class{omnibusPDSIZ}}" and the
+	  addition of the following argument\dots }
+	\itemize{
+		 
+	  \item{\code{runQuiet}:}{ \code{TRUE}: no feedback on progress;
+        \code{FALSE}: some feedback on progress} 
+    }	
+
+\item{\strong{\code{signature(izObject = "distanceLimitedPDSIZ", tract =
+	  "Tract")}}}{%\cr
+
+      This constructor is for the distance limited PDS (canonical or
+	  omnibus) method of sampling down logs. Everything is the same here
+	  as for the "omnibusPDSIZ" method above, with the exception of the
+	  first argument, which must be an object of class
+	  "\code{\linkS4class{distanceLimitedPDSIZ}}". }
+
+\item{\strong{\code{signature(izObject = "distanceLimitedMCIZ", tract =
+	  "Tract")}}}{%\cr
+
+      This constructor is for the distance limited Monte Carlo method of
+	  sampling down logs. Everything is the same here as for the
+	  "omnibusPDSIZ" method above, with the exception of the first
+	  argument, which must be an object of class
+	  "\code{\linkS4class{distanceLimitedMCIZ}}". }
 
 \item{\strong{\code{signature(izObject = "matrix", tract =
 	  "Tract")}}}{%\cr

@@ -63,7 +63,7 @@ constructor \code{\link{pointRelascopeIZ}} to create new objects.
 }
 
 \section{Extends}{
-Class \code{"\linkS4class{downLogIZ}"}, directly.
+Class \code{"\linkS4class{downLogIZ}"}, directly.\cr
 Class \code{"\linkS4class{InclusionZone}"}, by class "downLogIZ", distance 2.
 }
 

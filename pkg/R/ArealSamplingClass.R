@@ -6,7 +6,9 @@
 #   Classes...
 #     1. ArealSampling: virtual class for all methods
 #     2. circularPlot: class for fixed-radius circular plot sampling
-#     3. pointRelascope: class for point relascope sampling (PRS)
+#     3. pointRelascope: class for point relascope sampling (PRS) (Jan 2011)
+#     4. perpendicularDistance: class for PDS (Jan 2011)
+#     5. distanceLimit: class for variable plot MC (Mar 2011)
 #
 #Author...									Date: 19-Aug-2010
 #	Jeffrey H. Gove
@@ -126,7 +128,6 @@ setMethod('initialize', 'circularPlot',
 #
 #  the point relascope class is just a direct descendant of 'ArealSampling'...
 #
-#    location = the center of the log??
 #
 setClass('pointRelascope',
     representation(angleDegrees = 'numeric',        #relascope angle in degrees
@@ -149,3 +150,60 @@ setClass('pointRelascope',
                  return(TRUE)
                } #validity check
 ) #class pointRelascope
+
+
+
+
+
+
+
+
+#=================================================================================================
+#
+#  the perpendicular distance class is just a direct descendant of 'ArealSampling'...
+#
+#
+setClass('perpendicularDistance',
+    representation(factor = 'numeric',              #volume, surface, or coverage factor in appropriate units
+                   kpds = 'numeric'                 #pds factor in appropriate units
+                  ),
+    prototype = list(kpds = 43.56,                  #e.g., for volume: ft^{-1}
+                     factor = 500,                  #e.g., for volume: ft^3/acre
+                     units = 'English',
+                     description = 'English PDS'
+                    ),
+    contains = 'ArealSampling',                     #a subclass of the virtual 'ArealSampling' class
+    validity = function(object) {
+                 if(object@kpds <= 0 || object@factor <= 0)
+                   return('PDS factors must be greater than zero!')
+                 
+                 return(TRUE)
+               } #validity check
+) #class perpendicularDistance
+
+
+
+
+
+
+
+#=================================================================================================
+#
+#  the distance limited class is just a direct descendant of 'ArealSampling'...
+#
+#
+setClass('distanceLimited',
+    representation(distanceLimit = 'numeric'        #the limiting distance
+                  ),
+    prototype = list(distanceLimit = 1, 
+                     units = 'English',
+                     description = 'English DL'
+                    ),
+    contains = 'ArealSampling',                     #a subclass of the virtual 'ArealSampling' class
+    validity = function(object) {
+                 if(is.na(object@distanceLimit) || object@distanceLimit <= 0)
+                   return('distance limit  must be greater than zero!')
+                 
+                 return(TRUE)
+               } #validity check
+) #class distanceLimited

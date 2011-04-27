@@ -289,18 +289,34 @@ function(object,
 #   calculates summary statistics on the logs in the list...
 #------------------------------------------------------------------------------
     numLogs = length(logs)
-    volen = matrix(rep(NA, numLogs*2), ncol=2)
+    nvars = 6
+    volen = matrix(NA, nrow=numLogs, ncol=nvars)
     for(i in seq_len(numLogs)) {
       volen[i,1] = logs[[i]]@logVol
       volen[i,2] = logs[[i]]@logLen
+      volen[i,3] = logs[[i]]@surfaceArea
+      volen[i,4] = logs[[i]]@coverageArea
+      volen[i,5] = logs[[i]]@biomass
+      volen[i,6] = logs[[i]]@carbon
     }
-    stats = data.frame(matrix(rep(NA, 8), nc=2)) #stats as rows, vars as columns
-    colnames(stats) = c('volume','length')
-    rownames(stats) = c('mean','total','sd','var')
+
+#
+#   carbon and biomass can be all NAs and will throw warnings of no non-NA values when
+#   calculated some stats (like min) below; so keep it quiet...
+#
+    suppressWarnings({
+    
+    stats = data.frame(matrix(NA, nrow=6, nc=nvars)) #stats as rows, vars as columns
+    colnames(stats) = c('volume', 'length', 'surfaceArea', 'coverageArea','biomass','carbon')
+    rownames(stats) = c('mean','total','sd','var', 'min','max')
     stats[1,] = apply(volen, 2, mean, na.rm=TRUE)
     stats[2,] = colSums(volen, na.rm=TRUE)
     stats[3,] = apply(volen, 2, sd, na.rm=TRUE)
     stats[4,] = apply(volen, 2, var, na.rm=TRUE)
+    stats[5,] = apply(volen, 2, min, na.rm=TRUE)
+    stats[6,] = apply(volen, 2, max, na.rm=TRUE)
+
+    }) #suppressWarnings
  
     return(stats)
 }   #statsDownLogs

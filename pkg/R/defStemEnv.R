@@ -5,9 +5,11 @@
 #   Note that this now holds constants/parameters, etc. for other classes
 #   within sampSurf as well. JHG 16-Dec-2010.
 #
-#   To do all of the setup for the environment...
-#     -- .defStemEnv
-#   is run last thing in the file.
+#   Note that this environment and its bindings are locked so that no one
+#   can change it when it is attached. If it is not locked, then it is quite
+#   simple to mess with it by changing any of the quantities inside. However,
+#   locking can not be done at the end of this file, it must be done inside
+#   the .onLoad() function as the package is loaded. 23-Mar-2011, JHG.
 #
 #Author...									Date: 6-Aug-2010
 #	Jeffrey H. Gove
@@ -51,6 +53,8 @@
 .StemEnv$smpHectare = 10000
 .StemEnv$sfpAcre = 43560
 
+.StemEnv$baFactor = c( English=pi/(4*144), metric=pi/(4*10000) )
+
 #
 # per unit area names for the list object slot in the InclusionZone class or subclasses;
 # I have perhaps made this too difficult, but one can assign the slots based on the names
@@ -58,21 +62,34 @@
 # eval(parse(text=paste('list(',.StemEnv$puaEstimates$volumeCubic,'=3)')))
 # will do it...
 #
-.StemEnv$puaEstimates = list(cubicVolume = 'cubicVolume',          #cubic volume in correct units
-                             bfVolume = 'bfVolume',                #board foot volume
-                             Density = 'Density'                   #number of logs or trees
+.StemEnv$puaEstimates = list(volume = 'volume',                    #cubic volume in correct units
+                             #bfVolume = 'bfVolume',                #board foot volume--for trees!
+                             Density = 'Density',                  #number of logs or trees
+                             Length = 'Length',                    #total length of logs
+                             surfaceArea = 'surfaceArea',          #surface area
+                             coverageArea = 'coverageArea',        #projected coverage area
+                             biomass = 'biomass',                  #could be green or dry
+                             carbon = 'carbon'                     #carbon content
                             )
 #.StemEnv$puaNames = list(English =
-#                          list(cubicVolume = 'volume in cubic feet per acre',
+#                          list(volume = 'volume in cubic feet per acre',
 #                               bfVolume = 'board foot volume per acre',
 #                               logDensity = 'number of logs per acre'
 #                              ),
 #                          metric =
-#                           list(cubicVolume = 'volume in cubic meters per hectare',
+#                           list(volume = 'volume in cubic meters per hectare',
 #                                bfVolume = NULL,
 #                                logDensity = 'number of logs per hectare'
 #                               )
 #                         ) #puaNames
+
+
+#
+#   stuff for PDS...
+#
+.StemEnv$pdsTypes = c('volume', 'surfaceArea', 'coverageArea')  #main PPS variable
+
+
 
 #
 #   some plausible species codes/names--note that they can be any character string...
@@ -133,6 +150,7 @@
 
 
 
+
 #================================================================================
 #
 #  default taper function...
@@ -158,7 +176,7 @@ wbTaper = function(botDiam, topDiam, logLen, nSegs=20, solidType, hgt=NULL, isLo
       stop('Must have positive number of log segments for taper!')
     nSegs = nSegs + 1               #becomes the number of diameters required for taper
     if(is.null(solidType) || solidType < .StemEnv$solidTypes[1] || solidType > .StemEnv$solidTypes[2])
-      stop('solidType=',solidType,' out of range, must be in: (',solidType[1],',',solidType[2],')')
+      stop('solidType=',solidType,' out of range, must be in: [',solidTypes[1],',',solidTypes[2],']')
     r = solidType
     
     if(is.null(hgt))
@@ -177,11 +195,15 @@ rm(wbTaper)                                           #and remove from .GlobalEn
 
 #================================================================================
 #
-#  default volume function...
+#  default volume function based on default taper function...
 #
 #  k is the conversion factor that takes diameter to radius and puts it into the
 #  same units as length. But diameters should be in length units for downLogs,
 #  so k just represents taking squared diameter to squared radius...
+#
+#  To get actual bolt volume of a segment somewhere on the stem, call this twice,
+#  first with the shorter length, then the longer length (both defining the bolt)
+#  and get the volume by subtraction
 #
 wbVolume = function(botDiam, topDiam, logLen, solidType, boltLen=NULL) {
     if(is.null(solidType) || solidType < .StemEnv$solidTypes[1] || solidType > .StemEnv$solidTypes[2])
@@ -223,24 +245,175 @@ SmalianVolume = function(taper, isLog=TRUE) {
       hgtName = 'length'
     else
       hgtName = 'hgt'
-    vol = 0
+    vol = matrix(NA, nrow=nSegs, ncol=1)
     diam = taper[,'diameter']
     csArea = diam^2
     length = taper[,hgtName]
     for(i in 1:nSegs) {
       sectLen = length[i+1] - length[i]
       if(isTRUE(all.equal(diam[i+1],0.0)))
-        vol = vol + pi*k*csArea[i+1]*sectLen/3                 #cone for tip
+        vol[i,1] = pi*k*csArea[i+1]*sectLen/3                 #cone for tip
       else
-        vol = vol + pi*k*(csArea[i] + csArea[i+1])*sectLen/2   #Smalian's
+        vol[i,1] = pi*k*(csArea[i] + csArea[i+1])*sectLen/2   #Smalian's
     }
-    return(vol)
+    sumVol = colSums(vol)
+    return(list(boltVol = vol, logVol = sumVol))
 }   #SmalianVolume
 assign('SmalianVolume', SmalianVolume, envir=.StemEnv)     #move to .StemEnv
 environment(.StemEnv$SmalianVolume) = .StemEnv             #assign its environment
 rm(SmalianVolume)                                          #and remove from .GlobalEnv
 
   
+
+
+
+#================================================================================
+#
+#  default surface area function based on default taper function...
+#
+#  botDiam = buttDiam for the log
+#  topDiam = topTiam for the log
+#  logLen = logLen for the log
+#  solidType = solidType for the log
+#  lenBot = length at the beginning of the section (default whole log)
+#  lenTop = length at the top of the section (default whole log)
+#
+wbSurfaceArea = function(botDiam, topDiam, logLen, solidType, lenBot=0, lenTop=logLen) {
+    if(lenBot > lenTop || lenBot < 0 || lenTop < 0)
+      stop('Nonsensical lengths in wbSurfaceArea!')
+    
+    sa.taper = function(hgt, botDiam, topDiam, logLen, solidType) {
+               diam = .StemEnv$wbTaper(botDiam, topDiam, logLen, 1, solidType, hgt)$diameter
+               deriv = -2*(logLen-hgt)^(2/solidType-1) * (botDiam-topDiam)/(solidType*logLen^(2/solidType))
+               tsa = pi*diam* sqrt(1 + deriv^2/4)              
+               return(tsa)
+    } #sa.taper
+    sa = integrate(sa.taper, lenBot, lenTop, botDiam=botDiam, topDiam=topDiam, logLen=logLen,
+                   solidType=solidType)$value
+    return(sa)
+} #wbSurfaceArea
+assign('wbSurfaceArea', wbSurfaceArea, envir=.StemEnv)               #move to .StemEnv
+environment(.StemEnv$wbSurfaceArea) = .StemEnv                       #assign its environment
+rm(wbSurfaceArea)                                                    #and remove from .GlobalEnv
+  
+
+
+
+#================================================================================
+#
+#  spline surface area function based on taper points...
+#
+#  taper = the taper data frame for the log
+#  lenBot = length at the beginning of the section (default whole log)
+#  lenTop = length at the top of the section (default whole log)
+#
+#  Please note: Always pass the entire log's taper data frame as the first argument,
+#               even if you only want some intermediate bolt surface area, as
+#               the spline function is defined on the entirety of what is in
+#               taper, and will not reflect the entire log if only that portion
+#               is passed that contains the bolt, for example.
+#
+#  Additionally, lenBot is the length to the bottom of the bolt to be integrate,
+#  and lenTop is to the top of the bolt, both are relative to the butt of the
+#  log, which is always zero in a downLog object. 
+#
+splineSurfaceArea = function(taper, lenBot, lenTop) {
+    if(lenBot > lenTop || lenBot < 0 || lenTop < 0)
+      stop('Nonsensical lengths in splineSurfaceArea!')
+    length = taper$length
+    diameter = taper$diameter
+    
+    taper.spline = splinefun(length, diameter)
+    sa.spline = function(hgt) {                           #"hgt" is length dummy argument
+      diam = taper.spline(hgt)
+      deriv = taper.spline(hgt, 1)
+      ssa = pi*diam * sqrt(1 + deriv^2/4)
+      return(ssa)
+    } #sa.spline
+    sa = integrate(sa.spline, lenBot, lenTop)$value       #integrates "hgt" from lenBot to lenTop
+    return(sa)
+} #splineSurfaceArea
+assign('splineSurfaceArea', splineSurfaceArea, envir=.StemEnv)       #move to .StemEnv
+environment(.StemEnv$splineSurfaceArea) = .StemEnv                   #assign its environment
+rm(splineSurfaceArea)                                                #and remove from .GlobalEnv
+
+  
+
+
+
+#================================================================================
+#
+#  default coverage area function based on default taper function...
+#
+#  botDiam = buttDiam for the log
+#  topDiam = topTiam for the log
+#  logLen = logLen for the log
+#  solidType = solidType for the log
+#  lenBot = length at the beginning of the section (default whole log)
+#  lenTop = length at the top of the section (default whole log)
+#
+wbCoverageArea = function(botDiam, topDiam, logLen, solidType, lenBot=0, lenTop=logLen) {
+    if(lenBot > lenTop || lenBot < 0 || lenTop < 0)
+      stop('Nonsensical lengths in wbCoverageArea!')
+    
+      if(identical(logLen, (lenBot - lenTop)))
+        ca = (botDiam*solidType + 2*topDiam)*logLen/(solidType+2)
+      else {
+        r = solidType
+        a = lenBot
+        b = lenTop
+        Du = topDiam
+        Dl = botDiam
+        L = logLen
+        p1 = ((b - a)*Du*r + (2*b - 2*a)*Du)*L^(2/r)
+        p2 = (L - b)^(2/r) * ((Du - Dl)*r*L + (b*Dl - b*Du)*r)
+        p3 = (L - a)^(2/r) * ((Dl - Du)*r*L + (a*Du - a*Dl)*r)
+        ca = (p1 + p2 + p3)/((r+2)*L^(2/r))
+      }
+    
+    return(ca)
+} #wbCoverageArea
+assign('wbCoverageArea', wbCoverageArea, envir=.StemEnv)              #move to .StemEnv
+environment(.StemEnv$wbCoverageArea) = .StemEnv                       #assign its environment
+rm(wbCoverageArea)                                                    #and remove from .GlobalEnv
+
+
+
+#================================================================================
+#
+#  spline coverage area function based on taper points...
+#
+#  taper = the taper data frame for the log
+#  lenBot = length at the beginning of the section (default whole log)
+#  lenTop = length at the top of the section (default whole log)
+#
+#  Please note: Always pass the entire log's taper data frame as the first argument,
+#               even if you only want some intermediate bolt coverage area, as
+#               the spline function is defined on the entirety of what is in
+#               taper, and will not reflect the entire log if only that portion
+#               is passed that contains the bolt, for example.
+#
+#  Additionally, lenBot is the length to the bottom of the bolt to be integrate,
+#  and lenTop is to the top of the bolt, both are relative to the butt of the
+#  log, which is always zero in a downLog object. 
+#
+splineCoverageArea = function(taper, lenBot, lenTop) {
+    if(lenBot > lenTop || lenBot < 0 || lenTop < 0)
+      stop('Nonsensical lengths in splineCoverageArea!')
+    length = taper$length
+    diameter = taper$diameter
+    
+    taper.spline = splinefun(length, diameter)
+    ca = integrate(taper.spline, lenBot, lenTop)$value       #integrates "hgt" from lenBot to lenTop
+    return(ca)
+} #splineCoverageArea
+assign('splineCoverageArea', splineCoverageArea, envir=.StemEnv)       #move to .StemEnv
+environment(.StemEnv$splineCoverageArea) = .StemEnv                   #assign its environment
+rm(splineCoverageArea)                                                #and remove from .GlobalEnv
+ 
+
+
+
 
 
 
@@ -303,5 +476,31 @@ environment(.StemEnv$underLine) = .StemEnv                #assign its environmen
 rm(.underLine)                                            #and remove from .GlobalEnv
 
 
+
+
+
+
+#================================================================================
+#
+#   just generates a random ID in character string that can be combined with
+#   any prefix for spatial IDs in the package...
+#
+randomID = function(lenDigits=4,                        #number of digits to use
+                    lenAlpha=4,                         #number of alpha characters
+                    ...)
+{
+    if(lenDigits<1 || lenAlpha<1)
+      stop('random IDs must have at least one digit and one letter!')
+    dig = sample(0:9, lenDigits)
+    alpha = sample(letters, lenAlpha)
+    comb = c(dig, alpha)
+    nn = length(comb)
+    idx = sample(1:nn, nn)
+    ranid = paste(comb[idx], collapse='')
+    return(ranid)
+}   #randomID
+assign('randomID', randomID, envir=.StemEnv)              #move to .StemEnv
+environment(.StemEnv$randomID) = .StemEnv                 #assign its environment
+rm(randomID)                                              #and remove from .GlobalEnv
 
 

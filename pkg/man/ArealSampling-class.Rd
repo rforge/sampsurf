@@ -57,11 +57,17 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
- Subclass "\code{\linkS4class{circularPlot}}" for a circular plot
+ "\code{\linkS4class{circularPlot}}" for a circular plot
  subclass.\cr
 % 
- Subclass "\code{\linkS4class{pointRelascope}}" for the point relascope
- sampling subclass.
+ "\code{\linkS4class{pointRelascope}}" for the point relascope
+ sampling subclass.\cr
+% 
+ "\code{\linkS4class{perpendicularDistance}}" for the
+ perpendicular distance  sampling subclass.\cr
+% 
+ "\code{\linkS4class{distanceLimited}}" for the
+ distance limited sampling subclass.
 }
 \examples{
 showClass("ArealSampling")
