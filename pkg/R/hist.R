@@ -100,7 +100,24 @@ function(x,
     vals = sapply( x@logs, function(z) slot(z, logAttr) )
     #check for no carbon or biomass conversions in the collection...
     if(all(is.na(vals)))
-      stop('All values for',logAttr,'are NA!')
+      stop('All values for ',logAttr,' are NA!')
+
+#
+#   convert diameters to usual units...
+#
+    if(logAttr == 'buttDiam' || logAttr == 'topDiam')
+       if(x@units == .StemEnv$msrUnits$metric) 
+         vals = vals*.StemEnv$m2cm
+       else
+         vals = vals*.StemEnv$ft2in
+
+#
+#   and angles too...
+#
+    if(logAttr == 'logAngle')
+      vals = sapply(vals, .StemEnv$rad2Deg)    #not vectorized at present V0.52
+
+    
     hg = hist(vals, main=main, xlab=xlab, col=col, ...)
 
     return(invisible(hg))
