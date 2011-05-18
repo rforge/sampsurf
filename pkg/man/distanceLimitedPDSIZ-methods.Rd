@@ -33,7 +33,7 @@
         "\code{\linkS4class{downLog}}" for which the inclusion zone is to be
         determined.}
 		
-	  \item{\code{prs}:}{ An object of class
+	  \item{\code{pds}:}{ An object of class
 	    "\code{\linkS4class{perpendicularDistance}}" that supplies the
 	    information on the perpendicular distance method for
 	    constructing the inclusion zone. }
