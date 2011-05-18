@@ -37,6 +37,12 @@
          solidType = 3,                #defaults to 3  
          logAngle = 0,                 #canonical position
          logVol = NULL,
+         surfaceArea = NULL,
+         coverageArea = NULL,
+         biomass = NA,
+         vol2wgt = NA,
+         carbon = NA,
+         wgt2carbon = NA,
          centerOffset = c(x=0, y=0),   #log center offset
          species = '',
          logID = paste('log',format(runif(1),digits=6),sep=':'),
@@ -76,9 +82,31 @@
         is releative to East being zero.}
 	  
 	  \item{\code{logVol}:}{ The log volume if precomputed, otherwise, if
-        \code{NULL}, the log volume will be computed from the taper
-        volume equation. }
+        \code{NULL}, the log volume will be computed from the taper volume
+        equation or Smalian's formula if \code{solidType=NULL}. }
 	  
+	  \item{\code{surfaceArea}:}{ The log surface area if precomputed, otherwise, if
+        \code{NULL}, the log surface area will be computed from the taper
+        equation or spline approximation. }
+	  
+	  \item{\code{coverageArea}:}{ The log coverage area if precomputed, otherwise, if
+        \code{NULL}, the log coverage area will be computed from the taper
+        equation or spline approximation. }
+	  
+	  \item{\code{biomass}:}{ The log woody biomass if precomputed,
+        otherwise, if \code{NA}, the log biomass will be computed from
+        the volume and \code{vol2wgt} conversion. }
+	  
+	  \item{\code{vol2wgt}:}{ The volume to weight conversion factor. If
+	  \code{NA} and \code{biomass} is passed, then it will be computed.}
+	  
+	  \item{\code{carbon}:}{ The log carbon content if precomputed, otherwise, if
+        \code{NA}, the carbon content will be computed from the biomass and
+        \code{wgt2carbon} conversion. }
+	  
+	  \item{\code{wgt2carbon}:}{ The weight to carbon conversion factor. If
+	  \code{NA} and \code{carbon} is passed, then it will be computed.}
+		
 	  \item{\code{centerOffset}:}{ The log center position that will be
         used for the \code{location} slot. This is a vector of length two
         with names "x" and "y"; note that it can be length three with a "z"
@@ -133,6 +161,12 @@
          solidType = NULL,             #defaults to null for passed taper
          logAngle = 0,                 #canonical
          logVol = NULL,
+         surfaceArea = NULL,
+         coverageArea = NULL,
+         biomass = NA,
+         vol2wgt = NA,
+         carbon = NA,
+         wgt2carbon = NA,
          centerOffset = c(x=0, y=0),   #log center offset
          species = '',
          logID = paste('log',format(runif(1),digits=6),sep=':'),
