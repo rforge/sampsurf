@@ -6,7 +6,10 @@
 #     (3) standUpIZ class
 #     (4) chainSawIZ class
 #     (5) sausageIZ class
-#     (6) downLogIZs (plural) class
+#     (6) pointRelscopeIZ class
+#     (7) perpendicularDistanceIZ class
+#     (8) distanceLimitedPDSIZ class
+#     (9) distanceLimitedMCIZ class
 #
 #Author...									Date: 24-Aug-2010
 #	Jeffrey H. Gove
@@ -389,41 +392,3 @@ function(object,
 }   #summary for 'distanceLimitedMCIZ'
 ) #setMethod
 
-    
-
-
-
-
-
-#================================================================================
-#  method for data frames and class "downLogIZs" (plural!)...
-#
-setMethod('summary',
-          signature(object = 'downLogIZs'),
-function(object,
-         ...
-        )
-{
-#------------------------------------------------------------------------------
-#   just a simple summary of items in the "downLogIZs" object...
-#------------------------------------------------------------------------------
-    cat('\nObject of class:', class(object))
-    .StemEnv$underLine(60)
-    cat(object@description, fill=60)
-    .StemEnv$underLine(60, prologue='')
-    cat('Container class object...')
-    numIZs = length(object@iZones)
-    cat('\n  There are',numIZs,'inclusion zones in the population')
-    cat('\n  Inclusion zones are of class:', class(object@iZones[[1]]))
-    cat('\n  Units of measurement: ', object@units)
-
-    cat('\n\n  Encapulating bounding box...\n')
-    print(object@bbox)
-
-    cat('\n')
-    return(invisible())
-}   #summary for 'downLogIZs'
-) #setMethod
-
-
-#showMethods('summary')

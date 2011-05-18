@@ -50,8 +50,8 @@ contributed by users).
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.51\cr
-Date: \tab 2011-04-27\cr
+Version: \tab 0.52\cr
+Date: \tab 2011-05-17\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
 }
@@ -166,9 +166,11 @@ detail, including slot and argument definitions.
 	\code{\linkS4class{omnibusDLPDSIZ}}: \tab Class for the omnibus
 	  distance limited perpendicular distance method of sampling down logs.\cr
 	\code{\linkS4class{distanceLimitedMCIZ}}: \tab Class for the 
-	  distance limited Monte Carlo method of sampling down logs.\cr
+	distance limited Monte Carlo method of sampling down logs.\cr
+	\code{\linkS4class{izContainer}}: \tab A virtual container
+	class---see the following entry for a useable subclass.\cr
 	\code{\linkS4class{downLogIZs}}: \tab A container class to hold a
-	  population of inclusion zone objects associated with down logs \cr
+	  population of inclusion zone objects associated with down logs. \cr
 	} }
 
   \subsection{The \dQuote{InclusionZoneGrid} class\ldots}{
@@ -295,11 +297,12 @@ detail, including slot and argument definitions.
   printing information within the object\ldots
 
   \tabular{ll}{
+	\code{\link{hist}}: \tab Create a histogram of object attributes\cr	
 	\code{\link{plot}}: \tab  To plot one of the package objects\cr
-	\code{\link{summary}}: \tab  To summarize one of the package objects\cr
-	\code{\link{show}}: \tab  To succinctly print one of the package objects\cr
 	\code{\link{plot3D}}: \tab  To plot \dQuote{sampSurf} objects using
 	  \pkg{rgl}\cr 
+	\code{\link{show}}: \tab  To succinctly print one of the package objects\cr
+	\code{\link{summary}}: \tab  To summarize one of the package objects\cr
   } %tabular
   
 } %summary and plotting
@@ -313,6 +316,7 @@ detail, including slot and argument definitions.
   potentially useful routines\ldots
 
   \tabular{ll}{
+	\code{\link{area}}: \tab Returns the area of a spatial object\cr
 	\code{\link{bbox}}: \tab Return the bounding box for a spatial
 	  object\cr
 	\code{\link{bboxCheck}}: \tab Check for a valid bounding box for a
@@ -322,7 +326,7 @@ detail, including slot and argument definitions.
 	\code{\link{bboxSum}}: \tab	Calculate an overall \code{bbox} from and
 	array of \code{bbox} matrices\cr
 	\code{\link{perimeter}}: \tab Returns the perimeter of a spatial
-	  object, which can then be plotted\cr
+	object, which can then be plotted\cr
   } %tabular
   
 } %helper methods
@@ -348,16 +352,16 @@ detail, including slot and argument definitions.
   Some methods that might be useful as stand-alone routines\ldots
 
   \tabular{ll}{
-	\code{\link{sampleLogs}}: \tab Draws a simulated sample of down logs and
-	  returns a data frame. \cr
 	\code{\link{boltDimensions}}: \tab Calculates segment volumes,
 	  surface area, etc.\cr
-    \code{\link{taperInterpolate}}: \tab Interpolates diameters or
-	  lengths within down logs.\cr
+	\code{\link{gridCellEnhance}}: \tab Draws grid lines and centers.\cr
 	\code{\link{heapIZ}}: \tab Used to heap inclusion zone grids into a
 	  sampling surface.\cr
-	\code{\link{gridCellEnhance}}: \tab Draws grid lines and centers.\cr
     \code{\link{initRandomSeed}}: \tab Initialize \code{.Random.seed}.\cr
+	\code{\link{sampleLogs}}: \tab Draws a simulated sample of down logs and
+	  returns a data frame. \cr
+    \code{\link{taperInterpolate}}: \tab Interpolates diameters or
+	  lengths within down logs.\cr
     \code{\link{transparentColorBase}}: \tab Transparancy in base graphics.\cr
 	
   } %tabular
@@ -389,16 +393,16 @@ detail, including slot and argument definitions.
   need to be concerned about these.
   
   \tabular{ll}{
-	\code{\linkS4class{dlsNumeric}}: \tab Accepts either class
-	  \dQuote{distanceLimited} or \dQuote{numeric}. \cr
 	\code{\linkS4class{dlmcIZNull}}: \tab Accepts either class
 	  \dQuote{distanceLimitedMCIZ} or \dQuote{NULL}. \cr
+	\code{\linkS4class{dlsNumeric}}: \tab Accepts either class
+	  \dQuote{distanceLimited} or \dQuote{numeric}. \cr
+	%next only used in solidType slot...  
+	\code{\linkS4class{numericNULL}}: \tab Accepts either class
+	  \dQuote{numeric} or \dQuote{NULL}. \cr
 	\code{\linkS4class{pdsIZNull}}: \tab Accepts either class
 	  \dQuote{perpendicularDistanceIZ} (or subclass) or
 	  \dQuote{NULL}. \cr
-	%only used in solidType slot...  
-	\code{\linkS4class{numericNULL}}: \tab Accepts either class
-	  \dQuote{numeric} or \dQuote{NULL}. \cr
   } %tabular
   
 

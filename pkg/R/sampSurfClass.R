@@ -3,8 +3,8 @@
 #   This file holds the S4 class definitions for the "sampSurf" class.
 #
 #   Note that we could not simply extend class Tract here, as we then would
-#   no mechanism to deal with subclasses of Tract (like bufferedTract) in
-#   this class.
+#   have no mechanism to deal with subclasses of Tract (like bufferedTract)
+#   in this class.
 #
 #Author...									Date: 1-Oct-2010
 #	Jeffrey H. Gove
@@ -29,7 +29,7 @@ setClass('sampSurf',
 #  slots for the class and its subclasses...
 #
     representation(description = 'character',
-                   izContainer = 'downLogIZs',       #collection of iz objects (classUnion to add other types)
+                   izContainer = 'izContainer',      #collection of iz objects
                    tract = 'Tract',                  #the underlying "Tract" or subclass
                    estimate = 'character',           #the estimate for the tract layer
                    surfStats = 'list'                #sampling surface summary statistics

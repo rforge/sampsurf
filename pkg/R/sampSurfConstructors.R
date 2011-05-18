@@ -37,7 +37,7 @@ setGeneric('sampSurf',
 #   Takes a collection of log inclusion zones and a "Tract" object...
 #
 setMethod('sampSurf',
-          signature(object = 'downLogIZs', tract='Tract'),
+          signature(object = 'downLogIZs', tract='Tract'), 
 function(object, 
          tract,
          estimate = unlist(.StemEnv$puaEstimates),

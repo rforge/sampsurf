@@ -11,7 +11,8 @@
 	#require(gpclib)
     #require(sp)
 	#require(raster)
-    #.defStemEnv(moveMiscFunctions=TRUE)
+    info = drop(read.dcf(file=system.file("DESCRIPTION", package=pkg), fields=c("Version","Date")))
+    cat(paste(pkg, " version ", info["Version"], " (", info["Date"], ")\n", sep=""))
   
 #
 #   lock the environment and its bindings, otherwise, someone can make 
@@ -22,7 +23,8 @@
 
 
 #.onAttach = function(lib, pkg) {
-#    .defStemEnv(moveMiscFunctions=TRUE)
+#    info = drop(read.dcf(file=system.file("DESCRIPTION", package=pkg), fields=c("Version","Date")))
+#    cat(paste(pkg, " version ", info["Version"], " (", info["Date"], ")\n", sep=""))
 #}
 
 

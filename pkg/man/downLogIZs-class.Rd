@@ -16,10 +16,8 @@
  collection. Its specific intent it to hold a collection of
  "\code{\linkS4class{InclusionZone}}" objects for a given log
  population, that will ultimately be used to generate a sampling surface
- for a given sampling method.  It is a simplified view of traditional
- container classes in that is does not currently allow for deletion or
- addition of objects.  Please see \dQuote{\emph{The InclusionZone
- Class}} vignette for more information.}
+ for a given sampling method.  Please see \dQuote{\emph{The
+ InclusionZone Class}} vignette for more information.}
 
 \section{Objects from the Class}{ Objects can be created by calls of the
 form \code{new("downLogIZs", ...)}; however, as in the other classes
@@ -29,41 +27,43 @@ in preference to \code{new}.  The constructor, \code{\link{downLogIZs}}, has onl
  form. }
 
 \section{Slots}{
+
+  The slots are the same as for the "\code{\linkS4class{izContainer}}"
+  virtual superclass; please see it for details beyond what is below.
+   
   \describe{
 	
     \item{\code{iZones}:}{Object of class \code{"list"}: This slot holds
 	  a list of objects that all correspond to the same subclass of the
-	  "\code{\linkS4class{downLogIZ}}" class. In other words, each item
-	  must have been generated from the same sampling method; i.e., all
-	  of class "\code{\linkS4class{sausageIZ}}," for example.  }
-	
-    \item{\code{units}:}{Object of class \code{"character"}: The units
-      for all of the logs in the collection; note that they must all be
-      measured in the same units. }
-	
-    \item{\code{bbox}:}{Object of class \code{"matrix"}: The overall
-      bounding box for the collection used in plotting. }
-	
-    \item{\code{description}:}{Object of class \code{"character"}: A
-      description of the collection. }
+	  "\code{\linkS4class{downLogIZ}}" class.  }
 	
   }
 }
 
+\section{Extends}{
+Class \code{"\linkS4class{izContainer}"}, directly.
+}
+
 \section{Methods}{
   \describe{
+    \item{bbox}{\code{signature(obj = "downLogIZs")}: Return the minimal
+      bounding box matrix. }
+	
+    \item{perimeter}{\code{signature(object = "downLogIZs")}: Graphical
+      perimeter corresponding to the mnimal bounding box. }
+	
     \item{plot}{\code{signature(x = "downLogIZs", y = "missing")}:
       Graphical plot of the collection. }
 	
     \item{sampSurf}{\code{signature(object = "downLogIZs", tract =
-		"Tract")}: Create a sampling surface for the collecition on a
+		"Tract")}: Create a sampling surface for the collection on a
 		given "Tract". }
 	
-      \item{show}{\code{signature(object = "downLogIZs")}: Print some
+    \item{show}{\code{signature(object = "downLogIZs")}: Print some
       information about the collection.  }
 	  
-    \item{summary}{\code{signature(object = "downLogIZs")}: A summary of
-	 the collection. }
+    %\item{summary}{\code{signature(object = "downLogIZs")}: A summary of
+	% the collection. }
 	 }
 }
 
@@ -71,17 +71,8 @@ in preference to \code{new}.  The constructor, \code{\link{downLogIZs}}, has onl
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
-\seealso{ For subclasses of \code{\linkS4class{downLogIZ}}, see:
-  \code{\linkS4class{standUpIZ}},
-  \code{\linkS4class{chainSawIZ}},
-  \code{\linkS4class{sausageIZ}}
-  \code{\linkS4class{pointRelascopeIZ}},
-  \code{\linkS4class{perpendicularDistanceIZ}},
-  \code{\linkS4class{omnibusPDSIZ}},
-  \code{\linkS4class{distanceLimitedPDSIZ}},
-  \code{\linkS4class{omnibusDLPDSIZ}}, and
-  \code{\linkS4class{distanceLimitedMCIZ}}. 
-
+\seealso{ See the subclasses of \code{\linkS4class{downLogIZ}} for valid
+  object types that can be stored in this container.
 }
 
 \examples{

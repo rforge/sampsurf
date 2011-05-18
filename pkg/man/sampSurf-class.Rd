@@ -3,6 +3,7 @@
 \docType{class}
 \alias{sampSurf-class}
 \alias{bbox,sampSurf-method}
+%\alias{hist,sampSurf-method}
 %\alias{perimeter,sampSurf-method}
 \alias{plot3D,sampSurf-method}
 %\alias{plot,sampSurf,missing-method}
@@ -54,7 +55,7 @@ vignette.  }
     \item{\code{description}:}{Object of class \code{"character"}: a
       character description to be associated with this surface. }
 	
-    \item{\code{izContainer}:}{Object of class \code{"downLogIZs"}: A
+    \item{\code{izContainer}:}{Object of class \code{"izContainer"}: A
       collection or population of down log
       "\code{\linkS4class{InclusionZone}}" objects. Note that this can
       be extended to include standing tree inclusion zone objects when
@@ -77,12 +78,26 @@ vignette.  }
 
 \section{Methods}{
   \describe{
-    \item{bbox}{\code{signature(obj = "sampSurf")}: ... }
-    \item{perimeter}{\code{signature(object = "sampSurf")}: ... }
-    \item{plot3D}{\code{signature(x = "sampSurf")}: ... }
-    \item{plot}{\code{signature(x = "sampSurf", y = "missing")}: ... }
-    \item{show}{\code{signature(object = "sampSurf")}: ... }
-    \item{summary}{\code{signature(object = "sampSurf")}: ... }
+    \item{bbox}{\code{signature(obj = "sampSurf")}: Retrieve the
+      bounding box matrix. }
+	
+    \item{hist}{\code{signature(x = "sampSurf")}: Histogram of the
+      sampling distribution. }
+	
+    \item{perimeter}{\code{signature(object = "sampSurf")}: Graphical
+      perimeter of the surface. }
+	
+    \item{plot3D}{\code{signature(x = "sampSurf")}: Display the surface
+      in 3D with \code{\link{rgl}}. }
+	
+    \item{plot}{\code{signature(x = "sampSurf", y = "missing")}: Plot
+      the surface. }
+	
+    \item{show}{\code{signature(object = "sampSurf")}: \code{\link{raster}}-like
+      description of the surface grid. }
+	
+    \item{summary}{\code{signature(object = "sampSurf")}: Detailed
+	   summary of the surface statistics. }
 	 }
    }
    

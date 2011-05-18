@@ -288,16 +288,18 @@ function(object,
 #------------------------------------------------------------------------------
 #   calculates summary statistics on the logs in the list...
 #------------------------------------------------------------------------------
+    attrNames = c('volume', 'length', 'surfaceArea', 'coverageArea','biomass','carbon')
     numLogs = length(logs)
     nvars = 6
-    volen = matrix(NA, nrow=numLogs, ncol=nvars)
+    logAttr = matrix(NA, nrow=numLogs, ncol=nvars) #log attributes
+    colnames(logAttr) = attrNames
     for(i in seq_len(numLogs)) {
-      volen[i,1] = logs[[i]]@logVol
-      volen[i,2] = logs[[i]]@logLen
-      volen[i,3] = logs[[i]]@surfaceArea
-      volen[i,4] = logs[[i]]@coverageArea
-      volen[i,5] = logs[[i]]@biomass
-      volen[i,6] = logs[[i]]@carbon
+      logAttr[i,1] = logs[[i]]@logVol
+      logAttr[i,2] = logs[[i]]@logLen
+      logAttr[i,3] = logs[[i]]@surfaceArea
+      logAttr[i,4] = logs[[i]]@coverageArea
+      logAttr[i,5] = logs[[i]]@biomass
+      logAttr[i,6] = logs[[i]]@carbon
     }
 
 #
@@ -307,16 +309,25 @@ function(object,
     suppressWarnings({
     
     stats = data.frame(matrix(NA, nrow=6, nc=nvars)) #stats as rows, vars as columns
-    colnames(stats) = c('volume', 'length', 'surfaceArea', 'coverageArea','biomass','carbon')
+    colnames(stats) = attrNames
     rownames(stats) = c('mean','total','sd','var', 'min','max')
-    stats[1,] = apply(volen, 2, mean, na.rm=TRUE)
-    stats[2,] = colSums(volen, na.rm=TRUE)
-    stats[3,] = apply(volen, 2, sd, na.rm=TRUE)
-    stats[4,] = apply(volen, 2, var, na.rm=TRUE)
-    stats[5,] = apply(volen, 2, min, na.rm=TRUE)
-    stats[6,] = apply(volen, 2, max, na.rm=TRUE)
+    #stats[1,] = apply(logAttr, 2, mean, na.rm=TRUE)
+    stats[1,] = colMeans(logAttr, na.rm=TRUE)
+    stats[2,] = colSums(logAttr, na.rm=TRUE)
+    stats[3,] = apply(logAttr, 2, sd, na.rm=TRUE)
+    stats[4,] = apply(logAttr, 2, var, na.rm=TRUE)
+    stats[5,] = apply(logAttr, 2, min, na.rm=TRUE)
+    stats[6,] = apply(logAttr, 2, max, na.rm=TRUE)
 
     }) #suppressWarnings
+
+#
+#   and clean these up if necessary...
+#
+    if(all(is.na(logAttr[,'biomass'])))
+      stats[,'biomass'] = NA
+    if(all(is.na(logAttr[,'carbon'])))
+      stats[,'carbon'] = NA
  
     return(stats)
 }   #statsDownLogs

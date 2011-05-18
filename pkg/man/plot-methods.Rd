@@ -20,7 +20,7 @@
 \alias{plot,Stem,missing-method}
 \alias{plot,Tract,missing-method}
 
-\title{ Methods for Function \code{plot} in Package \sQuote{sampSurf} }
+\title{ Methods for \pkg{graphics} Function \code{plot} in Package \sQuote{sampSurf} }
 
 \description{
   The methods described here are for the \code{\link[sampSurf]{plot}}
