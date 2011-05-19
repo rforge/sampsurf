@@ -113,7 +113,7 @@ function(object,
     surfStats = list( mean=cellStats(tract, mean)*areaAdjust,
                       sum=cellStats(tract,sum)*areaAdjust,
                       var=cellStats(tract, var)*areaAdjust^2,
-                      nc=ncell(tract)
+                      nc=ncell(tract), max = maxValue(tract)
                     )
     surfStats$stDev = sqrt(surfStats$var)
     surfStats$se = surfStats$stDev/sqrt(surfStats$nc)

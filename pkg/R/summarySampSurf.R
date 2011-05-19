@@ -88,6 +88,7 @@ function(object,
     cat('\n  var =', object@surfStats$var)
     cat('\n  st. dev. =', object@surfStats$stDev)
     cat('\n  cv % =', 100*object@surfStats$stDev/object@surfStats$mean)
+    cat('\n  surface max =', object@surfStats$max)
     #cat('\n  st. error =', object@surfStats$se)
     cat('\n  total # grid cells =', object@surfStats$nc)
     cat('\n  grid cell resolution (x & y) =', xres(object@tract), unitLen)
