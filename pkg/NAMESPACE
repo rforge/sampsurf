@@ -1,6 +1,6 @@
 
 import(methods)
-importFrom(graphics, plot)
+importFrom(graphics, plot, hist)
 import(sp)
 #importFrom("sp", bbox, Spatial, SpatialGrid, SpatialGridDataFrame, plot)
 import(raster)
@@ -25,23 +25,25 @@ exportClasses(ArealSampling, circularPlot, pointRelascope, perpendicularDistance
               distanceLimited)
 exportClasses(Tract, bufferedTract)
 exportClasses(InclusionZone, InclusionZoneGrid, csFullInclusionZoneGrid,
-              downLogIZ, standUpIZ, sausageIZ, downLogIZs, chainSawIZ,
+              downLogIZ, standUpIZ, sausageIZ, chainSawIZ,
               pointRelascopeIZ, perpendicularDistanceIZ, omnibusPDSIZ,
               distanceLimitedMCIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ)
+exportClasses(izContainer, downLogIZs)
 exportClasses(sampSurf)
 
 #export required for all methods with external generics...
-exportMethods(plot, summary, show)
-exportMethods(bbox, perimeter, plot3D)
+exportMethods(plot, summary, show, hist)
+exportMethods(bbox, perimeter, plot3D, area)
 
 #and evidently for all internal methods/generics...
 exportMethods(downLog, downLogs)
 exportMethods(circularPlot, pointRelascope, perpendicularDistance, distanceLimited)
-exportMethods(standUpIZ, sausageIZ, downLogIZs, chainSawIZ, pointRelascopeIZ,
+exportMethods(standUpIZ, sausageIZ, chainSawIZ, pointRelascopeIZ,
               perpendicularDistanceIZ, omnibusPDSIZ,
               distanceLimitedMCIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ)
+exportMethods(downLogIZs)
 exportMethods(Tract, bufferedTract)
 exportMethods(izGrid, izGridCSFull)
 exportMethods(heapIZ)

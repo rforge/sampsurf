@@ -389,7 +389,7 @@ function(izObject,
 
           
 #================================================================================
-#  method for 'omnibusPDSIZ' and 'Tract' classes...  ******THIS WILL CHANGE*************
+#  method for 'omnibusPDSIZ' and 'Tract' classes...  
 #
 setMethod('izGrid',
           signature(izObject = 'omnibusPDSIZ', tract='Tract'),
@@ -485,9 +485,12 @@ function(izObject,
 #  the first is a superclass of the second...
 #
 #  The routine is set up in 3 main steps...
-#  1. construct the entire dlpds izGrid object so that we have a bounding grid
-#     for the whole polygon--do not use the estimates here as they are not
-#     correct, just do this for the grid object
+#  1. the entire stem is under PDS, i.e., not DL portion, so we just treat
+#     it as normal PDS and use pdsFull to get the grid
+#
+#     otherwise construct the entire dlpds izGrid object so that we have a
+#     bounding grid for the whole polygon--do not use the estimates here as 
+#     they are not correct, just do this to get the grid object
 #
 #  2. if it exists, compute and expand the dlsPart of the izGrid and substitute
 #     its values for the dummy values in step 1
@@ -508,8 +511,23 @@ function(izObject,
         )
 {
 #---------------------------------------------------------------------------
+#   1. first see if the inclusion zone is completely PDS, if so, we just
+#      dispatch to the correct constructor and we are done...
 #
-#   1. first get the overall izGrid object to work with--DO NOT use these 
+    if(is.null(izObject@dlsPart) && is.null(izObject@pdsPart)) {
+      griz = izGrid(izObject=izObject@pdsFull, tract=tract, description=description,
+                       wholeIZ=wholeIZ, runQuiet=runQuiet, ...)
+      return(griz)
+    }    
+
+
+  
+#---------------------------------------------------------------------------
+#
+#   ---Now we have a situation where we are either all DLPDS, or a hybrid
+#      of the two methods...
+#
+#      first get the overall izGrid object to work with--DO NOT use these 
 #      puaEstimates as they are combined (if both DL and PDS in the same log)...
 #
     griz = izGridConstruct(izObject=izObject, tract=tract, description=description,
@@ -594,9 +612,9 @@ function(izObject,
             est = colnames(data)
             data[pdsTo.idx, est] = df[pdsFrom.idx, est]                   #variable within each est
           }
-          else
-            for(est in colnames(data)) 
-              data[pdsTo.idx, est] = izObject@pdsPart@puaEstimates[[est]] #constant for each est 
+        else
+          for(est in colnames(data)) 
+            data[pdsTo.idx, est] = izObject@pdsPart@puaEstimates[[est]] #constant for each est 
 
         griz@data = data
       }
