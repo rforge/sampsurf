@@ -94,6 +94,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
   \code{\linkS4class{omnibusPDSIZ}},
   \code{\linkS4class{distanceLimitedPDSIZ}},
   \code{\linkS4class{omnibusDLPDSIZ}}, 
+  \code{\linkS4class{distanceLimitedIZ}},  
   \code{\linkS4class{distanceLimitedMCIZ}},  
   and the \code{\linkS4class{downLogIZs}} container class.  }
 

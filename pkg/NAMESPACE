@@ -27,7 +27,7 @@ exportClasses(Tract, bufferedTract)
 exportClasses(InclusionZone, InclusionZoneGrid, csFullInclusionZoneGrid,
               downLogIZ, standUpIZ, sausageIZ, chainSawIZ,
               pointRelascopeIZ, perpendicularDistanceIZ, omnibusPDSIZ,
-              distanceLimitedMCIZ,
+              distanceLimitedMCIZ, distanceLimitedIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ)
 exportClasses(izContainer, downLogIZs)
 exportClasses(sampSurf)
@@ -41,7 +41,7 @@ exportMethods(downLog, downLogs)
 exportMethods(circularPlot, pointRelascope, perpendicularDistance, distanceLimited)
 exportMethods(standUpIZ, sausageIZ, chainSawIZ, pointRelascopeIZ,
               perpendicularDistanceIZ, omnibusPDSIZ,
-              distanceLimitedMCIZ,
+              distanceLimitedMCIZ, distanceLimitedIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ)
 exportMethods(downLogIZs)
 exportMethods(Tract, bufferedTract)

@@ -77,7 +77,7 @@ setClass('csFullInclusionZoneGrid',
 #  slots for the class; note that we need a list of "InclusionZoneGrid" objects, one for
 #  each chainSaw estimate within the overall sausage inclusion zone...
 #
-    representation(chiz = 'list'                      #a list of IncluzionZoneGrid objects
+    representation(chiz = 'list'                      #a list of InclusionZoneGrid objects
                   ),
     contains = 'InclusionZoneGrid',
     prototype = list(description = 'full chainsaw-sausage gridded inclusion zone',

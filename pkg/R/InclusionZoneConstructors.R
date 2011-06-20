@@ -13,6 +13,7 @@
 #     7. for 'distanceLimitedPDSIZ' (Feb-Mar 2011)
 #     8. for 'omnibusDLPDSIZ (Mar 2011)
 #     9. for 'distanceLimitedMCIZ (Mar 2011)
+#    10. for 'distacneLimitedIZ (May 2011)
 #
 #   Note that the sp, raster, and gpclib packages must be loaded.
 #
@@ -84,13 +85,19 @@
              function(downLog, dls, ...) standardGeneric('distanceLimitedMCIZ'),
              signature = c('downLog', 'dls')
             )
+
+#if(!isGeneric("distanceLimitedIZ")) 
+  setGeneric('distanceLimitedIZ',  
+             function(downLog, dls, ...) standardGeneric('distanceLimitedIZ'),
+             signature = c('downLog', 'dls')
+            )
    
 
 
 
        
 #================================================================================
-#  method for functions and class standUpIZ...
+#  1. method for functions and class standUpIZ...
 #
 setMethod('standUpIZ',
           signature(downLog = 'downLog', plotRadius = 'numeric'),
@@ -159,7 +166,7 @@ function(downLog,
 
        
 #================================================================================
-#  method for functions and class chainSawIZ...
+#  2. method for functions and class chainSawIZ...
 #
 setMethod('chainSawIZ',
           signature(downLog = 'downLog', plotRadius = 'numeric'),
@@ -280,7 +287,7 @@ function(downLog,
 
        
 #================================================================================
-#  method for functions and class sausageIZ...
+#  3. method for functions and class sausageIZ...
 #
 setMethod('sausageIZ',
           signature(downLog = 'downLog', plotRadius = 'numeric'),
@@ -405,7 +412,7 @@ function(downLog,
 
        
 #================================================================================
-#  method for functions and class pointRelascopeIZ...
+#  4. method for functions and class pointRelascopeIZ...
 #
 setMethod('pointRelascopeIZ',
           signature(downLog = 'downLog', prs = 'pointRelascope'),
@@ -547,7 +554,7 @@ function(downLog,
 
        
 #================================================================================
-#  method for functions and class perpendicularDistanceIZ...
+#  5. method for functions and class perpendicularDistanceIZ...
 #
 setMethod('perpendicularDistanceIZ',
           signature(downLog = 'downLog', pds = 'perpendicularDistance'),
@@ -668,7 +675,7 @@ function(downLog,
 
        
 #================================================================================
-#  method for class omnibusPDSIZ construction--just call parent method...
+#  6. method for class omnibusPDSIZ construction--just call parent method...
 #
 setMethod('omnibusPDSIZ',
           signature(downLog = 'downLog', pds = 'perpendicularDistance'),
@@ -723,14 +730,14 @@ function(downLog,
        
 #================================================================================
 #
-#  DLPDS...
+#  7. DLPDS...
 #
 #  method for class distanceLimitedPDSIZ construction using a "distanceLimited"
 #  object...
 #
 #================================================================================
 #
-setClassUnion('dlsNumeric',c('distanceLimited','numeric'))       #let this constructor handle both
+setClassUnion('dlsNumeric', c('distanceLimited','numeric'))       #let this constructor handle both
 setMethod('distanceLimitedPDSIZ',
           signature(downLog = 'downLog', pds = 'perpendicularDistance', dls='dlsNumeric'), 
 function(downLog,
@@ -857,7 +864,7 @@ function(downLog,
 #   smaller down log butt portion; this will be a distanceLimitedMCIZ object...
 #
     dls = distanceLimited(distanceLimit, units=downLog@units)
-    dlIZ = distanceLimitedMCIZ(dl.dlog, dls, description = description,
+    dlIZ = distanceLimitedIZ(dl.dlog, dls, description = description,
                              spID = spID, spUnits = spUnits, ...)
 
 #
@@ -941,12 +948,7 @@ function(downLog,
 #
 #   per unit area estimates for the full log...
 #
-    #puaEstimates = as.list(unlist(pdsIZ@puaEstimates) + unlist(dlIZ@puaEstimates))  #not in general
-    puaEstimates = as.list(rep(NA, 7))             #all to NA to cover omnibusDLPDSIZ
-    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
-                                                  'surfaceArea', 'coverageArea',
-                                                  'biomass', 'carbon'
-                                                )]
+    puaEstimates = as.list(unlist(pdsIZ@puaEstimates) + unlist(dlIZ@puaEstimates))  #not in general
     
 #
 #   full perimeter is in two parts that must be joined together...
@@ -1004,7 +1006,7 @@ function(downLog,
 
        
 #================================================================================
-#  method for class omnibusDLPDSIZ construction--just call parent method...
+#  8. method for class omnibusDLPDSIZ construction--just call parent method...
 #
 setMethod('omnibusDLPDSIZ',
           signature(downLog = 'downLog', pds = 'perpendicularDistance', dls = 'dlsNumeric'),
@@ -1032,15 +1034,32 @@ function(downLog,
                                     )
 
 #
-#   this just mirrors what we have in omnibusPDSIZ without having to recreate everything...
+#   this just mirrors what we have in omnibusPDSIZ and distanceLimitedMCIZ
+#   using coercion without having to recreate everything from scratch...
 #
     npua = length(dlpdsIZ@puaEstimates)
+
+    #pdsPart...
     if(!is.null(dlpdsIZ@pdsPart)) {
       pdsPart = as(dlpdsIZ@pdsPart, 'omnibusPDSIZ')   #cast/coerce
       pdsPart@puaEstimates[1:npua] = rep(NA, npua)    #will keep names okay
     }
     else
       pdsPart = NULL
+
+    #dlsPart...
+    if(!is.null(dlpdsIZ@dlsPart)) {
+      dlsPart = as(dlpdsIZ@dlsPart, 'distanceLimitedMCIZ')   #cast/coerce
+      unitArea = ifelse(dlsPart@downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare)
+      izArea = dlsPart@area
+      logLen = dlsPart@downLog@logLen
+      dlsPart@puaBlowup = unitArea/izArea * logLen     #<<<*****Note
+      dlsPart@puaEstimates[c('volume','surfaceArea','coverageArea','biomass', 'carbon')] = NA
+    }
+    else
+      dlsPart = NULL
+
+    #pdsFull...
     if(!is.null(dlpdsIZ@pdsFull)) {
       pdsFull = as(dlpdsIZ@pdsFull, 'omnibusPDSIZ')   #cast/coerce
       pdsFull@puaEstimates[1:npua] = rep(NA, npua)    #will keep names okay
@@ -1048,6 +1067,17 @@ function(downLog,
     else
       pdsFull = NULL
 
+#
+#   per unit area estimates for the full log are unknown at this point as they
+#   depend on some function of perpendicular diameter...
+#
+    puaEstimates = as.list(rep(NA, 7))             #all to NA to cover omnibusDLPDSIZ
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                  'surfaceArea', 'coverageArea',
+                                                  'biomass', 'carbon'
+                                                )]
+    
+    
 #
 #   create the new object afresh...
 #
@@ -1062,12 +1092,12 @@ function(downLog,
                    units = dlpdsIZ@units,                #units of measure
                    area = dlpdsIZ@area,                  #exact inclusion zone area
                    puaBlowup = dlpdsIZ@puaBlowup,        #NA per unit area blowup factor
-                   puaEstimates = dlpdsIZ@puaEstimates,  #per unit area estimates
+                   puaEstimates = puaEstimates,          #per unit area estimates
                    bbox = dlpdsIZ@bbox,                  #overall bounding box--redundant here
                    dls = dlpdsIZ@dls,                    #distanceLimited object
                    dlsDiameter = dlpdsIZ@dlsDiameter,    #the limiting diameter
                    pdsPart = pdsPart,                    #pdsIZ component object
-                   dlsPart = dlpdsIZ@dlsPart,            #DL component pdsIZ object
+                   dlsPart = dlsPart,                    #DL component pdsIZ object
                    pdsFull = pdsFull                     #as if it were plain pdsIZ
                   )
 
@@ -1088,14 +1118,14 @@ function(downLog,
 
        
 #================================================================================
-#  method for functions and class distanceLimitedMCIZ...
+#  9. method for functions and class distanceLimitedIZ...
 #
-setMethod('distanceLimitedMCIZ',
+setMethod('distanceLimitedIZ',
           signature(downLog = 'downLog', dls = 'distanceLimited'), #change second argument!!
 function(downLog,
          dls,
-         description = 'inclusion zone for down log DLMC sampling',
-         spID = paste('dlmc',.StemEnv$randomID(),sep=':'),
+         description = 'inclusion zone for down log DL sampling',
+         spID = paste('dl',.StemEnv$randomID(),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
         )
@@ -1125,25 +1155,21 @@ function(downLog,
     logLen = downLog@logLen
     unitArea = ifelse(downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
     izArea = 2*logLen*distanceLimit          #DL component
-    puaBlowup = unitArea/izArea * logLen     #<<<*****Note
-
-#
-#   per unit area estimates...
-#   most of the per unit area estimates for this component depend on the perpendicular
-#   diameter in some form, but a couple are constant...
-#
-    puaEstimates = as.list(rep(NA, 7))
+    puaBlowup = unitArea/izArea 
+    puaEstimates = list(downLog@logVol*puaBlowup, puaBlowup, logLen*puaBlowup,
+                        downLog@surfaceArea*puaBlowup, downLog@coverageArea*puaBlowup,
+                        downLog@biomass*puaBlowup, downLog@carbon*puaBlowup
+                       )
     names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
                                                   'surfaceArea', 'coverageArea',
                                                   'biomass', 'carbon'
                                                 )]
-    puaEstimates$Density = puaBlowup/logLen
-    puaEstimates$Length = puaBlowup
+
 
 #    
 #   back transform the log to canonical postion, then determine the inclusion zone perimeter...
 #
-    halfLen = downLog@logLen/2
+    halfLen = logLen/2
     izPerim = matrix(c(-halfLen, distanceLimit, 1), nrow=1)          #left-most top point
     izPerim = rbind(izPerim, c(halfLen, distanceLimit,1))            #right-most top point
     izPerim = rbind(izPerim, c(halfLen, -distanceLimit,1))           #right-most bottom point
@@ -1165,7 +1191,8 @@ function(downLog,
 #
 #   create the object...
 #
-    vpmcIZ = new('distanceLimitedMCIZ', downLog=downLog,
+    dlsIZ = new('distanceLimitedIZ',
+                 downLog=downLog,
                  dls = dls,                          #distanceLimited sampling object
                  izPerim = izPerim,                  #matrix representation of perimeter
                  perimeter = spObj,                  #SpatialPolygons perimeter
@@ -1179,6 +1206,55 @@ function(downLog,
                  bbox = bbox(spObj)                  #overall bounding box--redundant here
                 )
 
-    return(vpmcIZ)
+    return(dlsIZ)
+}   #distanceLimitedIZ constructor
+)   #setMethod
+
+
+
+
+
+
+
+
+       
+#================================================================================
+#  10. method for functions and class distanceLimitedMCIZ; everything is the same
+#      as under dls, except the per nuit area estimates for all but Density
+#      and Length...
+#
+setMethod('distanceLimitedMCIZ',
+          signature(downLog = 'downLog', dls = 'distanceLimited'), #change second argument!!
+function(downLog,
+         dls,
+         description = 'inclusion zone for down log DLMC sampling',
+         spID = paste('dlmc',.StemEnv$randomID(),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+    dlsIZ = distanceLimitedIZ(downLog=downLog, dls=dls, description=description,
+                              spID=spID, spUnits=spUnits, ...)
+    dlmcIZ = as(dlsIZ, 'distanceLimitedMCIZ')   #cast
+
+#
+#   we must reset the blowup for use in the InclusionZoneGrid routine for dlmc...
+#
+    unitArea = ifelse(downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare)
+    izArea = dlsIZ@area
+    logLen = dlsIZ@downLog@logLen
+    dlmcIZ@puaBlowup = unitArea/izArea * logLen     #<<<*****Note
+    
+#
+#   per unit area estimates...
+#     most of the per unit area estimates for this component depend on the perpendicular
+#     diameter in some form, but a couple (Density and Length) are constant...
+#
+    dlmcIZ@puaEstimates[c('volume','surfaceArea','coverageArea','biomass', 'carbon')] = NA
+    
+    return(dlmcIZ)
 }   #distanceLimitedMCIZ constructor
 )   #setMethod
+    

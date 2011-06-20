@@ -46,9 +46,9 @@ constructor \code{\link{distanceLimitedPDSIZ}} to create new objects.
       subclass, i.e., \code{"\linkS4class{omnibusPDSIZ}"} object), or
       \code{NULL} if none exists. }
 	
-    \item{\code{dlsPart}:}{Object of class \code{"\linkS4class{dlmcIZNull}"} holding
-      the distance limited Monte Carlo portion of the inclusion zone as a
-      \code{"\linkS4class{distanceLimitedMCIZ}"} object, or
+    \item{\code{dlsPart}:}{Object of class \code{"\linkS4class{dlsIZNull}"} holding
+      the distance limited sampling portion of the inclusion zone as a
+      \code{"\linkS4class{distanceLimitedIZ}"} object, or
       \code{NULL} if none exists. }
 	
     \item{\code{pdsFull}:}{Object of class \code{"\linkS4class{pdsIZNull}"} holding a

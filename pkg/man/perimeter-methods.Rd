@@ -87,7 +87,7 @@
 	Returns the spatial object associated with the perimeter of the
     inclusion zone---works on all subclasses. }
 
-  \item{\strong{\code{signature(object = "distanceLimitedMCIZ")}}}{ %\cr
+  \item{\strong{\code{signature(object = "distanceLimitedIZ")}}}{ %\cr
 
 	Returns the spatial object associated with the perimeter of the
     inclusion zone. }

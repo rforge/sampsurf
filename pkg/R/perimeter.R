@@ -12,7 +12,7 @@
 #     3. sausageIZ
 #     4. pointRelascopeIZ
 #     5. perpendicularDistanceIZ (omnibusPDSIZ, distanceLimitedPDSIZ, omnibusDLPDSIZ)
-#     6. distanceLimitedMCIZ
+#     6. distanceLimitedIZ
 #     7. downLog
 #     8. downLogs
 #     9. circularPlot of class ArealSampling
@@ -127,14 +127,14 @@ function(object, ...)
 
 
 #================================================================================
-#  method for distanceLimitedMCIZ object...
+#  method for distanceLimitedIZ or subclass (distanceLimitedMCIZ) object...
 #
 setMethod('perimeter',
-          signature(object = 'distanceLimitedMCIZ'),
+          signature(object = 'distanceLimitedIZ'),
 function(object, ...)
 {
     return(object@perimeter)
-}   #distanceLimitedMCIZ
+}   #distanceLimitedIZ
 ) #setMethod
 
 

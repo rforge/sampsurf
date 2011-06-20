@@ -10,7 +10,7 @@
 #   5. "pointRelascopeIZ"
 #   6. "perpendicularDistanceIZ"
 #   7. "distanceLimitedPDSIZ'
-#   8. "distanceLimitedMCIZ'
+#   8. "distanceLimitedIZ'
 #
 #   9. "downLogIZs"
 #
@@ -288,7 +288,7 @@ function(x,
 
 
 #================================================================================
-#  7. method for distanceLimitedPDSIZ subclass (10-Mar-2011)...
+#  7. method for distanceLimitedPDSIZ or subclasses (10-Mar-2011)...
 #
 setMethod('plot',
           signature(x = 'distanceLimitedPDSIZ', y='missing'),
@@ -348,10 +348,10 @@ function(x,
 
 
 #================================================================================
-#  8. method for distanceLimitedMCIZ subclass (22-Mar-2011)...
+#  8. method for distanceLimitedIZ or distanceLimitedMCIZ subclass (22-Mar-2011)...
 #
 setMethod('plot',
-          signature(x = 'distanceLimitedMCIZ', y='missing'),
+          signature(x = 'distanceLimitedIZ', y='missing'),
 function(x, 
          axes = FALSE,                     #not a par() so can't be passed to callNextMethod, so separate it
          showLog = TRUE,
@@ -363,7 +363,7 @@ function(x,
         )
 {
 #------------------------------------------------------------------------------
-#   plots the distanceLimitedMCIZ object...
+#   plots the distanceLimitedIZ object...
 #
 #   note: the IZ center and log center coincide with VPMC, if you want to
 #         show one of them, show the log center
@@ -381,7 +381,7 @@ function(x,
     })
                      
     return(invisible())
-}   #plot for 'distanceLimitedMCIZ'
+}   #plot for 'distanceLimitedIZ'
 )   #setMethod
 
 

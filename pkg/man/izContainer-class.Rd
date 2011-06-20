@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{izContainer-class}
-\alias{hist,izContainer-method}
+%\alias{hist,izContainer-method}
 \alias{summary,izContainer-method}
 
 \title{Class \code{"izContainer"}}

@@ -114,13 +114,21 @@
 	  first argument, which must be an object of class
 	  "\code{\linkS4class{distanceLimitedPDSIZ}}". }
 
+\item{\strong{\code{signature(izObject = "distanceLimitedIZ", tract =
+	  "Tract")}}}{%\cr
+
+      This constructor is for the distance limited method of sampling
+	  down logs. Everything is the same here as for the "omnibusPDSIZ"
+	  method above, with the exception of the first argument, which must
+	  be an object of class "\code{\linkS4class{distanceLimitedIZ}}". }
+
 \item{\strong{\code{signature(izObject = "distanceLimitedMCIZ", tract =
 	  "Tract")}}}{%\cr
 
-      This constructor is for the distance limited Monte Carlo method of
-	  sampling down logs. Everything is the same here as for the
-	  "omnibusPDSIZ" method above, with the exception of the first
-	  argument, which must be an object of class
+      This constructor is for the distance limited  Monte Carlo
+	  method of sampling down logs. Everything is the same here
+	  as for the "distanceLimitedIZ" method above, with the exception of the
+	  first argument, which must be an object of class
 	  "\code{\linkS4class{distanceLimitedMCIZ}}". }
 
 \item{\strong{\code{signature(izObject = "matrix", tract =

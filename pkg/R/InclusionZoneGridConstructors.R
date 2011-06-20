@@ -4,6 +4,7 @@
 #   InclusionZoneGrid class...
 #
 #   The methods include...
+#     0. matrix constructor
 #     1. a constructor for 'standUpIZ'
 #     2. for 'chainSawIZ'
 #     3. for 'sausageIZ'
@@ -16,6 +17,7 @@
 #     7. for 'omnibusPDSIZ'
 #     8. for 'distanceLimitedPDSIZ'
 #     9. for 'distanceLimitedMCIZ'
+#    10. for 'distanceLimtedIZ'
 #
 #   Of course, if chainSaw was not so strange, we would only require one
 #   method for every different technique! (Well except for omnibus, and
@@ -51,15 +53,15 @@ setGeneric('izGridCSFull',
 #  This is a helper routine, not normally called from outside the construction
 #  of an InclusionZoneGrid object...
 #
-#  method for 'matrix' and 'Tract' classes; this is used within the following
-#  constructors and should not normally be called by itself as it simply
-#  established the minimal bounding grid that encompasses the inclusion zone
+#  0. method for 'matrix' and 'Tract' classes; this is used within the following
+#     constructors and should not normally be called by itself as it simply
+#     established the minimal bounding grid that encompasses the inclusion zone
 #
 setMethod('izGrid',
           signature(izObject = 'matrix', tract='Tract'),
-function(izObject,  #a bbox object
+function(izObject,        #a bbox object
          tract,
-         data = 0,
+         data = 0,        #background value for all cells in the minimal bounding grid
          useCrop = TRUE,  #T: use crop(); F: use extent method
          ...
         )
@@ -113,7 +115,7 @@ function(izObject,  #a bbox object
 
           
 #================================================================================
-#  method for 'standUpIZ' and 'Tract' classes...
+#  1. method for 'standUpIZ' and 'Tract' classes...
 #
 setMethod('izGrid',
           signature(izObject = 'standUpIZ', tract='Tract'),
@@ -141,7 +143,7 @@ function(izObject,
 
           
 #================================================================================
-#  method for 'sausageIZ' and 'Tract' classes...
+#  2. method for 'sausageIZ' and 'Tract' classes...
 #
 setMethod('izGrid',
           signature(izObject = 'sausageIZ', tract='Tract'),
@@ -170,9 +172,9 @@ function(izObject,
 
           
 #================================================================================
-#  method for 'chainSawIZ' and 'Tract' classes--of course chainsaw is weird
-#  since it is really a point inclusion zone, so it must have a more involved
-#  constructor method...
+#  3. method for 'chainSawIZ' and 'Tract' classes--of course chainsaw is weird
+#     since it is really a point inclusion zone, so it must have a more involved
+#     constructor method...
 #
 setMethod('izGrid',
           signature(izObject = 'chainSawIZ', tract='Tract'),
@@ -252,9 +254,9 @@ function(izObject,
 
           
 #================================================================================
-#  method for the full 'chainSawIZ' within the encompassing sausage inclusion
-#  zone and 'Tract' classes; this is probably going to be the only exception to
-#  the general InclusionZoneGrid class and constructors...
+#  4. method for the full 'chainSawIZ' within the encompassing sausage inclusion
+#     zone and 'Tract' classes; this is probably going to be the only exception to
+#     the general InclusionZoneGrid class and constructors...
 #
 setMethod('izGridCSFull',
           signature(izGridSausage = 'InclusionZoneGrid', tract='Tract'),
@@ -334,7 +336,7 @@ function(izGridSausage,
 
           
 #================================================================================
-#  method for 'pointRelascopeIZ' and 'Tract' classes...
+#  5. method for 'pointRelascopeIZ' and 'Tract' classes...
 #
 setMethod('izGrid',
           signature(izObject = 'pointRelascopeIZ', tract='Tract'),
@@ -362,7 +364,7 @@ function(izObject,
 
           
 #================================================================================
-#  method for 'perpendicularDistanceIZ' and 'Tract' classes...
+#  6. method for 'perpendicularDistanceIZ' and 'Tract' classes...
 #
 setMethod('izGrid',
           signature(izObject = 'perpendicularDistanceIZ', tract='Tract'),
@@ -389,7 +391,7 @@ function(izObject,
 
           
 #================================================================================
-#  method for 'omnibusPDSIZ' and 'Tract' classes...  
+#  7. method for 'omnibusPDSIZ' and 'Tract' classes...  
 #
 setMethod('izGrid',
           signature(izObject = 'omnibusPDSIZ', tract='Tract'),
@@ -479,7 +481,7 @@ function(izObject,
 
           
 #================================================================================
-#  method for 'distanceLimitedPDSIZ' or 'omnibusDLPDSIZ' and 'Tract' classes...
+#  8. method for 'distanceLimitedPDSIZ' or 'omnibusDLPDSIZ' and 'Tract' classes...
 #
 #  Note that this will work for both of the above PDS classes "as is" since
 #  the first is a superclass of the second...
@@ -647,7 +649,7 @@ function(izObject,
 
           
 #================================================================================
-#  method for 'distanceLimitedMCIZ' and 'Tract' classes...
+#  9. method for 'distanceLimitedMCIZ' and 'Tract' classes...
 #================================================================================
 #
 setMethod('izGrid',
@@ -721,3 +723,31 @@ function(izObject,
 }   #izGrid for'distanceLimitedMCIZ'
 )   #setMethod
   
+               
+  
+
+  
+
+
+          
+#================================================================================
+#  10. method for 'distanceLimitedIZ' and 'Tract' classes...
+#================================================================================
+#
+setMethod('izGrid',
+          signature(izObject = 'distanceLimitedIZ', tract='Tract'),
+function(izObject,
+         tract,
+         description = 'distanceLimitedIZ inclusion zone grid object',
+         wholeIZ = TRUE,           #TRUE: grid the whole object; FALSE: just grid the IZ
+         ...
+        )
+{
+#---------------------------------------------------------------------------
+#
+#
+    griz = izGridConstruct(izObject=izObject, tract=tract, description=description,
+                           wholeIZ=wholeIZ, ...)
+    return(griz)
+}   #izGrid for'distanceLimitedIZ'
+)   #setMethod

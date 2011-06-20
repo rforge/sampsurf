@@ -24,9 +24,18 @@ constructor \code{\link{omnibusDLPDSIZ}} to create new objects.  }
   This class is a direct descendent (subclass) of
   \code{"distanceLimitedPDSIZ"} and adds no new slots to that
   definition. Please see the \code{"\linkS4class{distanceLimitedPDSIZ}"}
-  class definition for details.
-  
+  class definition for details. The one slight change for omnibus is the
+  following, where we see that the Monte Carlo version is expected\dots
 
+  
+  \describe{
+	
+    \item{\code{dlsPart}:}{Object of class \code{"\linkS4class{dlsIZNull}"} holding
+      the distance limited Monte Carlo sampling portion of the inclusion zone as a
+      \code{"\linkS4class{distanceLimitedMCIZ}"} object, or
+      \code{NULL} if none exists. }
+  
+  }
 }
 \section{Extends}{
 Class \code{"\linkS4class{distanceLimitedPDSIZ}"}, directly.\cr

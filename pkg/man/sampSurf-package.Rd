@@ -34,14 +34,29 @@ graphically. Estimator variance is directly associated with the sampling
 surface roughness, and so methods can also be compared visually.
 
 Please note that \pkg{sampSurf} is quite functional, and has support for
-down logs sampled on fixed-area plots (which include the
-\sQuote{stand-up,} \sQuote{sausage,} and \sQuote{chainsaw} methods or
-protocols), point relascope sampling, several variants of perpendicular
-distance sampling, as well as a new method called distance limited Monte
-Carlo. Support for standing trees has not yet been added. The class
-structure is designed to support additions with relative ease, however,
-so more methods will appear in future releases (hopefully with some
-contributed by users).
+several methods/protocols for sampling down logs\dots
+
+\itemize{
+
+  \item Fixed area plots, which includes the so-called \sQuote{stand-up,}
+    \sQuote{sausage,} and \sQuote{chainsaw} protocols.
+%
+  \item Point relascope sampling (PRS).
+%
+  \item Perpendicular distance sampling (PDS) in several forms:
+    Canonical PDS, omnibus PDS, canonical distance limited PDS, and
+    omnibus distance limited PDS.
+%
+  \item Distance limited sampling in two forms: Simple (DLS), and Monte
+    Carlo (DLMCS).	
+
+} %itemize
+
+
+Support for standing trees has not yet been added. The class structure
+is designed to support additions with relative ease, however, so more
+methods will appear in future releases (hopefully with some contributed
+by users).
 
 }
 
@@ -50,8 +65,8 @@ contributed by users).
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.52\cr
-Date: \tab 2011-05-17\cr
+Version: \tab 0.54\cr
+Date: \tab 2011-06-17\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
 }
@@ -165,8 +180,10 @@ detail, including slot and argument definitions.
 	  distance limited perpendicular distance method of sampling down logs.\cr
 	\code{\linkS4class{omnibusDLPDSIZ}}: \tab Class for the omnibus
 	  distance limited perpendicular distance method of sampling down logs.\cr
+	\code{\linkS4class{distanceLimitedIZ}}: \tab Class for the 
+	  distance limited method of sampling down logs.\cr
 	\code{\linkS4class{distanceLimitedMCIZ}}: \tab Class for the 
-	distance limited Monte Carlo method of sampling down logs.\cr
+	  distance limited Monte Carlo method of sampling down logs.\cr
 	\code{\linkS4class{izContainer}}: \tab A virtual container
 	class---see the following entry for a useable subclass.\cr
 	\code{\linkS4class{downLogIZs}}: \tab A container class to hold a
@@ -258,6 +275,8 @@ detail, including slot and argument definitions.
 	  object for the \sQuote{distance limited perpendicular distance} sampling method \cr
 	\code{\link{omnibusDLPDSIZ}}: \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{omnibus distance limited perpendicular distance} sampling method \cr
+	\code{\link{distanceLimitedIZ}}: \tab Creates an \dQuote{InclusionZone}
+	  object for the \sQuote{distance limited} sampling method \cr
 	\code{\link{distanceLimitedMCIZ}}: \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{distance limited Monte Carlo} sampling method \cr
 	\code{\link{downLogIZs}}: \tab Holds a population of 
@@ -393,8 +412,8 @@ detail, including slot and argument definitions.
   need to be concerned about these.
   
   \tabular{ll}{
-	\code{\linkS4class{dlmcIZNull}}: \tab Accepts either class
-	  \dQuote{distanceLimitedMCIZ} or \dQuote{NULL}. \cr
+	\code{\linkS4class{dlsIZNull}}: \tab Accepts either class
+	  \dQuote{distanceLimitedIZ} (or subclass) or \dQuote{NULL}. \cr
 	\code{\linkS4class{dlsNumeric}}: \tab Accepts either class
 	  \dQuote{distanceLimited} or \dQuote{numeric}. \cr
 	%next only used in solidType slot...  
@@ -441,7 +460,11 @@ exhaustive.
 %
 \item{}{Gove, J. H. and Van Deusen, P. C. 2011. On fixed-area plot sampling for
   downed coarse woody debris. \emph{Forestry} \bold{84}:109--117.}
+%
+\item{}{Gove, J. H., Ducey, M. J. and Valentine, H. T. 2012. A distance
+  limited method for sampling downed coarse woody debris. \emph{In Prep.} }
 }
+
 }
 
 \keyword{ package }

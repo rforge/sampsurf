@@ -3,7 +3,7 @@
 \docType{class}
 \alias{dlsNumeric-class}
 \alias{pdsIZNull-class}
-\alias{dlmcIZNull-class}
+\alias{dlsIZNull-class}
 \alias{numericNULL-class}
 
 \title{Class Unions in \pkg{sampSurf} }
@@ -21,8 +21,8 @@ Here are the class unions in the \pkg{sampSurf} package and their usage.
   \item{\code{pdsIZNull}:}{ Used where a class of either
     \dQuote{perpendicularDistanceIZ} (or subclass) or \code{NULL} is appropriate.}
   
-  \item{\code{dlmcIZNull}:}{ Used where a class of either
-    \dQuote{distanceLimitedMCIZ} or \code{NULL} is appropriate.}
+  \item{\code{dlsIZNull}:}{ Used where a class of either
+    \dQuote{distanceLimitedIZ} (or subclass) or \code{NULL} is appropriate.}
   
   \item{\code{numericNULL}:}{ Used where a class of either
     \dQuote{numeric} or \code{NULL} is appropriate. Currently, this is

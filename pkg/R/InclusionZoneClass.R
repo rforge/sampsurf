@@ -17,9 +17,10 @@
 #     6. pointRelascopeIZ: the point relascope method for sampling down cwd
 #     7. perpendicularDistanceIZ: normal PDS
 #     8. omnibusPDSIZ: for omnibus estimation under normal PDS
-#     9. distanceLimitedMCIZ: for variable plot MC
-#    10. distanceLimitedPDSIZ: for DLPDS
-#    11. omnibusDLPDSIZ: combines omnibus PDS component with DL component
+#     9. distanceLimitedIZ: for canonical distance limited sampling (dls)
+#    10. distanceLimitedMCIZ: DLMC
+#    11. distanceLimitedPDSIZ: for canonical DLPDS
+#    12. omnibusDLPDSIZ: combines omnibus PDS component with DLMC component
 #
 #Author...									Date: 20-Aug-2010
 #	Jeffrey H. Gove
@@ -345,14 +346,14 @@ setClass('omnibusPDSIZ',
 
 #=================================================================================================
 #
-#  9. the distanceLimitedMCIZ class is a direct descendant of 'downLogIZ'...
+#  9. the distanceLimitedIZ class is a direct descendant of 'downLogIZ'...
 #
 #
 #     below: hc = homogeneous coordinates
 #
-#     added: 22&23-Mar-2011
+#     added: 25-May-2011
 #
-setClass('distanceLimitedMCIZ',
+setClass('distanceLimitedIZ',
     representation(dls = 'distanceLimited',         #the distanceLimited sampling object
                    izPerim = 'matrix',              #holds the iz perimeter in matrix form w/ hc
                    area = 'numeric',                #exact area of the inclusion zone
@@ -369,8 +370,23 @@ setClass('distanceLimitedMCIZ',
                  
                  return(TRUE)
                } #validity check
-) #class distanceLimitedMCIZ 
+) #class distanceLimitedIZ 
 
+
+
+
+#=================================================================================================
+#
+#  10. the distanceLimitedMCIZ class is a direct descendant of 'distanceLimitedIZ'; the dates
+#      below are off compared with the parent because I actually developed the MC version first,
+#      then added the distanceLimtedIZ class, this necessitated switching the defintion so
+#      that the parent was the base for this class of objects
+#
+#     added: 22&23-Mar-2011
+#
+setClass('distanceLimitedMCIZ',
+    contains = 'distanceLimitedIZ'
+) #class distanceLimitedMCIZ 
 
 
 
@@ -379,18 +395,20 @@ setClass('distanceLimitedMCIZ',
 
 #=================================================================================================
 #
-#  10. the distanceLimitedPDSIZ class is a direct descendant of 'InclusionZone'...
+#  11. the distanceLimitedPDSIZ class is a direct descendant of 'perpendicularDistanceIZ'...
 #
+#      Two class unions are defined below to allow the slots to be either filled with something
+#      of the correct class, or be empty with NULL
 #
 #     added: 8&10-Mar-2011
 #
 setClassUnion('pdsIZNull', c('perpendicularDistanceIZ', 'omnibusPDSIZ', 'NULL')) #allow for omnibus
-setClassUnion('dlmcIZNull', c('distanceLimitedMCIZ', 'NULL'))
+setClassUnion('dlsIZNull', c('distanceLimitedIZ', 'NULL')) 
 setClass('distanceLimitedPDSIZ',
     representation(dls = 'distanceLimited',               #the distanceLimited ArealSampling object
                    dlsDiameter = 'numeric',               #limiting diameter
                    pdsPart = 'pdsIZNull',                 #pds object for pds section of the log
-                   dlsPart = 'dlmcIZNull',                #distance limited component of the log
+                   dlsPart = 'dlsIZNull',                 #distance limited component of the log
                    pdsFull = 'pdsIZNull'                  #as if this were a full PDS object  (never NULL?)
                   ),
     contains = 'perpendicularDistanceIZ',
@@ -414,7 +432,7 @@ setClass('distanceLimitedPDSIZ',
 
 #=================================================================================================
 #
-#  11. the omnibusDLPDSIZ class is a direct descendant of 'distanceLimitedPDSIZ'...
+#  12. the omnibusDLPDSIZ class is a direct descendant of 'distanceLimitedPDSIZ'...
 #
 #      combines DL with omnibus PDS
 #

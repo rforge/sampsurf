@@ -2,7 +2,15 @@
 #
 #   Methods for generic summary() for sampSurf class...
 #     (1) This will have to be changed somewhat once variables other than
-#         volume and density become available. 
+#         volume and density become available.
+#
+#   Note: in some cases such as volume in the Monte Carlo methods for example,
+#         cells can be within inclusion zones and have small (near zero)
+#         values. In determining which cells are background cells (zero-valued)
+#         vs. surface cells, we must therefore use the "digits" argument to
+#         the raster count() function because it in turn uses round() for the
+#         actual comparisons and we don't want small real values rounded to
+#         zero to be counted as background--see below. 
 #
 #Author...									Date: 5-Oct-2010
 #	Jeffrey H. Gove
@@ -92,7 +100,7 @@ function(object,
     #cat('\n  st. error =', object@surfStats$se)
     cat('\n  total # grid cells =', object@surfStats$nc)
     cat('\n  grid cell resolution (x & y) =', xres(object@tract), unitLen)
-    ncellZero = count(object@tract, 0) #zero cells
+    ncellZero = count(object@tract, 0, digits=15) #zero cells, note count rounds, use digits
     cat('\n  # of background cells (zero) =', ncellZero)
     cat('\n  # of inclusion zone cells =', object@surfStats$nc - ncellZero)
     cat('\n')

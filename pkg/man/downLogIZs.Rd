@@ -48,6 +48,7 @@ For subclasses of \code{\linkS4class{downLogIZ}}, see: \code{\linkS4class{standU
   \code{\linkS4class{omnibusPDSIZ}},
   \code{\linkS4class{distanceLimitedPDSIZ}},
   \code{\linkS4class{omnibusDLPDSIZ}}, and
+  \code{\linkS4class{distanceLimitedIZ}}. 
   \code{\linkS4class{distanceLimitedMCIZ}}. 
 }
 

@@ -43,9 +43,9 @@ hist(x, ...)
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
-\seealso{
+%\seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+%}
 \examples{
 dlogs = downLogs(20)
 hist(dlogs, logAttr='logVol')

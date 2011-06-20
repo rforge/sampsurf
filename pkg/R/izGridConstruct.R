@@ -55,7 +55,7 @@ izGridConstruct = function(izObject,
     izg = izGrid(iz.bbox, tract)                       #get the minimal bounding grid
 
 #
-#   grid with NAs outside the overlay region...
+#   grid with NAs outside the overlay region and zeros inside...
 #
     #grid = polygonsToRaster(perimeter(izObject), izg, mask=TRUE, silent=TRUE)  ##replaced by rasterize
     grid = rasterize(perimeter(izObject), izg, mask=TRUE, silent=TRUE)

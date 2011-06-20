@@ -15,7 +15,7 @@
 \alias{plot,pointRelascopeIZ,missing-method}
 \alias{plot,perpendicularDistanceIZ,missing-method}
 \alias{plot,distanceLimitedPDSIZ,missing-method}
-\alias{plot,distanceLimitedMCIZ,missing-method}
+\alias{plot,distanceLimitedIZ,missing-method}
 \alias{plot,standUpIZ,missing-method}
 \alias{plot,Stem,missing-method}
 \alias{plot,Tract,missing-method}
@@ -458,7 +458,7 @@ argument definition for the most part.
 	    \code{FALSE}: do not display it. }
 		 
 	  \item{\code{showDLSPart}:}{ \code{TRUE}: display the
-		  "\code{\linkS4class{distanceLimitedMCIZ}}" portion of the
+		  "\code{\linkS4class{distanceLimitedIZ}}" portion of the
 		  inclusion zone (if any); \code{FALSE}: do not display it. }
 		 
 	  \item{\code{showPDSPart}:}{ \code{TRUE}: display the
@@ -474,9 +474,10 @@ argument definition for the most part.
 		 		 
   
 
-\item{\strong{\code{signature(x = "distanceLimitedMCIZ", y = "missing")}}}{%\cr
+\item{\strong{\code{signature(x = "distanceLimitedIZ", y = "missing")}}}{%\cr
 
     This adds the necessary functionality to plot objects of class
+    "\code{\linkS4class{distanceLimitedIZ}}" and subclass
     "\code{\linkS4class{distanceLimitedMCIZ}}".}
   
   \item{}{\bold{usage\ldots}
@@ -491,7 +492,7 @@ argument definition for the most part.
 }
 	\itemize{
 		 
-	  \item{\code{x}:}{ An object that is of class \dQuote{distanceLimitedMCIZ} or
+	  \item{\code{x}:}{ An object that is of class \dQuote{distanceLimitedIZ} or
 	    subclass. } 
 		 
 	  \item{\code{showLog}:}{ \code{TRUE}: plot the log object;

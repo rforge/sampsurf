@@ -88,7 +88,7 @@ vignette.  }
       perimeter of the surface. }
 	
     \item{plot3D}{\code{signature(x = "sampSurf")}: Display the surface
-      in 3D with \code{\link{rgl}}. }
+      in 3D with \code{rgl}. }
 	
     \item{plot}{\code{signature(x = "sampSurf", y = "missing")}: Plot
       the surface. }

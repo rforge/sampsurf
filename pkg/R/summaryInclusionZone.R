@@ -9,7 +9,7 @@
 #     (6) pointRelscopeIZ class
 #     (7) perpendicularDistanceIZ class
 #     (8) distanceLimitedPDSIZ class
-#     (9) distanceLimitedMCIZ class
+#     (9) distanceLimitedIZ class
 #
 #Author...									Date: 24-Aug-2010
 #	Jeffrey H. Gove
@@ -358,21 +358,21 @@ function(object,
 
 
 #================================================================================
-#  method for class "distanceLimitedMCIZ"...
+#  method for class "distanceLimitedIZ"...
 #
 setMethod('summary',
-          signature(object = 'distanceLimitedMCIZ'),
+          signature(object = 'distanceLimitedIZ'),
 function(object,
          ...
         )
 {
 #------------------------------------------------------------------------------
-#   add a little to 'InclusionZone' & 'downLogIZ' methods for 'distanceLimitedMCIZ'...
+#   add a little to 'InclusionZone' & 'downLogIZ' methods for 'distanceLimitedIZ'...
 #------------------------------------------------------------------------------
     callNextMethod()
     cat('  (Note: NAs signify location-dependent attributes.)\n')
     
-    cat('\ndistanceLimitedMCIZ...')
+    cat('\n',class(object),'...',sep='')
     cat('\n  Spatial ID:', object@perimeter@polygons$pgs@ID)
     if(object@units == .StemEnv$msrUnits$metric) {
       cat('\n  distance limit = ', object@dls@distanceLimit, ' meters', sep='')
@@ -389,6 +389,6 @@ function(object,
     cat('\n')
     
     return(invisible())
-}   #summary for 'distanceLimitedMCIZ'
+}   #summary for 'distanceLimitedIZ'
 ) #setMethod
 
