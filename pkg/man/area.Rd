@@ -10,13 +10,19 @@
   returns the area as stored within the object as given in
   \code{\link{area-methods}}.  }
 
-\usage{
-area(x, ...)
-}
-\arguments{
-  \item{x}{ Signature object, which differs with each method. }
-  \item{\dots}{ See methods. }
-}
+%
+% the \usage below will create a warning in running a check on the
+% package because the generic is not here, but in base, so it says there
+% is a usage in Rd that is not in the code. I tried a number of things,
+% but settled on leaving it for now...
+%
+%\usage{
+%area(x, ...)
+%}
+%\arguments{
+%  \item{x}{ Signature object, which differs with each method. }
+%  \item{\dots}{ See methods. }
+%}
 
 \details{ The area that is stored and returned is in the native units of
   the object. In most cases, this will be either square feet or square

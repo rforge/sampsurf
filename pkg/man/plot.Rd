@@ -20,15 +20,15 @@
 % is a usage in Rd that is not in the code. I tried a number of things,
 % but settled on leaving it for now...
 %
-\usage{
-plot(x, y, ...)
-}
+%\usage{
+%plot(x, y, ...)
+%}
 
-\arguments{
-  \item{x}{  Signature object, which differs for each method.}
-  \item{y}{  Signature object, which differs for each method.}
-  \item{\dots}{  See methods.}
-}
+%\arguments{
+%  \item{x}{  Signature object, which differs for each method.}
+%  \item{y}{  Signature object, which differs for each method.}
+%  \item{\dots}{  See methods.}
+%}
 
 \details{ The different classes within the package are unique enough
   that there is not much functionality in common with regard to shared

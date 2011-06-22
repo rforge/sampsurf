@@ -17,14 +17,14 @@
 % is a usage in Rd that is not in the code. I tried a number of things,
 % but settled on leaving it for now...
 %
-\usage{
-hist(x, ...)
-}
+%\usage{
+%hist(x, ...)
+%}
 %- maybe also 'usage' for other objects documented here.
-\arguments{
-  \item{x}{ Signature object, which differs for each method.}
-  \item{\dots}{ See methods and graphics::\code{\link[graphics]{hist}} for details.}
-}
+%\arguments{
+%  \item{x}{ Signature object, which differs for each method.}
+%  \item{\dots}{ See methods and graphics::\code{\link[graphics]{hist}} for details.}
+%}
 
 \details{ The different attributes of each class that are plotted are
   described in \code{\link{hist-methods}}. Not all classes have a
@@ -43,9 +43,9 @@ hist(x, ...)
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
 
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
+\seealso{
+ See methods and graphics::\code{\link[graphics]{hist}} for details.
+}
 \examples{
 dlogs = downLogs(20)
 hist(dlogs, logAttr='logVol')

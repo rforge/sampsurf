@@ -20,16 +20,16 @@
 % is a usage in Rd that is not in the code. I tried a number of things,
 % but settled on leaving it for now...
 %
-\usage{
-plot3D(x, ...)
-}
+%\usage{
+%plot3D(x, ...)
+%}
 
-\arguments{
-  \item{x}{ An object of one of the classes mentioned above, or their
-  subclasses, if any.}
+%\arguments{
+%  \item{x}{ An object of one of the classes mentioned above, or their
+%  subclasses, if any.}
 
-  \item{\dots}{ Please see the Details section that follows.}
-}
+%  \item{\dots}{ Please see the Details section that follows.}
+%}
 
 \details{ This is not the generic, that is defined in
   raster::\code{plot3D} and should be referred to for

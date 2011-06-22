@@ -2,13 +2,14 @@ Package: sampSurf
 Type: Package
 Title: Sampling Surface Simulation for Areal Sampling Methods
 Version: 0.54
-Date: 2011-06-17
-Author: J. H. Gove
-Maintainer: J. H. Gove <jgove@fs.fed.us>
+Date: 17-June-2011
+Author: Jeffrey H. Gove
+Maintainer: Jeffrey H. Gove <jgove@fs.fed.us>
 Depends: R (>= 2.11.0), methods(>= 2.11.0), sp(>= 0.9-56), raster(>= 1.1.7), gpclib(>= 1.5.1)
 Suggests: rgl
-Description: Contains the base classes and routines for sampling surface generation
-             in addition to stem piece class definitions
+Description: This package provides the base classes and routines for sampling surface simulation
+             useful in the comparison of different areal sampling methods in forestry, ecology
+             and natural resources.
 License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
