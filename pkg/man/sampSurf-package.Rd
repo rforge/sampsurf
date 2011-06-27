@@ -65,7 +65,7 @@ by users).
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.54\cr
+Version: \tab 0.5-4\cr
 Date: \tab 2011-06-17\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr

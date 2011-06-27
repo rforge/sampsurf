@@ -1,7 +1,7 @@
 Package: sampSurf
 Type: Package
 Title: Sampling Surface Simulation for Areal Sampling Methods
-Version: 0.54
+Version: 0.5-4
 Date: 17-June-2011
 Author: Jeffrey H. Gove
 Maintainer: Jeffrey H. Gove <jgove@fs.fed.us>
