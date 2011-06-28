@@ -11,7 +11,7 @@
 #        the "downLogIZ" class to be constructed. signature will need
 #        to be modified for all, with missing used in 1&2 for 2nd argument
 #
-#   Note that 2 & 3 are not implemented yet & probably won't be.
+#   Note that 2 & 3 are not implemented yet & probably aren't needed.
 #
 #Author...									Date: 24-Aug-2010
 #	Jeffrey H. Gove
@@ -54,42 +54,6 @@ function(object,
     if(numIZs < 1)
       stop('error in "object": must be at least one inclusion zone in the list')
 
-#
-#   group all polygons into one SpatialPolygons to get the overall bbox; note
-#   that this code allows mixing of different objects within class "downLogIZ"
-#   but currently, the validation routines will subsequently flag this as an error,
-#   so we'll let it go here and deal with it later...
-#
-#    sp = vector('list', numIZs)
-#    for(i in seq_len(numIZs)) {
-#      if(!is(object[[i]], 'downLogIZ'))     #catch objects that may not be in the correct form
-#        stop('All list elements must be a subclass of "downLogIZ"!')
-#      class = class(object[[i]])
-#      if(class == 'standUpIZ')
-#        sp[[i]] = object[[i]]@circularPlot@perimeter@polygons$pgsCircPlot
-#      else if(class == 'sausageIZ')
-#        sp[[i]] = object[[i]]@perimeter@polygons$pgsSausage
-#      else if(class == 'pointRelascopeIZ')
-#        sp[[i]] = object[[i]]@perimeter@polygons$pgsPRS
-#      else                                  #all others should now be standard as...
-#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
-#      else if(class == 'perpendicularDistanceIZ')
-#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
-#      else if(class == 'omnibusPDSIZ')
-#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
-#      else if(class == 'distanceLimitedPDSIZ')
-#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
-#      else if(class == 'omnibusDLPDSIZ')
-#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
-#      else if(class == 'distanceLimitedMCIZ')
-#        sp[[i]] = object[[i]]@perimeter@polygons$pgs
-#      else
-#        if(!is(object[[i]], 'downLogIZ'))     #catch objects that may not be in the correct form
-#          stop('All list elements must be a subclass of "downLogIZ"!')
-#    }
-   
-#    sps = SpatialPolygons(sp)
-#    bbox = bbox(sps)
 
 #
 #   make an array of the perimeter bbox matrices for each IZ object, then determine their

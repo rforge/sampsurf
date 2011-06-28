@@ -107,8 +107,7 @@ function(cellSize,
     ra@description = description
     ra@units = units
 
-    squareArea = nrow(ra)*ncol(ra)*xres(ra)^2
-    ra@area = squareArea    
+    ra@area = nrow(ra)*ncol(ra)*xres(ra)^2
 
     if(validObject(ra))
       return(invisible(ra))
@@ -248,8 +247,7 @@ function(object,
     ra@description = description
     ra@units = units
 
-    squareArea = nrow(ra)*ncol(ra)*xres(ra)^2
-    ra@area = squareArea    
+    ra@area = nrow(ra)*ncol(ra)*xres(ra)^2
 
     if(validObject(ra))
       return(invisible(ra))

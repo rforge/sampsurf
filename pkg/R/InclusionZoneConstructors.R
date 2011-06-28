@@ -188,16 +188,7 @@ function(downLog,
 #   in general, but in sampling surface simulations, only plots whose centers
 #   fall within the sausage-shaped inclusion zone should be passed here, so
 #   unless someone tries to use this for some other purpose, it will not matter.
-#------------------------------------------------------------------------------
-#
-#   the only way to do chainsaw is with the built-in taper equation, because we
-#   must be able to calculate the sliver, bounding bolt, etc.; so if the log's
-#   taper comes from some other source is.null(solidType), then we can not
-#   proceed with this method...
-#
-    ##if(is.null(downLog@solidType))
-      ##stop('Log taper must come from the built-in taper equation to use the chainsaw method')
-  
+#------------------------------------------------------------------------------  
 #
 #   get bbox from the downLog object...
 #
@@ -296,8 +287,6 @@ function(downLog,
          nptsHalfCircle = 50,          #number of points in each end's half circle
          description = 'inclusion zone for downed log "sausage" sampling method',
          spID = paste('saus',.StemEnv$randomID(),sep=':'),
-         #spID = unlist(strsplit(tempfile('sausageIZ:',''),'\\/'))[2],
-         #spID = paste('sausageIZ',format(runif(1,0,10000),digits=8),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
         )
@@ -421,8 +410,6 @@ function(downLog,
          nptsCircle = 100,          #number of points in each dual circle
          description = 'inclusion zone for down log point relascope sampling method',
          spID = paste('prs',.StemEnv$randomID(),sep=':'),
-         #spID = unlist(strsplit(tempfile('prsIZ:',''),'\\/'))[2],
-         #spID = paste('prsIZ',format(runif(1,0,10000),digits=8),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...
         )
@@ -563,7 +550,6 @@ function(downLog,
          description = 'inclusion zone for down log perpendicular distance sampling',
          spID = paste('pds',.StemEnv$randomID(),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
-         #pdsClass = c('perpendicularDistanceIZ', 'omnibusPDSIZ'),
          pdsType = .StemEnv$pdsTypes,
          ...
         )
@@ -578,7 +564,6 @@ function(downLog,
 #
 #   which kind of object do we build? And what PPS type in pds?
 #
-    #pdsClass = match.arg(pdsClass)
     pdsType = match.arg(pdsType)
   
 #
@@ -644,7 +629,6 @@ function(downLog,
 #
 #   create the object...
 #
-    #pdsIZ = new(pdsClass, downLog=downLog,
     pdsIZ = new('perpendicularDistanceIZ', downLog=downLog,
                  pds = pds,                          #pds sampling object
                  pdsType = pdsType,                  #PPS version of PDS

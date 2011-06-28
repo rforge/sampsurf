@@ -27,13 +27,13 @@ function(object)
     .StemEnv$underLine(60, prologue='')
     
     cat('Measurement units =', object@units)
-    #squareArea = nrow(object)*ncol(object)*xres(object)^2
-    squareArea = object@area
+    #area = nrow(object)*ncol(object)*xres(object)^2
+    area = object@area
     if(object@units == .StemEnv$msrUnits$metric) {
-      cat('\nArea in square meters = ', squareArea,' (',squareArea/.StemEnv$smpHectare,' hectares)',sep='')
+      cat('\nArea in square meters = ', area,' (',area/.StemEnv$smpHectare,' hectares)',sep='')
     }
     else {
-      cat('\nArea in square feet = ', squareArea,' (',squareArea/.StemEnv$sfpAcre,' acres)',sep='')
+      cat('\nArea in square feet = ', area,' (',area/.StemEnv$sfpAcre,' acres)',sep='')
     }
     cat('\n\n')
     

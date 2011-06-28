@@ -40,7 +40,6 @@ setClass('Stem',
                    units = 'character',            #English or metric units
                    location = 'SpatialPoints',     #object "central" location
                    spUnits = 'CRS',                #sp units, character will change
-#                   spUnits = 'missCRS',            #sp units, character will change
 #                  other...                   
                    description = 'character',      #descriptive comment
                    userExtra = 'ANY'               #anything else the user wants to include--no checks
@@ -49,7 +48,6 @@ setClass('Stem',
                      units = 'metric',
                      location = SpatialPoints(matrix(c(0,0), nrow=1, dimnames=list('1',c('x','y'))) ),
                      spUnits = CRS(projargs=as.character(NA)),
-#                     spUnits = NULL,
                      description = '',
                      userExtra = NULL
                     ),
