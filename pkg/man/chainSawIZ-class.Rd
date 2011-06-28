@@ -65,7 +65,7 @@ Class \code{"\linkS4class{InclusionZone}"}, by class "downLogIZ", distance 2.
 }
 \references{
 Gove, J. H. and Van Deusen, P. C. 2011. On fixed-area plot sampling for
-downed coarse woody debris. \emph{Forestry}. (Accepted).\cr
+downed coarse woody debris. \emph{Forestry}. \emph{Forestry} \bold{84}:109--117.\cr
 }
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
