@@ -65,8 +65,8 @@ by users).
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.5-4\cr
-Date: \tab 2011-06-17\cr
+Version: \tab 0.5-6\cr
+Date: \tab 2011-07-27\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
 }
@@ -180,6 +180,8 @@ detail, including slot and argument definitions.
 	  distance limited perpendicular distance method of sampling down logs.\cr
 	\code{\linkS4class{omnibusDLPDSIZ}}: \tab Class for the omnibus
 	  distance limited perpendicular distance method of sampling down logs.\cr
+	\code{\linkS4class{hybridDLPDSIZ}}: \tab Class for the \dQuote{hybrid}
+	  distance limited perpendicular distance method of sampling down logs.\cr
 	\code{\linkS4class{distanceLimitedIZ}}: \tab Class for the 
 	  distance limited method of sampling down logs.\cr
 	\code{\linkS4class{distanceLimitedMCIZ}}: \tab Class for the 
@@ -275,6 +277,8 @@ detail, including slot and argument definitions.
 	  object for the \sQuote{distance limited perpendicular distance} sampling method \cr
 	\code{\link{omnibusDLPDSIZ}}: \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{omnibus distance limited perpendicular distance} sampling method \cr
+	\code{\link{hybridDLPDSIZ}}: \tab Creates an \dQuote{InclusionZone}
+	  object for the \sQuote{hybrid distance limited perpendicular distance} sampling method \cr
 	\code{\link{distanceLimitedIZ}}: \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{distance limited} sampling method \cr
 	\code{\link{distanceLimitedMCIZ}}: \tab Creates an \dQuote{InclusionZone}

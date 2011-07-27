@@ -1,0 +1,301 @@
+%\documentclass[reqno, 11pt, pdftex]{article}
+\documentclass[11pt]{article}
+%
+%packages & their options...
+%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%\usepackage{mathpazo}
+%\usepackage{palatino}
+%\usepackage{cmbright}
+\usepackage{amssymb, bm}
+\usepackage[round]{natbib}              %use natbib for bibtex
+\usepackage{dcolumn}                    %decimal table alignments
+\usepackage{booktabs}                   %better table rules
+\usepackage{bbm}
+\usepackage[svgnames]{xcolor}
+\usepackage{url}
+\usepackage{ifthen}                     %conditional stuff
+
+\usepackage{datetime}                   %for printing time
+
+%
+% xcolor color definitions...
+%
+\colorlet{jhgSteelBlue}{SteelBlue!20!SlateGray}   %for svgnames
+\colorlet{jhgHyperLinks}{Navy!40!DarkSlateGray}   %for svgnames
+
+%
+% good section headers in \sffamily, with color if desired...
+%
+\newboolean{wantColorSec}
+\setboolean{wantColorSec}{true}   %set to true for color sections
+\usepackage[sf,bf,medium,raggedright]{titlesec} %section headers
+\ifthenelse{\boolean{wantColorSec}}  
+{ %for color sectioning; see xcolor manual for formula...
+\titleformat{\section}
+  {\Large\sffamily\bfseries\color{jhgSteelBlue}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\large\sffamily\bfseries\color{jhgSteelBlue}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalsize\sffamily\bfseries\color{jhgSteelBlue}}{\thesubsubsection}{1em}{}
+}
+{} %no color
+
+%
+%page layout: allows the graphical view of LaTeX's page layout parameters...
+%
+\usepackage[paper=letterpaper,
+           % includemp,
+            includehead,
+            lmargin=1in,
+            rmargin=1in,
+            tmargin=1in,
+            %bmargin=1in,
+            textwidth=6.25in,
+            textheight=602pt,
+            headsep=20pt
+           ]{geometry}
+\usepackage{layouts}
+\setlayoutscale{0.33}
+\setparametertextfont{\scriptsize}
+\setlabelfont{\scriptsize}
+\currentpage
+
+\setlength{\parskip}{\baselineskip}     %between paragraphs
+
+%
+%page style...
+%
+\usepackage{fancyhdr}       %new version of fancyheadings
+
+\usepackage[utf8]{inputenx}     %inputenx updates inputenc
+
+%
+% hyperref package always goes LAST of all loaded packages!!! <<********
+%
+\usepackage[pdftex,
+            letterpaper,
+            bookmarks,
+            colorlinks,
+            unicode,
+            %linkcolor=jhgHyperLinks,    %color for colorlinks
+            citecolor=MidnightBlue, %for citations
+            pagebackref,
+            pageanchor,
+            pdftitle={},  %use \pdfinfo to set
+            pdfauthor={J.~H.~Gove},
+            pdfsubject={} %use \pdfinfo to set
+           ]{hyperref}
+
+
+\DeclareUrlCommand\email{\urlstyle{rm} %
+     \renewcommand\UrlLeft{e-mail:\ }%
+     \renewcommand\UrlRight{{}}
+     }
+
+\newcommand{\R}{\textsf{R}}           %R
+\newcommand{\Rc}{\textcolor{jhgSteelBlue}{\bf\R}} %R in color!
+\newcommand{\Rpackage}[1]{\texttt{#1}}   %for R packages
+\newcommand{\Rclass}[1]{``#1''}          %for R classes
+\newcommand{\Rslot}[1]{\texttt{#1}}      %for R class slots
+\newcommand{\Rvar}[1]{\texttt{#1}}       %for R variables, arguments, etc.
+\newcommand{\Rmeth}[1]{\texttt{#1}}      %for R methods and functions
+\newcommand{\Rlang}[1]{\texttt{#1}}      %for R language objects like list, etc.
+\newcommand{\Rcode}[1]{\texttt{#1}}      %for R source code statements 
+\newcommand{\Renvir}[1]{\texttt{#1}}     %for R environments
+\newcommand{\Sfour}{\textsf{S4}}
+
+
+%
+% must manually use Sweave to get the correct definitions of its
+% macros...
+%
+\usepackage{/usr/share/R/texmf/tex/latex/Sweave}  %Fedora as of 14
+%\usepackage{/usr/share/R/share/texmf/tex/latex/Sweave} %Ubuntu  as of v2.12
+
+
+
+
+%\VignetteIndexEntry{Getting Started}
+
+
+%------------------------------------------------------------------------------------------
+
+\begin{document}
+
+\SweaveOpts{keep.source=TRUE}
+
+
+\title{\sffamily\bfseries \textcolor{jhgSteelBlue}{Getting Started with Package \Rpackage{sampSurf}}}
+
+\author{Jeffrey H.~Gove\thanks{Phone: (603) 868-7667; 
+                               Fax: (603) 868-7604. 
+                              } \\
+    \small Research Forester\\
+    \small USDA Forest Service\\
+    \small Northern Research Station\\
+    \small 271 Mast Road\\
+    \small Durham, New Hampshire 03824 USA \\
+    \small \email{jgove@fs.fed.us} or \email{jhgove@unh.edu}              
+    } 
+
+\date{\textcolor{jhgSteelBlue}{\today\\ \footnotesize\ampmtime}}
+
+\maketitle
+
+\section{Introduction}
+
+The \Rpackage{sampSurf} package is designed to facilitate the comparison of new and
+existing areal sampling methods through simulation. The package is thoroughly documented
+in several vignettes as mentioned below. This document is meant to point you in the right
+direction in finding the needed information to get started using \Rpackage{sampSurf}.
+
+\section{Installation}
+
+\Rpackage{sampSurf} is installed like any other package. If you are not familiar with the
+routine, please check out the help for installing packages with
+\Rcode{?install.packages}. You can install the package from within \Rc\ with\dots
+%
+<<eval=FALSE>>=
+install.packages('sampSurf')
+@ 
+%
+\noindent Obviously, you can add other arguments to this command as required---see the
+help page for details. Note that there are several dependencies (other packages---see
+below) that will be installed if you do not have them installed already.
+
+Then load the package with\dots
+%
+<<eval=FALSE>>=
+library(sampSurf)
+@ 
+
+\subsection{Dependancies}
+
+The \Rpackage{sampSurf} package depends on several other packages, which should be
+installed automatically with the command given above. In addition, it `suggests' the
+\Rpackage{rgl} package, which must be installed separately. The \Rpackage{rgl} package
+allows one to visualize the sampling surface in three dimensions and is not necessary for
+basic functionality, so installation is optional.
+
+
+
+\section{\Rpackage{sampSurf} Package Vignettes}
+
+Several vignettes have been written for \Rpackage{sampSurf}. Unfortunately, when vignettes
+are distributed pre-compiled to CRAN\footnote{\url{http://www.r-project.org/}, then choose
+  the CRAN link to the left, and a nearby mirror site}, they do not get added to the list
+of vignettes for the package on the web site, even though they are indeed there and they
+will be installed when you install the package as shown above. You can, however, view
+these vignettes before installing \Rpackage{sampSurf} by simply downloading the package
+\texttt{*.tar.gz} file and looking in the \texttt{sampSurf/inst/doc}
+subdirectory. Alternatively the files reside in the \texttt{/doc} directory of the
+\texttt{*.zip} package file. The PDF files can be readily opened from there.
+
+The second and better option is to install the package and then use \Rc\ to open the
+vignettes from your installation. There are two steps as follows\dots
+%
+\begin{enumerate}
+  
+  \item At the \Rc\ prompt, type \Rcode{package?sampSurf} to get to the help
+    page.\footnote{Note that you need to also make sure that \Rc's internal HTML help
+      server is the default. The easiest way to do this is to add the following to your
+      \Rcode{.Rprofile} file: \Rcode{options(list(help\_type = 'html',browser='firefox'))}
+      (or whatever browser you use).} Scroll to the bottom of this page and find the
+    ``Index'' hyperlink, and choose it. Near the top of the page you will find links to
+    vignettes; choose the last link that says ``browse directory.'' The vignettes will be
+    available to read on this page.
+    
+  \item The second method is easier. Just use \Rcode{RShowDoc}  (see \Rcode{?RShowDoc}) to
+    look at the vignettes. You will need to know their names for this, these are listed
+    below, or can be found via the prior step.
+
+\end{enumerate}
+
+<<eval=FALSE>>=
+RShowDoc('Overview', package='sampSurf')
+@ 
+
+
+\subsection{Vignette summary}
+
+Each of the vignettes can be opened as shown above. They are outlined briefly as follows\dots
+
+\begin{itemize}
+  
+  \item \emph{Overview:} This document should normally be read first, it provides an
+    introduction to the package and provides a simple example of generating a sampling
+    surface simulation. It also provides the relationship between the class structures
+    that are described in the vignettes that follow.
+    
+  \item \emph{StemClass:} This vignette shows how to generate individual
+     \Rclass{Stem} class objects, as well as populations or collections of such
+     objects.
+     
+  \item \emph{TractClass:} The \Rclass{Tract} class provides a site for the simulated
+    population in the form of a sample plot, or a tract.
+    
+  \item \emph{ArealSamplingClass:} Each sampling method has some mechanism for choosing
+    down logs or standing trees in a probability sampling context. This class provides a
+    number of different subclasses that contain the necessary information on how to
+    construct inclusion zones under the desired sampling method or protocol.
+    
+  \item \emph{InclusionZoneClass:} The combination of a \Rclass{Stem} object and an
+    \Rclass{ArealSampling} object provides the necessary information required to construct
+    the inclusion zone (the former provides the log attributes, the latter the sampling
+    protocol information). This vignette details examples of the use of this class and its
+    constructors for different sampling methods. 
+    
+  \item \emph{InclusionZoneGridClass:} This is an intermediate class used by the package
+    to generate the sampling surface from the inclusion zones. The casual user need not be
+    concerned about this class as it is generally used behind the scenes while creating
+    the sampling surface. However, there is plenty of detail available in the vignette for
+    those that might want to contribute new methods.
+    
+  \item \emph{sampSurfClass:} This details the final product---generation of a sampling
+    surface from simulation.
+    
+  \item \emph{sampSurfExtensions:} If you want to know more about how to add your own
+    sampling method to the package, this is where to look. It is advisable that you
+    familiarize yourself with the above vignettes first before undertaking programming a
+    new method.     
+    
+\end{itemize} 
+
+\section{Help Files}
+
+\Rpackage{sampSurf} has an extensive help facility.  The best place to start is with
+%
+<<eval=FALSE>>=
+package?sampSurf
+@ 
+%
+\noindent as mentioned above. All of the help files can be accessed from this page.
+
+There are also help files available for each class and method, which can be accessed
+individually as is normal in \Rc. For example\dots
+%
+<<eval=FALSE>>=
+class?downLog
+?downLog
+methods?downLog
+@ 
+%
+\noindent The first line will display the help for the \Rclass{downLog} class in your
+browser. The next line will display the help for the \Rmeth{downLog} generic
+function\footnote{This is \Sfour\ terminology, if it does not make sense right now, don't
+  worry about it, it is not essential for using the package}. Finally, the different
+`constructor' methods for making \Rclass{downLog} objects is displayed.
+
+The above can be followed for any classes in \Rpackage{sampSurf}. Please do see the above
+vignettes for extensive examples and documentation. Finally, the full system help
+available in PDF format can be downloaded from the \Rc\ website for the project at CRAN;
+e.g., \url{http://software.rc.fas.harvard.edu/mirrors/R/}, and then choose the
+\Rpackage{sampSurf} link.
+
+\section{Summary}
+
+This has just been a short primer to get you going. I hope you find \Rpackage{sampSurf} useful.
+ 
+\end{document} 

@@ -287,10 +287,11 @@ function(object,
 #------------------------------------------------------------------------------
     callNextMethod()
     
-    if(is(object, 'omnibusPDSIZ') || is(object, 'omnibusDLPDSIZ'))
-      cat('\nomnibusPDSIZ...')
-    else
-      cat('\nperpendicularDistanceIZ...')
+  #  if(is(object, 'omnibusPDSIZ') || is(object, 'omnibusDLPDSIZ'))
+  #    cat('\nomnibusPDSIZ...')
+  #  else                                              
+  #    cat('\nperpendicularDistanceIZ...')
+    cat('\n',class(object),'...',sep='')
     cat('\n  PDS type:', object@pdsType)
     cat('\n  Spatial ID:', object@perimeter@polygons$pgs@ID)
     if(object@units == .StemEnv$msrUnits$metric) {
@@ -329,10 +330,13 @@ function(object,
     callNextMethod()
     cat('  (The above summary is for the entire DLPDS region)\n')
 
-    if(is(object, 'omnibusDLPDSIZ'))
-      cat('\nomnibusDLPDSIZ...')
-    else   
-      cat('\ndistanceLimitedPDSIZ...')
+    #if(is(object, 'omnibusDLPDSIZ'))
+    #  cat('\nomnibusDLPDSIZ...')
+    #else if (is(object, 'hybridDLPDSIZ'))
+    #  cat('\ndistanceLimitedMCPDSIZ...')
+    #else   
+    #  cat('\ndistanceLimitedPDSIZ...')
+    cat('\n',class(object),' details...',sep='')
     if(object@units == .StemEnv$msrUnits$metric) {
       cat('\n  distance limit = ', object@dls@distanceLimit, ' meters', sep='')
       cat('\n  limiting diameter = ', object@dlsDiameter, ' meters', sep='')

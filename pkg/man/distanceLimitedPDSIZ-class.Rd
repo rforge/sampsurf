@@ -10,7 +10,7 @@
 
 \description{This class holds the inclusion zone definition for the
 \sQuote{distance limited perpendicular distance sampling} method (Ducey
-et. al) for sampling down coarse woody debris. This class is fairly
+et. al 2012) for sampling down coarse woody debris. This class is fairly
 complicated because there are three possibilities for the components of
 the inclusion zone. It is best to read \emph{"The InclusionZone Class"}
 vignette, along with the paper cited above for more information---the
@@ -48,7 +48,8 @@ constructor \code{\link{distanceLimitedPDSIZ}} to create new objects.
 	
     \item{\code{dlsPart}:}{Object of class \code{"\linkS4class{dlsIZNull}"} holding
       the distance limited sampling portion of the inclusion zone as a
-      \code{"\linkS4class{distanceLimitedIZ}"} object, or
+      \code{"\linkS4class{distanceLimitedIZ}"} object (or
+      subclass, i.e., \code{"\linkS4class{distanceLimitedMCIZ}"} object), or
       \code{NULL} if none exists. }
 	
     \item{\code{pdsFull}:}{Object of class \code{"\linkS4class{pdsIZNull}"} holding a
@@ -82,9 +83,10 @@ Class \code{"\linkS4class{InclusionZone}"}, by class "perpendicularDistanceIZ", 
 \references{
 \describe{
 %
-\item{}{Ducey, M. J., Williams, M. S., Roberge, S., Kenning, R. S.,
-and Gove ,J. H. 2005. Distance limited per- pendicular distance sampling
-for coarse woody material: Theory and field results. Unpublished.}
+\item{}{Ducey, M. J., Williams, M. S.,  Gove, J. H., Roberge, S. and Kenning, R. S.,
+2012. Distance limited perpendicular distance sampling
+for coarse woody material: Theory and field results. \emph{Forestry} (in
+review).}
 
 }
 }

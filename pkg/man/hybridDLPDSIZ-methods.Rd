@@ -1,27 +1,27 @@
-\name{omnibusDLPDSIZ-methods}
+\name{hybridDLPDSIZ-methods}
 \docType{methods}
-\alias{omnibusDLPDSIZ-methods}
-\alias{omnibusDLPDSIZ,downLog,perpendicularDistance,dlsNumeric-method}
+\alias{hybridDLPDSIZ-methods}
+\alias{hybridDLPDSIZ,downLog,perpendicularDistance,dlsNumeric-method}
 
-\title{ Methods for "\code{omnibusDLPDSIZ}" Object Construction in
-  Package \pkg{sampSurf}}
+\title{ Methods for Function \code{hybridDLPDSIZ} in Package  \pkg{sampSurf} }
 
 \description{
- This is the one method for generic function \code{\link{omnibusDLPDSIZ}} in
+ This is the one method for generic function \code{\link{hybridDLPDSIZ}} in
  Package \sQuote{sampSurf} that allows for creation of objects of class
- "\code{\linkS4class{omnibusDLPDSIZ}}."
+ "\code{\linkS4class{hybridDLPDSIZ}}."
 }
 
 \section{Methods}{
 \describe{
 
 \item{\strong{\code{signature(downLog = "downLog", pds = "perpendicularDistance", dls = "dlsNumeric")}}}{}
+
   \item{}{\bold{usage\ldots}
     \preformatted{function(downLog,
          pds,
          dls,
-         description = 'inclusion zone for down log omnibus distance limited PDS',
-         spID = paste('odlpds',.StemEnv$randomID(),sep=':'),
+         description = 'inclusion zone for down log hybrid distance limited PDS',
+         spID = paste('hdlpds',.StemEnv$randomID(),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          pdsType = .StemEnv$pdsTypes,
          ... )}

@@ -11,9 +11,10 @@
 #     5. for 'perpendicularDistanceIZ'  (Jan 2011)
 #     6. for 'omnibusPDSIZ' (Feb 2011)
 #     7. for 'distanceLimitedPDSIZ' (Feb-Mar 2011)
-#     8. for 'omnibusDLPDSIZ (Mar 2011)
-#     9. for 'distanceLimitedMCIZ (Mar 2011)
-#    10. for 'distacneLimitedIZ (May 2011)
+#     8. for 'omnibusDLPDSIZ' (Mar 2011)
+#     9. for 'hybridDLPDSIZ' (July 2011)
+#    10. for 'distanceLimitedMCIZ (Mar 2011)
+#    11. for 'distacneLimitedIZ (May 2011)
 #
 #   Note that the sp, raster, and gpclib packages must be loaded.
 #
@@ -77,6 +78,12 @@
 #if(!isGeneric("omnibusDLPDSIZ")) 
   setGeneric('omnibusDLPDSIZ',  
              function(downLog, pds, dls, ...) standardGeneric('omnibusDLPDSIZ'),
+             signature = c('downLog', 'pds', 'dls')
+            )
+
+#if(!isGeneric("hybridDLPDSIZ")) 
+  setGeneric('hybridDLPDSIZ',  
+             function(downLog, pds, dls, ...) standardGeneric('hybridDLPDSIZ'),
              signature = c('downLog', 'pds', 'dls')
             )
 
@@ -794,7 +801,7 @@ function(downLog,
     if(dl.diam > max(downLog@taper$diameter)) {        #off the large end--whole log is pds
       dlpds = as(full.pdsIZ, 'distanceLimitedPDSIZ')   #cast object
       dlpds@dls = dls
-      dlpds@dlsDiameter = dl.diam
+      dlpds@dlsDiameter = dl.diam                      #limiting diameter: can be off the log
       dlpds@pdsPart = NULL
       dlpds@dlsPart = NULL
       dlpds@pdsFull = full.pdsIZ                       #just for consistency, does take more room
@@ -1091,6 +1098,100 @@ function(downLog,
 )   #setMethod
 
 
+    
+
+
+       
+#================================================================================
+#  9. method for class hybridDLPDSIZ construction--just call parent method...
+#
+#     this code is very similar to omnibusDLPDSIZ, which was written first, here
+#     we have distanceLimitedMCIZ + canonicalPDSIZ iz components...
+#
+setMethod('hybridDLPDSIZ',
+          signature(downLog = 'downLog', pds = 'perpendicularDistance', dls = 'dlsNumeric'),
+function(downLog,
+         pds,
+         dls,
+         description = 'inclusion zone for down log hybrid distance limited PDS',
+         spID = paste('hdlpds',.StemEnv$randomID(),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         pdsType = .StemEnv$pdsTypes,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   create an object of the correct class; note that we cannot use as() to
+#   directly coerce below because it chokes on the classUnions with NULL, so
+#   we can just create an object with new() instead...
+#
+    pdsType = match.arg(pdsType)
+    dlpdsIZ = distanceLimitedPDSIZ(downLog, pds, dls, description = description,
+                                     spID = spID, spUnits = spUnits,
+                                     pdsType = pdsType,
+                                     ...
+                                    )
+
+#
+#   this just mirrors what we have in omnibusPDSIZ and distanceLimitedMCIZ
+#   using coercion without having to recreate everything from scratch;
+#   note that the pds portion is canonical, so we leave it alone...
+#
+    npua = length(dlpdsIZ@puaEstimates)
+
+    #dlsPart...
+    if(!is.null(dlpdsIZ@dlsPart)) {
+      dlsPart = as(dlpdsIZ@dlsPart, 'distanceLimitedMCIZ')   #cast/coerce
+      unitArea = ifelse(dlsPart@downLog@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare)
+      izArea = dlsPart@area
+      logLen = dlsPart@downLog@logLen
+      dlsPart@puaBlowup = unitArea/izArea * logLen     #<<<*****Note
+      dlsPart@puaEstimates[c('volume','surfaceArea','coverageArea','biomass', 'carbon')] = NA
+    }
+    else
+      dlsPart = NULL
+
+#
+#   per unit area estimates for the full log are unknown at this point as they
+#   depend on some function of perpendicular diameter...
+#
+    puaEstimates = as.list(rep(NA, 7))             #all to NA to cover hybridDLPDSIZ
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'Length',
+                                                  'surfaceArea', 'coverageArea',
+                                                  'biomass', 'carbon'
+                                                )]
+    
+    
+#
+#   create the new object afresh...
+#
+    hdlpdsIZ = new('hybridDLPDSIZ', downLog=downLog,
+                   pds = pds,                            #pds sampling object
+                   pdsType = pdsType,                    #PPS version of PDS
+                   izPerim = dlpdsIZ@izPerim,            #matrix representation of perimeter
+                   perimeter = dlpdsIZ@perimeter,        #SpatialPolygons perimeter
+                   pgArea = dlpdsIZ@pgArea,              #area of SpatialPolygons izone: approximate
+                   spUnits = spUnits,                    #CRS units
+                   description = description,            #a comment
+                   units = dlpdsIZ@units,                #units of measure
+                   area = dlpdsIZ@area,                  #exact inclusion zone area
+                   puaBlowup = dlpdsIZ@puaBlowup,        #NA per unit area blowup factor
+                   puaEstimates = puaEstimates,          #per unit area estimates
+                   bbox = dlpdsIZ@bbox,                  #overall bounding box--redundant here
+                   dls = dlpdsIZ@dls,                    #distanceLimited object
+                   dlsDiameter = dlpdsIZ@dlsDiameter,    #the limiting diameter
+                   pdsPart = dlpdsIZ@pdsPart,            #pdsIZ component object
+                   dlsPart = dlsPart,                    #DL component pdsIZ object
+                   pdsFull = dlpdsIZ@pdsFull             #as if it were plain pdsIZ
+                  )
+
+
+    return(hdlpdsIZ)
+}   #hybridDLPDSIZ constructor
+)   #setMethod
+
+
 
 
 
@@ -1102,7 +1203,7 @@ function(downLog,
 
        
 #================================================================================
-#  9. method for functions and class distanceLimitedIZ...
+# 10. method for functions and class distanceLimitedIZ...
 #
 setMethod('distanceLimitedIZ',
           signature(downLog = 'downLog', dls = 'distanceLimited'), #change second argument!!
@@ -1203,7 +1304,7 @@ function(downLog,
 
        
 #================================================================================
-#  10. method for functions and class distanceLimitedMCIZ; everything is the same
+#  11. method for functions and class distanceLimitedMCIZ; everything is the same
 #      as under dls, except the per nuit area estimates for all but Density
 #      and Length...
 #

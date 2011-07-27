@@ -428,8 +428,6 @@ setClass('distanceLimitedPDSIZ',
 
 
 
-
-
 #=================================================================================================
 #
 #  12. the omnibusDLPDSIZ class is a direct descendant of 'distanceLimitedPDSIZ'...
@@ -441,6 +439,22 @@ setClass('distanceLimitedPDSIZ',
 setClass('omnibusDLPDSIZ',
     contains = 'distanceLimitedPDSIZ'
 ) #class omnibusDLPDSIZ 
+
+
+
+
+
+#=================================================================================================
+#
+#  13. the hbridDLPDSIZ class is a direct descendant of 'distanceLimitedPDSIZ'...
+#
+#      combines DL with omnibus PDS
+#
+#     added: 26-July-2011
+#
+setClass('hybridDLPDSIZ',
+    contains = 'distanceLimitedPDSIZ'
+) #class hybridDLPDSIZ 
 
 
          
