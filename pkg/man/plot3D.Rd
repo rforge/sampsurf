@@ -32,7 +32,7 @@
 %}
 
 \details{ This is not the generic, that is defined in
-  raster::\code{plot3D} and should be referred to for
+  rasterVis::\code{plot3D} and should be referred to for
   more details on both possible arguments and functionality. Because the
   \code{plot3D} methods in the \dQuote{sampSurf} package are all the
   same in their arguments as the above, they are not detailed elsewhere.  }
@@ -49,7 +49,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
   in the \dQuote{\code{rgl}} package. }
 
 \seealso{
-raster::\code{\link[raster]{plot3D}}, \code{\link[rgl]{r3d}} 
+rasterVis::\code{\link[rasterVis]{plot3D}}, \code{\link[rgl]{r3d}} 
 }
 
 \examples{
