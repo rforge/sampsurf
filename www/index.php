@@ -69,16 +69,20 @@ so more methods will appear in future releases (hopefully with some contributed 
 
 <h4>A Note On Installation</h4>
 
+<p>
+sampSurf is now on CRAN. It is probably best to download it from there as the version here might not always be fully functional. However, if  you do desire to use the version here, please read what follows as it may help.
+</p>
 
 <p>
 On the project pages, you will note that you can install the package directly from R-Forge using...<br><br>
 
 install.packages("sampSurf", repos="http://R-Forge.R-project.org")<br><br>
 
-and can include the dep=TRUE argument if you want the packages that sampSurf is dependent upon to also be installed. Unfortunately, installing the dependencies in this way may be a little difficult. First, I believe that the dependencies are only searched for on R-Forge, and not CRAN (you could add more repos to the list to compensate). Since raster and rgl are both R-Forge projects, they will be found. But gpclib, for example, is not on R-Forge and therefore R will complain that it can not find it. Second, the packages that are available on R-Forge could be in some intermediate stage of update, so it is better to install the required packages from CRAN, with what is known to be a stable release. The dependencies are listed in the DESCRIPTION file for sampSurf; they are: sp, raster, gpclib, with rgl suggested but not necessary unless you want to look at the sampling surfaces in 3D. Therefore, I would recommend that you use the normal install.packages() on all these packages so that you get the latest stable version from CRAN. Here is what I would try (in this order)...<br><br>
+and can include the dep=TRUE argument if you want the packages that sampSurf is dependent upon to also be installed. Unfortunately, installing the dependencies in this way may be a little difficult. First, I believe that the dependencies are only searched for on R-Forge, and not CRAN (you could add more repos to the list to compensate). Since raster and rgl are both R-Forge projects, they will be found. But gpclib, for example, is not on R-Forge and therefore R will complain that it can not find it. Second, the packages that are available on R-Forge could be in some intermediate stage of update, so it is better to install the required packages from CRAN, with what is known to be a stable release. The dependencies are listed in the DESCRIPTION file for sampSurf; they are: sp, raster, rasterVis, gpclib, with rgl suggested but not necessary unless you want to look at the sampling surfaces in 3D. Therefore, I would recommend that you use the normal install.packages() on all these packages so that you get the latest stable version from CRAN. Here is what I would try (in this order)...<br><br> 
 
 install.packages("sp")<br>
 install.packages("raster")<br>
+install.packages("rasterVis")<br>
 install.packages("gpclib")<br>
 install.packages("sampSurf", repos="http://R-Forge.R-project.org")<br><br>
 
