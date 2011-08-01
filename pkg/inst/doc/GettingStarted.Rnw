@@ -111,7 +111,7 @@
 % must manually use Sweave to get the correct definitions of its
 % macros...
 %
-\usepackage{/usr/share/R/texmf/tex/latex/Sweave}  %Fedora as of 14
+%\usepackage{/usr/share/R/texmf/tex/latex/Sweave}  %Fedora as of 14
 %\usepackage{/usr/share/R/share/texmf/tex/latex/Sweave} %Ubuntu  as of v2.12
 
 
