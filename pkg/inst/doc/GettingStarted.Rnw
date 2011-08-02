@@ -5,88 +5,23 @@
 %
 \usepackage{amsmath}
 \usepackage{amsfonts}
-%\usepackage{mathpazo}
-%\usepackage{palatino}
-%\usepackage{cmbright}
 \usepackage{amssymb, bm}
 \usepackage[round]{natbib}              %use natbib for bibtex
-\usepackage{dcolumn}                    %decimal table alignments
-\usepackage{booktabs}                   %better table rules
 \usepackage{bbm}
-\usepackage[svgnames]{xcolor}
 \usepackage{url}
-\usepackage{ifthen}                     %conditional stuff
 
 \usepackage{datetime}                   %for printing time
 
-%
-% xcolor color definitions...
-%
-\colorlet{jhgSteelBlue}{SteelBlue!20!SlateGray}   %for svgnames
-\colorlet{jhgHyperLinks}{Navy!40!DarkSlateGray}   %for svgnames
-
-%
-% good section headers in \sffamily, with color if desired...
-%
-\newboolean{wantColorSec}
-\setboolean{wantColorSec}{true}   %set to true for color sections
-\usepackage[sf,bf,medium,raggedright]{titlesec} %section headers
-\ifthenelse{\boolean{wantColorSec}}  
-{ %for color sectioning; see xcolor manual for formula...
-\titleformat{\section}
-  {\Large\sffamily\bfseries\color{jhgSteelBlue}}{\thesection}{1em}{}
-\titleformat{\subsection}
-  {\large\sffamily\bfseries\color{jhgSteelBlue}}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}
-  {\normalsize\sffamily\bfseries\color{jhgSteelBlue}}{\thesubsubsection}{1em}{}
-}
-{} %no color
-
-%
-%page layout: allows the graphical view of LaTeX's page layout parameters...
-%
-\usepackage[paper=letterpaper,
-           % includemp,
-            includehead,
-            lmargin=1in,
-            rmargin=1in,
-            tmargin=1in,
-            %bmargin=1in,
-            textwidth=6.25in,
-            textheight=602pt,
-            headsep=20pt
-           ]{geometry}
-\usepackage{layouts}
-\setlayoutscale{0.33}
-\setparametertextfont{\scriptsize}
-\setlabelfont{\scriptsize}
-\currentpage
-
 \setlength{\parskip}{\baselineskip}     %between paragraphs
 
-%
-%page style...
-%
-\usepackage{fancyhdr}       %new version of fancyheadings
+\usepackage[utf8]{inputenc}     %inputenx updates inputenc
 
-\usepackage[utf8]{inputenx}     %inputenx updates inputenc
+\usepackage{Sweave}
 
 %
 % hyperref package always goes LAST of all loaded packages!!! <<********
 %
-\usepackage[pdftex,
-            letterpaper,
-            bookmarks,
-            colorlinks,
-            unicode,
-            %linkcolor=jhgHyperLinks,    %color for colorlinks
-            citecolor=MidnightBlue, %for citations
-            pagebackref,
-            pageanchor,
-            pdftitle={},  %use \pdfinfo to set
-            pdfauthor={J.~H.~Gove},
-            pdfsubject={} %use \pdfinfo to set
-           ]{hyperref}
+\usepackage{hyperref}
 
 
 \DeclareUrlCommand\email{\urlstyle{rm} %
@@ -108,13 +43,10 @@
 
 
 %
-% must manually use Sweave to get the correct definitions of its
-% macros...
+% must manually use Sweave to get the correct definitions of its macros...
 %
 %\usepackage{/usr/share/R/texmf/tex/latex/Sweave}  %Fedora as of 14
 %\usepackage{/usr/share/R/share/texmf/tex/latex/Sweave} %Ubuntu  as of v2.12
-
-
 
 
 %\VignetteIndexEntry{Getting Started}
@@ -127,7 +59,7 @@
 \SweaveOpts{keep.source=TRUE}
 
 
-\title{\sffamily\bfseries \textcolor{jhgSteelBlue}{Getting Started with Package \Rpackage{sampSurf}}}
+\title{\sffamily\bfseries Getting Started with Package \Rpackage{sampSurf}}
 
 \author{Jeffrey H.~Gove\thanks{Phone: (603) 868-7667; 
                                Fax: (603) 868-7604. 
@@ -140,7 +72,7 @@
     \small \email{jgove@fs.fed.us} or \email{jhgove@unh.edu}              
     } 
 
-\date{\textcolor{jhgSteelBlue}{\today\\ \footnotesize\ampmtime}}
+\date{\today\\ \footnotesize\ampmtime}
 
 \maketitle
 
@@ -155,7 +87,7 @@ direction in finding the needed information to get started using \Rpackage{sampS
 
 \Rpackage{sampSurf} is installed like any other package. If you are not familiar with the
 routine, please check out the help for installing packages with
-\Rcode{?install.packages}. You can install the package from within \Rc\ with\dots
+\Rcode{?install.packages}. You can install the package from within \R\ with\dots
 %
 <<eval=FALSE>>=
 install.packages('sampSurf')
@@ -177,7 +109,9 @@ The \Rpackage{sampSurf} package depends on several other packages, which should 
 installed automatically with the command given above. In addition, it `suggests' the
 \Rpackage{rgl} package, which must be installed separately. The \Rpackage{rgl} package
 allows one to visualize the sampling surface in three dimensions and is not necessary for
-basic functionality, so installation is optional.
+basic functionality, so installation is optional. To look at the different
+graphics in \Rpackage{sampSurf} using \Rpackage{rgl}, the \Rpackage{rasterVis} package is
+now required as well, but will be installed automatically when installing \Rpackage{sampSurf}.
 
 
 
@@ -193,13 +127,13 @@ these vignettes before installing \Rpackage{sampSurf} by simply downloading the 
 subdirectory. Alternatively the files reside in the \texttt{/doc} directory of the
 \texttt{*.zip} package file. The PDF files can be readily opened from there.
 
-The second and better option is to install the package and then use \Rc\ to open the
+The second and better option is to install the package and then use \R\ to open the
 vignettes from your installation. There are two steps as follows\dots
 %
 \begin{enumerate}
   
-  \item At the \Rc\ prompt, type \Rcode{package?sampSurf} to get to the help
-    page.\footnote{Note that you need to also make sure that \Rc's internal HTML help
+  \item At the \R\ prompt, type \Rcode{package?sampSurf} to get to the help
+    page.\footnote{Note that you need to also make sure that \R's internal HTML help
       server is the default. The easiest way to do this is to add the following to your
       \Rcode{.Rprofile} file: \Rcode{options(list(help\_type = 'html',browser='firefox'))}
       (or whatever browser you use).} Scroll to the bottom of this page and find the
@@ -274,7 +208,7 @@ package?sampSurf
 \noindent as mentioned above. All of the help files can be accessed from this page.
 
 There are also help files available for each class and method, which can be accessed
-individually as is normal in \Rc. For example\dots
+individually as is normal in \R. For example\dots
 %
 <<eval=FALSE>>=
 class?downLog
@@ -290,7 +224,7 @@ function\footnote{This is \Sfour\ terminology, if it does not make sense right n
 
 The above can be followed for any classes in \Rpackage{sampSurf}. Please do see the above
 vignettes for extensive examples and documentation. Finally, the full system help
-available in PDF format can be downloaded from the \Rc\ website for the project at CRAN;
+available in PDF format can be downloaded from the \R\ website for the project at CRAN;
 e.g., \url{http://software.rc.fas.harvard.edu/mirrors/R/}, and then choose the
 \Rpackage{sampSurf} link.
 
