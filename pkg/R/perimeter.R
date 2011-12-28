@@ -14,11 +14,13 @@
 #     5. perpendicularDistanceIZ (omnibusPDSIZ, distanceLimitedPDSIZ, omnibusDLPDSIZ)
 #     6. distanceLimitedIZ
 #     7. downLog
-#     8. downLogs
-#     9. circularPlot of class ArealSampling
-#    10. Tract
-#    11. sampSurf
-#    12. downLogIZs
+#     8. standingTree
+#     9. StemContainer subclasses
+#    10. circularPlot of class ArealSampling
+#    11. Tract
+#    12. sampSurf
+#    13. izContainer
+#    14. circularPlotIZ
 #
 #Author...									Date: 21-Sept-2010
 #	Jeffrey H. Gove
@@ -153,15 +155,29 @@ function(object, ...)
 
 
 
+
 #================================================================================
-#  method for downLogs object... (same code as Tract--should make this a function: bboxToPoly) ***
+#  method for standingTree object...
 #
 setMethod('perimeter',
-          signature(object = 'downLogs'),
+          signature(object = 'standingTree'),
+function(object, ...)
+{
+    return(object@spDBH)
+}   #standingTree
+) #setMethod
+
+
+
+#================================================================================
+#  method for StemContainer subclass objects...
+#
+setMethod('perimeter',
+          signature(object = 'StemContainer'),
 function(object, ...)
 {
     return(bboxToPoly(object))
-}   #downLogs
+}   #StemContainer subclasses
 ) #setMethod
 
 
@@ -209,12 +225,27 @@ function(object, ...)
 
 
 #================================================================================
-#  method for downLogIZs object...
+#  method for izContainer object...
 #
 setMethod('perimeter',
-          signature(object = 'downLogIZs'),
+          signature(object = 'izContainer'),
 function(object, ...)
 {
     return(bboxToPoly(object))
-}   #downLogIZs
+}   #izContainer
+) #setMethod
+
+
+
+
+
+#================================================================================
+#  method for circularPlotIZ object...
+#
+setMethod('perimeter',
+          signature(object = 'circularPlotIZ'),
+function(object, ...)
+{
+    return(object@circularPlot@perimeter)
+}   #circularPlotIZ
 ) #setMethod

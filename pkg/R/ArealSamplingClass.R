@@ -9,6 +9,7 @@
 #     3. pointRelascope: class for point relascope sampling (PRS) (Jan 2011)
 #     4. perpendicularDistance: class for PDS (Jan 2011)
 #     5. distanceLimit: class for variable plot MC (Mar 2011)
+#     6. angleGauge: class for Bitterlich sampling methods
 #
 #Author...									Date: 19-Aug-2010
 #	Jeffrey H. Gove
@@ -207,3 +208,40 @@ setClass('distanceLimited',
                  return(TRUE)
                } #validity check
 ) #class distanceLimited
+
+
+
+
+
+#=================================================================================================
+#
+#  the angle guage class is just a direct descendant of 'ArealSampling'...
+#
+#  this is for small angle sampling methods like horizontal point sampling for standing
+#  trees--not point or transect relascope methods for logs
+#
+#
+setClass('angleGauge',
+    representation(angleDegrees = 'numeric',        #gauge angle in degrees
+                   angleRadians = 'numeric',        #gauge angle in radians
+                   baf = 'numeric',                 #basal area factor (ft^2/ac or m^2/ha)
+                   prf = 'numeric',                 #plot radius factor (ft/in or m/cm)
+                   PRF = 'numeric',                 #prf (ft/ft or m/m) as in tree dbh units
+                   alpha = 'numeric'                #proportionality constant--dimensionless
+                  ),
+    prototype = list(angleDegrees = 2.29,
+                     angleRadians = 0.040,
+                     baf = 4,                       #metric
+                     prf = 0.25,
+                     alpha = 50
+                    ),
+    contains = 'ArealSampling',                     #a subclass of the virtual 'ArealSampling' class
+    validity = function(object) {
+                 maxDegrees = .StemEnv$angleGaugeMaxDegrees
+                 if(object@angleDegrees <= 0 || object@angleDegrees > maxDegrees)
+                   return(paste('Gauge angle must be between 0 and',maxDegrees,'degrees!'))
+                 
+                 return(TRUE)
+               } #validity check
+) #class angleGauge
+

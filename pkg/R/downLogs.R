@@ -195,6 +195,7 @@ function(object,                                 #number of logs to generate
 setMethod('downLogs',
           signature(object = 'list', container='missing'),
 function(object,
+         description = '',
          ...
         )
 {
@@ -223,7 +224,8 @@ function(object,
 #
 #   create the object directly, let the constructor check the rest...
 #    
-    dlo = new('downLogs', logs=logs, bbox=bbox, units=logs[[1]]@units, stats=stats)
+    dlo = new('downLogs', logs=logs, bbox=bbox, units=logs[[1]]@units,
+              stats=stats, description=description)
     
     return(dlo)
 }   #downLogs method for list
@@ -290,7 +292,7 @@ function(object,
 #------------------------------------------------------------------------------
     attrNames = c('volume', 'length', 'surfaceArea', 'coverageArea','biomass','carbon')
     numLogs = length(logs)
-    nvars = 6
+    nvars = length(attrNames)
     logAttr = matrix(NA, nrow=numLogs, ncol=nvars) #log attributes
     colnames(logAttr) = attrNames
     for(i in seq_len(numLogs)) {

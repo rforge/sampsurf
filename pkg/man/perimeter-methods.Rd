@@ -31,20 +31,22 @@
 	Returns the spatial object associated with the perimeter of the down
     log.}
 
-  \item{\strong{\code{signature(object = "downLogs")}}}{ %\cr
+  \item{\strong{\code{signature(object = "standingTree")}}}{%\cr
+
+	Returns the spatial object associated with the perimeter of the standing
+    tree.}
+
+  \item{\strong{\code{signature(object = "StemContainer")}}}{ %\cr
 
 	Returns the spatial object associated with the bounding box for the
-    collection of \dQuote{downLog} objects.}
+    collection of \dQuote{downLog} or \dQuote{standingTree} objects
+    within the appropriate \dQuote{downLogs} or \dQuote{standingTrees}
+    container objects, respectively.}
 
   \item{\strong{\code{signature(object = "circularPlot")}}}{ %\cr
 
 	Returns the spatial object associated with the perimeter of the
     circular plot. }
-
-  \item{\strong{\code{signature(object = "downLogIZs")}}}{% \cr
-
-	Returns the spatial object associated with the bounding box for the
-    collection of \dQuote{downLogIZ} objects.}
 
   \item{\strong{\code{signature(object = "sausageIZ")}}}{ %\cr
 
@@ -92,12 +94,22 @@
 	Returns the spatial object associated with the perimeter of the
     inclusion zone. }
 
- \item{\strong{\code{signature(object = "Tract")}}}{ %\cr
+  \item{\strong{\code{signature(object = "circularPlotIZ")}}}{ %\cr
+
+	Returns the spatial object associated with the perimeter of the
+    inclusion zone. }
+
+  \item{\strong{\code{signature(object = "izContainer")}}}{% \cr
+
+	Returns the spatial object associated with the bounding box for the
+    collection of \dQuote{izContainer} subclass objects.}
+
+  \item{\strong{\code{signature(object = "Tract")}}}{ %\cr
 
    Returns the spatial object associated with the perimeter of the
    \dQuote{Tract}. }
 
- \item{\strong{\code{signature(object = "sampSurf")}}}{%\cr
+  \item{\strong{\code{signature(object = "sampSurf")}}}{%\cr
 
    Returns the spatial object associated with the perimeter of the
    \code{tract} slot in the object.}

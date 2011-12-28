@@ -3,7 +3,10 @@
 #   Methods for generic plot() for class for InclusionZone and subclasses;
 #
 #   All y="missing" signature, x is...
+#
 #   1. "InclusionZone"
+#
+#       ...downLogIZ subclasses...
 #   2. "StandUpIZ"
 #   3. "chainSawIZ"
 #   4. "sausageIZ"
@@ -12,11 +15,14 @@
 #   7. "distanceLimitedPDSIZ'
 #   8. "distanceLimitedIZ'
 #
-#   9. "downLogIZs"
-#
 #   Note that the plot routines for methods like standup, sausage, PRS, etc.
 #   are all very similar, they could probably be collapsed sometime with a
 #   "base" function taking away much of the duplication. 18-Jan-2011
+#
+#       ...standingTreeIZ subclasses..
+#   1.  "circularPlotIZ"
+#   2.  "horizontalPointIZ" is a subclass of "circularPlotIZ" so has no
+#       subclass plot at this point, it just uses the superclass version
 #
 #   Note in the plotting of Spatial objects, the xlab and ylab arguments
 #   do not seem to be passed through to plot, so no labels will be shown
@@ -398,40 +404,60 @@ function(x,
 
 
 
+
+
+
+#---------------------------------------------------------------------------
+#
+#   plot methods for "standingTreeIZ" subclasses...
+#
+#   1. circularPlotIZ
+#      Note as above that "horizontalPointIZ" is a subclass of "circularPlotIZ"
+#      and therefore simply uses its plot method.
+#
+#Author...									Date: 1-Dec-2011
+#	Jeffrey H. Gove
+#	USDA Forest Service
+#	Northern Research Station
+#	271 Mast Road
+#	Durham, NH 03824
+#	jhgove@unh.edu
+#	phone: 603-868-7667	fax: 603-868-7604
+#---------------------------------------------------------------------------
+#
+
+
+
 #================================================================================
-#================================================================================
-#  9. method for a "downLogIZs" collection/population...
+#  1. method for circularPlotIZ subclass...
 #
 setMethod('plot',
-          signature(x = 'downLogIZs', y='missing'),
+          signature(x = 'circularPlotIZ', y='missing'),
 function(x, 
-         axes = FALSE,        #not a par() so can't be passed to callNextMethod, so separate it
-         add = FALSE,          #add each log to overall plot if TRUE
+         axes = FALSE,           #not a par() so can't be passed to callNextMethod, so separate it
+         showTree = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,                           #add each IZ to overall plot if TRUE
          asp = 1,
          ...
         )
 {
 #------------------------------------------------------------------------------
-#  plots the downed logs...
+#  plots the circularPlotIZ object...
 #------------------------------------------------------------------------------
 #
     object = x
-    numIZs = length(object@iZones)
-    #validObject(object)  #just make sure!
 
-#
-#   set up the plot extents via the bounding box, then plot each inclusion zone...
-#
-    suppressWarnings({                                #for object-specific parameters not in par() ...
-    bbox = object@bbox
     if(!add)
-      plot(SpatialPoints(t(bbox)), col=NA, axes=axes, asp=asp, ...)  #set up limits
+      callNextMethod(object, axes=axes, asp=asp, ...)            #setup extents
 
-    for(i in seq_len(numIZs))  #use one of the individual iz methods for plotting...
-      plot(object@iZones[[i]], axes=axes, add=TRUE, ...)
-    
+    suppressWarnings({                                #for object-specific parameters not in par() ...
+      plot(object@circularPlot, izColor=izColor, border=izBorder, axes=axes, add=TRUE, ...)
+      if(showTree)
+        plot(object@standingTree, add=TRUE, ...)
     })
-        
+                     
     return(invisible())
-}   #plot for 'downLogIZs'
-)   #setMethod
+}   #plot for 'circularPlotIZ'
+) #setMethod

@@ -68,7 +68,9 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
  perpendicular distance  sampling subclass.\cr
 % 
  "\code{\linkS4class{distanceLimited}}" for the
- distance limited sampling subclass.
+ distance limited sampling subclass.\cr
+% 
+ "\code{\linkS4class{angleGauge}}" for horizontal point sampling subclass.
 }
 \examples{
 showClass("ArealSampling")

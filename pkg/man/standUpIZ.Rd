@@ -30,12 +30,8 @@ standUpIZ(downLog, plotRadius, ...)
   arguments coincide with the above. Please see
   \code{\link{standUpIZ-methods}} for more details.
 }
+
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
 A valid object of class "\code{\linkS4class{standUpIZ}}."
 }
 

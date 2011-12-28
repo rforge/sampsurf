@@ -4,17 +4,25 @@
 #   InclusionZone class & subclasses...
 #
 #   The methods include...
-#     1. a constructor for 'standUpIZ'
-#     2. for 'chainSawIZ'
-#     3. for 'sausageIZ'
-#     4. for 'pointRelascopeIZ' (Jan 2011)
-#     5. for 'perpendicularDistanceIZ'  (Jan 2011)
-#     6. for 'omnibusPDSIZ' (Feb 2011)
-#     7. for 'distanceLimitedPDSIZ' (Feb-Mar 2011)
-#     8. for 'omnibusDLPDSIZ' (Mar 2011)
-#     9. for 'hybridDLPDSIZ' (July 2011)
-#    10. for 'distanceLimitedMCIZ (Mar 2011)
-#    11. for 'distacneLimitedIZ (May 2011)
+#
+#        ...downLogIZ subclass constructors...
+#
+#     1. a constructor for 'standUpIZ'     (Aug 2010)
+#     2. for 'chainSawIZ'                  (Fall 2010)
+#     3. for 'sausageIZ'                   (Fall 2010)
+#     4. for 'pointRelascopeIZ'            (Jan 2011)
+#     5. for 'perpendicularDistanceIZ'     (Jan 2011)
+#     6. for 'omnibusPDSIZ'                (Feb 2011)
+#     7. for 'distanceLimitedPDSIZ'        (Feb-Mar 2011)
+#     8. for 'omnibusDLPDSIZ'              (Mar 2011)
+#     9. for 'hybridDLPDSIZ'               (July 2011)
+#    10. for 'distanceLimitedMCIZ'         (Mar 2011)
+#    11. for 'distanceLimitedIZ'           (May 2011)
+#
+#        ...standingTreeIZ subclass constructors...
+#
+#     1. for 'circularPlotIZ'              (Dec 2011)
+#     2. for 'horizontalPointIZ'           (Dec 2011)
 #
 #   Note that the sp, raster, and gpclib packages must be loaded.
 #
@@ -123,14 +131,26 @@ function(downLog,
 #   get bbox from the downLog object...
 #
     downLog.bbox = bbox(downLog@spLog)
-    units = downLog@units
    
 #
 #   now also from the circularPlot object...
+#   --we must be careful below and not just pass the "..." because we are
+#     explicitly passing "units" and if the user also put "units" in the "..."
+#     call to the current method, then it will be passed twice throwing an
+#     error; so pull out any other arguments from "..." that could go to
+#     circularPlot and pass them explicitly or set them to default; i.e.,
+#     nptsPerimeter
 #
+    units = downLog@units
     loc = coordinates(downLog@slNeedleAxis)$naLines$naLine[1,]    #transformed butt center point
+    args = list(...)
+    if('nptsPerimeter' %in% names(args))          #user can override here
+      nptsPerimeter = args$nptsPerimeter          #user's choice
+    else
+      nptsPerimeter = 100                         #default in circularPlot()
     circularPlot = circularPlot(plotRadius, units=units, centerPoint=loc,
-                                spID = spID, spUnits = spUnits,...)
+                                spID = spID, spUnits = spUnits,
+                                nptsPerimeter = nptsPerimeter)
     cp.bbox = bbox(circularPlot@perimeter)
 
 #
@@ -200,14 +220,26 @@ function(downLog,
 #   get bbox from the downLog object...
 #
     downLog.bbox = bbox(downLog@spLog)
-    units = downLog@units
     logID = downLog@spLog@polygons$pgsLog@ID
    
 #
 #   now also from the circularPlot object...
+#   --we must be careful below and not just pass the "..." because we are
+#     explicitly passing "units" and if the user also put "units" in the "..."
+#     call to the current method, then it will be passed twice throwing an
+#     error; so pull out any other arguments from "..." that could go to
+#     circularPlot and pass them explicitly or set them to default; i.e.,
+#     nptsPerimeter
 #
+    units = downLog@units
+    args = list(...)
+    if('nptsPerimeter' %in% names(args))          #user can override here
+      nptsPerimeter = args$nptsPerimeter          #user's choice
+    else
+      nptsPerimeter = 100                         #default in circularPlot()
     circularPlot = circularPlot(plotRadius, units=units, centerPoint=plotCenter,
-                                spID = spID, spUnits = spUnits,...)
+                                spID = spID, spUnits = spUnits,
+                                nptsPerimeter = nptsPerimeter)
     cp.bbox = bbox(circularPlot@perimeter)
     cpCoords = coordinates(circularPlot@perimeter@polygons$pgsCircPlot@Polygons$circPlot)
 
@@ -1343,3 +1375,210 @@ function(downLog,
 }   #distanceLimitedMCIZ constructor
 )   #setMethod
     
+
+
+
+
+#---------------------------------------------------------------------------
+#
+#   This section defines the constructors for standTreeIZ objects...
+#
+#Author...									Date: 1-Dec-2011
+#	Jeffrey H. Gove
+#	USDA Forest Service
+#	Northern Research Station
+#	271 Mast Road
+#	Durham, NH 03824
+#	jhgove@unh.edu
+#	phone: 603-868-7667	fax: 603-868-7604
+#---------------------------------------------------------------------------
+#
+
+#if(!isGeneric("circularPlotIZ")) 
+  setGeneric('circularPlotIZ',  
+             function(standingTree, plotRadius, ...) standardGeneric('circularPlotIZ'),
+             signature = c('standingTree', 'plotRadius')
+            )
+
+#if(!isGeneric("horizontalPointIZ")) 
+  setGeneric('horizontalPointIZ',  
+             function(standingTree, angleGauge, ...) standardGeneric('horizontalPointIZ'),
+             signature = c('standingTree', 'angleGauge')
+            )
+   
+
+
+
+       
+#================================================================================
+#  1. method for functions and class circularPlotIZg...
+#
+setMethod('circularPlotIZ',
+          signature(standingTree = 'standingTree', plotRadius = 'numeric'),
+function(standingTree,
+         plotRadius,
+         description = 'inclusion zone for circular plot method',
+         spID = paste('cp',.StemEnv$randomID(),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   get bbox from the standingTree object...
+#
+    standingTree.bbox = bbox(standingTree@spDBH)
+    
+#
+#   get bbox from the circularPlot object---tied to the tree center...
+#   --we must be careful below and not just pass the "..." because we are
+#     explicitly passing "units" and if the user also put "units" in the "..."
+#     call to the current method, then it will be passed twice throwing an
+#     error; so pull out any other arguments from "..." that could go to
+#     circularPlot and pass them explicitly or set them to default; i.e.,
+#     nptsPerimeter
+#
+    units = standingTree@units
+    loc = coordinates(standingTree@location)[1,]  #need a vector from matrix
+    args = list(...)
+    if('nptsPerimeter' %in% names(args))          #user can override here
+      nptsPerimeter = args$nptsPerimeter          #user's choice
+    else
+      nptsPerimeter = 100                         #default in circularPlot()
+    circularPlot = circularPlot(plotRadius, units=units, centerPoint=loc,
+                                spID = spID, spUnits = spUnits,
+                                nptsPerimeter = nptsPerimeter)
+    cp.bbox = bbox(circularPlot@perimeter)
+
+#
+#   combine them for the overall bbox (we can't assume that the circular plot
+#   will be larger than the tree)...
+#
+    min = apply(cbind(standingTree.bbox, cp.bbox), 1, min)
+    max = apply(cbind(standingTree.bbox, cp.bbox), 1, max)
+    bbox = matrix(cbind(min,max),ncol=2, dimnames=list(c('x','y'), c('min','max')))
+
+#
+#   per unit area estimates...
+#
+    baFactor =  ifelse(standingTree@units==.StemEnv$msrUnits$English, .StemEnv$baFactor['English'],
+                       .StemEnv$baFactor['metric'])
+    unitArea = ifelse(standingTree@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
+    puaBlowup = unitArea/circularPlot@area 
+    puaEstimates = list(standingTree@treeVol*puaBlowup,
+                        puaBlowup,
+                        standingTree@dbh^2*baFactor*puaBlowup,
+                        standingTree@surfaceArea*puaBlowup, 
+                        standingTree@biomass*puaBlowup,
+                        standingTree@carbon*puaBlowup
+                       )
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'basalArea',
+                                                  'surfaceArea', 'biomass', 'carbon'
+                                                )]
+
+#
+#   create the object...
+#
+    cpIZ = new('circularPlotIZ', standingTree=standingTree, circularPlot=circularPlot,
+               bbox=bbox, spUnits=spUnits, description=description,
+               units = units, puaBlowup = puaBlowup, puaEstimates = puaEstimates
+              )
+
+    return(cpIZ)
+}   #circularPlotIZ constructor
+)   #setMethod
+
+
+
+
+
+       
+#================================================================================
+#  2. method for functions and class horizontalPointIZ...
+#
+setMethod('horizontalPointIZ',
+          signature(standingTree = 'standingTree', angleGauge = 'angleGauge'),
+function(standingTree,
+         angleGauge,
+         description = 'inclusion zone for horizontal point sampling method',
+         spID = paste('hps',.StemEnv$randomID(),sep=':'),
+         spUnits = CRS(projargs=as.character(NA)),
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   get bbox from the standingTree object...
+#
+    standingTree.bbox = bbox(standingTree@spDBH)
+    
+#
+#   get bbox from the circularPlot object---tied to the tree center...
+#   --we must be careful below and not just pass the "..." because we are
+#     explicitly passing "units" and if the user also put "units" in the "..."
+#     call to the current method, then it will be passed twice throwing an
+#     error; so pull out any other arguments from "..." that could go to
+#     circularPlot and pass them explicitly or set them to default; i.e.,
+#     nptsPerimeter
+#
+    units = standingTree@units                    #user has no choice here, must match
+    dbh = standingTree@dbh
+    plotRadius = angleGauge@PRF * dbh             #remember, dbh is stored in m or ft, not cm or inches
+    loc = coordinates(standingTree@location)[1,]  #need a vector from matrix
+    args = list(...)
+    if('nptsPerimeter' %in% names(args))          #user can override here
+      nptsPerimeter = args$nptsPerimeter          #user's choice
+    else
+      nptsPerimeter = 100                         #default in circularPlot()
+    circularPlot = circularPlot(plotRadius, units=units, centerPoint=loc,
+                                spID = spID, spUnits = spUnits,
+                                nptsPerimeter = nptsPerimeter)
+    cp.bbox = bbox(circularPlot@perimeter)
+
+#
+#   combine them for the overall bbox (we can't assume that the circular plot
+#   will be larger than the tree)...
+#
+    min = apply(cbind(standingTree.bbox, cp.bbox), 1, min)
+    max = apply(cbind(standingTree.bbox, cp.bbox), 1, max)
+    bbox = matrix(cbind(min,max),ncol=2, dimnames=list(c('x','y'), c('min','max')))
+
+#
+#   per unit area estimates...
+#
+    baFactor =  ifelse(standingTree@units==.StemEnv$msrUnits$English, .StemEnv$baFactor['English'],
+                       .StemEnv$baFactor['metric'])
+    #unitArea = ifelse(standingTree@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare)
+    ba = baFactor*dbh*dbh                               #remember, dbh is stored in m or ft, not cm or inches
+    baf = angleGauge@baf
+    puaBlowup = baf/ba                                  #unitArea constant is in the baf already
+    puaEstimates = list(standingTree@treeVol*puaBlowup,
+                        puaBlowup,
+                        baf, 
+                        standingTree@surfaceArea*puaBlowup, 
+                        standingTree@biomass*puaBlowup,
+                        standingTree@carbon*puaBlowup
+                       )
+    names(puaEstimates) = .StemEnv$puaEstimates[c('volume', 'Density', 'basalArea',
+                                                  'surfaceArea', 'biomass', 'carbon'
+                                                )]
+
+#
+#   create the object...
+#
+    hpIZ = new('horizontalPointIZ',
+               standingTree = standingTree,
+               circularPlot = circularPlot,
+               angleGauge = angleGauge,
+               bbox = bbox,
+               spUnits = spUnits,
+               description = description,
+               units = units,
+               puaBlowup = puaBlowup,
+               puaEstimates = puaEstimates
+              )
+
+    return(hpIZ)
+}   #horizontalPointIZ constructor
+)   #setMethod
+

@@ -61,7 +61,7 @@
 
 \title{\sffamily\bfseries Getting Started with Package \Rpackage{sampSurf}}
 
-\author{Jeffrey H.~Gove\thanks{Phone: (603) 868-7667; 
+\author{Jeffrey H. Gove\thanks{Phone: (603) 868-7667; 
                                Fax: (603) 868-7604. 
                               } \\
     \small Research Forester\\
@@ -177,9 +177,9 @@ Each of the vignettes can be opened as shown above. They are outlined briefly as
     
   \item \emph{InclusionZoneClass:} The combination of a \Rclass{Stem} object and an
     \Rclass{ArealSampling} object provides the necessary information required to construct
-    the inclusion zone (the former provides the log attributes, the latter the sampling
-    protocol information). This vignette details examples of the use of this class and its
-    constructors for different sampling methods. 
+    the inclusion zone (the former provides the log or tree attributes, the latter the
+    sampling protocol information). This vignette details examples of the use of this
+    class and its constructors for different sampling methods.
     
   \item \emph{InclusionZoneGridClass:} This is an intermediate class used by the package
     to generate the sampling surface from the inclusion zones. The casual user need not be

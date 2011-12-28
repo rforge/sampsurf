@@ -8,6 +8,7 @@
 #     2. a constructor for 'pointRelascope' (Jan 2011)
 #     3. a constructor for 'perpendicularDistance' (Jan 2011)
 #     4. a constructor for 'distanceLimit' (Mar 2011)
+#     5. a constructor for 'angleGauge' (6-Dec-2011)
 #
 #   Note that the sp package should be loaded for the complete functionality. 
 #
@@ -44,6 +45,12 @@ if(!isGeneric("distanceLimited"))
   setGeneric('distanceLimited',  
              function(distanceLimit, ...) standardGeneric('distanceLimited'),
              signature = c('distanceLimit')
+            )
+
+if(!isGeneric("angleGauge")) 
+  setGeneric('angleGauge',  
+             function(baf, ...) standardGeneric('angleGauge'),
+             signature = c('baf')
             )
 
           
@@ -231,3 +238,50 @@ function(distanceLimit,
 }   #distanceLimited constructor
 )   #setMethod
     
+
+
+
+
+          
+#================================================================================
+#  5. constructor method for class angleGauge...
+#
+setMethod('angleGauge',
+          signature(baf = 'numeric'),
+function(baf,
+         units = 'metric',
+         description = 'angle gauge method',
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+    if(units == .StemEnv$msrUnits$metric) {
+      unitArea = .StemEnv$smpHectare
+      conv = .StemEnv$m2cm
+    }
+    else {
+      unitArea = .StemEnv$sfpAcre
+      conv = .StemEnv$ft2in
+    }
+  
+#
+#   get the angle in radians and plot radius factor...
+#
+    angleRadians = 2*asin(sqrt(baf/unitArea))
+    angleDegrees = .StemEnv$rad2Deg(angleRadians)
+
+    alpha = sqrt(unitArea/baf)
+
+    PRF = alpha/2          #ft/ft or m/m
+    prf = PRF/conv         #ft/in or m/cm
+
+    ag = new('angleGauge', angleDegrees=angleDegrees, angleRadians=angleRadians,
+              baf=baf, prf=prf, PRF=PRF, alpha=alpha,
+              description=description, units=units
+             )
+
+    return(ag)
+}   #angleGauge constructor
+)   #setMethod
+ 

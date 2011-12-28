@@ -5,6 +5,7 @@
 #     (2) pointRelascope class
 #     (3) perpendicularDistance class
 #     (4) distanceLimited class
+#     (5) angleGauge class
 #
 #Author...									Date: 20-Aug-2010
 #	Jeffrey H. Gove
@@ -209,3 +210,46 @@ function(object,
 }   #summary for 'distanceLimited'
 ) #setMethod
     
+
+
+
+
+
+#================================================================================
+# method for class "angleGauge"...
+#
+setMethod('summary',
+          signature(object = 'angleGauge'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'ArealSampling' method for 'angleGauge'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+
+    if(object@units == .StemEnv$msrUnits$metric) { 
+      saUnits = ' square meters per hectare'
+      prfUnits = ' meters per cm'
+      PRFUnits = ' meters per meter'
+    }
+    else {
+      saUnits = ' square feet per acre'
+      prfUnits = ' feet per inch'
+      PRFUnits = ' feet per foot'
+    }
+    
+    cat('\nangleGauge...')
+    cat('\n  Angle (nu) in degrees = ', object@angleDegrees, sep='')
+    cat('\n  Angle (nu) in radians = ', object@angleRadians, sep='')
+    cat('\n  Basal area factor (baf) = ', object@baf, saUnits, sep='')
+    cat('\n  Plot radius factor (prf) = ', object@prf, prfUnits,' (',object@PRF, PRFUnits,')',sep='')
+    cat('\n  This angle has a proportionality factor (alpha) = ',format(object@alpha,digits=3),
+        PRFUnits, sep='')
+
+    cat('\n')
+        
+    return(invisible())
+}   #summary for 'angleGauge'
+) #setMethod

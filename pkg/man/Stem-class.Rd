@@ -7,13 +7,15 @@
 \alias{summary,Stem-method}
 
 \title{Class "Stem" for building tree and log like subclasses}
+
 \description{
   This class is virtual. It provides the minimal structure to build
-  subclasses that can be tailored to the desired application. Notably,
-  "downLog" and perhaps "standingTree" subclasses are obvious
-  possibilities. It provides for graphical display via the
+  subclasses that can be tailored to the desired application. Notably, the
+  "downLog" and "standingTree" subclasses are already implemented.
+  It provides the basis for graphical display via the
   \code{\link{sp}} package. 
 }
+
 \section{Objects from the Class}{A virtual Class: No objects may be
   created from it.}
 
@@ -22,7 +24,7 @@
     \item{\code{species}:}{Object of class \code{"character"}: Some
 	  form of identifier to species or group level. }
     \item{\code{units}:}{Object of class \code{"character"}: The units of
-	  measure used, must be either "English" or "metric". }
+	  measurement system used, must be either "English" or "metric". }
     \item{\code{location}:}{Object of class \code{"SpatialPoints"}: The
 	  x,y location of the object, can include z (elevation) but this is
 	  not used currently. }
@@ -50,21 +52,18 @@
 	the object. }
 	 }
 }
-%\references{
-%%  ~~put references to the literature/web site here~~
-%}
+
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
-%\note{
-%%  ~~further notes~~
-%}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
- Subclass "\code{\linkS4class{downLog}}" for downed logs.
+ Subclasses "\code{\linkS4class{downLog}}" for downed logs and
+ "\code{\linkS4class{standingTree}}" for standing trees.
 }
+
 \examples{
 showClass("Stem")
 }

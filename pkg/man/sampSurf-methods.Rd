@@ -14,7 +14,7 @@
 \section{Methods}{
 \describe{
 
-\item{\strong{\code{signature(object = "downLogIZs", tract =
+\item{\strong{\code{signature(object = "izContainer", tract =
 	  "Tract")}}}{%\cr
 
       This constructor will allow the most
@@ -35,13 +35,14 @@
 	\itemize{
 		 
 	  \item{\code{object}:}{ An object of one of the subclasses of
-	    "downLogIZs." }
+	    "izContainer." }
 		 
 	  \item{\code{tract}:}{ An object of class "Tract" or subclass.}
 		 
 	  \item{\code{estimate}:}{ A character variable corresponding to the
-	  desired estimate; these include 'cubicVolume', 'Length',
-	  'Density', 'surfaceArea', and 'coverageArea'.}
+	  desired estimate attribute; these include 'volume', 'Length' (logs),
+	  'Density', 'surfaceArea', 'coverageArea' (logs), 'basalArea'
+	  (trees), 'biomass' and 'carbon'.}
 		
 	  \item{\code{wantChainSaw}:}{ \code{TRUE}: if the full chainsaw
 	    method is desired; \code{FALSE}: if not (default).}
@@ -74,7 +75,7 @@
   \item{}{\bold{usage\ldots}
     \preformatted{function(object, 
          tract,
-         iZone = c('sausageIZ','standUpIZ','pointRelascopeIZ'), 
+         iZone, 
          estimate = unlist(.StemEnv$puaEstimates),
          wantChainSaw = FALSE,               
          description = 'sampling surface object',
@@ -91,7 +92,8 @@
 	    method, you must specify a sausage inclusion zone and set
 	    \code{wantChainSaw} to \code{TRUE} as the entire whole-log
 	    inclusion zone is calculated for each log in the population (be
-	    prepared to wait a bit).}
+	    prepared to wait a bit). The routine will determine whether to
+	    generate logs or trees based on this argument.}
 	  
 	  \item{... :}{ Other arguments to be passed along to routines that
 		construct the downlog population, the inclusion zones, and

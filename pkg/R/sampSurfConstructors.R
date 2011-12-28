@@ -5,12 +5,14 @@
 #
 #   The methods include signatures for...
 #     Signature: "object", "tract"
-#     1. "downLogIZs", "Tract": Takes a collection of down log inclusion
-#        zone already generated for the tract argument.
+#     1. "izContainer", "Tract": Takes a collection of inclusion
+#        zones already generated for the tract argument.
 #     2. "numeric", "Tract": This will allow generating a sampling surface
-#        from scratch. The object is the number of logs, you can specify any
-#        argument for generating logs that will be passed on to downLogs in
-#        the ... argument list, similar for other methods.
+#        from scratch. The object is the number of logs/trees, you can specify any
+#        argument for generating logs/trees that will be passed on to downLogs or
+#        standingTrees in the "..." argument list, similar for other methods.
+#
+#   Revamped to handle standing tree methods 5-Dec-2011, JHG.
 #
 #Author...									Date: 1-Oct-2010
 #	Jeffrey H. Gove
@@ -34,10 +36,10 @@ setGeneric('sampSurf',
           
 #================================================================================
 #
-#   Takes a collection of log inclusion zones and a "Tract" object...
+#   Takes a collection of Stem inclusion zones and a "Tract" object...
 #
 setMethod('sampSurf',
-          signature(object = 'downLogIZs', tract='Tract'), 
+          signature(object = 'izContainer', tract='Tract'), 
 function(object, 
          tract,
          estimate = unlist(.StemEnv$puaEstimates),
@@ -60,10 +62,12 @@ function(object,
 #
 #---------------------------------------------------------------------------
 #
-#   create the surface--chainsaw is always the problem child...
+#   chainsaw is always the problem child...
 #
     if(wantChainSaw && !is(object@iZones[[1]], 'sausageIZ'))
       stop('If you want the full chainsaw estimate, you must also specify sausage inclusion zones!')
+    if(is(object@iZones[[1]], 'chainSawIZ'))                 #this request does not make sense
+      stop('You must use \"sausageIZ\" zones for the chainSaw method!')
 
 #
 #   throw a warning if any of the inclusion zones land outside the tract boundary...
@@ -71,18 +75,35 @@ function(object,
     bb.iz = bbox(object)
     bb.tr = bbox(tract)
     if(any(bb.iz[,'min']<bb.tr[,'min']) || any(bb.iz[,'max']>bb.tr[,'max']))
-      warning('Some object incusion zones lie outside the tract--this will impart a bias!!')
+      warning('Some object inclusion zones lie outside the tract--this will impart a bias!!')
+
+#
+#   let's see what we are dealing with here...
+#
+    estimate = match.arg(estimate)
+    if(is(object, 'downLogIZs')) {
+      isLogs = TRUE
+      stemName = 'log'
+      if(!estimate %in% .StemEnv$validEstimates$downLogs)
+        stop(paste(estimate,'is not a valid attribute for downLogs'))
+    }
+    else {
+      isLogs = FALSE
+      stemName = 'tree'
+      if(!estimate %in% .StemEnv$validEstimates$standingTrees)
+        stop(paste(estimate,'is not a valid attribute for standingTrees'))
+    }
+
     
 #
 #   heap each inclusion zone in the collection...
 #
-    estimate = match.arg(estimate)
-    nLogs = length(object@iZones)
+    nStems = length(object@iZones)
     if(!runQuiet) {
-      cat('\nLogs in collection =', nLogs)
-      cat('\nHeaping log: ')
+      cat('\nNumber of ',stemName,'s in collection = ', nStems, sep='')
+      cat('\nHeaping ',stemName,': ',sep='')
     }
-    for(i in seq_len(nLogs)) {
+    for(i in seq_len(nStems)) {
       if(!runQuiet)
         cat(i,',',sep='')
       if(wantChainSaw && is(object@iZones[[1]], 'sausageIZ')) {   #need sausage inclusion zones for chainsaw
@@ -98,36 +119,48 @@ function(object,
 
 
 #
-#   we must adjust the area of the tract in case it is different from one hectare
-#   or one acre...
-#
-    unitArea = ifelse(object@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
-    areaAdjust = tract@area/unitArea     
-    
-#
-#   some surface stats--truth value is from the raw log quantities...
+#   get the true population attribute value for the collection...
 #   note that it is possible for biomass and carbon to have logs with
 #   no estimates (NA), so we must account for that since these quantities are
 #   optional...
 #
-    surfStats = list( mean=cellStats(tract, mean)*areaAdjust,
-                      sum=cellStats(tract,sum)*areaAdjust,
-                      var=cellStats(tract, var)*areaAdjust^2,
-                      nc=ncell(tract), max = maxValue(tract)
+    if(isLogs)
+      Stems = as(object, 'downLogs')
+    else
+      Stems = as(object, 'standingTrees')
+
+    truth = switch(estimate,
+                   volume =  Stems@stats['total','volume'],
+                   Density = nStems,
+                   Length =  Stems@stats['total','length'],
+                   surfaceArea = Stems@stats['total','surfaceArea'],
+                   coverageArea = Stems@stats['total','coverageArea'],
+                   basalArea = Stems@stats['total','basalArea'],
+                   biomass = Stems@stats['total','biomass'],
+                   carbon = Stems@stats['total','carbon'],
+                   NA
+                  )
+
+#
+#   we must adjust the area of the tract in case it is different from one hectare
+#   or one acre...
+#
+    unitArea = ifelse(object@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
+    areaAdjust = tract@area/unitArea   
+    
+#
+#   some surface stats using raster...
+#
+    surfStats = list( mean = cellStats(tract, mean)*areaAdjust,
+                      sum = cellStats(tract,sum)*areaAdjust,
+                      var = cellStats(tract, var)*areaAdjust^2,
+                      nc = ncell(tract),
+                      max = maxValue(tract)*areaAdjust
                     )
     surfStats$stDev = sqrt(surfStats$var)
     surfStats$se = surfStats$stDev/sqrt(surfStats$nc)
-    truth = switch(estimate,
-                   volume = sum(sapply(object@iZones,function(x){x@downLog@logVol})),
-                   Density = nLogs,
-                   Length = sum(sapply(object@iZones,function(x){x@downLog@logLen})),
-                   surfaceArea = sum(sapply(object@iZones,function(x){x@downLog@surfaceArea})),
-                   coverageArea = sum(sapply(object@iZones,function(x){x@downLog@coverageArea})),
-                   biomass = sum(sapply(object@iZones,function(x){x@downLog@biomass}), na.rm=TRUE), #optional
-                   carbon = sum(sapply(object@iZones,function(x){x@downLog@carbon}), na.rm=TRUE),   #optional
-                   NA
-                  )
-    surfStats$bias = surfStats$mean - truth     
+    surfStats$bias = surfStats$mean - truth
+    surfStats$popTotal = truth
              
 
 #
@@ -145,7 +178,7 @@ function(object,
       cat('\n')
 
     return(ss)
-}   #sampSurf for "downLogIZs"
+}   #sampSurf for "izContainer"
 )   #setMethod
 
 
@@ -156,13 +189,9 @@ function(object,
           
 #================================================================================
 #
-#   Takes the number of logs and a "Tract" object, other arguments for, e.g.,
+#   Takes the number of stems and a "Tract" object, other arguments for, e.g.,
 #   downLogs, can be passed via "..."
 #
-#   Eventually, if standingTrees are added, we will have to change this to
-#   reflect generating these rather than downLog objects--could key off the kind
-#   of subclass passed in iZone below if we start with InclusionZone rather
-#   than downLog in the check below
 #
 setMethod('sampSurf',
           signature(object = 'numeric', tract='Tract'),
@@ -184,24 +213,44 @@ function(object,
 #                    iZone must be 'sausageIZ' for this to work; FALSE: one 
 #                    of the other methods.
 #
-    nLogs = object
-    if(nLogs<1)
-      stop('You must specify a positive number of logs in "object"!')
+#   a few checks...
+#
+    nStems = round(object)
+    if(nStems<1)
+      stop('You must specify a positive number of stems in "object"!')
 
 #
 #   make sure the inclusion zone constructor is a valid available type...
 #
-    papa = getClass('downLogIZ')
+    if(extends(iZone, 'downLogIZ')) {
+      isLogs = TRUE                                 #proper English
+      papa = getClass('downLogIZ')
+    }
+    else if(extends(iZone, 'standingTreeIZ')) {
+      isLogs = FALSE
+      papa = getClass('standingTreeIZ')
+    }
+    else                                  #catch non-InclusionZone subclass values...
+      stop('Invalid inclusion zone constructor name supplied: iZone = ',iZone)
+    #above test is not quite enough, iZone must actually be a subclass, not the parent itself...     
     validNames = names(papa@subclasses)
     if(is.na(match(iZone, validNames)))
       stop('Invalid inclusion zone constructor name supplied: iZone = ',iZone)
-       
+    if(iZone=='chainSawIZ')                          #catch this error too
+      stop('You must use \"sausageIZ\" zones for the chainSaw method!')
+ 
 
 #
-#   get the logs and the inclusion zones...
+#   get the logs/trees and the inclusion zones...
 #
-    dlogs = downLogs(nLogs, tract, ...)
-    izs = downLogIZs(lapply(dlogs@logs, iZone, ...))
+    if(isLogs) {
+      dlogs = downLogs(nStems, tract, ...)
+      izs = downLogIZs(lapply(dlogs@logs, iZone, ...))
+    }
+    else {
+      strees = standingTrees(nStems, tract, ...)
+      izs = standingTreeIZs(lapply(strees@trees, iZone, ...))
+    }
 
 #
 #   just apply the default constructor now...

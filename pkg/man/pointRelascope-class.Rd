@@ -20,7 +20,10 @@ for creating new objects is via the \code{\link{pointRelascope}} constructor.
 }
 
 \section{Slots}{
-  In addition to those slots in class "ArealSampling," the following are defined\ldots
+  
+  In addition to those slots in class "ArealSampling," the following are
+  defined\ldots
+  
   \describe{
 	
     \item{\code{angleDegrees}:}{Object of class \code{"numeric"}: The

@@ -5,6 +5,7 @@
 \alias{summary,downLogIZ-method}
 
 \title{Class "downLogIZ"}
+
 \description{
   This represents an incremental change from the virtual base 
   "\code{\linkS4class{InclusionZone}}" class. It is meant to clearly
@@ -13,12 +14,17 @@
   parent.
 }
 
-\section{Objects from the Class}{A virtual Class: No objects may be created from it.}
+\section{Objects from the Class}{A virtual Class: No objects may be
+  created from it.}
+
 \section{Slots}{
+  
   Only one slot has been added to this class, please see the definition
-  of the "\code{\linkS4class{InclusionZone}}" class for other inherited slots\ldots
+  of the "\code{\linkS4class{InclusionZone}}" class for other inherited
+  slots\ldots
+  
   \describe{
-    \item{\code{downLog}:}{Object of class \code{"downLog"}: For and
+    \item{\code{downLog}:}{Object of class \code{"downLog"}: Holds and
 	  object of class "\code{\linkS4class{downLog}}". }
   }
 }
@@ -35,6 +41,10 @@ Class \code{"\linkS4class{InclusionZone}"}, directly.
    }
    
 
+\references{
+\dQuote{\emph{The InclusionZone Class}} vignette.
+}
+
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
@@ -50,9 +60,9 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
   \code{\linkS4class{perpendicularDistanceIZ}},
   \code{\linkS4class{omnibusPDSIZ}},
   \code{\linkS4class{distanceLimitedPDSIZ}},
-  \code{\linkS4class{omnibusDLPDSIZ}}, and
-  \code{\linkS4class{distanceLimitedIZ}}. 
-  \code{\linkS4class{distanceLimitedMCIZ}}. 
+  \code{\linkS4class{omnibusDLPDSIZ}}, 
+  \code{\linkS4class{distanceLimitedIZ}},  
+  \code{\linkS4class{distanceLimitedMCIZ}}, 
   and the \code{\linkS4class{downLogIZs}} container class.  }
 
 \examples{

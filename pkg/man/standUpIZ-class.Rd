@@ -28,7 +28,9 @@ objects.  }
 	
     \item{\code{circularPlot}:}{Object of class \code{"circularPlot"}:
 	  An object from the  "\code{\linkS4class{ArealSampling}}" subclass
-	  "\code{\linkS4class{circularPlot}}". }
+	  "\code{\linkS4class{circularPlot}}".  Please see the help for this
+	  class for more information on the slots associated with circular
+	  plot objects.}
   }
   }
 
@@ -40,11 +42,14 @@ Class \code{"\linkS4class{InclusionZone}"}, by class "downLogIZ", distance 2.
 \section{Methods}{
   \describe{
     \item{izGrid}{\code{signature(izObject = "standUpIZ", tract =
-      "Tract")}: \dQuote{InclusionZoneGrid} generic constructor } 
+		"Tract")}: \dQuote{InclusionZoneGrid} generic constructor }
+	
     \item{perimeter}{\code{signature(object = "standUpIZ")}: Return the
       object perimeter }
+	
     \item{plot}{\code{signature(x = "standUpIZ", y = "missing")}: Plot
       the object  }
+	
     \item{summary}{\code{signature(object = "standUpIZ")}: Object summary }
 	 }
 }

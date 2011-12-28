@@ -8,7 +8,10 @@
 #   2. "standUpIZ" uses circularPlot
 #   3. "chainSawIZ" is always a pain
 #   4. "Tract" and subclasses
-#   5. "InclusionZoneGrid" 
+#   5. "InclusionZoneGrid"
+#
+#      ...standingTree related...
+#   1. "circularPlotIZ"
 #
 #Author...									Date: 10-May-2011
 #	Jeffrey H. Gove
@@ -119,4 +122,24 @@ function(x,
     area = nrow(x@grid)*ncol(x@grid)*xres(x@grid)^2
     return(area)
 }   #"InclusionZoneGrid" constructor
+)   #setMethod
+
+
+
+
+#================================================================================
+#  method for "circularPlotIZ" objects...
+#
+setMethod('area',
+          signature(x = 'circularPlotIZ'),
+function(x,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   gotta get it from the circularPlot object...
+#
+    
+    return(x@circularPlot@area)
+}   #"circularPlotIZ" constructor
 )   #setMethod

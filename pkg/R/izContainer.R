@@ -6,6 +6,7 @@
 #    1. izContainer: A virtual class that is the superclass of the following...       
 #    2. downLogIZs: a container class for multiple objects of any subclass
 #                    of 'downLogIZ' (original 20-Aug-2010)
+#    3. standingTreeIZs: for objects of subclass of 'standingTreeIZ' (Nov-2011)
 #
 #Author...									Date: 10-May-2011 
 #	Jeffrey H. Gove
@@ -91,12 +92,31 @@ setClass('izContainer',
 setClass('downLogIZs',
     contains = 'izContainer',
     validity = function(object) {
-#                we just need to check one zone, since the izContainer validity checks for all
+#                we just need to check one izone, since the izContainer validity checks for all
 #                of the same type...
                  #if(!extends(class, 'InclusionZone'))  #last test passed for all, so just check first
-                 if(!is(object@iZones[[1]], 'downLogIZ'))  #last test passed for all, so just check first
+                 if(!is(object@iZones[[1]], 'downLogIZ'))  
                    return('Classes of objects in iZones must be a subclass of "downLogIZ"!')                 
                  
                  return(TRUE)
                } #validity check
 ) #class downLogIZs 
+
+
+
+#=================================================================================================
+#=================================================================================================
+#
+#  2. the standingTreeIZs class (plural) is a container class for a number of "standingTreeIZ" objects...
+#
+setClass('standingTreeIZs',
+    contains = 'izContainer',
+    validity = function(object) {
+#                we just need to check one izone, since the izContainer validity checks for all
+#                of the same type...
+                 if(!is(object@iZones[[1]], 'standingTreeIZ'))  
+                   return('Classes of objects in iZones must be a subclass of "standingTreeIZ"!')                 
+                 
+                 return(TRUE)
+               } #validity check
+) #class standingTreeIZs 

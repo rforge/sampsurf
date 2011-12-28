@@ -14,6 +14,7 @@ a valid object.  }
 \usage{
 downLog(object, ...)
 }
+
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{  This is the signature formal argument, see the methods
@@ -31,25 +32,18 @@ as necessary.
 }
 
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
 A valid object of class "\code{\linkS4class{downLog}}."
 }
 
-%\references{
-%}
+\references{
+  \dQuote{The Stem Class} vignette in this package.
+}
+
 \author{Jeffrey H. Gove}
-%\note{
-%%  ~~further notes~~
-%}
 
 
 \seealso{
 \code{\link{downLog-methods}}
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 
 \examples{

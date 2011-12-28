@@ -62,9 +62,8 @@ There are several vignettes associated with the package that provide detailed ex
 Please note that sampSurf is quite functional, and has support for down logs sampled on fixed-area plots (which
 include the `stand-up,' `sausage,' and `chainsaw' methods or protocols), point relascope sampling, several variants 
 of perpendicular distance sampling, as well as a new method called distance limited sampling and a Monte Carlo variant. 
-Support for standing trees has not yet been added. The class structure is designed to support additions with 
-relative ease, however,
-so more methods will appear in future releases (hopefully with some contributed by users).
+Support for standing trees has also been been added recently with classes and methods for fixed-area circular plot and horizontal point sampling methods. The overall class structure is designed to support additions with 
+relative ease, so more methods will appear in future releases (hopefully with some contributed by users). At the current release, there are more than 20 variants of sampling methods available in the package (see "package?sampSurf" and the vignettes for details).
 </p>
 
 <h4>A Note On Installation</h4>

@@ -50,10 +50,15 @@
 .StemEnv$in2ft = 1/12
 .StemEnv$ft2in = 12
 
+.StemEnv$dbhHgt = c(English = 4.5, metric = 1.3716)  #in English and metric
+
 .StemEnv$smpHectare = 10000
 .StemEnv$sfpAcre = 43560
 
-.StemEnv$baFactor = c( English=pi/(4*144), metric=pi/(4*10000) )
+.StemEnv$baFactor = c( English = pi/4, metric = pi/4)     #dbh in feet or meters
+#.StemEnv$baFactor = c( English = pi/(4*144), metric = pi/(4*10000) ) #dbh in inches or cm
+
+.StemEnv$angleGaugeMaxDegrees = 6.5   #maximum angle for angleGauge objects in ArealSampling Class
 
 #
 # per unit area names for the list object slot in the InclusionZone class or subclasses;
@@ -67,10 +72,20 @@
                              Density = 'Density',                  #number of logs or trees
                              Length = 'Length',                    #total length of logs
                              surfaceArea = 'surfaceArea',          #surface area
-                             coverageArea = 'coverageArea',        #projected coverage area
+                             coverageArea = 'coverageArea',        #projected coverage area--down logs
                              biomass = 'biomass',                  #could be green or dry
-                             carbon = 'carbon'                     #carbon content
+                             carbon = 'carbon',                    #carbon content
+                             basalArea = 'basalArea'               #basal area for standing trees
                             )
+#
+#  these are the valid estimates from the above list for each main subclass of Stem object...
+#
+.StemEnv$validEstimates = list(downLogs = c('volume','Density','Length','surfaceArea','coverageArea',
+                                            'biomass','carbon'),
+                               standingTrees = c('volume','Density','surfaceArea','basalArea',
+                                                 'biomass','carbon')
+                              )
+  
 #.StemEnv$puaNames = list(English =
 #                          list(volume = 'volume in cubic feet per acre',
 #                               bfVolume = 'board foot volume per acre',
@@ -117,6 +132,13 @@
 .StemEnv$logAttributeColor = transparentColorBase('tan3',              #needle & center color
                                     ifelse(1.5*.StemEnv$alphaTrans>1, 1, 1.5*.StemEnv$alphaTrans))
 
+
+#standing tree colors, etc. (could be for dbh circle or standing tree as needed)...
+.StemEnv$treeBorderColor = 'brown4'  #perimeter color for dbh circle 
+.StemEnv$treeColor = transparentColorBase('sandybrown', .StemEnv$alphaTrans)  #internal shade for dbh circle
+.StemEnv$treeAttributeColor = transparentColorBase('tan3',                    #center color
+                                    ifelse(1.5*.StemEnv$alphaTrans>1, 1, 1.5*.StemEnv$alphaTrans))
+
 #inclusion zones or plot-related...
 .StemEnv$izBorderColor = transparentColorBase('slategray',                      #plot perimeter color
                                     ifelse(1.5*.StemEnv$alphaTrans>1, 1, 1.5*.StemEnv$alphaTrans)) 
@@ -137,10 +159,12 @@
 
 
 #
-#   sampleLogs stuff...
+#   sampleLogs & sampleTrees stuff...
 #
-.StemEnv$sampleLogsNames = c('species', 'buttDiam', 'topDiam', 'logLen', 'solidType',
+.StemEnv$sampleLogsNames = c('species', 'logLen', 'buttDiam', 'topDiam', 'solidType',
                              'x', 'y', 'logAngle', 'logAngle.D')
+.StemEnv$sampleTreesNames = c('species', 'height', 'dbh', 'topDiam', 'solidType',
+                             'x', 'y')
 
 
 #
@@ -185,6 +209,8 @@ wbTaper = function(botDiam, topDiam, logLen, nSegs=20, solidType, hgt=NULL, isLo
     taper = data.frame(diameter=diameter, hgt=hgt)
     if(isLog)
       colnames(taper) = c('diameter','length')
+    else
+      colnames(taper) =  c('diameter','height')
     return(taper)
 }   #wbTaper
 assign('wbTaper', wbTaper, envir=.StemEnv)            #move to .StemEnv
@@ -244,7 +270,7 @@ SmalianVolume = function(taper, isLog=TRUE) {
     if(isLog)
       hgtName = 'length'
     else
-      hgtName = 'hgt'
+      hgtName = 'height'
     vol = matrix(NA, nrow=nSegs, ncol=1)
     diam = taper[,'diameter']
     csArea = diam^2
@@ -317,10 +343,13 @@ rm(wbSurfaceArea)                                                    #and remove
 #  and lenTop is to the top of the bolt, both are relative to the butt of the
 #  log, which is always zero in a downLog object. 
 #
-splineSurfaceArea = function(taper, lenBot, lenTop) {
+splineSurfaceArea = function(taper, lenBot, lenTop, isLog=TRUE) {
     if(lenBot > lenTop || lenBot < 0 || lenTop < 0)
       stop('Nonsensical lengths in splineSurfaceArea!')
-    length = taper$length
+    if(isLog)
+      length = taper$length
+    else
+      length = taper$height
     diameter = taper$diameter
     
     taper.spline = splinefun(length, diameter)

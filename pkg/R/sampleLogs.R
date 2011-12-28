@@ -50,6 +50,7 @@ sampleLogs = function(nLogs = 2,
 #
 #   Returns...
 #     A data frame with the following columns invisibly...
+#       --species
 #       --logLen = log lengths
 #       --buttDiam = large-end/butt diameters
 #       --topDiam = small-end/top diameters

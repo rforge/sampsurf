@@ -34,6 +34,10 @@ A valid object of class "\code{\linkS4class{downLogIZs}}."
 }
 
 
+\references{
+\dQuote{\emph{The InclusionZone Class}} vignette.
+}
+
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }

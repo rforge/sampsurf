@@ -71,9 +71,10 @@
 	 }
    }
    
-%\references{
-%%  ~~put references to the literature/web site here~~
-%}
+\references{
+\dQuote{\emph{The InclusionZone Class}} vignette.
+}
+
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }

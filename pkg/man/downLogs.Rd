@@ -10,7 +10,7 @@ Generate Objects of Class "\code{\linkS4class{downLogs}}"
 This generic function has methods based on the signature formal
 arguments \code{object} and \code{container}. It is used as a
 constructor function for objects that are of class
-"\code{\linkS4class{downLog}}". This method should be used in preference
+"\code{\linkS4class{downLogs}}". This method should be used in preference
 to \code{\link{new}} to insure a valid object.
 }
 
@@ -19,14 +19,14 @@ downLogs(object, container, ...)
 }
 
 \arguments{
-  \item{object}{Signature formal argument to key on whether logs are
+  \item{object}{ Signature formal argument to key on whether logs are
 	passed or generated.}
   
-  \item{container}{Relevant if the logs are to be contained within some
+  \item{container}{ Relevant if the logs are to be contained within some
 	physical boundary/area like a \dQuote{\code{\linkS4class{Tract}}}
 	object.}
   
-  \item{\dots}{Formal arguments that are different for each method, see
+  \item{\dots}{ Formal arguments that are different for each method, see
 	those for details. }
 }
 
@@ -39,21 +39,20 @@ collection in various ways. Please see the above link for more details.
 }
 
 \value{
-A valid object of class "\code{\linkS4class{downLogs}}."
+A valid object of class "\code{\linkS4class{downLogs}}"
 }
-%\references{
-%}
+
+\references{
+  \dQuote{The Stem Class} vignette in this package.
+}
+
 \author{
 Jeffrey H. Gove
 }
-%\note{
-%%  ~~further notes~~
-%}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-  \code{\link{downLog}}
+  \code{\link{downLog}}, "\code{\linkS4class{downLog}}", "\code{\linkS4class{StemContainer}}"
 }
 
 \examples{

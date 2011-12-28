@@ -4,11 +4,13 @@
 #   to the sampSurf package class objects...
 #
 #   The methods for classes include...
-#     1. IncluzionZone & downLogIZs container
+#     1. InclusionZone & downLogIZs container
 #     2. downLog
-#     3. circularPlot
-#     4. Tract
-#     5. sampSurf
+#     3. standingTree
+#     4. StemContainer
+#     5. circularPlot
+#     6. Tract
+#     7. sampSurf
 #
 #Author...									Date: 17-Sept-2010
 #	Jeffrey H. Gove
@@ -22,7 +24,7 @@
 
           
 #================================================================================
-#  method for 'InclusionZone' classes...
+#  method for 'InclusionZone' subclasses...
 #
 setMethod('bbox',
           signature(obj = 'InclusionZone'),
@@ -34,14 +36,14 @@ function(obj)
 
 
 #================================================================================
-#  method for 'downLogIZs' classes...
+#  method for 'izContainer' subclasses...
 #
 setMethod('bbox',
-          signature(obj = 'downLogIZs'),
+          signature(obj = 'izContainer'),
 function(obj)
 {
     return(obj@bbox)
-}   #bbox for 'InclusionZone' only
+}   #bbox for 'izContainer'
 )   #setMethod
 
           
@@ -71,14 +73,26 @@ function(obj)
 
 
 #================================================================================
-#  method for 'downLogs' class...
+#  method for 'standingTree' class...
 #
 setMethod('bbox',
-          signature(obj = 'downLogs'),
+          signature(obj = 'standingTree'),
+function(obj)
+{
+    return(bbox(obj@spDBH))
+}   #bbox for 'standingTree' only
+)   #setMethod
+
+
+#================================================================================
+#  method for 'StemContainer' class and subclasses...
+#
+setMethod('bbox',
+          signature(obj = 'StemContainer'),
 function(obj)
 {
     return(obj@bbox)
-}   #bbox for 'downLogs' only
+}   #bbox for 'StemContainer' & subclasses
 )   #setMethod
    
 

@@ -2,9 +2,10 @@
 #
 #   This file holds the S4 class definitions for the Inclusion Zone method
 #   related classes. Inclusion zones are properties of the particular
-#   'Stem' subclass, and 'ArealSampling' subclass. Therefore, the VIRTUAL
-#   base class is composed of these two slots. Then we subclass this depending
-#   on 'Stem' subclass-type, and finally 'ArealSampling' subclass-type.
+#   'Stem' subclass, and 'ArealSampling' subclass.
+#
+#   The following section holds all of the definitions for down logs, those
+#   for standing trees are after these in the file.
 #
 #   Classes...
 #     1. InclusionZone: virtual for all 'ArealSampling' methods and Stem
@@ -21,6 +22,9 @@
 #    10. distanceLimitedMCIZ: DLMC
 #    11. distanceLimitedPDSIZ: for canonical DLPDS
 #    12. omnibusDLPDSIZ: combines omnibus PDS component with DLMC component
+#
+#   Search for "standingTreeIZ" to find the definitions for standing trees at
+#   the end of this file.
 #
 #Author...									Date: 20-Aug-2010
 #	Jeffrey H. Gove
@@ -468,3 +472,111 @@ setClass('hybridDLPDSIZ',
 
 
 
+#---------------------------------------------------------------------------
+#
+#   This section contains the InclusionZone class definitions for standing
+#   trees...
+#
+#   Classes...
+#
+#     1. standingTreeIZ: virtual parent
+#     2. circularPlotIZ: fixed-area circular plots
+#     3. horizontalPointIZ: horizontal point sampling (6-Dec-2011)
+#
+#Author...									Date: 1-Dec-2011
+#	Jeffrey H. Gove
+#	USDA Forest Service
+#	Northern Research Station
+#	271 Mast Road
+#	Durham, NH 03824
+#	jhgove@unh.edu
+#	phone: 603-868-7667	fax: 603-868-7604
+#---------------------------------------------------------------------------
+#
+
+
+
+#=================================================================================================
+#
+#  1. the standing tree inclusion zone class is just a direct descendant of 'InclusionZone'...
+#
+#
+setClass('standingTreeIZ',
+    representation(standingTree = 'standingTree'              #standingTree object
+                  ),
+    contains = c('InclusionZone', 'VIRTUAL'),             #a subclass of the virtual 'InclusionZone' class
+    validity = function(object) {
+
+                 if(!validObject(object@standingTree))
+                   return('object in standingTree slot is an invalid object!')
+
+                 if(!identical(object@standingTree@units, object@units))
+                   return('measurement units do not match between standingTree and IZ objects!')
+
+                 if(!identical(object@standingTree@spUnits, object@spUnits))
+                   return('Spatial units do not match between standingTree and IZ objects!')
+                 
+                 return(TRUE)
+               } #validity check
+) #class standingTreeIZ 
+
+
+ 
+
+
+
+
+
+#=================================================================================================
+#
+#  2. the circularPlotIZ class is just a direct descendant of 'standingTreeIZ'...
+#
+#
+setClass('circularPlotIZ',
+    representation(circularPlot = 'circularPlot'       #circularPlot object
+                  ),
+    contains = 'standingTreeIZ',                      #a subclass of the virtual 'standingTreeIZ' class
+    validity = function(object) {
+
+                 if(!validObject(object@circularPlot))
+                   return('object in circularPlot slot is an invalid object!')
+
+                 if(!identical(object@standingTree@units, object@circularPlot@units))
+                   return('measurement units do not match between standingTree and circularPlot objects!')
+
+                 if(!identical(object@standingTree@spUnits, object@circularPlot@spUnits))
+                   return('Spatial units do not match between standingTree and circularPlot objects!')
+                 
+                 return(TRUE)
+               } #validity check
+) #class circularPlotIZ 
+
+
+
+
+
+
+#=================================================================================================
+#
+#  3. the horizontalPointIZ class is a direct descendant of 'circularPlotIZ'...
+#
+#     what that means is that it saves coding further down the line as, for example, it will use
+#     the methods for InclusionZoneGrid, Plot, etc. generics.
+#
+#
+setClass('horizontalPointIZ',
+    representation(angleGauge = 'angleGauge'         #angleGauge object
+                   
+                  ),
+    contains = 'circularPlotIZ',                     #a subclass of the 'circularPlotIZ' class
+    validity = function(object) {
+
+                 if(!validObject(object@angleGauge))
+                   return('object in angleGauge slot is an invalid object!')
+
+                 if(!identical(object@standingTree@units, object@angleGauge@units))
+                   return('measurement units do not match between standingTree and angleGauge objects!')
+                 
+                 return(TRUE)
+               } #validity check
+) #class horizontalPointIZ 

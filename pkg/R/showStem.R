@@ -1,8 +1,8 @@
 #---------------------------------------------------------------------------
 #
 #   Methods for generic show() for class...
-#     (1) Stem and subclasses; this includes the downLogs (plural)
-#         container class
+#     (1) Stem and subclasses (e.g., downLog, standingTree)
+#     (2) StemContainer and subclasses (e.g., downLogs, standingTrees)
 #
 #   For now, these all just call the corresponding summary method.
 #
@@ -30,12 +30,12 @@ function(object)
 
 
 #================================================================================
-#  method for data frames and class "downLogs" (plural!)...
+#  method for data frames and class "StemContainer" & subclasses...
 #
 setMethod('show',
-          signature(object = 'downLogs'),
+          signature(object = 'StemContainer'),
 function(object)
 {
     return(summary(object))
-}   #show for 'downLogs'
+}   #show for 'StemContainer'
 ) #setMethod

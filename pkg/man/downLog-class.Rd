@@ -10,6 +10,7 @@
 \alias{summary,downLog-method}
 
 \title{Class "downLog": Representation of Downed Logs}
+
 \description{
   A subclass of virtual class \dQuote{\code{\linkS4class{Stem}}} that can be used to
   represent downed coarse woody debris in the form of something
@@ -21,25 +22,30 @@
   details on creating and using objects from this class.
 }
 
-\section{Objects from the Class}{  
+\section{Objects from the Class}{
+  
 Objects can be created by calls of the form \code{new("downLog", ...)}.
 However, this is \emph{not} recommended. The object has a number of
-slots that require establishment that can be somewhat complex to
-calculate. Therefore, a constructor function \code{\link{downLog}} has
-been provided that will make the desired object with the correct values
-for the slots. It is strongly recommended that one use this generic's
-methods to create the log objects.
-}
+required slots that can be somewhat complex to calculate. Therefore, a
+constructor function \code{\link{downLog}} has been provided that will
+make the desired object with the correct values for the slots. It is
+strongly recommended that one use this generic's methods to create the
+log objects.  }
 
 \section{Slots}{
+
+  Please note that all diameters below are presumed to be in the
+  \emph{same} units as length, i.e., meters for \dQuote{metric}, and
+  feet for \dQuote{English} \code{units}.
+
   In addition to the slots provided by the virtual superclass
-  \dQuote{\code{\linkS4class{Stem}}}, the following slots are represented\ldots
+  \dQuote{\code{\linkS4class{Stem}}}, the following slots are
+  represented\ldots
+  
   \describe{
 	
     \item{\code{buttDiam}:}{Object of class \code{"numeric"}: the log
-	  diameter at the large (butt) end in the proper units. For both
-	  "English" and "metric" the diameters are in the \emph{same} units
-	  as length, i.e., meters for metric. }
+	  diameter at the large (butt) end in the proper units. }
 	
     \item{\code{topDiam}:}{Object of class \code{"numeric"}: The
 	  small-end diameter of the log. }
@@ -148,16 +154,11 @@ log volume: does critical height prevail? \emph{Forest Science}\cr
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
-%\note{
-%%  ~~further notes~~
-%}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-%\seealso{
-%%  ~~objects to See Also as \code{\link{~~fun~~}}, ~~~
-%%  ~~or \code{\linkS4class{CLASSNAME}} for links to other classes ~~~
-%}
+\seealso{
+"\code{\linkS4class{Stem}}", "\code{\linkS4class{standingTree}}",
+ "\code{\linkS4class{StemContainer}}"
+}
 
 \examples{
 showClass("downLog")

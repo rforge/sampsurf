@@ -2,6 +2,8 @@
 #
 #   Methods for generic summary() for InclusionZone class...
 #     (1) InclusionZone base class
+#
+#         ...downLogIZ subclasses...
 #     (2) downLog component class--on a per unit area basis
 #     (3) standUpIZ class
 #     (4) chainSawIZ class
@@ -10,6 +12,11 @@
 #     (7) perpendicularDistanceIZ class
 #     (8) distanceLimitedPDSIZ class
 #     (9) distanceLimitedIZ class
+#
+#         ...standingTreeIZ subclasses...
+#      1. standingTreeIZ
+#      2. circularPlotIZ
+#      3. horizontalPointIZ
 #
 #Author...									Date: 24-Aug-2010
 #	Jeffrey H. Gove
@@ -396,3 +403,117 @@ function(object,
 }   #summary for 'distanceLimitedIZ'
 ) #setMethod
 
+
+
+
+#---------------------------------------------------------------------------
+#
+#   For "standingTreeIZ" related methods
+#
+#   1. "standingTreeIZ"
+#   2. "circularPlotIZ"
+#
+#Author...									Date: 1-Dec-2011
+#	Jeffrey H. Gove
+#	USDA Forest Service
+#	Northern Research Station
+#	271 Mast Road
+#	Durham, NH 03824
+#	jhgove@unh.edu
+#	phone: 603-868-7667	fax: 603-868-7604
+#---------------------------------------------------------------------------
+#
+
+
+
+
+#================================================================================
+#  method for class "standingTreeIZ"...
+#
+setMethod('summary',
+          signature(object = 'standingTreeIZ'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'InclusionZone' method for 'standingTreeIZ'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+
+    cat('\nstandingTree component estimates...')
+    cat('\n  Spatial ID:', object@standingTree@spTree@polygons$pgsTree@ID)
+    if(object@units == .StemEnv$msrUnits$metric) {
+      cat('\n  Number of trees:', object@puaEstimates$Density, 'per hectare')
+      cat('\n  Basal area:', object@puaEstimates$basalArea, 'square meters per hectare')
+      cat('\n  Volume:', object@puaEstimates$volume, 'cubic meters per hectare')
+      cat('\n  Surface area:', object@puaEstimates$surfaceArea, 'square meters per hectare')
+      cat('\n  Biomass (stem):', object@puaEstimates$biomass, 'per hectare')
+      cat('\n  Carbon content:', object@puaEstimates$carbon, 'per hectare')
+    }
+    else {
+      cat('\n  Number of trees:', object@puaEstimates$Density, 'per acre')
+      cat('\n  Basal area:', object@puaEstimates$basalArea, 'square feet per acre')
+      cat('\n  Volume:', object@puaEstimates$volume, 'cubic feet per acre')
+      cat('\n  Surface area:', object@puaEstimates$surfaceArea, 'square feet per acre')
+      cat('\n  Biomass (stem):', object@puaEstimates$biomass, 'per acre')
+      cat('\n  Carbon content:', object@puaEstimates$carbon, 'per acre')
+    }
+
+    cat('\n')
+    
+    return(invisible())
+}   #summary for 'standingTreeIZ'
+) #setMethod
+
+
+#================================================================================
+#  method for class "circularPlotIZ"...
+#
+setMethod('summary',
+          signature(object = 'circularPlotIZ'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'InclusionZone' & 'standingTreeIZ' methods for 'circularPlotIZ'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+    
+    cat('\ncircularPlotIZ...')
+    cat('\n  use \"summary\" on the circularPlot slot for details')
+    #summary(object@circularPlot)
+
+    cat('\n')
+    
+    return(invisible())
+}   #summary for 'circularPlotIZ'
+) #setMethod
+
+
+
+
+#================================================================================
+#  method for class "horizontalPointIZ"...
+#
+setMethod('summary',
+          signature(object = 'horizontalPointIZ'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'InclusionZone' & 'standingTreeIZ' methods for 'horizontalPointIZ'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+    
+    cat('\nhorizontalPointIZ...')
+    cat('\n  use \"summary\" on the angleGauge slot for details')
+    #summary(object@circularPlot)
+
+    cat('\n')
+    
+    return(invisible())
+}   #summary for 'horizontalPointIZ'
+) #setMethod

@@ -5,6 +5,9 @@
 #
 #   The methods include...
 #     0. matrix constructor
+#
+#        ...downLogIZ subclass constructors...
+#
 #     1. a constructor for 'standUpIZ'
 #     2. for 'chainSawIZ'
 #     3. for 'sausageIZ'
@@ -19,9 +22,14 @@
 #     9. for 'distanceLimitedMCIZ'
 #    10. for 'distanceLimtedIZ'
 #
+#        ...standingTreeIZ subclass constructors...
+#
+#     1. for 'circularPlotIZ'
+#        for 'horizontalPointIZ', nothing is required, it uses 'circularPlotIZ'
+#
 #   Of course, if chainSaw was not so strange, we would only require one
 #   method for every different technique! (Well except for omnibus, and
-#   other methods with varying height IZs.)
+#   other methods with varying height IZs...)
 #
 #Author...									Date: 17-Sept-2010
 #	Jeffrey H. Gove
@@ -481,10 +489,11 @@ function(izObject,
 
           
 #================================================================================
-#  8. method for 'distanceLimitedPDSIZ' or 'omnibusDLPDSIZ' and 'Tract' classes...
+#  8. method for 'distanceLimitedPDSIZ', 'omnibusDLPDSIZ' or 'hybridDLPDSIZ'
+#     and 'Tract' classes...
 #
 #  Note that this will work for both of the above PDS classes "as is" since
-#  the first is a superclass of the second...
+#  the first is a superclass of the second/third...
 #
 #  The routine is set up in 3 main steps...
 #  1. the entire stem is under PDS, i.e., not DL portion, so we just treat
@@ -522,7 +531,7 @@ function(izObject,
       return(griz)
     }    
 
-
+    densityAdjust = 0  #see end of routine for an explanation of this
   
 #---------------------------------------------------------------------------
 #
@@ -571,6 +580,8 @@ function(izObject,
           data[dlsTo.idx, est] = df[dlsFrom.idx, est]          
 
         griz@data = data
+
+        densityAdjust = densityAdjust + ifelse(any(data$Density>0),1,0)
       }
     }  #DL component
 
@@ -619,17 +630,32 @@ function(izObject,
             data[pdsTo.idx, est] = izObject@pdsPart@puaEstimates[[est]] #constant for each est 
 
         griz@data = data
+
+        densityAdjust = densityAdjust + ifelse(any(data$Density>0),1,0)
       }
       
     } #PDS component
 
     
 #   ------------------------
-#   the estimates of density are both==1 if both methods are present,
-#   so we have to factor this down by half in this case...
+#   The estimates of density are both==1 if both methods are present (i.e., both components
+#   are in the overall inclusion zone), so we have to factor the estimate of "2 logs" down by
+#   half in this case...
 #
-    if( !is.null(izObject@dlsPart) && !is.null(izObject@pdsPart) )
-      griz@data[,'Density'] = griz@data[,'Density']*0.5
+#   However, it can happen that the inclusion zone for one or the other is just a sliver, and
+#   even though present, will not contain any grid cell centers, and thus no estimate; this
+#   case is taken care of by adjusting by densityAdjust, which will be either 1 or 2,
+#   depending on whether any sample points (grid cell centers) actually fall within
+#   the respective IZ component; thus, we get...
+#      a. Both components present and contain sample points: densityAdjust=2
+#      b. Both components present but one does not contain sample points: densityAdjust=1
+#      c. Only DLS present (PDS-only is handled in section 1. above): densityAdjust=1
+#      d. Both or one present, and the overall inclusion zone is so small it contains no grid
+#         cell centers: densityAdjust=0 (gosh, let's hope this never happens!) 
+#
+    if(!(densityAdjust %in% c(1,2)))
+      stop('densityAdjust = ',densityAdjust,' out of range in distanceLimitedPDSIZ (izGrid)!')
+    griz@data[,'Density'] = griz@data[,'Density']/densityAdjust
     
     return(griz)
 }   #izGrid for'distanceLimitedPDSIZ'
@@ -750,4 +776,52 @@ function(izObject,
                            wholeIZ=wholeIZ, ...)
     return(griz)
 }   #izGrid for'distanceLimitedIZ'
+)   #setMethod
+
+
+
+
+
+
+#---------------------------------------------------------------------------
+#
+#   For standingTreeIZ subclass objects...
+#
+#   1. "circularPlotIZ"
+#      -- "horizontalPointIZ" is a subclass of "circularPlotIZ" so that no
+#         new method is required for it.
+#
+#Author...									Date: 1-Dec-2011
+#	Jeffrey H. Gove
+#	USDA Forest Service
+#	Northern Research Station
+#	271 Mast Road
+#	Durham, NH 03824
+#	jhgove@unh.edu
+#	phone: 603-868-7667	fax: 603-868-7604
+#---------------------------------------------------------------------------
+#
+  
+
+
+          
+#================================================================================
+#  1. method for 'circularPlotIZ' and 'Tract' classes...
+#
+setMethod('izGrid',
+          signature(izObject = 'circularPlotIZ', tract='Tract'),
+function(izObject,
+         tract,
+         description = 'circularPlotIZ inclusion zone grid object',
+         wholeIZ = TRUE,           #TRUE: grid the whole object; FALSE: just grid the IZ
+         ...
+        )
+{
+#---------------------------------------------------------------------------
+#
+#
+    griz = izGridConstruct(izObject=izObject, tract=tract, description=description,
+                           wholeIZ=wholeIZ, ...)
+    return(griz)
+}   #izGrid for'circularPlotIZ'
 )   #setMethod

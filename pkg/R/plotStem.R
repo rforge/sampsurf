@@ -1,8 +1,9 @@
 #---------------------------------------------------------------------------
 #
 #   Methods for generic plot() for class...
-#     (1) Stem and subclasses; this includes the downLogs (plural)
-#         container class
+#     (1) Stem and subclasses...
+#     (2) downLogs subclass
+#     (3) standingTree subclass
 #
 #   Note in the plotting of Spatial objects, the xlab and ylab arguments
 #   do not seem to be passed through to plot, so no labels will be shown
@@ -23,7 +24,7 @@
 
 
 #================================================================================
-#  method for data frames and class Stem...
+#  1.  method for class Stem...
 #
 setMethod('plot',
           signature(x = 'Stem', y='missing'),
@@ -51,7 +52,7 @@ function(x,
         
     return(invisible())
 
-}    #plot for 'downLog'
+}    #plot for 'Stem'
 ) #setMethod
 
 
@@ -60,7 +61,7 @@ function(x,
 
 
 #================================================================================
-#  method for downLog subclass...
+#  2. method for downLog subclass...
 #
 setMethod('plot',
           signature(x = 'downLog', y='missing'),
@@ -103,56 +104,47 @@ function(x,
 )   #setMethod
 
 
-
-
-
-
-
-
-
-
-
+    
 
 
 
 #================================================================================
-#================================================================================
-#  method for a "downLogs" collection/population...
+#  3. method for standingTree subclass...
 #
 setMethod('plot',
-          signature(x = 'downLogs', y='missing'),
-function(x, 
-         axes = FALSE,        #not a par() so can't be passed to callNextMethod, so separate it
-         add = FALSE,          #no existing plot assumed
+          signature(x = 'standingTree', y='missing'),
+function(x,
+         axes = FALSE,  #not a par() so can't be passed to callNextMethod, so separate it
+         treeColor = .StemEnv$treeColor,
+         showLocation = TRUE,
+         pchLocation = 3,       #20 is also good
+         locationColor = .StemEnv$treeAttributeColor,
+         treeBorderColor = .StemEnv$treeBorderColor,   #tree perimeter color
          asp = 1,
          ...
         )
 {
 #------------------------------------------------------------------------------
-#  plots all the downed logs in the collection...
+#  plots the trees...
 #------------------------------------------------------------------------------
 #
     object = x
-    numLogs = length(object@logs)
-    validObject(object)  #just make sure!
-
-#
-#   set up the plot extents via the bounding box, then plot each log...
-#
-    if(!add) {
-      bbox = object@bbox
-      plot(SpatialPoints(t(bbox)), col=NA, axes=axes, asp=asp)  #set up limits
-    }
-
     suppressWarnings({                              #for non-plot arguments in ...    
-    for(i in seq_len(numLogs)) 
-      plot(object@logs[[i]], axes=axes, add = TRUE, ...)
+      plot(object@spDBH, col=treeColor, axes=axes, border=treeBorderColor, asp=asp, ...)
     })   
+
+
+# 
+#   call next method subsequent, adding to the existing plot()...
+#
+    if(showLocation)
+      callNextMethod(x=object, pchStemLocation = pchLocation,
+                     stemLocationColor = locationColor, ...)  
+
         
     return(invisible())
-}   #plot for 'downLogs'
+}   #plot for 'standingTree'
 )   #setMethod
-    
 
 
 

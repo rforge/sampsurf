@@ -510,35 +510,45 @@ argument definition for the most part.
 	  
 	} %itemize
  } %item
+  
 
+\item{\strong{\code{signature(x = "circularPlotIZ", y = "missing")}}}{%\cr
 
-	  
-
-\item{\strong{\code{signature(x = "downLogIZs", y = "missing")}}}{%\cr
-
-    This adds the necessary functionality to plot objects of container
-    class "\code{\linkS4class{downLogIZs}}". Note that arguments passed
-    in this call that are destined for individual \dQuote{downLogIZ} or
-    \dQuote{downLog} objects within the collection will apply to
-    \emph{all} objects of that class within the collection.}
+    This adds the necessary functionality to plot objects of class
+    "\code{\linkS4class{circularPlotIZ}}".}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(x, 
          axes = FALSE,  
-         add = FALSE, 
+         showTree = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,  
          asp = 1,
          ... )}
+	   
 	\itemize{
 		 
-	  \item{\code{x}:}{ An object that is of class \dQuote{downLogIZs} or
-	    any subclass that might be eventualy defined. }
-		
+	  \item{\code{x}:}{ An object that is of class \dQuote{circularPlotIZ} or
+	    subclass. } 
+		 
+	  \item{\code{showTree}:}{ \code{TRUE}: plot the tree object;
+	    \code{FALSE}: do not show it.}
+		 		 
+	  \item{\code{izColor}:}{ An \R color for the interior of the
+	    inclusion zone.}
+		 
+	  \item{\code{izBorder}:}{ An \R color for the border/perimeter of
+	    the inclusion zone.}
+		 	  
 	  \item{\dots :}{ Other graphics arguments to be passed on to
 		\code{\link[graphics]{plot}}, or to the plot methods for the
 		individual objects.}
 	  
 	} %itemize
  } %item
+		 
+
 	  
 } %describe
 } %section InclusionZone
@@ -631,6 +641,53 @@ argument definition for the most part.
 
 } %describe
 } %section InclusionZoneGrid
+%-------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+%-------------------------------------------------------------------------
+\section{\emph{The \dQuote{izContainer} Class}}{
+
+\describe{
+
+	  
+
+\item{\strong{\code{signature(x = "izContainer", y = "missing")}}}{%\cr
+
+    This adds the necessary functionality to plot subclass objects of
+    container class "\code{\linkS4class{izContainer}}", including both
+    "\code{\linkS4class{downLogIZs}}" and
+    "\code{\linkS4class{standingTreeIZs}}" . Note that arguments passed
+    in this call that are destined for individual \dQuote{downLogIZ} or
+    \dQuote{downLog} objects within the collection will apply to
+    \emph{all} objects of that class within the collection; similarly
+    for standing tree components.}
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x, 
+         axes = FALSE,  
+         add = FALSE, 
+         asp = 1,
+         ... )}
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of subclass \dQuote{izContainer}. }
+		
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+		\code{\link[graphics]{plot}}, or to the plot methods for the
+		individual objects.}
+	  
+	} %itemize
+ } %item
+	  
+} %describe
+} %section izContainer
 %-------------------------------------------------------------------------
 
 
@@ -774,7 +831,90 @@ argument definition for the most part.
 	} %itemize
   } %item
 
+	
+  
+ \item{\strong{\code{signature(x = "standingTree", y = "missing")}}}{%\cr
 
+   This adds the necessary functionality to plot objects of class
+    "\code{\linkS4class{standingTree}}".}
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x,
+         axes = FALSE,  #not a par() so can't be passed to callNextMethod, so separate it
+         treeColor = .StemEnv$treeColor,
+         showLocation = TRUE,
+         pchLocation = 3,       #20 is also good
+         locationColor = .StemEnv$treeAttributeColor,
+         treeBorderColor = .StemEnv$treeBorderColor,   #log perimeter color
+         asp = 1,
+         ...
+        )}
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object of class \dQuote{downLog} or any
+	    subclass that might eventually be defined.}
+		 
+	  \item{\code{treeColor}:}{ An \R color to be used for shading the tree.}
+		 
+	  \item{\code{showLocation}:}{ \code{TRUE}: plot tree center
+	    location; \code{FALSE}: do not plot it.}
+		 
+	  \item{\code{pchLocation}:}{ The \code{\link{pch}} value for the
+	    tree center.}
+		 
+	  \item{\code{locationColor}:}{ An \R color to be used for the tree
+		center point location.}
+		 
+	  \item{\code{treeBorderColor}:}{ An \R color to be used for drawing
+	    the perimeter of the tree.}
+		 
+	  \item{\code{\dots}:}{ Other graphical arguments to be passed on to
+	    \code{\link[graphics]{plot}}.}
+		
+	} %itemize
+  } %item
+  
+
+} %describe
+} %section Stem
+%-------------------------------------------------------------------------
+
+
+  
+
+%-------------------------------------------------------------------------
+\section{\emph{The \dQuote{StemContainer} Class}}{
+
+\describe{
+
+
+  \item{\strong{\code{signature(x = "StemContainer", y = "missing")}}}{%\cr
+
+	The base method for this class. Note that since \dQuote{StemContainer} is a virtual
+    class, this method just provides very generic capabilities that are
+    shared among all subclasses and will never therefore
+    be called outright based on its signature (but only through
+    \code{\link{callNextMethod}}). Currently, it just sets up the
+    overall extents for the plot area. }
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x, 
+         axes = FALSE, 
+         add = FALSE, 
+         asp = 1,
+         ... )}
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{Stem} or
+	    any subclass that might be eventualy defined. }
+	  
+	  \item{\dots :}{ Other graphics arguments to be passed on.}
+	  
+	} %itemize
+ } %item
+
+ 
+  
   \item{\strong{\code{signature(x = "downLogs", y = "missing")}}}{%\cr
 
 	This adds the necessary functionality to plot objects of container
@@ -800,10 +940,37 @@ argument definition for the most part.
 	  
 	} %itemize
  } %item
+ 
+  
+  \item{\strong{\code{signature(x = "standingTrees", y = "missing")}}}{%\cr
+
+	This adds the necessary functionality to plot objects of container
+    class "\code{\linkS4class{standingTrees}}". Note that arguments passed in
+    this call that are destined for individual \dQuote{standingTree} objects
+    within the collection will apply to \emph{all} trees within the
+    collection.}
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x, 
+         axes = FALSE,
+         add = FALSE,
+         asp = 1,
+         ... )}
+	\itemize{
+		 		 
+	  \item{\code{x}:}{ An object that is of class 
+	    \dQuote{standingTrees} or subclass thereof. }
+		
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+		\code{\link[graphics]{plot}}, or to the plot methods for the
+		individual standingTree objects (please see above).}
+	  
+	} %itemize
+ } %item
   
 
 } %describe
-} %section Stem
+} %section StemContainer
 %-------------------------------------------------------------------------
 
 

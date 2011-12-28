@@ -49,7 +49,7 @@ sampleLogs(nLogs = 2,
 
   \item{solidTypes}{ A length-two vector specifying the \emph{range} in
         the log shape parameter for the default taper and volume
-        equations; where: 1-2 is a neiloid, 2-3 is a cone, and >3 is a
+        equations; where: 1-2 is a neiloid, 2 is a cone, and >2 is a
         paraboloid. }
 
   \item{species}{ A character vector of possible species from which
@@ -93,6 +93,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 \seealso{
   \code{\link{downLogs-methods}}
 }
+
 \examples{
 #
 #  draw from a unit square...

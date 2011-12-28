@@ -1,8 +1,6 @@
 #---------------------------------------------------------------------------
 #
 #   Methods for generic summary() for sampSurf class...
-#     (1) This will have to be changed somewhat once variables other than
-#         volume and density become available.
 #
 #   Note: in some cases such as volume in the Monte Carlo methods for example,
 #         cells can be within inclusion zones and have small (near zero)
@@ -10,7 +8,12 @@
 #         vs. surface cells, we must therefore use the "digits" argument to
 #         the raster count() function because it in turn uses round() for the
 #         actual comparisons and we don't want small real values rounded to
-#         zero to be counted as background--see below. 
+#         zero to be counted as background--see below.
+#
+#   Extended for standingTreeIZs-based sampling surfaces 5-Dec-2011, JHG.
+#
+#   Returns...
+#     summary information invisibly
 #
 #Author...									Date: 5-Oct-2010
 #	Jeffrey H. Gove
@@ -53,56 +56,96 @@ function(object,
       unitVol = 'cubic feet'
       unitSA = 'square feet'
     }
+
+#
+#   let's see what we are dealing with...
+#
+    if(class(object@izContainer) == 'downLogIZs') {
+      isLogs = TRUE
+      stemName = 'log'
+    }
+    else {
+      isLogs = FALSE
+      stemName = 'tree'
+    }
     
     cat('\nInclusion zone objects:', class(object@izContainer@iZones[[1]]) )
     if(.hasSlot(object@izContainer@iZones[[1]], 'pdsType'))
        cat(' (with PP to: ',object@izContainer@iZones[[1]]@pdsType,')',sep='')
     cat('\nMeasurement units =', object@tract@units)
-    numLogs = length(object@izContainer@iZones)
-    cat('\nNumber of logs =', numLogs)
-    logs = vector('list', numLogs)
-    for(i in seq_len(numLogs))
-      logs[[i]] = object@izContainer@iZones[[i]]@downLog
-    dls = downLogs(logs)
-    cat('\nTrue log volume =', dls@stats['total','volume'],unitVol)
-    cat('\nTrue log length =', dls@stats['total','length'],unitLen)
-    cat('\nTrue log surface area =', dls@stats['total','surfaceArea'],unitSA)
-    cat('\nTrue log coverage area =', dls@stats['total','coverageArea'],unitSA)
-    cat('\nTrue log biomass =', dls@stats['total','biomass'])
-    cat('\nTrue log carbon =', dls@stats['total','carbon'])
+
+#
+#   make a collection of Stems and get its statistics (population truth)...
+#
+    numStems = length(object@izContainer@iZones)
+    cat('\nNumber of ',stemName,'s = ', numStems, sep='')
+    if(isLogs)
+      Stems = as(object@izContainer, 'downLogs')
+    else
+      Stems = as(object@izContainer, 'standingTrees')
+    
+    
+    cat('\nTrue',stemName,'volume =', Stems@stats['total','volume'],unitVol)
+    if(isLogs)
+      cat('\nTrue',stemName,'length =', Stems@stats['total','length'],unitLen)
+    else
+      cat('\nTrue',stemName,'basal area =', Stems@stats['total','basalArea'],unitSA)
+    cat('\nTrue',stemName,'surface area =', Stems@stats['total','surfaceArea'],unitSA)
+    if(isLogs)
+      cat('\nTrue',stemName,'coverage area =', Stems@stats['total','coverageArea'],unitSA)
+    cat('\nTrue',stemName,'biomass =', Stems@stats['total','biomass'])
+    cat('\nTrue',stemName,'carbon =', Stems@stats['total','carbon'])
     cat('\n\nEstimate attribute:', object@estimate)
 
+
+#
+#   and the surface stats for comparison; send everything back in the summary...
+#
     cat('\nSurface statistics...')
-    #cat('\n  attribute =', object@estimate)
     cat('\n  mean =', object@surfStats$mean)
     cat('\n  bias =', object@surfStats$bias )
 
     truth = switch(object@estimate,
-                   volume =  dls@stats['total','volume'],
-                   Density = numLogs,
-                   Length =  dls@stats['total','length'],
-                   surfaceArea = dls@stats['total','surfaceArea'],
-                   coverageArea = dls@stats['total','coverageArea'],
-                   biomass = dls@stats['total','biomass'],
-                   carbon = dls@stats['total','carbon'],
+                   volume =  Stems@stats['total','volume'],
+                   Density = numStems,
+                   Length =  Stems@stats['total','length'],
+                   surfaceArea = Stems@stats['total','surfaceArea'],
+                   coverageArea = Stems@stats['total','coverageArea'],
+                   basalArea = Stems@stats['total','basalArea'],
+                   biomass = Stems@stats['total','biomass'],
+                   carbon = Stems@stats['total','carbon'],
                    NA
                   )
-    #if(object@estimate == 'volume')
-    #  truth = dls@stats['total','volume']
-    #else
-    #  truth = numLogs
-    cat('\n  bias percent =', object@surfStats$bias/truth*100)
+    summaryNames = c('estimate','truth','mean','pctBias','sum','var','stDev','pctCV','max',
+                     'gcTot','gcRes','gcBack','gcIZ')
+    vals = vector('list', length(summaryNames))            #return summary values
+    names(vals) = summaryNames
+    vals$estimate = object@estimate
+    vals$truth = truth
+    vals$mean = object@surfStats$mean
+
+    vals$pctBias = object@surfStats$bias/truth*100
+    cat('\n  bias percent =', vals$pctBias)
+    vals$sum = object@surfStats$sum
     cat('\n  sum =', object@surfStats$sum)
+    vals$var = object@surfStats$var
     cat('\n  var =', object@surfStats$var)
+    vals$stDev = object@surfStats$stDev
     cat('\n  st. dev. =', object@surfStats$stDev)
-    cat('\n  cv % =', 100*object@surfStats$stDev/object@surfStats$mean)
+    vals$pctCV = 100*object@surfStats$stDev/object@surfStats$mean
+    cat('\n  cv % =', vals$pctCV)
+    vals$max = object@surfStats$max
     cat('\n  surface max =', object@surfStats$max)
     #cat('\n  st. error =', object@surfStats$se)
+    vals$gcTot = object@surfStats$nc
     cat('\n  total # grid cells =', object@surfStats$nc)
+    vals$gcRes = xres(object@tract)
     cat('\n  grid cell resolution (x & y) =', xres(object@tract), unitLen)
     ncellZero = count(object@tract, 0, digits=15) #zero cells, note count rounds, use digits
+    vals$gcBack = ncellZero
     cat('\n  # of background cells (zero) =', ncellZero)
-    cat('\n  # of inclusion zone cells =', object@surfStats$nc - ncellZero)
+    vals$gcIZ = object@surfStats$nc - ncellZero
+    cat('\n  # of inclusion zone cells =', vals$gcIZ)
     cat('\n')
 
 
@@ -110,7 +153,7 @@ function(object,
     #summary(object@tract)
     cat('\n')
     
-    return(invisible())
+    return(invisible(vals))
 }   #summary for 'sampSurf'
 ) #setMethod
 

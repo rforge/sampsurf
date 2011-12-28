@@ -2,7 +2,7 @@
 #
 #   Methods for generic show() for class...
 #     (1) InclusionZone and subclasses
-#     (2) downLogIZs
+#     (2) izContainer and subclass
 #
 #Author...									Date: 23-Sept-2010
 #	Jeffrey H. Gove
@@ -18,6 +18,8 @@
 #================================================================================
 #  method for base class InclusionZone & subclasses...
 #
+#  this will handle any subclass
+#
 setMethod('show',
           signature(object = 'InclusionZone'),
 function(object)
@@ -31,12 +33,14 @@ function(object)
 
 
 #================================================================================
-#  method for base class downLogIZs...
+#  method for base class izContainer...
+#
+#  this will handle any subclass
 #
 setMethod('show',
-          signature(object = 'downLogIZs'),
+          signature(object = 'izContainer'),
 function(object)
 {
     return(summary(object))
-}   #show for 'downLogIZs'
+}   #show for 'izContainer'
 ) #setMethod

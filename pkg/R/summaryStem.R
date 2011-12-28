@@ -1,8 +1,9 @@
 #---------------------------------------------------------------------------
 #
 #   Methods for generic summary() for class...
-#     (1) Stem and subclasses; this includes the downLogs (plural)
-#         container class
+#     (1) Stem virtual class
+#     (2) downLog subclass
+#     (3) standingTree subclass
 #
 #Author...									Date: 6-Aug-2010
 #	Jeffrey H. Gove
@@ -18,7 +19,7 @@
 
 
 #================================================================================
-#  method for data frames and class Stem...
+#  1. method for class Stem...
 #
 setMethod('summary',
           signature(object = 'Stem'),
@@ -53,7 +54,7 @@ function(object,
 
 
 #================================================================================
-#  method for data frames and class "downLog"...
+#  2. method for subclass "downLog"...
 #
 setMethod('summary',
           signature(object = 'downLog'),
@@ -124,85 +125,69 @@ function(object,
 
 
 
-
 #================================================================================
-#  method for data frames and class "downLogs" (plural!)...
+#  3. method for subclass "standingTree"...
 #
 setMethod('summary',
-          signature(object = 'downLogs'),
+          signature(object = 'standingTree'),
 function(object,
          ...
         )
 {
 #------------------------------------------------------------------------------
-#   just a simple summary of items in the "downLogs" object...
+#   add a little to 'Stem' method for 'standingTree'...
 #------------------------------------------------------------------------------
-    cat('\nObject of class:', class(object))
-    .StemEnv$underLine(60)
-    cat('Container class object...')
-    numLogs = length(object@logs)
-    cat('\n  There are',numLogs,'logs in the population')
-    cat('\n  Units of measurement: ', object@units)
+    callNextMethod()
+    cat('    (Above coordinates are for dbh center)')
+    cat('\n  Spatial ID:', object@spTree@polygons$pgsTree@ID)
 
-#
-#   totals over all logs...
-#
-    totVol = object@stats['total','volume']
-    totSA = object@stats['total','surfaceArea']
-    totCA = object@stats['total','coverageArea']
-    totBms = object@stats['total','biomass']
-    totC = object@stats['total','carbon']
-    if(object@logs[[1]]@units == .StemEnv$msrUnits$metric) {
-      cat('\n  Population log volume = ', totVol, 'cubic meters')
-      cat('\n  Population log surface area = ', totSA, 'square meters')
-      cat('\n  Population log coverage area = ', totCA, 'square meters')
+    cat('\n\nstandingTree...')
+    if(object@units == .StemEnv$msrUnits$metric) {
+      cat('\n  Butt diameter = ', object@buttDiam, ' meters (', object@buttDiam*.StemEnv$m2cm, ' cm)',sep='')
+      cat('\n  Top diameter = ', object@topDiam, ' meters (', object@topDiam*.StemEnv$m2cm, ' cm)', sep='')
+      cat('\n  DBH = ', object@dbh, ' meters (', object@dbh*.StemEnv$m2cm, ' cm)', sep='')
+      cat('\n  Basal area = ', object@ba, 'square meters')
+      cat('\n  Height =', object@height, 'meters')
+      cat('\n  Tree volume =', object@treeVol, 'cubic meters')
+      cat('\n  Tree surface area =', object@surfaceArea, 'square meters')
     }
     else {
-      cat('\n  Population log volume = ', totVol, 'cubic feet')
-      cat('\n  Population log surface area = ', totSA, 'square feet')
-      cat('\n  Population log coverage area = ', totCA, 'square feet')
+      cat('\n  Butt diameter = ', object@buttDiam, ' feet (', object@buttDiam*.StemEnv$ft2in, ' in)',sep='')
+      cat('\n  Top diameter = ', object@topDiam, ' feet (', object@topDiam*.StemEnv$ft2in, ' in)', sep='')
+      cat('\n  DBH = ', object@dbh, ' feet (', object@dbh*.StemEnv$ft2in, ' in)', sep='')
+      cat('\n  Basal area = ', object@ba, 'square feet')
+      cat('\n  Height =', object@height, 'feet')
+      cat('\n  Tree volume =', object@treeVol, 'cubic feet')
+      cat('\n  Tree surface area =', object@surfaceArea, 'square feet')
     }
-    if(!is.na(totBms))
-      cat('\n  Population log biomass = ', totBms)
-    if(!is.na(totC))
-      cat('\n  Population log carbon = ', totC)
-
-
-#
-#   averages per log...
-#
-    avgVol = object@stats['mean','volume']
-    avgSA = object@stats['mean','surfaceArea']
-    avgCA = object@stats['mean','coverageArea']
-    avgBms = object@stats['mean','biomass']
-    avgC = object@stats['mean','carbon']
-    avgLen = object@stats['mean','length']
-    if(object@logs[[1]]@units == .StemEnv$msrUnits$metric) {
-      cat('\n  Average volume/log = ', avgVol, 'cubic meters')
-      cat('\n  Average surface area/log = ', avgSA, 'square meters')
-      cat('\n  Average coverage area/log = ', avgCA, 'square meters')
-      cat('\n  Average length/log = ', avgLen, 'meters')
-    }
-    else {
-      cat('\n  Average volume/log = ', avgVol, 'cubic feet')
-      cat('\n  Average surface area/log = ', avgSA, 'square feet')
-      cat('\n  Average coverage area/log = ', avgCA, 'square feet')
-      cat('\n  Average length/log = ', avgLen, 'feet')
-    }
-    if(!is.na(avgBms))
-      cat('\n  Average biomass/log =', avgBms)
-    if(!is.na(avgC))
-      cat('\n  Average carbon/log =', avgC)
+    if(!is.na(object@biomass))
+      cat('\n  Tree biomass =', object@biomass)
+    if(!is.na(object@carbon))
+      cat('\n  Tree carbon =', object@carbon)
+    if(!is.na(object@conversions['volumeToWeight']))
+      cat('\n  Volume to weight conversion =', object@conversions['volumeToWeight'])
+    if(!is.na(object@conversions['weightToCarbon']))
+      cat('\n  Weight to carbon conversion =', object@conversions['weightToCarbon'])
+    cat('\n  Taper parameter = ', ifelse(is.null(object@solidType), 'NULL', object@solidType) )
     
-    cat('\n(**All statistics exclude NAs)')
-    
+    cat('\n\nTaper (in part)...\n')
+    print(head(object@taper))
 
-    cat('\n\n  Encapulating bounding box...\n')
-    print(object@bbox)
+    if(!is.null(object@userExtra))
+      cat('\n  "Note: userExtra" slot is non-NULL')
+    
+#
+#   important check to see if any valid SpatialPolygon exists for the object...
+#
+    if(length(object@spTree@polygons) == 0)  #check for object made with new()
+      cat('\n\n***No spTree "SpatialPolygons" -- please use standingTree constructor!\n')
+    if(length(object@spDBH@polygons) == 0)  #check for object made with new()
+      cat('\n\n***No spDBH "SpatialPolygons" -- please use standingTree constructor!\n')
 
     cat('\n')
+        
     return(invisible())
-}   #summary for 'downLogs'
+}   #summary for 'standingTree'
 ) #setMethod
     
 

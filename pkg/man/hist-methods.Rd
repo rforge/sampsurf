@@ -52,6 +52,32 @@ graphics documentation for details.
  } %item
 
 
+ 
+\item{\strong{\code{signature(x = "standingTrees")}}}{
+
+    Creates a histogram of any one of several standing tree attributes in the
+    container collection as specified by the \code{treeAttr} argument.}  
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x, 
+         treeAttr = c('height','buttDiam','dbh','topDiam','solidType','treeVol',
+                      'surfaceArea','biomass','carbon'),
+         xlab = treeAttr,
+         main = NA,
+         col = 'gray90',
+         ... )}
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{standingTrees}. }
+		 
+	  \item{\code{treeAttr}:}{ Any of these can be used for the histogram.}
+	  
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+	    \code{\link[graphics]{hist}}.}
+	} %itemize
+ } %item
+
+
 
  \item{\strong{\code{signature(x = "izContainer")}}}{
 

@@ -7,9 +7,9 @@
 \title{  Methods for "downLog" Object Construction}
 \description{
  There are currently two available methods for the generic
- \code{\link{downLog}}. This methods generates objects of class
- "\code{\linkS4class{downLog}}" that are legal objects. This is the
- preferred method for generating such objects instead of using
+ \code{\link{downLog}}. These methods generate objects of class
+ "\code{\linkS4class{downLog}}" that are valid objects. This is the
+ preferred method for generating such objects, rather than using
  \code{\link{new}}.
 }
 
@@ -18,7 +18,7 @@
 
   \item{\strong{\code{signature(object = "missing")}}}{%\cr
 
-	The constructor will be used when the signature argument is
+	This constructor will be used when the signature argument is
     "missing."  When \code{object} is \code{\link{missing}}, the taper
     data is generated from the internal taper function between the
     \code{buttDiam} and \code{topDiam} diameters specified, in
@@ -26,7 +26,8 @@
     \emph{\dQuote{The Stem Class}} vignette and references for
     "\code{\linkS4class{downLog}}." The following arguments are part of
     the function call; all arguments with the same names as class slots
-    are defined in the class definition.}
+    are also defined in the class definition (and may be stored
+    differently than the arguments).}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(

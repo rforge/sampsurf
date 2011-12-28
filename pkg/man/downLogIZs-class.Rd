@@ -45,27 +45,13 @@ Class \code{"\linkS4class{izContainer}"}, directly.
 }
 
 \section{Methods}{
-  \describe{
-    \item{bbox}{\code{signature(obj = "downLogIZs")}: Return the minimal
-      bounding box matrix. }
-	
-    \item{perimeter}{\code{signature(object = "downLogIZs")}: Graphical
-      perimeter corresponding to the mnimal bounding box. }
-	
-    \item{plot}{\code{signature(x = "downLogIZs", y = "missing")}:
-      Graphical plot of the collection. }
-	
-    \item{sampSurf}{\code{signature(object = "downLogIZs", tract =
-		"Tract")}: Create a sampling surface for the collection on a
-		given "Tract". }
-	
-    \item{show}{\code{signature(object = "downLogIZs")}: Print some
-      information about the collection.  }
-	  
-    %\item{summary}{\code{signature(object = "downLogIZs")}: A summary of
-	% the collection. }
-	 }
+No methods defined with class "downLogIZs" in the signature.
 }
+
+\references{
+\dQuote{\emph{The InclusionZone Class}} vignette.
+}
+
 
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}

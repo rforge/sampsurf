@@ -5,6 +5,7 @@
 #
 #   1. "izContainer" -- inclusion zone areas
 #   2. "sampSurf" -- the surface estimate at each grid cell
+#   3. "downLogs" -- several different attibutes available
 #
 #Author...									Date: 10-May-2011
 #	Jeffrey H. Gove
@@ -41,7 +42,7 @@ function(x,
 
     return(invisible(hg))
 
-}    #plot for 'InclusionZone'
+}    #hist for 'izContainer'
 ) #setMethod
      
 
@@ -72,7 +73,7 @@ function(x,
 
     return(invisible(hg))
 
-}    #plot for 'sampSurf'
+}    #hist for 'sampSurf'
 ) #setMethod
      
 
@@ -122,6 +123,50 @@ function(x,
 
     return(invisible(hg))
 
-}    #plot for 'sampSurf'
+}    #hist for 'downLogs'
+) #setMethod
+     
+     
+
+
+#================================================================================
+#  4. method for class "standingTrees" container...
+#
+setMethod('hist',
+          signature(x = 'standingTrees'),
+function(x,
+         treeAttr = c('height','buttDiam','dbh','topDiam','solidType','treeVol',
+                      'surfaceArea','biomass','carbon'),
+         xlab = treeAttr,
+         main = NA,
+         col = 'gray90',
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   this just plots one of the desired metrics for the trees...
+#------------------------------------------------------------------------------
+#
+    treeAttr = match.arg(treeAttr)
+
+    vals = sapply( x@trees, function(z) slot(z, treeAttr) )
+    #check for no carbon or biomass conversions in the collection...
+    if(all(is.na(vals)))
+      stop('All values for ',treeAttr,' are NA!')
+
+#
+#   convert diameters to usual units...
+#
+    if(treeAttr == 'buttDiam' || treeAttr == 'topDiam' || treeAttr == 'dbh')
+       if(x@units == .StemEnv$msrUnits$metric) 
+         vals = vals*.StemEnv$m2cm
+       else
+         vals = vals*.StemEnv$ft2in
+    
+    hg = hist(vals, main=main, xlab=xlab, col=col, ...)
+
+    return(invisible(hg))
+
+}    #hist for 'standingTrees'
 ) #setMethod
      

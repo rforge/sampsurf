@@ -33,8 +33,8 @@ volume, number of individuals, etc.) are represented by the
 graphically. Estimator variance is directly associated with the sampling
 surface roughness, and so methods can also be compared visually.
 
-Please note that \pkg{sampSurf} is quite functional, and has support for
-several methods/protocols for sampling down logs\dots
+\pkg{sampSurf} has support for several methods/protocols for sampling
+down logs; e.g.,\ldots
 
 \itemize{
 
@@ -44,8 +44,10 @@ several methods/protocols for sampling down logs\dots
   \item Point relascope sampling (PRS).
 %
   \item Perpendicular distance sampling (PDS) in several forms:
-    Canonical PDS, omnibus PDS, canonical distance limited PDS, and
-    omnibus distance limited PDS.
+    Canonical PDS, omnibus PDS, canonical distance limited PDS (DLPDS),
+    omnibus DLPDS, and hybrid DLPDS. Each of these PDS variants can be used
+    with any one of three selection attributes: volume, coverage or
+    surface areas.
 %
   \item Distance limited sampling in two forms: Simple (DLS), and Monte
     Carlo (DLMCS).	
@@ -53,10 +55,20 @@ several methods/protocols for sampling down logs\dots
 } %itemize
 
 
-Support for standing trees has not yet been added. The class structure
-is designed to support additions with relative ease, however, so more
-methods will appear in future releases (hopefully with some contributed
-by users).
+Support for standing trees includes the following methods\ldots
+
+\itemize{
+
+  \item Circular fixed area plots.
+%
+  \item Horizontal point sampling.
+
+} %itemize
+
+  
+The class structure is designed to support additions with relative ease,
+so more methods will appear in future releases (hopefully with some
+contributed by users).
 
 }
 
@@ -65,8 +77,8 @@ by users).
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.5-6\cr
-Date: \tab 2011-07-27\cr
+Version: \tab 0.6-0\cr
+Date: \tab 29-Dec-2011\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
 }
@@ -77,17 +89,16 @@ capabilities include the following\ldots
 
 \itemize{
 
-  \item Generate synthetic populations of logs or standing trees (the
-  latter is not implemented yet) as \dQuote{\code{\linkS4class{Stem}}}
-  objects. Note that data from field measurements can also be used if
-  available.
+  \item Generate synthetic populations of logs or standing trees as
+  \dQuote{\code{\linkS4class{Stem}}} objects. Note that data from field
+  measurements can also be used if available.
 %  
   \item Construct inclusion zones around each individual in the
   population and assign attributes to the zone for volume, etc.
 %  
   \item Generate \dQuote{\code{\linkS4class{Tract}}} objects of given dimension
   (x,y) and resolution (grid cell size) to hold the objects. The grid
-  cell resolution related directly to sampling intensity: each grid cell center
+  cell resolution is related directly to sampling intensity: each grid cell center
   can be thought of as a sample point for the method under consideration.
 %
   \item Combine the above into a sampling surface and calculate summary
@@ -113,100 +124,171 @@ detail, including slot and argument definitions.
 } %details
 
 
-
-\section{Classes for use in \pkg{sampSurf}}{ The following S4 classes
-  are defined within the \pkg{sampSurf} package to facilitate sampling
-  surface generation. Note that it is not necessary to work with the
-  class structures directly if all you want to do is generate a sampling
-  surface for a population of synthetic logs or trees. However, some
-  familiarization with the basic class structure is helpful in order to
-  understand how the pieces fit together into a final sampling
+%
+%  S4 classes section...
+%
+\section{Classes For Use In \pkg{sampSurf}\ldots}{ The following S4
+  classes are defined within the \pkg{sampSurf} package to facilitate
+  sampling surface generation. Note that it is not necessary to work
+  with the class structures directly if all you want to do is generate a
+  sampling surface for a population of synthetic logs or trees. However,
+  some familiarization with the basic class structure is helpful in
+  order to understand how the pieces fit together into a final sampling
   surface. Again, the vignettes are a source of much information.
 
+%  
   \subsection{The \dQuote{Stem} class\ldots}{
 
-  \tabular{ll}{
-	\code{\linkS4class{Stem}}: \tab The stem class is virtual, but
-	  from it subclasses are defined for logs and trees\cr
-	\code{\linkS4class{downLog}}: \tab A class for down logs\cr
-	\code{\linkS4class{downLogs}}: \tab Container class for a population
-	  of down log objects\cr
-  } }
+  Objects of the non-virtual classes below can be created using
+  constructor functions of the same name, see the \emph{Object
+  Constructors} section for details.
 
+  \tabular{ll}{
+	\code{\linkS4class{Stem}} \tab Virtual base class for the following\cr
+	\code{\linkS4class{downLog}} \tab A class for down logs\cr
+	\code{\linkS4class{standingTree}} \tab A class for standing trees\cr
+  }
+  
+  }%Stem
+
+
+%
+  \subsection{The \dQuote{StemContainer} class\ldots}{
+
+  Container classes hold collections of individual \dQuote{Stem}
+  subclass objects of the corresponding name\ldots
+
+  \tabular{ll}{
+	\code{\linkS4class{StemContainer}} \tab Virtual base class for the following\cr
+	\code{\linkS4class{downLogs}} \tab Container class for a population  of down log objects\cr
+	\code{\linkS4class{standingTrees}} \tab Container class for a population of standing tree objects\cr
+  }
+  
+  }%StemContainer
+
+
+%	
   \subsection{The \dQuote{Tract} class\ldots}{
 
   \tabular{ll}{
-	\code{\linkS4class{Tract}}: \tab A class structure for the land area
-	  which holds the population of individuals \cr
-	\code{\linkS4class{bufferedTract}}: \tab A \dQuote{Tract} subclass
-	with a buffer \cr
-  } }
+	\code{\linkS4class{Tract}} \tab Land area holding the population of individuals \cr
+	\code{\linkS4class{bufferedTract}} \tab A \dQuote{Tract} subclass with a buffer \cr
+  }
 
+  The above classes are derived from the \code{\linkS4class{Raster}}
+  class in the \pkg{raster} package. They conform to a rectangular area
+  of ground such as a plot or any tract of land, tessellated into grid cells.
+
+  }%Tract
+
+
+%
   \subsection{The \dQuote{ArealSampling} class\ldots}{
 
-  \tabular{ll}{
-	\code{\linkS4class{ArealSampling}}: \tab A class structure for describing
-	  areal sampling methods \cr
-    \code{\linkS4class{circularPlot}}: \tab A subclass of
-	  \dQuote{ArealSampling} for circular plot construction\cr
-	\code{\linkS4class{pointRelascope}}: \tab A subclass of
-	  \dQuote{ArealSampling} for point relascope sampling\cr
-	\code{\linkS4class{perpendicularDistance}}: \tab A subclass of
-	  \dQuote{ArealSampling} for variants of perpendicular distance sampling\cr
-	\code{\linkS4class{distanceLimited}}: \tab A subclass of
-	  \dQuote{ArealSampling} for distance limited sampling\cr
-  } }
+	These classes define the different sampling methods available and
+	provide the method-based information for the subsequent construction of
+	inclusion zones\ldots
 
+  \tabular{ll}{
+	\code{\linkS4class{ArealSampling}} \tab A class structure for describing areal sampling methods \cr
+    \code{\linkS4class{circularPlot}} \tab A subclass of \dQuote{ArealSampling} for circular plot construction\cr
+	\code{\linkS4class{pointRelascope}} \tab A subclass of \dQuote{ArealSampling} for point relascope sampling\cr
+	\code{\linkS4class{perpendicularDistance}} \tab A subclass of
+	      \dQuote{ArealSampling} for variants of perpendicular distance
+	      sampling\cr 
+	\code{\linkS4class{distanceLimited}} \tab A subclass of \dQuote{ArealSampling} for distance limited sampling\cr
+	\code{\linkS4class{angleGauge}} \tab A subclass of
+	      \dQuote{ArealSampling} for angle gauge (e.g., prism) sampling\cr
+	}
+
+  }%ArealSampling
+
+
+%
   \subsection{The \dQuote{InclusionZone} class\ldots}{
 
   \tabular{ll}{
-	\code{\linkS4class{InclusionZone}}: \tab Virtual base class for combining the
-	  sampling method with the individual down log or tree objects\cr
-	\code{\linkS4class{downLogIZ}}: \tab Virtual subclass for all down log
+	\code{\linkS4class{InclusionZone}} \tab Virtual base class for combining the
+	   sampling method with the individual down log or tree objects.\cr
+	%
+	\emph{Classes for down logs\ldots} \tab \cr
+	\code{\linkS4class{downLogIZ}} \tab Virtual subclass for all down log
 	  \code{InclusionZone} objects.\cr
-	\code{\linkS4class{standUpIZ}}: \tab Class for the "standup" method
+	\code{\linkS4class{standUpIZ}} \tab Class for the "standup" method
 	  of sampling down logs.\cr
-	\code{\linkS4class{sausageIZ}}: \tab Class for the "sausage" method
+	\code{\linkS4class{sausageIZ}} \tab Class for the "sausage" method
 	  of sampling down logs.\cr
-	\code{\linkS4class{chainSawIZ}}: \tab Class for the "chainsaw" method
+	\code{\linkS4class{chainSawIZ}} \tab Class for the "chainsaw" method
 	  of sampling down logs.\cr
-	\code{\linkS4class{pointRelascopeIZ}}: \tab Class for the point relascope method
+	\code{\linkS4class{pointRelascopeIZ}} \tab Class for the point relascope method
 	  of sampling down logs.\cr
-	\code{\linkS4class{perpendicularDistanceIZ}}: \tab Class for the
+	\code{\linkS4class{perpendicularDistanceIZ}} \tab Class for the
 	  perpendicular distance method of sampling down logs.\cr
-	\code{\linkS4class{omnibusPDSIZ}}: \tab Class for the omnibus
+	\code{\linkS4class{omnibusPDSIZ}} \tab Class for the omnibus
 	  perpendicular distance method of sampling down logs.\cr
-	\code{\linkS4class{distanceLimitedPDSIZ}}: \tab Class for the
+	\code{\linkS4class{distanceLimitedPDSIZ}} \tab Class for the
 	  distance limited perpendicular distance method of sampling down logs.\cr
-	\code{\linkS4class{omnibusDLPDSIZ}}: \tab Class for the omnibus
+	\code{\linkS4class{omnibusDLPDSIZ}} \tab Class for the omnibus
 	  distance limited perpendicular distance method of sampling down logs.\cr
-	\code{\linkS4class{hybridDLPDSIZ}}: \tab Class for the \dQuote{hybrid}
+	\code{\linkS4class{hybridDLPDSIZ}} \tab Class for the \dQuote{hybrid}
 	  distance limited perpendicular distance method of sampling down logs.\cr
-	\code{\linkS4class{distanceLimitedIZ}}: \tab Class for the 
+	\code{\linkS4class{distanceLimitedIZ}} \tab Class for the 
 	  distance limited method of sampling down logs.\cr
-	\code{\linkS4class{distanceLimitedMCIZ}}: \tab Class for the 
-	  distance limited Monte Carlo method of sampling down logs.\cr
-	\code{\linkS4class{izContainer}}: \tab A virtual container
-	class---see the following entry for a useable subclass.\cr
-	\code{\linkS4class{downLogIZs}}: \tab A container class to hold a
-	  population of inclusion zone objects associated with down logs. \cr
-	} }
+	\code{\linkS4class{distanceLimitedMCIZ}} \tab Class for the 
+	distance limited Monte Carlo method of sampling down logs.\cr
+	%
+	\emph{Classes for standing trees\ldots} \tab \cr
+	\code{\linkS4class{standingTreeIZ}} \tab Virtual subclass for all
+	  standing tree \code{InclusionZone} objects.\cr
+	\code{\linkS4class{circularPlotIZ}} \tab Class for the
+	  sampling standing trees using circulat plots.\cr
+	\code{\linkS4class{horizontalPointIZ}} \tab Class for
+	  horizontal point sampling of standing trees.\cr
+	%}
+	} %tabular
 
+  }%InclusionZone
+
+  
+%
+  \subsection{The \dQuote{izContainer} class\ldots}{
+
+  The following are container classes that hold collections of objects
+  of the corresponding type for inclusion zones generated based on down
+  logs or standing trees and the desired sampling methods. Each holds a
+  collection of objects that are a subclass of \dQuote{downLogIZ} or
+  \dQuote{standingTreeIZ}, respectively.
+
+  \tabular{ll}{  
+	\code{\linkS4class{izContainer}} \tab Virtual base class for the following\cr
+	\code{\linkS4class{downLogIZs}} \tab Holds inclusion zone objects associated with down logs\cr
+	\code{\linkS4class{standingTreeIZs}} \tab Holds inclusion zone objects associated with standing trees\cr
+  }
+  
+  }%izContainer
+  
+
+%  
   \subsection{The \dQuote{InclusionZoneGrid} class\ldots}{
 
   \tabular{ll}{  
-	\code{\linkS4class{InclusionZoneGrid}}: \tab Not for general use, see
+	\code{\linkS4class{InclusionZoneGrid}} \tab Not for general use, see
 	  documentation for details \cr
-	\code{\linkS4class{csFullInclusionZoneGrid}}: \tab Not for general
+	\code{\linkS4class{csFullInclusionZoneGrid}} \tab Not for general
 	  use, see documentation for details \cr
-	} }
+	}
+  }%InclusionZoneGrid
+  
 
+%  
   \subsection{The \dQuote{sampSurf} class\ldots}{
 
   \tabular{ll}{
-	\code{\linkS4class{sampSurf}}: \tab The class structure for the final
+	\code{\linkS4class{sampSurf}} \tab The class structure for the final
 	  sampling surface simulation \cr
-	} }
+	}
+
+  }%sampSurf
 
   Again, many of these classes will only be of interest to someone
   wanting to do special simulations or for someone who wants to add
@@ -215,8 +297,11 @@ detail, including slot and argument definitions.
 } %classes
 
 
-
-\section{Object constructors}{
+%--------------------------------------------------------------------------
+%  constructors section...
+%
+\section{Object Constructors}{
+  
   For each of the classes defined in the table above, we must be able to
   create objects that can be used in \R. This is done using
   class-specific "constructor" methods that take the drudgery away from
@@ -225,85 +310,124 @@ detail, including slot and argument definitions.
   constructor for a given class of object, and these are differentiated
   by the method signature; see the links provided below for more details\ldots
 
-
+%
   \subsection{\dQuote{Stem} class constructors\ldots}{
 
   \tabular{ll}{
-	\code{\link{downLog}}: \tab Constructor for individual
-	  \dQuote{Stem} objects\cr   
-	\code{\link{downLogs}}: \tab Constructs a container object 	holding
-	multiple \dQuote{downLog} objects\cr
-  } }
-	
+	\code{\link{downLog}} \tab Constructor for individual
+	  \dQuote{downLog} objects\cr   
+	\code{\link{standingTree}} \tab Constructor for individual
+	  \dQuote{standingTree} objects\cr   
+  }
 
+  }%Stem
+
+%
+  \subsection{The \dQuote{StemContainer} class\ldots}{
+
+  \tabular{ll}{
+	\code{\link{downLogs}} \tab Constructs a container object holding
+	  multiple \dQuote{downLog} objects\cr
+	\code{\link{standingTrees}} \tab Constructs a container object holding
+	  multiple \dQuote{standingTree} objects \cr
+  }
+  
+  }%StemContainer
+	
+%
   \subsection{\dQuote{Tract} class constructors\ldots}{
 
   \tabular{ll}{
-    \code{\link{Tract}}: \tab Constructor for \dQuote{Tract} objects \cr 
-	\code{\link{bufferedTract}}: \tab Constructs a
+    \code{\link{Tract}} \tab Constructor for \dQuote{Tract} objects \cr 
+	\code{\link{bufferedTract}} \tab Constructs a
 	\dQuote{bufferedTract} object\cr
-  }}
-	
+  }
+  }%Tract
 
+  
+%
   \subsection{\dQuote{ArealSampling} class constructors\ldots}{
 
   \tabular{ll}{
-    \code{\link{circularPlot}}: \tab Constructs a circular plot object
+    \code{\link{circularPlot}} \tab Constructs a circular plot object
 	  \cr
-    \code{\link{pointRelascope}}: \tab Constructs a point relascope object
+    \code{\link{pointRelascope}} \tab Constructs a point relascope object
 	  \cr
-    \code{\link{perpendicularDistance}}: \tab Constructs a perpendicular
+    \code{\link{perpendicularDistance}} \tab Constructs a perpendicular
       distance object \cr
-    \code{\link{distanceLimited}}: \tab Constructs a distance limited object
+    \code{\link{distanceLimited}} \tab Constructs a distance limited object\cr
+    \code{\link{angleGauge}} \tab Constructs an angle gauge object
 	  \cr
-  }}	
-
+	}
+  }%ArealSampling
+  
+%
   \subsection{\dQuote{InclusionZone} class constructors\ldots}{
 
-  \tabular{ll}{
-	\code{\link{standUpIZ}}: \tab Creates an \dQuote{InclusionZone}
+  \tabular{ll}{	
+	\emph{Classes for down logs\ldots} \tab \cr
+	\code{\link{standUpIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{stand-up} sampling method \cr
-	\code{\link{sausageIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{sausageIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{sausage} sampling method \cr
-	\code{\link{chainSawIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{chainSawIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{chainsaw} sampling method \cr
-	\code{\link{pointRelascopeIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{pointRelascopeIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{point relascope} sampling method \cr
-	\code{\link{perpendicularDistanceIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{perpendicularDistanceIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{perpendicular distance} sampling method \cr
-	\code{\link{omnibusPDSIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{omnibusPDSIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{omnibus perpendicular distance} sampling method \cr
-	\code{\link{distanceLimitedPDSIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{distanceLimitedPDSIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{distance limited perpendicular distance} sampling method \cr
-	\code{\link{omnibusDLPDSIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{omnibusDLPDSIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{omnibus distance limited perpendicular distance} sampling method \cr
-	\code{\link{hybridDLPDSIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{hybridDLPDSIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{hybrid distance limited perpendicular distance} sampling method \cr
-	\code{\link{distanceLimitedIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{distanceLimitedIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{distance limited} sampling method \cr
-	\code{\link{distanceLimitedMCIZ}}: \tab Creates an \dQuote{InclusionZone}
+	\code{\link{distanceLimitedMCIZ}} \tab Creates an \dQuote{InclusionZone}
 	  object for the \sQuote{distance limited Monte Carlo} sampling method \cr
-	\code{\link{downLogIZs}}: \tab Holds a population of 
-      \dQuote{InclusionZone} objects for down logs\cr
-   }}
+	%
+	\emph{Classes for standing trees\ldots} \tab \cr
+	\code{\link{circularPlotIZ}} \tab Creates an \dQuote{InclusionZone}
+	  object for the fixed-area circular plot sampling method \cr
+	\code{\link{horizontalPointIZ}} \tab Creates an \dQuote{InclusionZone}
+	  object for the horizontal point (prism) sampling method \cr
+  }
+  }%InclusionZone
+  
+%
+  \subsection{The \dQuote{izContainer} class constructors\ldots}{
 
+  \tabular{ll}{  
+	\code{\link{downLogIZs}} \tab Creates a collection of
+	  \dQuote{downLogIZ} objects for down logs\cr
+	\code{\link{standingTreeIZs}} \tab Creates a collection of
+	  \dQuote{standingTreeIZ} objects for standing trees\cr
+  }
+  
+  }%izContainer
 
+%
   \subsection{\dQuote{InclusionZoneGrid} class constructors\ldots}{
 
   \tabular{ll}{  	
-	\code{\link{izGrid}}: \tab Creates an \dQuote{InclusionZoneGrid}
+	\code{\link{izGrid}} \tab Creates an \dQuote{InclusionZoneGrid}
 	  object\cr
-	\code{\link{izGridCSFull}}: \tab Creates an \dQuote{csFullInclusionZoneGrid}
+	\code{\link{izGridCSFull}} \tab Creates an \dQuote{csFullInclusionZoneGrid}
 	object\cr
-   }}
+  }
+  }%InclusionZoneGrid
 
-   
+%   
   \subsection{\dQuote{sampSurf} class constructors\ldots}{
 
   \tabular{ll}{
-	\code{\link{sampSurf}}: \tab Constructor for \dQuote{sampSurf}
+	\code{\link{sampSurf}} \tab Constructor for \dQuote{sampSurf}
 	  objects\cr 
-  }}
+	}
+  }%sampSurf
 	
 } %constructors
 
@@ -320,12 +444,12 @@ detail, including slot and argument definitions.
   printing information within the object\ldots
 
   \tabular{ll}{
-	\code{\link{hist}}: \tab Create a histogram of object attributes\cr	
-	\code{\link{plot}}: \tab  To plot one of the package objects\cr
-	\code{\link{plot3D}}: \tab  To plot \dQuote{sampSurf} objects using
+	\code{\link{hist}} \tab Create a histogram of object attributes\cr	
+	\code{\link{plot}} \tab  To plot one of the package objects\cr
+	\code{\link{plot3D}} \tab  To plot \dQuote{sampSurf} objects using
 	  \pkg{rgl}\cr 
-	\code{\link{show}}: \tab  To succinctly print one of the package objects\cr
-	\code{\link{summary}}: \tab  To summarize one of the package objects\cr
+	\code{\link{show}} \tab  To succinctly print one of the package objects\cr
+	\code{\link{summary}} \tab  To summarize one of the package objects\cr
   } %tabular
   
 } %summary and plotting
@@ -339,17 +463,19 @@ detail, including slot and argument definitions.
   potentially useful routines\ldots
 
   \tabular{ll}{
-	\code{\link{area}}: \tab Returns the area of a spatial object\cr
-	\code{\link{bbox}}: \tab Return the bounding box for a spatial
+	\code{\link{area}} \tab Returns the area of a spatial object\cr
+	\code{\link{bbox}} \tab Return the bounding box for a spatial
 	  object\cr
-	\code{\link{bboxCheck}}: \tab Check for a valid bounding box for a
+	\code{\link{bboxCheck}} \tab Check for a valid bounding box for a
 	  spatial object\cr
-	\code{\link{bboxToPoly}}: \tab Convert a \code{bbox} matrix to a
-	"\code{\linkS4class{SpatialPolygons}}" object\cr
-	\code{\link{bboxSum}}: \tab	Calculate an overall \code{bbox} from and
-	array of \code{bbox} matrices\cr
-	\code{\link{perimeter}}: \tab Returns the perimeter of a spatial
-	object, which can then be plotted\cr
+	\code{\link{bboxToPoly}} \tab Convert a \code{bbox} matrix to a
+	  "\code{\linkS4class{SpatialPolygons}}" object\cr
+	\code{\link{bboxSum}} \tab	Calculate an overall \code{bbox} from and
+	  array of \code{bbox} matrices\cr
+	\code{\link{perimeter}} \tab Returns the perimeter of a spatial
+	  object, which can then be plotted\cr
+	\code{\link{spCircle}} \tab Returns a circular
+	  "\code{\linkS4class{SpatialPolygons}}" object\cr 
   } %tabular
   
 } %helper methods
@@ -360,12 +486,19 @@ detail, including slot and argument definitions.
 \section{Coercion methods}{
   Object coercion is accomplished in S4 by a call to \code{\link{as}}
   with the appropriate object and class to which one wants to
-  convert. Only one conversion method is supplied thus far\ldots
+  convert\ldots
 
   \tabular{ll}{
-	\code{\link{as}}: \tab Convert from a \dQuote{downLogs} object to a
-	data frame\cr
-  } %tabular
+	\code{\link{as}} \tab Convert from a \dQuote{downLogs} or \dQuote{standingTrees} object to a
+	     data frame\cr
+	                 \tab Convert \dQuote{downLogIZs} or
+	     \dQuote{standingTreeIZs} object to respective \dQuote{StemContainer}\cr
+	} %tabular
+
+	The resulting data frame in the first method will be compatible with those generated
+	from calls to either \dQuote{sampleLogs} or
+	\dQuote{sampleTrees}. The second takes the drudgery out of getting a
+	log collection from, say, the \code{izContainer} slot of a \code{sampSurf} object.
   
 } %coercion methods
 
@@ -375,17 +508,19 @@ detail, including slot and argument definitions.
   Some methods that might be useful as stand-alone routines\ldots
 
   \tabular{ll}{
-	\code{\link{boltDimensions}}: \tab Calculates segment volumes,
+	\code{\link{boltDimensions}} \tab Calculates segment volumes,
 	  surface area, etc.\cr
-	\code{\link{gridCellEnhance}}: \tab Draws grid lines and centers.\cr
-	\code{\link{heapIZ}}: \tab Used to heap inclusion zone grids into a
+	\code{\link{gridCellEnhance}} \tab Draws grid lines and centers.\cr
+	\code{\link{heapIZ}} \tab Used to heap inclusion zone grids into a
 	  sampling surface.\cr
-    \code{\link{initRandomSeed}}: \tab Initialize \code{.Random.seed}.\cr
-	\code{\link{sampleLogs}}: \tab Draws a simulated sample of down logs and
+    \code{\link{initRandomSeed}} \tab Initialize \code{.Random.seed}.\cr
+	\code{\link{sampleLogs}} \tab Draws a simulated sample of down logs and
 	  returns a data frame. \cr
-    \code{\link{taperInterpolate}}: \tab Interpolates diameters or
+    \code{\link{taperInterpolate}} \tab Interpolates diameters or
 	  lengths within down logs.\cr
-    \code{\link{transparentColorBase}}: \tab Transparancy in base graphics.\cr
+    \code{\link{transparentColorBase}} \tab Transparancy in base graphics.\cr
+	\code{\link{sampleTrees}} \tab Draws a simulated sample of standing
+	  trees and returns a data frame. \cr
 	
   } %tabular
      
@@ -394,6 +529,7 @@ detail, including slot and argument definitions.
 
 
 \section{\sQuote{sampSurf} environments}{
+  
   This package uses a \dQuote{hidden} environment to keep things that
   are not necessary for the user out of mind. There is little reason to peak
   into it, except that some function argument defaults are specified
@@ -402,7 +538,7 @@ detail, including slot and argument definitions.
   accessed if desired.
   
   \tabular{ll}{
-	\code{\link{.StemEnv}}: \tab This environment holds parameters for
+	\code{\link{.StemEnv}} \tab This environment holds parameters for
 	  much of the package. \cr
 	
   } %tabular
@@ -411,29 +547,32 @@ detail, including slot and argument definitions.
  
 
 \section{\sQuote{sampSurf} class unions}{
+  
   There are a few class unions that are documented here only for the
   sake of completeness. It is unlikely that the casual user would ever
   need to be concerned about these.
   
   \tabular{ll}{
-	\code{\linkS4class{dlsIZNull}}: \tab Accepts either class
+	\code{\linkS4class{dlsIZNull}} \tab Accepts either class
 	  \dQuote{distanceLimitedIZ} (or subclass) or \dQuote{NULL}. \cr
-	\code{\linkS4class{dlsNumeric}}: \tab Accepts either class
+	\code{\linkS4class{dlsNumeric}} \tab Accepts either class
 	  \dQuote{distanceLimited} or \dQuote{numeric}. \cr
 	%next only used in solidType slot...  
-	\code{\linkS4class{numericNULL}}: \tab Accepts either class
+	\code{\linkS4class{numericNULL}} \tab Accepts either class
 	  \dQuote{numeric} or \dQuote{NULL}. \cr
-	\code{\linkS4class{pdsIZNull}}: \tab Accepts either class
+	\code{\linkS4class{pdsIZNull}} \tab Accepts either class
 	  \dQuote{perpendicularDistanceIZ} (or subclass) or
 	  \dQuote{NULL}. \cr
   } %tabular
   
-
 } %class unions  
-  
+
+
+
 \author{
 Jeffrey H. Gove
 }
+
 
 \references{ The first two references describe the sampling surface
 method in detail. The rest provide some examples of its use and are not
@@ -466,10 +605,24 @@ exhaustive.
   downed coarse woody debris. \emph{Forestry} \bold{84}:109--117.}
 %
 \item{}{Gove, J. H., Ducey, M. J. and Valentine, H. T. 2012. A distance
-  limited method for sampling downed coarse woody debris. \emph{In Prep.} }
-}
+  limited method for sampling downed coarse woody debris. \emph{In
+	Prep.}}
+%
+\item{}{Ducey, M. J., Williams, M. S., Gove, J. H., Roberge, S. and
+  Kenning, R. S. 2012. Distance limited perpendicular distance sampling
+  for coarse woody material: Theory and field results. \emph{Forestry}
+  (In review).}
+%
+\item{}{Gove, J. H., Ducey, M. J., Valentine, H. T. and Williams,
+  M. S. 2012. A comprehensive comparison of perpendicular distance
+  sampling methods for sampling down coarse woody
+  debris. \emph{Forestry} (In review).}
 
-}
+}%describe
+
+}%references
+
+
 
 \keyword{ package }
 \seealso{
