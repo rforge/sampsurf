@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{angleGauge-class}
-\alias{horizontalPointIZ,standingTree,angleGauge-method}
+%\alias{horizontalPointIZ,standingTree,angleGauge-method}
 \alias{summary,angleGauge-method}
 
 \title{Class \code{"angleGauge"}: For Angle Gauge Sampling Methods}

@@ -1,8 +1,8 @@
 \name{hist-methods}
 \docType{methods}
 \alias{hist-methods}
-\alias{hist,ANY-method}
-\alias{hist,downLogs-method}
+%\alias{hist,ANY-method}
+%\alias{hist,downLogs-method}
 \alias{hist,izContainer-method}
 \alias{hist,RasterLayer-method}
 \alias{hist,RasterStackBrick-method}

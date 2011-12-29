@@ -3,7 +3,7 @@
 \docType{class}
 \alias{standingTree-class}
 \alias{bbox,standingTree-method}
-\alias{perimeter,standingTree-method}
+%\alias{perimeter,standingTree-method}
 \alias{plot,standingTree,missing-method}
 \alias{summary,standingTree-method}
 

@@ -2,7 +2,12 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{izContainer-class}
+\alias{bbox,izContainer-method}
 %\alias{hist,izContainer-method}
+%\alias{perimeter,izContainer-method}
+\alias{plot,izContainer,missing-method}
+\alias{sampSurf,izContainer,Tract-method}
+\alias{show,izContainer-method}
 \alias{summary,izContainer-method}
 
 \title{Class \code{"izContainer"}}

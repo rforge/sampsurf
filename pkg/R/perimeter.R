@@ -240,7 +240,7 @@ function(object, ...)
 
 
 #================================================================================
-#  method for circularPlotIZ object...
+#  method for circularPlotIZ or horizontalPointIZ object...
 #
 setMethod('perimeter',
           signature(object = 'circularPlotIZ'),

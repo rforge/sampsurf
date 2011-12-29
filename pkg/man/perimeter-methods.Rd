@@ -4,14 +4,16 @@
 \alias{perimeter,chainSawIZ-method}
 \alias{perimeter,circularPlot-method}
 \alias{perimeter,downLog-method}
-\alias{perimeter,downLogIZs-method}
-\alias{perimeter,downLogs-method}
+\alias{perimeter,standingTree-method}
+\alias{perimeter,StemContainer-method}
 \alias{perimeter,sampSurf-method}
 \alias{perimeter,sausageIZ-method}
 \alias{perimeter,standUpIZ-method}
 \alias{perimeter,pointRelascopeIZ-method}
 \alias{perimeter,perpendicularDistanceIZ-method}
 \alias{perimeter,distanceLimitedMCIZ-method}
+\alias{perimeter,circularPlotIZ-method}
+\alias{perimeter,izContainer-method}
 \alias{perimeter,Tract-method}
 
 \title{ Methods for Function perimeter in Package `sampSurf' }
@@ -97,7 +99,8 @@
   \item{\strong{\code{signature(object = "circularPlotIZ")}}}{ %\cr
 
 	Returns the spatial object associated with the perimeter of the
-    inclusion zone. }
+    inclusion zone. Also handles objects of subclass
+    "\code{\linkS4class{horizontalPointIZ}}". }
 
   \item{\strong{\code{signature(object = "izContainer")}}}{% \cr
 

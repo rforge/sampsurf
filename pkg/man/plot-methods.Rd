@@ -17,7 +17,9 @@
 \alias{plot,distanceLimitedPDSIZ,missing-method}
 \alias{plot,distanceLimitedIZ,missing-method}
 \alias{plot,standUpIZ,missing-method}
+\alias{plot,circularPlotIZ,missing-method}
 \alias{plot,Stem,missing-method}
+\alias{plot,StemContainer,missing-method}
 \alias{plot,Tract,missing-method}
 
 \title{ Methods for \pkg{graphics} Function \code{plot} in Package \sQuote{sampSurf} }
@@ -515,7 +517,8 @@ argument definition for the most part.
 \item{\strong{\code{signature(x = "circularPlotIZ", y = "missing")}}}{%\cr
 
     This adds the necessary functionality to plot objects of class
-    "\code{\linkS4class{circularPlotIZ}}".}
+    "\code{\linkS4class{circularPlotIZ}}" as well as those of its
+    subclass "\code{\linkS4class{horizontalPointIZ}}".}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(x, 

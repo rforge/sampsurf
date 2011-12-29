@@ -10,6 +10,7 @@
 \alias{izGrid,omnibusPDSIZ,Tract-method}
 \alias{izGrid,distanceLimitedPDSIZ,Tract-method}
 \alias{izGrid,distanceLimitedMCIZ,Tract-method}
+\alias{izGrid,circularPlotIZ,Tract-method}
 
 \title{ Methods for "InclusionZoneGrid" object construction in Package `sampSurf'}
 
@@ -20,6 +21,11 @@
   InclusionZoneGrid Class"} vignette for more details and examples. }
 
 \section{Methods}{
+
+  The following constructors all share the formal arguments (after
+  the two signature arguments) defined in the \code{standUpIZ}
+  method. Any additional arguments are listed where appropriate.
+	
 \describe{
 
 \item{\strong{\code{signature(izObject = "standUpIZ", tract =
@@ -91,6 +97,7 @@
 	  above, with the exception of the first argument, which must be an
 	  object of class "\code{\linkS4class{perpendicularDistanceIZ}}". }
 
+	
 \item{\strong{\code{signature(izObject = "omnibusPDSIZ", tract =
 	  "Tract")}}}{%\cr
 
@@ -108,11 +115,12 @@
 \item{\strong{\code{signature(izObject = "distanceLimitedPDSIZ", tract =
 	  "Tract")}}}{%\cr
 
-      This constructor is for the distance limited PDS (canonical or
-	  omnibus) method of sampling down logs. Everything is the same here
-	  as for the "omnibusPDSIZ" method above, with the exception of the
-	  first argument, which must be an object of class
+      This constructor is for the distance limited PDS (canonical,
+	  omnibus or hybrid) method of sampling down logs. Everything is the
+	  same here as for the "omnibusPDSIZ" method above, with the
+	  exception of the first argument, which must be an object of class
 	  "\code{\linkS4class{distanceLimitedPDSIZ}}". }
+	
 
 \item{\strong{\code{signature(izObject = "distanceLimitedIZ", tract =
 	  "Tract")}}}{%\cr
@@ -131,6 +139,16 @@
 	  first argument, which must be an object of class
 	  "\code{\linkS4class{distanceLimitedMCIZ}}". }
 
+	
+\item{\strong{\code{signature(izObject = "circularPlotIZ", tract =
+	  "Tract")}}}{%\cr
+
+      This constructor is for the circular plot and horizontal point
+	  sampling (a subclass of "circularPlotIZ") methods for standing
+	  trees.  }
+
+
+	
 \item{\strong{\code{signature(izObject = "matrix", tract =
 	  "Tract")}}}{%\cr
 

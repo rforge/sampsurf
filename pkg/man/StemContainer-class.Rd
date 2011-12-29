@@ -3,7 +3,7 @@
 \docType{class}
 \alias{StemContainer-class}
 \alias{bbox,StemContainer-method}
-\alias{perimeter,StemContainer-method}
+%\alias{perimeter,StemContainer-method}
 %\alias{plot,StemContainer,missing-method}
 \alias{show,StemContainer-method}
 \alias{summary,StemContainer-method}
