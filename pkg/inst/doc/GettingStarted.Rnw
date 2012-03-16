@@ -190,6 +190,14 @@ Each of the vignettes can be opened as shown above. They are outlined briefly as
   \item \emph{sampSurfClass:} This details the final product---generation of a sampling
     surface from simulation.
     
+  \item \emph{monte:} This set of classes was created to make it easy to do ``when is $n$
+    sufficiently large?'' experiments. In other words, it allows repeated Monte Carlo
+    sampling from a given \Rclass{sampSurf} object at different sample sizes and gives
+    statistics on confidence interval coverage rates. Both normal theory and bootstrap
+    intervals can be calculated.\footnote{These classes are more general than being applicable only
+    to \Rclass{sampSurf} objects, so their definitions may be moved into a separate package
+    in the future, with only \Rclass{sampSurf} support left here.}
+    
   \item \emph{sampSurfExtensions:} If you want to know more about how to add your own
     sampling method to the package, this is where to look. It is advisable that you
     familiarize yourself with the above vignettes first before undertaking programming a
