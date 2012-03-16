@@ -56,10 +56,8 @@ vignette.  }
       character description to be associated with this surface. }
 	
     \item{\code{izContainer}:}{Object of class \code{"izContainer"}: A
-      collection or population of down log
-      "\code{\linkS4class{InclusionZone}}" objects. Note that this can
-      be extended to include standing tree inclusion zone objects when
-      that portion of the package is completed. }
+      collection or population of down log or standing tree
+      "\code{\linkS4class{InclusionZone}}" objects.  }
 	
     \item{\code{tract}:}{Object of class \code{"Tract"}: This is the
       tract over which to generate the sampling surface, and on which
@@ -67,7 +65,7 @@ vignette.  }
 	
     \item{\code{estimate}:}{Object of class \code{"character"}: The
       attribute estimate name for the sampling surface represented on
-      this tract; i.e., "cubicVolume", or number of stems
+      this tract; i.e., "volume", or number of stems
       ("Density"), etc., per unit area.}
 	
     \item{\code{surfStats}:}{Object of class \code{"list"}: A list

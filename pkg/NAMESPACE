@@ -44,6 +44,8 @@ exportClasses(standingTreeIZ, circularPlotIZ, horizontalPointIZ)
 exportClasses(izContainer, downLogIZs,  standingTreeIZs)
 #sampSurf...
 exportClasses(sampSurf)
+#monte...
+exportClasses(montePop, monteSample, monteNTSample, monteBSSample, monte)
 
 
 
@@ -76,6 +78,8 @@ exportMethods(heapIZ)
 #sampSurf constructors...
 exportMethods(sampSurf)
 #exportMethods(Plot)
+#monte constructors...
+exportMethods(montePop, monte, monteNTSample, monteBSSample)
 
 
 

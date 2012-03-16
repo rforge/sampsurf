@@ -65,7 +65,7 @@ function(object,
 #------------------------------------------------------------------------------
     callNextMethod()
     numLogs = length(object@logs)
-    cat('\n  There are',numLogs,'logs in the population')
+    cat('  There are',numLogs,'logs in the population')
 
 #
 #   totals over all logs...
@@ -147,7 +147,7 @@ function(object,
 #
     callNextMethod()
     numTrees = length(object@trees)
-    cat('\n  There are',numTrees,'trees in the population')
+    cat('  There are',numTrees,'trees in the population')
 
 #
 #   totals over all trees...

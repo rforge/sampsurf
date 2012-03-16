@@ -58,7 +58,7 @@ function(object,
     if(!is.null(object@userExtra))
       cat('\n  "Note: userExtra" slot is non-NULL')
 
-    cat('\n')
+    #cat('\n')
     
     return(invisible())
 }   #summary for 'InclusionZone'

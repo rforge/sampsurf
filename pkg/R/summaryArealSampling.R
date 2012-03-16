@@ -69,7 +69,7 @@ function(object,
     if(object@units == .StemEnv$msrUnits$metric) {
       cat('\n  radius = ', object@radius, ' meters',sep='')
       cat('\n  area = ', object@area, ' square meters', sep='')
-      cat(' (', format(object@area/.StemEnv$smpHectare, digits=4), ' hectares)')
+      cat(' (', format(object@area/.StemEnv$smpHectare, digits=4), ' hectares)', sep='')
     }
     else {
       cat('\n  radius = ', object@radius, ' feet',sep='')

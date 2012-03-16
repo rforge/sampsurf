@@ -143,19 +143,20 @@ function(object,
 
 #
 #   we must adjust the area of the tract in case it is different from one hectare
-#   or one acre...
+#   or one acre--this then adjusts the /acre or /hectare values to total values...
 #
     unitArea = ifelse(object@units==.StemEnv$msrUnits$English, .StemEnv$sfpAcre, .StemEnv$smpHectare) 
-    areaAdjust = tract@area/unitArea   
+    areaAdjust = area(tract)/unitArea                             #m^2/m^2 or ft^2/ft^2
+    tract = setValues(tract, getValues(tract) * areaAdjust)
     
 #
 #   some surface stats using raster...
 #
-    surfStats = list( mean = cellStats(tract, mean)*areaAdjust,
-                      sum = cellStats(tract,sum)*areaAdjust,
-                      var = cellStats(tract, var)*areaAdjust^2,
+    surfStats = list( mean = cellStats(tract, mean), 
+                      sum = cellStats(tract,sum),    
+                      var = cellStats(tract, var), 
                       nc = ncell(tract),
-                      max = maxValue(tract)*areaAdjust
+                      max = maxValue(tract)       
                     )
     surfStats$stDev = sqrt(surfStats$var)
     surfStats$se = surfStats$stDev/sqrt(surfStats$nc)

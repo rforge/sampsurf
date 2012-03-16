@@ -17,12 +17,11 @@
 \item{\strong{\code{signature(object = "izContainer", tract =
 	  "Tract")}}}{%\cr
 
-      This constructor will allow the most
-	  flexibility. One can create all of the individual objects from
-	  generating a population of "Stem" objects up through the
-	  corresponding collection of inclusion zones and give the latter,
-	  along with the \dQuote{Tract} object to this constructor to
-	  generate the surface. }
+      This constructor will allow the most flexibility. One can create
+	  all of the individual objects from generating a population of
+	  "Stem" objects up through the corresponding collection of
+	  inclusion zones and give the latter, along with the \dQuote{Tract}
+	  object to this constructor to generate the surface. }
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(object, 

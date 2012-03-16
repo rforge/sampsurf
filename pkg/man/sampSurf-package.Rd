@@ -77,8 +77,8 @@ contributed by users).
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.6-0\cr
-Date: \tab 29-Dec-2011\cr
+Version: \tab 0.6-2\cr
+Date: \tab 16-Mar-2012\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
 }
@@ -557,6 +557,10 @@ detail, including slot and argument definitions.
 	  \dQuote{distanceLimitedIZ} (or subclass) or \dQuote{NULL}. \cr
 	\code{\linkS4class{dlsNumeric}} \tab Accepts either class
 	  \dQuote{distanceLimited} or \dQuote{numeric}. \cr
+	\code{\linkS4class{monteBSSampleOrNULL}} \tab Accepts either class
+	  \dQuote{monteBSSample} or \dQuote{NULL}. \cr
+	\code{\linkS4class{monteNTSampleOrNULL}} \tab Accepts either class
+	  \dQuote{monteNTSample} or \dQuote{NULL}. \cr
 	%next only used in solidType slot...  
 	\code{\linkS4class{numericNULL}} \tab Accepts either class
 	  \dQuote{numeric} or \dQuote{NULL}. \cr
@@ -566,6 +570,31 @@ detail, including slot and argument definitions.
   } %tabular
   
 } %class unions  
+
+\section{\dQuote{monte}: When is \emph{n} Sufficiently Large? }{
+  
+  This section has both classes and methods defined for doing Monte
+  Carlo analysis of the convergence of confidence interval catch rates
+  as sample size increases.
+  
+  \tabular{ll}{
+	\code{\linkS4class{montePop}} \tab Population class with
+	  constructor \code{\link{montePop}}. \cr
+	\code{\linkS4class{monteSample}} \tab Virtual repeated sampling class with
+	  the following two subclasses. \cr
+	\code{\linkS4class{monteNTSample}} \tab Normal theory repeated sampling class with
+	  constructor \code{\link{monteNTSample}}. \cr
+	\code{\linkS4class{monteBSSample}} \tab Bootstrap repeated sampling class with
+	  constructor \code{\link{monteBSSample}}. \cr
+	\code{\linkS4class{monte}} \tab Main Monte Carlo class with
+	  constructor \code{\link{monte}}. \cr
+	} %tabular
+
+  Please see the \sQuote{\dQuote{monte}: When is \emph{n} Sufficiently
+  Large?} vignette for more details and examples.\cr
+
+  
+} %monte  
 
 
 
@@ -606,7 +635,7 @@ exhaustive.
 %
 \item{}{Gove, J. H., Ducey, M. J. and Valentine, H. T. 2012. A distance
   limited method for sampling downed coarse woody debris. \emph{In
-	Prep.}}
+	Review}}
 %
 \item{}{Ducey, M. J., Williams, M. S., Gove, J. H., Roberge, S. and
   Kenning, R. S. 2012. Distance limited perpendicular distance sampling
