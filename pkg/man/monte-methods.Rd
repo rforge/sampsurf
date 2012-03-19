@@ -2,6 +2,8 @@
 \docType{methods}
 \alias{monte-methods}
 \alias{monte,sampSurf-method}
+\alias{monte,montePop-method}
+\alias{monte,numeric-method}
 
 \title{ Methods for "\code{\linkS4class{monte}}" Object Construction
   in Package \pkg{sampSurf} }

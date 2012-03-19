@@ -3,8 +3,8 @@
 \docType{class}
 \alias{montePop-class}
 \alias{hist,montePop-method}
-\alias{monteBSSample,montePop-method}
-\alias{monteNTSample,montePop-method}
+%\alias{monteBSSample,montePop-method}
+%\alias{monteNTSample,montePop-method}
 \alias{show,montePop-method}
 \alias{summary,montePop-method}
 
