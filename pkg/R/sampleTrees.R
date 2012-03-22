@@ -101,7 +101,7 @@ sampleTrees = function(nTrees = 2,
 #   generate log centers within the sample rectangle...
 #
     if(is.null(sampleRect) || is.na(sampleRect)) {
-      sampleRect = matrix(rep(0:1, 2), nr=2,                       #dimensionless center points
+      sampleRect = matrix(rep(0:1, 2), nrow=2,                       #dimensionless center points
                           byrow = TRUE,
                           dimnames = list(c('x','y'),c('min','max'))
         

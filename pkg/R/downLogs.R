@@ -310,7 +310,7 @@ function(object,
 #
     suppressWarnings({
     
-    stats = data.frame(matrix(NA, nrow=6, nc=nvars)) #stats as rows, vars as columns
+    stats = data.frame(matrix(NA, nrow=6, ncol=nvars)) #stats as rows, vars as columns
     colnames(stats) = attrNames
     rownames(stats) = c('mean','total','sd','var', 'min','max')
     #stats[1,] = apply(logAttr, 2, mean, na.rm=TRUE)
