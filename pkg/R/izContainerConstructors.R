@@ -10,6 +10,9 @@
 #     2. downLogIZs: for collections of "downLogIZ" subclass objects
 #     3. standingTreeIZs: for collections of standingTreeIZ subclass objects
 #
+#   Note that in both cases 2 & 3 above, there are different methods for
+#   different classes of objects.
+#
 #   This was revamped from the original "downLogIZs" code, which no
 #   longer exists. The changes were to move all of the common functionality
 #   to the izContainer method, and then just create the objects in the
@@ -93,6 +96,13 @@ function(object,
 
 
 
+
+
+#********************************************
+#  for downLogIZs objects...
+#********************************************
+
+
           
 #================================================================================
 #  2. method previously made collection of downLog IZs in a list...
@@ -122,6 +132,56 @@ function(object,
 
 
 
+
+#================================================================================
+#  2.1 method for  a previously made collection of downLog IZs from
+#      a collection of "downLogs" objects...
+#
+setMethod('downLogIZs',
+          signature(object = 'downLogs'),
+function(object,
+         iZone,
+         description = '',
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   make sure the inclusion zone constructor is a valid available type;
+#   note that I don't think the extended test for a valid subclass that is
+#   in the sampSurf constructor is necessary here as we are only dealing
+#   with downLogs...
+#
+    if(!is.character(iZone))                           #lapply will take a character name
+      iZone = deparse(substitute(iZone))
+    if(!extends(iZone, 'downLogIZ'))
+      stop(paste('The inclusion zone specification',iZone,'is not for downLog objects!'))
+
+#
+#   now apply the inclusion zone build to each log and then create the container...
+#
+    dl.l = lapply(object@logs, iZone, ... )
+    dl.iz = downLogIZs(dl.l, description=description, ...)
+    
+    return(dl.iz)
+}   #downLogIZs method for "downLogs" objects
+)   #setMethod
+
+          
+
+
+
+
+
+
+
+#********************************************
+#  for standingTreeIZs objects...
+#********************************************
+
+
+
+
           
 #================================================================================
 #  3. method for  a previously made collection of standingTree IZs in a list...
@@ -147,4 +207,40 @@ function(object,
     
     return(st.iz)
 }   #standingTreeIZs method for list
+)   #setMethod
+
+
+
+#================================================================================
+#  3.1 method for  a previously made collection of standingTree IZs from
+#      a collection of "standingTrees" objects...
+#
+setMethod('standingTreeIZs',
+          signature(object = 'standingTrees'),
+function(object,
+         iZone,
+         description = '',
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   make sure the inclusion zone constructor is a valid available type;
+#   note that I don't think the extended test for a valid subclass that is
+#   in the sampSurf constructor is necessary here as we are only dealing
+#   with standingTrees...
+#
+    if(!is.character(iZone))                           #lapply will take a character name
+      iZone = deparse(substitute(iZone))
+    if(!extends(iZone, 'standingTreeIZ'))
+      stop(paste('The inclusion zone specification',iZone,'is not for standingTree objects!'))
+
+#
+#   now apply the inclusion zone build to each tree and then create the container...
+#
+    st.l = lapply(object@trees, iZone, ... )
+    st.iz = standingTreeIZs(st.l, description=description, ...)
+    
+    return(st.iz)
+}   #standingTreeIZs method for "standingTrees" objects
 )   #setMethod

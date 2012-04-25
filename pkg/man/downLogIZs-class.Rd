@@ -22,9 +22,9 @@
 \section{Objects from the Class}{ Objects can be created by calls of the
 form \code{new("downLogIZs", ...)}; however, as in the other classes
 within this package, constructors have been written to simplify the
-process. The \code{\link{downLogIZs}} constructor should therefore be used
-in preference to \code{new}.  The constructor, \code{\link{downLogIZs}}, has only one
- form. }
+process. A \code{\link{downLogIZs}} constructor should therefore be used
+in preference to \code{new}.  The constructor, \code{\link{downLogIZs}},
+has different forms that will be useful with different classes of objects. }
 
 \section{Slots}{
 

@@ -9,16 +9,15 @@
 
 \title{Class "InclusionZone"}
 
-\description{
-  This is a virtual class that defines the root structure for inclusion
-  zones used in areal sampling methods. In general, subclasses will use
-  objects generated from both "\code{\linkS4class{ArealSampling}}"
-  and "\code{\linkS4class{Stem}}" classes to form the functional
-  object. Therefore, the object will be tied to the actual "Stem" object
-  and sampling method in use. Hence, individual \dQuote{InclusionZone}
-  objects will be made for each stem (i.e., downed log) in a collection
-  or population when the final objective is a sampling surface simulation.
-}
+\description{ This is a virtual class that defines the root structure
+  for inclusion zones used in areal sampling methods. In general,
+  subclasses will use objects generated from both
+  "\code{\linkS4class{ArealSampling}}" and "\code{\linkS4class{Stem}}"
+  classes to form the functional object. Therefore, the object will be
+  tied to the actual "Stem" object and sampling method in use. Hence,
+  individual \dQuote{InclusionZone} objects will be made for each stem
+  (i.e., downed log or standing tree) in a collection or population when
+  the final objective is a sampling surface simulation.  }
 
 \section{Objects from the Class}{A virtual Class: No objects may be
   created from it.}
@@ -86,7 +85,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-  For subclasses, see: \code{\linkS4class{downLogIZ}},
+  For subclasses associated with down logs, see: \code{\linkS4class{downLogIZ}},
   \code{\linkS4class{standUpIZ}},
   \code{\linkS4class{chainSawIZ}},
   \code{\linkS4class{sausageIZ}},
@@ -97,7 +96,16 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
   \code{\linkS4class{omnibusDLPDSIZ}}, 
   \code{\linkS4class{distanceLimitedIZ}},  
   \code{\linkS4class{distanceLimitedMCIZ}},  
-  and the \code{\linkS4class{downLogIZs}} container class.  }
+  and the \code{\linkS4class{downLogIZs}} container class. \\
+
+  For subclasses associated with standing trees, see:
+  \code{\linkS4class{standingTreeIZ}},
+  \code{\linkS4class{circularPlotIZ}},
+  \code{\linkS4class{horizontalPointIZ}},
+  and the \code{\linkS4class{standingTreeIZs}} container class. 
+  
+
+}
 
 \examples{
 showClass("InclusionZone")

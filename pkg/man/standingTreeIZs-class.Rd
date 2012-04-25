@@ -18,9 +18,9 @@
 \section{Objects from the Class}{ Objects can be created by calls of the
 form \code{new("standingTreeIZs", ...)}; however, as in the other classes
 within this package, constructors have been written to simplify the
-process. The \code{\link{standingTreeIZs}} constructor should therefore be used
-in preference to \code{new}.  The constructor, \code{\link{standingTreeIZs}}, has only one
-form.}
+process. A \code{\link{standingTreeIZs}} constructor should therefore be used
+in preference to \code{new}.  The constructor, \code{\link{standingTreeIZs}}, has different
+forms that will be useful with different classes of objects.}
 
 \section{Slots}{
 

@@ -223,6 +223,8 @@ function(object,
 #
 #   make sure the inclusion zone constructor is a valid available type...
 #
+    if(!is.character(iZone))                        #extends takes a character name
+      iZone = deparse(substitute(iZone))
     if(extends(iZone, 'downLogIZ')) {
       isLogs = TRUE                                 #proper English
       papa = getClass('downLogIZ')

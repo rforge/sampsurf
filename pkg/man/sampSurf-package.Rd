@@ -172,7 +172,7 @@ detail, including slot and argument definitions.
 
   \tabular{ll}{
 	\code{\linkS4class{Tract}} \tab Land area holding the population of individuals \cr
-	\code{\linkS4class{bufferedTract}} \tab A \dQuote{Tract} subclass with a buffer \cr
+	\code{\linkS4class{bufferedTract}} \tab A "Tract" subclass with a buffer \cr
   }
 
   The above classes are derived from the \code{\linkS4class{Raster}}
@@ -191,14 +191,14 @@ detail, including slot and argument definitions.
 
   \tabular{ll}{
 	\code{\linkS4class{ArealSampling}} \tab A class structure for describing areal sampling methods \cr
-    \code{\linkS4class{circularPlot}} \tab A subclass of \dQuote{ArealSampling} for circular plot construction\cr
-	\code{\linkS4class{pointRelascope}} \tab A subclass of \dQuote{ArealSampling} for point relascope sampling\cr
+    \code{\linkS4class{circularPlot}} \tab A subclass of "ArealSampling" for circular plot construction\cr
+	\code{\linkS4class{pointRelascope}} \tab A subclass of "ArealSampling" for point relascope sampling\cr
 	\code{\linkS4class{perpendicularDistance}} \tab A subclass of
-	      \dQuote{ArealSampling} for variants of perpendicular distance
+	      "ArealSampling" for variants of perpendicular distance
 	      sampling\cr 
-	\code{\linkS4class{distanceLimited}} \tab A subclass of \dQuote{ArealSampling} for distance limited sampling\cr
+	\code{\linkS4class{distanceLimited}} \tab A subclass of "ArealSampling" for distance limited sampling\cr
 	\code{\linkS4class{angleGauge}} \tab A subclass of
-	      \dQuote{ArealSampling} for angle gauge (e.g., prism) sampling\cr
+	      "ArealSampling" for angle gauge (e.g., prism) sampling\cr
 	}
 
   }%ArealSampling
@@ -230,7 +230,7 @@ detail, including slot and argument definitions.
 	  distance limited perpendicular distance method of sampling down logs.\cr
 	\code{\linkS4class{omnibusDLPDSIZ}} \tab Class for the omnibus
 	  distance limited perpendicular distance method of sampling down logs.\cr
-	\code{\linkS4class{hybridDLPDSIZ}} \tab Class for the \dQuote{hybrid}
+	\code{\linkS4class{hybridDLPDSIZ}} \tab Class for the "hybrid"
 	  distance limited perpendicular distance method of sampling down logs.\cr
 	\code{\linkS4class{distanceLimitedIZ}} \tab Class for the 
 	  distance limited method of sampling down logs.\cr
@@ -315,9 +315,9 @@ detail, including slot and argument definitions.
 
   \tabular{ll}{
 	\code{\link{downLog}} \tab Constructor for individual
-	  \dQuote{downLog} objects\cr   
+	  "downLog" objects\cr   
 	\code{\link{standingTree}} \tab Constructor for individual
-	  \dQuote{standingTree} objects\cr   
+	  "standingTree" objects\cr   
   }
 
   }%Stem
@@ -327,9 +327,9 @@ detail, including slot and argument definitions.
 
   \tabular{ll}{
 	\code{\link{downLogs}} \tab Constructs a container object holding
-	  multiple \dQuote{downLog} objects\cr
+	  multiple "downLog" objects\cr
 	\code{\link{standingTrees}} \tab Constructs a container object holding
-	  multiple \dQuote{standingTree} objects \cr
+	  multiple "standingTree" objects \cr
   }
   
   }%StemContainer
@@ -338,9 +338,9 @@ detail, including slot and argument definitions.
   \subsection{\dQuote{Tract} class constructors\ldots}{
 
   \tabular{ll}{
-    \code{\link{Tract}} \tab Constructor for \dQuote{Tract} objects \cr 
+    \code{\link{Tract}} \tab Constructor for "Tract" objects \cr 
 	\code{\link{bufferedTract}} \tab Constructs a
-	\dQuote{bufferedTract} object\cr
+	"bufferedTract" object\cr
   }
   }%Tract
 
@@ -366,33 +366,33 @@ detail, including slot and argument definitions.
 
   \tabular{ll}{	
 	\emph{Classes for down logs\ldots} \tab \cr
-	\code{\link{standUpIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{stand-up} sampling method \cr
-	\code{\link{sausageIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{sausage} sampling method \cr
-	\code{\link{chainSawIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{chainsaw} sampling method \cr
-	\code{\link{pointRelascopeIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{point relascope} sampling method \cr
-	\code{\link{perpendicularDistanceIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{perpendicular distance} sampling method \cr
-	\code{\link{omnibusPDSIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{omnibus perpendicular distance} sampling method \cr
-	\code{\link{distanceLimitedPDSIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{distance limited perpendicular distance} sampling method \cr
-	\code{\link{omnibusDLPDSIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{omnibus distance limited perpendicular distance} sampling method \cr
-	\code{\link{hybridDLPDSIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{hybrid distance limited perpendicular distance} sampling method \cr
-	\code{\link{distanceLimitedIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{distance limited} sampling method \cr
-	\code{\link{distanceLimitedMCIZ}} \tab Creates an \dQuote{InclusionZone}
-	  object for the \sQuote{distance limited Monte Carlo} sampling method \cr
+	\code{\link{standUpIZ}} \tab Creates an "InclusionZone"
+	  object for the 'stand-up' sampling method \cr
+	\code{\link{sausageIZ}} \tab Creates an "InclusionZone"
+	  object for the 'sausage' sampling method \cr
+	\code{\link{chainSawIZ}} \tab Creates an "InclusionZone"
+	  object for the 'chainsaw sampling method \cr
+	\code{\link{pointRelascopeIZ}} \tab Creates an "InclusionZone"
+	  object for the 'point relascope' sampling method \cr
+	\code{\link{perpendicularDistanceIZ}} \tab Creates an "InclusionZone"
+	  object for the 'perpendicular distance' sampling method \cr
+	\code{\link{omnibusPDSIZ}} \tab Creates an "InclusionZone"
+	  object for the 'omnibus perpendicular distance' sampling method \cr
+	\code{\link{distanceLimitedPDSIZ}} \tab Creates an "InclusionZone"
+	  object for the 'distance limited perpendicular distance' sampling method \cr
+	\code{\link{omnibusDLPDSIZ}} \tab Creates an "InclusionZone"
+	  object for the 'omnibus distance limited perpendicular distance' sampling method \cr
+	\code{\link{hybridDLPDSIZ}} \tab Creates an "InclusionZone"
+	  object for the 'hybrid distance limited perpendicular distance' sampling method \cr
+	\code{\link{distanceLimitedIZ}} \tab Creates an "InclusionZone"
+	  object for the 'distance limited' sampling method \cr
+	\code{\link{distanceLimitedMCIZ}} \tab Creates an "InclusionZone"
+	  object for the 'distance limited Monte Carlo' sampling method \cr
 	%
 	\emph{Classes for standing trees\ldots} \tab \cr
-	\code{\link{circularPlotIZ}} \tab Creates an \dQuote{InclusionZone}
+	\code{\link{circularPlotIZ}} \tab Creates an "InclusionZone"
 	  object for the fixed-area circular plot sampling method \cr
-	\code{\link{horizontalPointIZ}} \tab Creates an \dQuote{InclusionZone}
+	\code{\link{horizontalPointIZ}} \tab Creates an "InclusionZone"
 	  object for the horizontal point (prism) sampling method \cr
   }
   }%InclusionZone
@@ -402,9 +402,9 @@ detail, including slot and argument definitions.
 
   \tabular{ll}{  
 	\code{\link{downLogIZs}} \tab Creates a collection of
-	  \dQuote{downLogIZ} objects for down logs\cr
+	  "downLogIZ" objects for down logs\cr
 	\code{\link{standingTreeIZs}} \tab Creates a collection of
-	  \dQuote{standingTreeIZ} objects for standing trees\cr
+	  "standingTreeIZ" objects for standing trees\cr
   }
   
   }%izContainer
@@ -413,9 +413,9 @@ detail, including slot and argument definitions.
   \subsection{\dQuote{InclusionZoneGrid} class constructors\ldots}{
 
   \tabular{ll}{  	
-	\code{\link{izGrid}} \tab Creates an \dQuote{InclusionZoneGrid}
+	\code{\link{izGrid}} \tab Creates an "InclusionZoneGrid"
 	  object\cr
-	\code{\link{izGridCSFull}} \tab Creates an \dQuote{csFullInclusionZoneGrid}
+	\code{\link{izGridCSFull}} \tab Creates an "csFullInclusionZoneGrid"
 	object\cr
   }
   }%InclusionZoneGrid
@@ -424,7 +424,7 @@ detail, including slot and argument definitions.
   \subsection{\dQuote{sampSurf} class constructors\ldots}{
 
   \tabular{ll}{
-	\code{\link{sampSurf}} \tab Constructor for \dQuote{sampSurf}
+	\code{\link{sampSurf}} \tab Constructor for "sampSurf"
 	  objects\cr 
 	}
   }%sampSurf
@@ -446,8 +446,9 @@ detail, including slot and argument definitions.
   \tabular{ll}{
 	\code{\link{hist}} \tab Create a histogram of object attributes\cr	
 	\code{\link{plot}} \tab  To plot one of the package objects\cr
-	\code{\link{plot3D}} \tab  To plot \dQuote{sampSurf} objects using
-	  \pkg{rgl}\cr 
+	\code{\link{plot3D}} \tab  To plot "sampSurf" objects using
+	  package 'rgl'\cr 
+%when fixed, change this back to:	  \pkg{rgl}\cr 
 	\code{\link{show}} \tab  To succinctly print one of the package objects\cr
 	\code{\link{summary}} \tab  To summarize one of the package objects\cr
   } %tabular
@@ -458,7 +459,7 @@ detail, including slot and argument definitions.
 
 \section{Helper methods}{
   Slots in S4 objects can be accessed directly using \code{\link{slot}}
-  method or the \code{\link{@}} operator. However, some \dQuote{helper}
+  method or the \code{\link{@}} operator. However, some "helper"
   functions have been provided for certain objects, along with other
   potentially useful routines\ldots
 
@@ -489,10 +490,9 @@ detail, including slot and argument definitions.
   convert\ldots
 
   \tabular{ll}{
-	\code{\link{as}} \tab Convert from a \dQuote{downLogs} or \dQuote{standingTrees} object to a
+	\code{\link{as}} \tab Convert from a "downLogs" or "standingTrees" object to a
 	     data frame\cr
-	                 \tab Convert \dQuote{downLogIZs} or
-	     \dQuote{standingTreeIZs} object to respective \dQuote{StemContainer}\cr
+	\code{\link{as}} \tab Convert "downLogIZs" or "standingTreeIZs" object to respective "StemContainer"\cr
 	} %tabular
 
 	The resulting data frame in the first method will be compatible with those generated
@@ -554,19 +554,19 @@ detail, including slot and argument definitions.
   
   \tabular{ll}{
 	\code{\linkS4class{dlsIZNull}} \tab Accepts either class
-	  \dQuote{distanceLimitedIZ} (or subclass) or \dQuote{NULL}. \cr
+	  "distanceLimitedIZ" (or subclass) or "NULL". \cr
 	\code{\linkS4class{dlsNumeric}} \tab Accepts either class
-	  \dQuote{distanceLimited} or \dQuote{numeric}. \cr
+	  "distanceLimited" or "numeric". \cr
 	\code{\linkS4class{monteBSSampleOrNULL}} \tab Accepts either class
-	  \dQuote{monteBSSample} or \dQuote{NULL}. \cr
+	  "monteBSSample" or "NULL". \cr
 	\code{\linkS4class{monteNTSampleOrNULL}} \tab Accepts either class
-	  \dQuote{monteNTSample} or \dQuote{NULL}. \cr
+	  "monteNTSample" or "NULL". \cr
 	%next only used in solidType slot...  
 	\code{\linkS4class{numericNULL}} \tab Accepts either class
-	  \dQuote{numeric} or \dQuote{NULL}. \cr
+	  "numeric" or "NULL". \cr
 	\code{\linkS4class{pdsIZNull}} \tab Accepts either class
-	  \dQuote{perpendicularDistanceIZ} (or subclass) or
-	  \dQuote{NULL}. \cr
+	  "perpendicularDistanceIZ" (or subclass) or
+	  "NULL". \cr
   } %tabular
   
 } %class unions  
@@ -640,12 +640,12 @@ exhaustive.
 \item{}{Ducey, M. J., Williams, M. S., Gove, J. H., Roberge, S. and
   Kenning, R. S. 2012. Distance limited perpendicular distance sampling
   for coarse woody material: Theory and field results. \emph{Forestry}
-  (In review).}
+  (In press).}
 %
 \item{}{Gove, J. H., Ducey, M. J., Valentine, H. T. and Williams,
   M. S. 2012. A comprehensive comparison of perpendicular distance
   sampling methods for sampling down coarse woody
-  debris. \emph{Forestry} (In review).}
+  debris. \emph{Forestry} (In press).}
 
 }%describe
 
