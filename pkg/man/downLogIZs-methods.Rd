@@ -2,6 +2,7 @@
 \docType{methods}
 \alias{downLogIZs-methods}
 \alias{downLogIZs,list-method}
+\alias{downLogIZs,downLogs-method}
 
 \title{ Method for "downLogIZs" object construction in Package `sampSurf' }
 

@@ -2,6 +2,7 @@
 \docType{methods}
 \alias{standingTreeIZs-methods}
 \alias{standingTreeIZs,list-method}
+\alias{standingTreeIZs,standingTrees-method}
 
 \title{  Method for "standingTreeIZs" object construction in Package
   \pkg{sampSurf} }
