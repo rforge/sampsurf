@@ -1,0 +1,783 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+            "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+
+<head>
+<style type="text/css">.knitr {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}, 
+.warning {
+	font-weight: bold;
+} 
+.message {
+	font-style: italic;
+} 
+.source, .output, .warning, .error, .message {
+	padding: 0.5em 1em;
+}
+.background {
+  color: #F7F7F7;
+}
+
+.number {
+  color: #00000;
+}
+
+.functioncall {
+  color: #800054;
+  font-weight: bolder;
+}
+
+.string {
+  color: #9999FF;
+}
+
+.keyword {
+  font-weight: bolder;
+  color: black;
+}
+
+.argument {
+  color: #B04005;
+}
+
+.comment {
+  color: #2E9957;
+}
+
+.roxygencomment {
+  color: #707AB3;
+}
+
+.formalargs {
+  color: #B04005;
+}
+
+.eqformalargs {
+  color: #B04005;
+}
+
+.assignement {
+  font-weight: bolder;
+  color: #00000;
+}
+
+.package {
+  color: #96B525;
+}
+
+.slot {
+  font-style: italic;
+}
+
+.symbol {
+  color: #00000;
+}
+
+.prompt {
+  color: #444444;
+}
+</style>
+  <meta name="description" content="sampSurf: sampling surface simulation" /> 
+
+  <link rel="stylesheet" href="./css/sampSurf.css" type="text/css">
+  <link rel="stylesheet" href="./css/navList.css" type="text/css">
+
+  <title>The sampSurf Package</title>
+</head>
+
+<body id='container'>
+
+<!-- R-Forge Logo -->
+<div id='RFlogo'>
+<a href="https://r-forge.r-project.org/projects/sampsurf/">
+<img src="./images/logo.png" width="100%"/> </a>
+</div>
+
+
+
+<div id='content'>
+
+<h1> The sampSurf Package: Sampling Surface Simulation </h1>
+
+<!-- navigation menu -->
+<ul id="navlist">
+  <li><a href="#Overview">Overview</a></li>
+  <li><a href="#Installation">Installation</a></li>
+  <li><a href="#Examples">Examples</a></li>
+</ul><br><br>
+
+
+<!-- ============================================================================================== -->
+<h2><a name="Overview"></a>Overview of the sampSurf package</h2>
+
+<p> The <Rpkg>sampSurf</Rpkg> package can be used to construct sampling surface
+simulations for different areal sampling methods common to forestry and ecology. Areal
+sampling methods in general would include fixed-area plot methods, line intersect
+sampling, and various variable-radius plot sampling methods, the latter more commonly used
+in forestry. Most of these fall under the general probability proportional to size
+(<acronym>pps</acronym>) umbrella and have some form of inclusion zone associated with
+each individual in the population. The inclusion zone has well-defined area (sometimes
+called the inclusion area) and may be thought of simply as that zone within which a sample
+point could fall and select the associated individual. The sample point can be the center
+of a circular fixed-area plot, an actual point as in horizontal point sampling, or say,
+the midpoint of a line in line intersect sampling.
+</p>
+
+<p>
+In general we are interested in determining the properties of various sampling methods
+mentioned above when applied to fixed objects such as standing trees or down logs. The
+<Rpkg>sampSurf</Rpkg> package will allow generation of log or tree populations within a
+fixed tract area. The surface generated from the intersection of inclusion zones applied
+to the individuals in the population for a given attribute (e.g., cubic volume, number of
+individuals, etc.) are represented by the "sampSurf" class and can be displayed
+graphically. Estimator variance is directly associated with the sampling surface
+roughness, and so methods can also be compared visually.
+<!--An example of a graphical
+depiction of a sampling surface using the "sausage" method may be
+viewed <a href="./ssExample.pdf">here</a>. -->
+</p>
+
+<p>
+There are several vignettes associated with the package that provide detailed explanation
+and examples of the design and use of the various components. A good place to start is
+with <em>The sampSurf Package Overview</em> vignette, which provides an overview of the
+class structure, etc. The vignettes are all available from the package index help page
+once the package has been installed and loaded using library(). Another overview of the
+package in the help system can be found by issuing <Rcode>package?sampSurf</Rcode> at the
+R command line. This help page will provide links to all of the built-in class structure,
+generics with associated methods, and helper functions. Running the examples (with
+R's <Rcode>example()</Rcode> command) will also provide some help in getting started.
+</p>
+
+<p>
+Please note that <Rpkg>sampSurf</Rpkg> is quite functional, and has support for down logs
+sampled on fixed-area plots (which include the <sq>stand-up,</sq> <sa>sausage,</sq>
+and <sq>chainsaw</sq> methods or protocols), point relascope sampling, several variants of
+perpendicular distance sampling, as well as a new method called distance limited sampling
+and a Monte Carlo variant.  Support for standing trees has also been been added recently
+with classes and methods for fixed-area circular plot and horizontal point sampling
+methods. The overall class structure is designed to support additions with relative ease,
+so more methods will appear in future releases (hopefully with some contributed by
+users). At the current release, there are more than 20 variants of sampling methods
+available in the package (see <Rcode>package?sampSurf</Rcode> and the vignettes for
+details).
+</p>
+
+
+
+
+
+<!-- ============================================================================================== -->
+<h2><a name="Installation"></a>sampSurf installation</h2>
+
+<p>
+<Rpkg>sampSurf</Rpkg> is now on CRAN. It is probably best to install it from there as the
+version here at R-Forge might not always be fully functional. However, if you do desire to
+use the version here, please read what follows as it may help.
+</p>
+
+
+<p>
+On the project pages, you will note that you can install the package directly from R-Forge
+using&hellip;<br><br>
+
+<Rcode>install.packages("sampSurf", repos="http://R-Forge.R-project.org")</Rcode><br><br>
+
+and can include the dep=TRUE argument if you want the packages that <Rpkg>sampSurf</Rpkg>
+is dependent upon to also be installed. Unfortunately, installing the dependencies in this
+way may be a little difficult. First, I believe that the dependencies are only searched
+for on R-Forge, and not CRAN (you could add more repos to the list to
+compensate). Since <Rpkg>raster</Rpkg> and <Rpkg>rgl</Rpkg> are both R-Forge projects,
+they will be found. But <Rpkg>gpclib</Rpkg>, for example, is not on R-Forge and therefore
+R will complain that it can not find it. Second, the packages that are available on
+R-Forge could be in some intermediate stage of update, so it is better to install the
+required packages from CRAN, with what is known to be a stable release. The dependencies
+are listed in the DESCRIPTION file for <Rpkg>sampSurf</Rpkg>; they are:
+<Rpkg>sp</Rpkg>, <Rpkg>raster</Rpkg>, <Rpkg>rasterVis</Rpkg>,
+<Rpkg>gpclib</Rpkg>, with <Rpkg>rgl</Rpkg> suggested but not necessary unless you want to
+look at the sampling surfaces in 3D. Therefore, I would recommend that you use the normal
+<Rcode>install.packages()</Rcode> on all these packages so that you get the latest stable
+version from CRAN. Here is what I would try (in this order)&hellip;<br><br>
+
+<Rcode>install.packages("sp")</Rcode><br>
+<Rcode>install.packages("raster")</Rcode><br>
+<Rcode>install.packages("rasterVis")</Rcode><br>
+<Rcode>install.packages("gpclib")</Rcode><br>
+<Rcode>install.packages("sampSurf", repos="http://R-Forge.R-project.org")</Rcode><br><br>
+
+This should do it and get the correct stable releases from CRAN prior to installing
+<Rpkg>sampSurf</Rpkg>. Please note the limited use license restriction
+on <Rpkg>gpclib</Rpkg> (see this package on CRAN).
+</p>
+
+
+<h3>Enabling the R help system</h3>
+
+<p>
+One other thing that some R users may not be getting the full advantage of is the html
+help system. This really should be set up to work correctly in your .Rprofile file to get
+help via your web browser, using the local help file installation for each package (not
+just <Rpkg>sampSurf</Rpkg>). This will also enable you to see all of the vignette files for this
+package, which provide extensive documentation in PDF format. With the new dynamic help
+system that came in version 2.10.0, add these lines (with appropriate browser) to your
+.Rprofile&hellip;<br><br>
+
+<Rcode>options(help_type = 'html')</Rcode><br>
+<Rcode>options(browser='firefox')</Rcode><br><br>
+
+That should do it on linux, I have not tested this on other platforms, but it probably
+will work. Now when you do something like <Rcode>package?sampSurf</Rcode> at the R command
+line, you will get the response in your browser with hyper links to other useful pages.
+</p>
+
+
+<h3><Rpkg>rgl</Rpkg> Installation</h3>
+
+<p>
+On Linux, the <Rpkg>rgl</Rpkg> package requires system dependencies. The freeglut and mesa
+libraries must be installed. But in addition, the <em>development</em> versions of
+freeglut and libpng must also be install for <Rpkg>rgl</Rpkg> to run. On Fedora 12, these
+were freeglut-devel and libpng-devel which could be installed with yum prior to
+installing <Rpkg>rgl</Rpkg> within R. If you use windows or OS X, unfortunately I can not
+be of any help (but please let me know so I can post instructions here for others if there
+is anything extra one has to do).
+</p>
+
+<h3><Rpkg>sampSurf</Rpkg> package vignettes</h3>
+
+<p>
+As noted above, there are a number of package vignettes distributed with the package
+itself. These can also be downloaded here from the R-Forge versions if desired&hellip;
+</p>
+
+<ol>
+  <li><a href="../pkg/inst/doc/Overview.pdf"><em>The <Rpkg>sampSurf</Rpkg> Package Overview</em></a></li>
+  <li><a href="../pkg/inst/doc/ArealSamplingClass.pdf"><em>The <Rclass>ArealSampling</Rclass> Class</em></a></li>
+  <li><a href="../pkg/inst/doc/StemClass.pdf"><em>The <Rclass>Stem</Rclass> Class</em></a></li>
+  <li><a href="../pkg/inst/doc/TractClass.pdf"><em>The <Rclass>Tract</Rclass> Class</em></a></li>
+  <li><a href="../pkg/inst/doc/InclusionZoneClassClass.pdf"><em>The <Rclass>InclusionZone</Rclass> Class</em></a></li>
+  <li><a href="../pkg/inst/doc/InclusionZoneClassGridClass.pdf"><em>The <Rclass>InclusionZoneGrid</Rclass> Class</em></a></li>
+  <li><a href="../pkg/inst/doc/sampSurfClass.pdf"><em>The <Rclass>sampSurf</Rclass> Class</em></a></li>
+  <li><a href="../pkg/inst/doc/sampSurfExtensions.pdf"><em>Extending <Rclass>sampSurf</Rclass> Package</em></a></li>
+  <li><a href="../pkg/inst/doc/monte.pdf"><em><Rclass>monte</Rclass>: When is n Sufficiently Large?</em></a></li>
+</ol>
+
+The <em>Getting Started with Package <Rpkg>sampSurf</Rpkg></em> vignette is available only
+from CRAN, as it is built with the package there.
+
+
+
+
+
+<!-- ============================================================================================== -->
+<h2><a name="Examples"></a>sampSurf examples</h2>
+
+
+
+<p>
+Here we present some very simple examples illustrating how to use a few of the main
+functions in the <Rpkg>sampSurf</Rpkg> package. The vignettes go into extensive detail
+concerning the use of the methods shown below. In addition, the online help system is
+quite thorough in documenting class structures, generic functions, and their
+methods. Therefore, we have provided just a very terse set of examples to show a little of
+the functionality of the package here.
+</p>
+
+<p>
+In general, there are two main ways to create a sampling surface: (1) simple, uaually
+"one-off" construction, or (2) progressive, by constructing intermediate elements that can
+be re-used for comparison of methods, etc. Both will be demonstrated below.
+</p>
+
+
+
+<h3> Simple sampling surface construction </h3>
+
+<p>
+The first example shows how to create a sampling surface "on-the-fly," as it were, by
+hiding the intermediate steps used in building the surface. The only exception is that we
+always need some form of <Rclass>Tract</Rclass> object to be created ahead of time with the desired
+extents and resolution. This method is simple, but it does not easily allow for reuse of elements
+(e.g., the stem population, though it can be extracted if desired for reuse) in comparing
+other attribute surfaces, or different sampling methods. 
+
+
+
+
+<p> 
+The first component that is always required for a completed sampling surface is a <Rclass>Tract</Rclass>
+object with defined extents and resolution&hellip;
+</p>
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">sampSurf</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="symbol">tract.m</span> <span class="assignement">=</span> <span class="functioncall">Tract</span><span class="keyword">(</span><span class="functioncall">c</span><span class="keyword">(</span><span class="argument">x</span> <span class="argument">=</span> <span class="number">71</span><span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="number">71</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">cellSize</span> <span class="argument">=</span> <span class="number">0.5</span><span class="keyword">)</span>  <span class="comment">#in meters</span>
+<span class="prompt">R&gt; </span><span class="symbol">buffTract.m</span> <span class="assignement">=</span> <span class="functioncall">bufferedTract</span><span class="keyword">(</span><span class="argument">bufferWidth</span> <span class="argument">=</span> <span class="number">10</span><span class="keyword">,</span> <span class="symbol">tract.m</span><span class="keyword">)</span>
+</div></pre>
+
+
+<p>
+In the above example, we have first made a <Rclass>Tract</Rclass> object in metric (SI) units with no
+buffer that is one half hectare in area (71x71m), and has a grid resolution of 0.5m. The
+second step creates a buffered version with a 10m internal buffer. The two steps could, of
+course, be combined into one, but they are separated here for clarity. The internal buffer
+is generally set large enough that no inclusion zones will overlap the outer tract
+boundary; thus, eliminating concern for boundary slopover issues.
+</p>
+
+<p>
+Next, simply run the <Rcode>sampSurf</Rcode> constructor to create an object of that class
+with the desired number of, in this case, downed logs (first argument). The sampling
+method to apply to the logs is passed in the <Rcode>iZone</Rcode> argument; e.g.,&hellip;
+</p>
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="symbol">sausageLen.ss</span> <span class="assignement">=</span> <span class="functioncall">sampSurf</span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span> <span class="argument">tract</span> <span class="argument">=</span> <span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">iZone</span> <span class="argument">=</span> <span class="string">'sausageIZ'</span><span class="keyword">,</span>
+<span class="prompt">+ </span>                         <span class="argument">plotRadius</span> <span class="argument">=</span> <span class="number">3</span><span class="keyword">,</span> <span class="argument">estimate</span> <span class="argument">=</span> <span class="string">'Length'</span><span class="keyword">,</span>
+<span class="prompt">+ </span>                         <span class="argument">buttDiams</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span> <span class="number">50</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">logLens</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">2</span><span class="keyword">,</span> <span class="number">8</span><span class="keyword">)</span><span class="keyword">)</span>
+</div><div class="output">
+Number of logs in collection = 20
+Heaping log: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
+</div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">sausageLen.ss</span><span class="keyword">,</span> <span class="argument">useImage</span> <span class="argument">=</span> <span class="number">FALSE</span><span class="keyword">)</span>
+</div><img src="figures/ss-sausageLen.png" class="plot" />
+</pre>
+
+
+<p> Notice that you can specify the default log dimensions (e.g., <Rcode>buttDiams</Rcode>
+  for the range in large-end log diameters) that will be used in creating the synthetic
+  log population for this simulation. The <Rcode>plotRadius</Rcode> argument specifies the
+  radius of the <sq>sausage-shaped</sq> inclusion zone to be associated with each
+  log. The <Rcode>plot</Rcode> function shows a two-dimensional display of the sampling
+  surface, with down logs plotted by default. The logs are created so that their midpoints
+  (both longitudinal and radial) fall within the internal buffer of
+  the <Rclass>bufferedTract</Rclass> object. Choosing a plot radius that keeps all of the
+  inclusion zones within the tract for the longest possible log will ensure that all
+  inclusion zones fit within the tract, eliminating boundary slopover issues. The
+  constructor will warn you if any inclusion zones overlap the tract boundary.
+</p>
+
+
+<p>
+ A summary of the object is often useful&hellip;
+</p>
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="symbol">sausageLen.ss</span>
+</div><div class="output">
+Object of class: sampSurf
+------------------------------------------------------------
+sampling surface object
+------------------------------------------------------------
+
+Inclusion zone objects: sausageIZ
+Estimate: Length
+Number of logs = 20
+
+------------------------------------------------------------
+object of class Tract
+------------------------------------------------------------
+Measurement units = metric
+Area in square meters = 5041 (0.5041 hectares)
+
+class       : bufferedTract 
+dimensions  : 142, 142, 20164  (nrow, ncol, ncell)
+resolution  : 0.5, 0.5  (x, y)
+extent      : 0, 71, 0, 71  (xmin, xmax, ymin, ymax)
+coord. ref. : NA 
+values      : in memory
+min value   : 0 
+max value   : 1183 
+
+Buffer width =  10
+
+</div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">sausageLen.ss</span><span class="keyword">)</span>
+</div><div class="output">
+Object of class: sampSurf
+------------------------------------------------------------
+sampling surface object
+------------------------------------------------------------
+
+Inclusion zone objects: sausageIZ
+Measurement units = metric
+Number of logs = 20
+True log volume = 5.89 cubic meters
+True log length = 97.38 meters
+True log surface area = 81.83 square meters
+True log coverage area = 26.02 square meters
+True log biomass = NA
+True log carbon = NA
+
+Estimate attribute: Length
+Surface statistics...
+  mean = 97.34
+  bias = -0.04141
+  bias percent = -0.04252
+  sum = 1962735
+  var = 44212
+  st. dev. = 210.3
+  cv % = 216
+  surface max = 1183
+  total # grid cells = 20164
+  grid cell resolution (x & y) = 0.5 meters
+  # of background cells (zero) = 16215
+  # of inclusion zone cells = 3949
+
+</div></pre>
+
+
+<p>
+Printing the object in the first line, displays the specification on the
+internal <Rclass>Tract</Rclass> object, which derives from <Rclass>RasterLayer</Rclass> in
+the <Rpkg>raster</Rpkg> package. Using <Rcode>summary</Rcode> on the object returns
+information about the sampling statistics for the object.
+</p>
+
+<p>
+We can also display the surface nicely using the <Rpkg>rgl</Rpkg> package; take a minute
+to compare this to the two-dimensional display to see how the surface builds as inclusion
+zones overlap&hellip;
+</p>
+
+
+
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">rgl</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="functioncall">plot3D</span><span class="keyword">(</span><span class="symbol">sausageLen.ss</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="functioncall">par3d</span><span class="keyword">(</span><span class="argument">zoom</span> <span class="argument">=</span> <span class="number">0.8</span><span class="keyword">)</span>
+</div><img src="figures/ss-sausageLen-rgl.png" class="plot" style="margin: auto; display: block"/>
+</pre>
+
+
+
+
+
+<p>
+Note that sampling for log length under the sausage sampling protocol of fixed-area plot
+sampling yields a constant height surface for each log, which varies between logs. This
+method is a probability proportional to length estimation method, and normally the heights
+would be constant for all logs under such a design. But sausage sampling is a little
+different in this respect because of the way the inclusion area is determined.
+
+
+
+
+<h3>Detailed sampling surface construction </h3>
+
+<p>
+In this section we will look at elaborating on what was done in the previous section by
+showing how a sampling surface can be built by creating most of the intermediate objects
+"by hand." (I say "most" here because <Rclass>InclusionZoneGrid</Rclass> objects are
+automatically created by the <Rcode>sampSurf</Rcode> constructor.) The basic steps are as
+follows&hellip;
+
+<ol>
+<li> Create a <Rclass>Tract</Rclass> object.</li>
+<li> Create a population of synthetic stems in the form of logs or trees.</li>
+<li> If need be, create an <Rclass>ArealSampling</Rclass> object with the specifications
+  for the method.</li>
+<li> Combine the stem population and the sampling method population in the last two steps
+  and form the population of <Rclass>InclusionZone</Rclass> objects.</li>
+<li> Create the sampling surface from the collection in the previous step.</li>
+</ol>
+
+Some sampling methods or protocols do not require you to explicitly create an object that
+describes the sampling method in step 3; these include the fixed-area plot methods, where
+one simply specifies a plot radius. All other methods require information on design
+parameters as we will see below.
+</p>
+
+<p>
+We will use the <Rclass>Tract</Rclass> object from the first example. In this example, we will look at
+another down coarse woody debris sampling method known as perpendicular distance sampling
+(<acronym>pds</acronym>). Start by creating a population of down logs&hellip;
+</p>
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="symbol">dLogs</span> <span class="assignement">=</span> <span class="functioncall">downLogs</span><span class="keyword">(</span><span class="number">25</span><span class="keyword">,</span> <span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">buttDiams</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">25</span><span class="keyword">,</span> <span class="number">50</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">logLens</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">5</span><span class="keyword">,</span> <span class="number">10</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="symbol">dLogs</span>
+</div><div class="output">
+Object of class: downLogs
+------------------------------------------------------------
+
+------------------------------------------------------------
+Container class object...
+  Units of measurement:  metric
+
+  Encapulating bounding box...
+    min   max
+x 18.53 61.91
+y 13.76 61.49
+
+  There are 25 logs in the population
+  Population log volume =  13.02 cubic meters
+  Population log surface area =  166.9 square meters
+  Population log coverage area =  53.09 square meters
+  Average volume/log =  0.5208 cubic meters
+  Average surface area/log =  6.675 square meters
+  Average coverage area/log =  2.123 square meters
+  Average length/log =  7.332 meters
+(**All statistics exclude NAs)
+</div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">gridColor</span> <span class="argument">=</span> <span class="string">'grey70'</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">dLogs</span><span class="keyword">,</span> <span class="argument">add</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">)</span>
+</div><img src="figures/ss-dLogs.png" class="plot" />
+</pre>
+
+
+<p>
+We created a population of rather long, and large-diameter logs so they display nicely on
+the plot (remember, this is a metric example, and the <Rcode>buttDiams</Rcode> argument is in
+cm). The collection is created using the <Rcode>downLogs</Rcode> object constructor. The
+second line prints some summary information about the collection.
+</p>
+
+<p>
+Next, since we know we want to use <acronym>pds</acronym>, we need to create an object
+that contains the information about that sampling method in the form of design parameters
+for the distance limit. This is most easily done in terms of a
+"K<sub><acronym>pds</acronym></sub> factor" for the method&hellip;
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="symbol">pds.m</span> <span class="assignement">=</span> <span class="functioncall">perpendicularDistance</span><span class="keyword">(</span><span class="number">50</span><span class="keyword">,</span> <span class="argument">description</span> <span class="argument">=</span> <span class="string">"PDS parameters"</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="symbol">pds.m</span>
+</div><div class="output">
+Object of class: perpendicularDistance
+------------------------------------------------------------
+PDS parameters
+------------------------------------------------------------
+
+ArealSampling...
+  units of measurement:  metric
+
+perpendicularDistance...
+  kPDS factor = 50 per meter [or dimensionless] for volume [surface/coverage area]
+  volume [surface/coverage area] factor = 100 cubic meters [square meters] per hectare
+</div></pre>
+
+
+<p> The default is for metric units as we can see in the object summary. The associated
+volume, surface and coverage areas are determined for this particular
+K<sub><acronym>pds</acronym></sub> factor and are also shown in the summary. I don't want
+to get into the structure of the package classes too much at this point, but the summary
+shows that the <Rclass>perpendicularDistance</Rclass> class is a subclass of
+<Rclass>ArealSampling,</Rclass> and the pertinent information for both classes is shown
+(i.e., the subclass inherits the <Rcode>units</Rcode> slot information from the
+superclass). With regard to the volume (surface or coverage area)
+factor, <acronym>pds</acronym> is a probability proportional to volume (surface or
+coverage area) sampling method, depending on which protocol is selected in the next step
+(where the inclusion zones are created). Therefore, each log counted on a sample point
+contributes, in this case, 100m<sup>3</sup> (or 100m<sup>2</sup>) of volume (surface or
+coverage area) to the estimate.
+</p>
+
+
+<p>
+The next step is to combine the collection of down logs and the appropriate sampling
+method parameters (the last two objects created above) and make the inclusion zones for
+each log. In the end, what we want is a collection of inclusion zones, one for each log,
+to match the <Rcode>dLogs</Rcode> object created above. The <Rpkg>sampSurf</Rpkg> package
+has "container classes" to help with this. For example, the <Rcode>dLogs</Rcode> object is
+a container of individual down log (class <Rclass>downLog</Rclass>) objects. Likewise, the
+following creates a container of all the individual inclusion zone objects. It does this
+by applying the <Rcode>perpendicularDistanceIZ</Rcode> constructor method to each log in
+the collection&hellip;
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="symbol">dLogs.izs</span> <span class="assignement">=</span> <span class="functioncall">downLogIZs</span><span class="keyword">(</span><span class="symbol">dLogs</span><span class="keyword">,</span> <span class="argument">iZone</span> <span class="argument">=</span> <span class="string">'perpendicularDistanceIZ'</span><span class="keyword">,</span> <span class="argument">pds</span> <span class="argument">=</span> <span class="symbol">pds.m</span><span class="keyword">,</span>
+<span class="prompt">+ </span>                       <span class="argument">pdsType</span> <span class="argument">=</span> <span class="string">'volume'</span><span class="keyword">,</span>
+<span class="prompt">+ </span>                       <span class="argument">description</span> <span class="argument">=</span> <span class="string">'pds inclusion zones for dLogs'</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="symbol">dLogs.izs</span>
+</div><div class="output">
+Container object of class: downLogIZs
+------------------------------------------------------------
+pds inclusion zones for dLogs
+------------------------------------------------------------
+There are 25 inclusion zones in the population
+Inclusion zones are of class: perpendicularDistanceIZ
+Units of measurement:  metric
+Summary of inclusion zone areas in square meters...
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     var    SDev 
+  22.00   30.30   43.20   52.10   65.20  136.00  803.95   28.35 
+
+Encapulating bounding box...
+     min   max
+x 17.058 63.85
+y  5.902 65.02
+
+</div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">gridColor</span> <span class="argument">=</span> <span class="string">'grey70'</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">dLogs.izs</span><span class="keyword">,</span> <span class="argument">add</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">)</span>
+</div><img src="figures/ss-dLogs-izs.png" class="plot" />
+</pre>
+
+
+<p>
+Note that the <Rcode>downLogIZs</Rcode> constructor method creates the collection, and can
+work with any sampling method known to sampSurf that can be applied to sampling down logs
+(there's a companion method for standing trees as we will see in the next section). A
+summary of the collection is then printed showing some statistics on the inclusion zone
+areas (use <Rcode>hist</Rcode> on this object to display a histogram of the areas). Next,
+as a quick check to make sure all zones lie within the <Rclass>Tract</Rclass> object, the
+collection is plotted over the tract. Finally, we chose sampling with probability
+proportional to volume in this example (the <Rcode>pdsType</Rcode> argument). Therefore,
+the shape of the individual inclusion zones is an inflated version of each log's
+individual taper in terms of cross-sectional area along the stem (the integral of
+cross-sectional area is volume).
+</p>
+
+Of course now the last step is simply to create the sampling surface from the objects we
+have built in the previous steps. The sampling surface will be for volume in this
+case&hellip;
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="symbol">dLogs.ss</span> <span class="assignement">=</span> <span class="functioncall">sampSurf</span><span class="keyword">(</span><span class="symbol">dLogs.izs</span><span class="keyword">,</span> <span class="symbol">buffTract.m</span><span class="keyword">)</span>
+</div><div class="output">
+Number of logs in collection = 25
+Heaping log: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,
+</div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">dLogs.ss</span><span class="keyword">)</span>
+</div><div class="output">
+Object of class: sampSurf
+------------------------------------------------------------
+sampling surface object
+------------------------------------------------------------
+
+Inclusion zone objects: perpendicularDistanceIZ (with PP to: volume)
+Measurement units = metric
+Number of logs = 25
+True log volume = 13.02 cubic meters
+True log length = 183.3 meters
+True log surface area = 166.9 square meters
+True log coverage area = 53.09 square meters
+True log biomass = NA
+True log carbon = NA
+
+Estimate attribute: volume
+Surface statistics...
+  mean = 12.99
+  bias = -0.02725
+  bias percent = -0.2093
+  sum = 261981
+  var = 824.4
+  st. dev. = 28.71
+  cv % = 221
+  surface max = 201.6
+  total # grid cells = 20164
+  grid cell resolution (x & y) = 0.5 meters
+  # of background cells (zero) = 16094
+  # of inclusion zone cells = 4070
+
+</div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">dLogs.ss</span><span class="keyword">,</span> <span class="argument">useImage</span> <span class="argument">=</span> <span class="number">FALSE</span><span class="keyword">)</span>
+</div><img src="figures/ss-pdsVolume.png" class="plot" />
+</pre>
+
+
+<p>
+Note in the summary that the method is unbiased. And, as in the first example, we can
+visualize the surface using <Rpkg>rgl</Rpkg>&hellip;
+</p>
+
+
+
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">rgl</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="functioncall">plot3D</span><span class="keyword">(</span><span class="symbol">dLogs.ss</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="functioncall">par3d</span><span class="keyword">(</span><span class="argument">zoom</span> <span class="argument">=</span> <span class="number">0.8</span><span class="keyword">)</span>
+</div><img src="figures/ss-pdsVol-rgl.png" class="plot" style="margin: auto; display: block"/>
+</pre>
+
+
+
+
+
+<p>
+Because we are sampling with probability proportional to volume, and estimating volume,
+the volume estimate for each log is the same and it gets spread evenly over its inclusion
+zone under <acronym>pds</acronym>. Also, since each log accounts for the same estimate
+(the volume factor), we get an even stair-step "heaping" of the surface where the
+inclusion zones intersect. This is the more normal case when you are sampling to estimate
+the "design attribute" that the method is optimized in terms of. The sausage protocol
+above is an exception to this rule.
+</p>
+
+
+
+<h3>A final example </h3>
+
+<p>
+In the previous examples we have ignored standing trees and English units. Here we will
+rectify this. The steps presented below are the same as those outlined in the previous
+section, except they are applied to standing trees (and of course, the vignettes have much
+more detail on each step). You can look at
+(i.e., <Rcode>print</Rcode>, <Rcode>plot</Rcode>, <Rcode>hist</Rcode>, etc.) the objects
+created below to get more familiar with the package&hellip;
+</p>
+
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="symbol">tract.e</span> <span class="assignement">=</span> <span class="functioncall">Tract</span><span class="keyword">(</span><span class="functioncall">c</span><span class="keyword">(</span><span class="argument">x</span> <span class="argument">=</span> <span class="number">208</span><span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="number">209</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">units</span> <span class="argument">=</span> <span class="string">'English'</span><span class="keyword">,</span> <span class="argument">cellSize</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">)</span> <span class="comment">#feet here</span>
+<span class="prompt">R&gt; </span><span class="symbol">buffTract.e</span> <span class="assignement">=</span> <span class="functioncall">bufferedTract</span><span class="keyword">(</span><span class="argument">bufferWidth</span> <span class="argument">=</span> <span class="number">30</span><span class="keyword">,</span> <span class="symbol">tract.e</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="symbol">sTrees</span> <span class="assignement">=</span> <span class="functioncall">standingTrees</span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span> <span class="symbol">buffTract.e</span><span class="keyword">,</span> <span class="argument">dbhs</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">6</span><span class="keyword">,</span> <span class="number">15</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">heights</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">30</span><span class="keyword">,</span> <span class="number">50</span><span class="keyword">)</span><span class="keyword">,</span>
+<span class="prompt">+ </span>                       <span class="argument">units</span> <span class="argument">=</span> <span class="string">'English'</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="symbol">aGauge</span> <span class="assignement">=</span> <span class="functioncall">angleGauge</span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span> <span class="argument">units</span> <span class="argument">=</span> <span class="string">'English'</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="symbol">sTrees.izs</span> <span class="assignement">=</span> <span class="functioncall">standingTreeIZs</span><span class="keyword">(</span><span class="symbol">sTrees</span><span class="keyword">,</span> <span class="argument">iZone</span> <span class="argument">=</span> <span class="string">'horizontalPointIZ'</span><span class="keyword">,</span>
+<span class="prompt">+ </span>                             <span class="argument">angleGauge</span> <span class="argument">=</span> <span class="symbol">aGauge</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="symbol">hps.ss</span> <span class="assignement">=</span> <span class="functioncall">sampSurf</span><span class="keyword">(</span><span class="symbol">sTrees.izs</span><span class="keyword">,</span> <span class="symbol">buffTract.e</span><span class="keyword">,</span> <span class="argument">estimate</span> <span class="argument">=</span> <span class="string">'Density'</span><span class="keyword">)</span>
+</div><div class="output">
+Number of trees in collection = 20
+Heaping tree: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
+</div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">hps.ss</span><span class="keyword">,</span> <span class="argument">useImage</span> <span class="argument">=</span> <span class="number">FALSE</span><span class="keyword">)</span>
+</div><img src="figures/ss-hpsSS.png" class="plot" />
+</pre>
+
+
+
+
+
+
+<pre class="knitr"><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">rgl</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="functioncall">plot3D</span><span class="keyword">(</span><span class="symbol">hps.ss</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="functioncall">par3d</span><span class="keyword">(</span><span class="argument">zoom</span> <span class="argument">=</span> <span class="number">0.8</span><span class="keyword">)</span>
+</div><img src="figures/ss-hps-rgl.png" class="plot" style="margin: auto; display: block"/>
+</pre>
+
+
+
+
+
+<p>
+Note in the figures that larger trees represent fewer trees per acre, and thus have lower
+surface height than smaller trees. Some sampling methods (or protocols for a given method)
+even have variable height surfaces within individual inclusion zones for each stem,
+perhaps you'll stumble across these in the use of this package.
+</p>
+
+<h3>Summary</h3>
+
+<p>
+The examples presented assume some knowledge of the subject area with respect to areal
+sampling methods. Hopefully one can get an idea of what is involved in using the package
+and some uses it might be put to by comparing different (or new) methods on the sample
+stem populations. The vignettes provide much more detail and both they and the web pages
+have references to some of the more recent papers on both the sampling methods and the
+sampling surface concept. Please let me know if you've found <Rpkg>sampSurf</Rpkg> useful.
+</p>
+
+
+
+
+
+
+
+</div> <!-- #content -->
+
+<!-- ============================================================================================== -->
+
+
+
+   
+<div id="cleardiv"></div>
+
+<div id="footer">
+  <i>The examples in this page were generated using the very useful R package <Rpkg>knitr</Rpkg>.<br>
+  Last updated: 10-May-2012 (jhg)</i>
+</div>
+
+</body>
+</html>
