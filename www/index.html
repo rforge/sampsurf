@@ -104,7 +104,11 @@
 
 <div id='content'>
 
-<h1> The sampSurf Package: Sampling Surface Simulation </h1>
+<!--
+<h1><a href="https://r-forge.r-project.org/projects/sampsurf/">
+ The sampSurf Package: Sampling Surface Simulation  </a></h1> -->
+
+<h1>The sampSurf Package: Sampling Surface Simulation </h1>
 
 <!-- navigation menu -->
 <ul id="navlist">
@@ -149,16 +153,17 @@ There are several vignettes associated with the package that provide detailed ex
 and examples of the design and use of the various components. A good place to start is
 with <em>The sampSurf Package Overview</em> vignette, which provides an overview of the
 class structure, etc. The vignettes are all available from the package index help page
-once the package has been installed and loaded using library(). Another overview of the
-package in the help system can be found by issuing <Rcode>package?sampSurf</Rcode> at the
-R command line. This help page will provide links to all of the built-in class structure,
-generics with associated methods, and helper functions. Running the examples (with
-R's <Rcode>example()</Rcode> command) will also provide some help in getting started.
+once the package has been installed and loaded using <Rcode>library()</Rcode>. Another
+overview of the package in the help system can be found by
+issuing <Rcode>package?sampSurf</Rcode> at the R command line. This help page will provide
+links to all of the built-in class structure, generics with associated methods, and helper
+functions. Running the examples (with R's <Rcode>example()</Rcode> command) will also
+provide some help in getting started.
 </p>
 
 <p>
 Please note that <Rpkg>sampSurf</Rpkg> is quite functional, and has support for down logs
-sampled on fixed-area plots (which include the <sq>stand-up,</sq> <sa>sausage,</sq>
+sampled on fixed-area plots (which include the <sq>stand-up,</sq> <sq>sausage,</sq>
 and <sq>chainsaw</sq> methods or protocols), point relascope sampling, several variants of
 perpendicular distance sampling, as well as a new method called distance limited sampling
 and a Monte Carlo variant.  Support for standing trees has also been been added recently
@@ -190,19 +195,20 @@ using&hellip;<br><br>
 
 <Rcode>install.packages("sampSurf", repos="http://R-Forge.R-project.org")</Rcode><br><br>
 
-and can include the dep=TRUE argument if you want the packages that <Rpkg>sampSurf</Rpkg>
-is dependent upon to also be installed. Unfortunately, installing the dependencies in this
-way may be a little difficult. First, I believe that the dependencies are only searched
-for on R-Forge, and not CRAN (you could add more repos to the list to
-compensate). Since <Rpkg>raster</Rpkg> and <Rpkg>rgl</Rpkg> are both R-Forge projects,
-they will be found. But <Rpkg>gpclib</Rpkg>, for example, is not on R-Forge and therefore
-R will complain that it can not find it. Second, the packages that are available on
-R-Forge could be in some intermediate stage of update, so it is better to install the
-required packages from CRAN, with what is known to be a stable release. The dependencies
-are listed in the DESCRIPTION file for <Rpkg>sampSurf</Rpkg>; they are:
+and can include the <Rcode>dep=TRUE</Rcode> argument if you want the packages
+that <Rpkg>sampSurf</Rpkg> is dependent upon to also be installed. Unfortunately,
+installing the dependencies in this way may be a little difficult. First, I believe that
+the dependencies are only searched for on R-Forge, and not CRAN (you could add more repos
+to the list to compensate). Since <Rpkg>raster</Rpkg> and <Rpkg>rgl</Rpkg> are both
+R-Forge projects, they will be found. But <Rpkg>gpclib</Rpkg>, for example, is not on
+R-Forge and therefore R will complain that it can not find it. Second, the packages that
+are available on R-Forge could be in some intermediate stage of update, so it is better to
+install the required packages from CRAN, with what is known to be a stable release. The
+dependencies are listed in the DESCRIPTION file for <Rpkg>sampSurf</Rpkg>; they are:
 <Rpkg>sp</Rpkg>, <Rpkg>raster</Rpkg>, <Rpkg>rasterVis</Rpkg>,
-<Rpkg>gpclib</Rpkg>, with <Rpkg>rgl</Rpkg> suggested but not necessary unless you want to
-look at the sampling surfaces in 3D. Therefore, I would recommend that you use the normal
+<Rpkg>gpclib</Rpkg> and <Rpkg>boot</Rpkg>, with <Rpkg>rgl</Rpkg> suggested but not
+necessary unless you want to look at the sampling surfaces in 3D. Therefore, I would
+recommend that you use the normal
 <Rcode>install.packages()</Rcode> on all these packages so that you get the latest stable
 version from CRAN. Here is what I would try (in this order)&hellip;<br><br>
 
@@ -210,6 +216,7 @@ version from CRAN. Here is what I would try (in this order)&hellip;<br><br>
 <Rcode>install.packages("raster")</Rcode><br>
 <Rcode>install.packages("rasterVis")</Rcode><br>
 <Rcode>install.packages("gpclib")</Rcode><br>
+<Rcode>install.packages("boot")</Rcode><br>
 <Rcode>install.packages("sampSurf", repos="http://R-Forge.R-project.org")</Rcode><br><br>
 
 This should do it and get the correct stable releases from CRAN prior to installing
@@ -222,17 +229,17 @@ on <Rpkg>gpclib</Rpkg> (see this package on CRAN).
 
 <p>
 One other thing that some R users may not be getting the full advantage of is the html
-help system. This really should be set up to work correctly in your .Rprofile file to get
-help via your web browser, using the local help file installation for each package (not
-just <Rpkg>sampSurf</Rpkg>). This will also enable you to see all of the vignette files for this
-package, which provide extensive documentation in PDF format. With the new dynamic help
-system that came in version 2.10.0, add these lines (with appropriate browser) to your
-.Rprofile&hellip;<br><br>
+help system. This really should be set up to work correctly in your <Code>.Rprofile</Code>
+file to get help via your web browser, using the local help file installation for each
+package (not just <Rpkg>sampSurf</Rpkg>). This will also enable you to see all of the
+vignette files for this package, which provide extensive documentation in PDF format. With
+the new dynamic help system that came in version 2.10.0, add these lines (with appropriate
+browser) to your <Code>.Rprofile</Code>&hellip;<br><br>
 
 <Rcode>options(help_type = 'html')</Rcode><br>
 <Rcode>options(browser='firefox')</Rcode><br><br>
 
-That should do it on linux, I have not tested this on other platforms, but it probably
+That should do it on Linux, I have not tested this on other platforms, but it probably
 will work. Now when you do something like <Rcode>package?sampSurf</Rcode> at the R command
 line, you will get the response in your browser with hyper links to other useful pages.
 </p>
@@ -243,11 +250,12 @@ line, you will get the response in your browser with hyper links to other useful
 <p>
 On Linux, the <Rpkg>rgl</Rpkg> package requires system dependencies. The freeglut and mesa
 libraries must be installed. But in addition, the <em>development</em> versions of
-freeglut and libpng must also be install for <Rpkg>rgl</Rpkg> to run. On Fedora 12, these
-were freeglut-devel and libpng-devel which could be installed with yum prior to
-installing <Rpkg>rgl</Rpkg> within R. If you use windows or OS X, unfortunately I can not
-be of any help (but please let me know so I can post instructions here for others if there
-is anything extra one has to do).
+freeglut and libpng must also be install for <Rpkg>rgl</Rpkg> to run. On Fedora, these
+are <Code>freeglut-devel</Code> and <Code>libpng-devel</Code> which could be installed
+with <Code>yum</Code> prior to installing <Rpkg>rgl</Rpkg> within R. If you use windows or
+OS X, unfortunately I can not be of any help (but please let me know so I can post
+instructions here for others if there is anything extra one has to do to
+get <Rpkg>rgl</Rpkg> working on those systems).
 </p>
 
 <h3><Rpkg>sampSurf</Rpkg> package vignettes</h3>
@@ -276,6 +284,14 @@ from CRAN, as it is built with the package there.
 
 
 
+
+
+
+
+
+
+
+
 <!-- ============================================================================================== -->
 <h2><a name="Examples"></a>sampSurf examples</h2>
 
@@ -291,7 +307,7 @@ the functionality of the package here.
 </p>
 
 <p>
-In general, there are two main ways to create a sampling surface: (1) simple, uaually
+In general, there are two main ways to create a sampling surface: (1) simple, usually
 "one-off" construction, or (2) progressive, by constructing intermediate elements that can
 be re-used for comparison of methods, etc. Both will be demonstrated below.
 </p>
@@ -390,7 +406,7 @@ extent      : 0, 71, 0, 71  (xmin, xmax, ymin, ymax)
 coord. ref. : NA 
 values      : in memory
 min value   : 0 
-max value   : 1183 
+max value   : 1812 
 
 Buffer width =  10
 
@@ -404,27 +420,27 @@ sampling surface object
 Inclusion zone objects: sausageIZ
 Measurement units = metric
 Number of logs = 20
-True log volume = 5.89 cubic meters
-True log length = 97.38 meters
-True log surface area = 81.83 square meters
-True log coverage area = 26.02 square meters
+True log volume = 8.707 cubic meters
+True log length = 108.7 meters
+True log surface area = 103.4 square meters
+True log coverage area = 32.86 square meters
 True log biomass = NA
 True log carbon = NA
 
 Estimate attribute: Length
 Surface statistics...
-  mean = 97.34
-  bias = -0.04141
-  bias percent = -0.04252
-  sum = 1962735
-  var = 44212
-  st. dev. = 210.3
-  cv % = 216
-  surface max = 1183
+  mean = 108.9
+  bias = 0.1467
+  bias percent = 0.135
+  sum = 2195189
+  var = 63918
+  st. dev. = 252.8
+  cv % = 232.2
+  surface max = 1812
   total # grid cells = 20164
   grid cell resolution (x & y) = 0.5 meters
-  # of background cells (zero) = 16215
-  # of inclusion zone cells = 3949
+  # of background cells (zero) = 16321
+  # of inclusion zone cells = 3843
 
 </div></pre>
 
@@ -479,7 +495,7 @@ follows&hellip;
 <li> Create a population of synthetic stems in the form of logs or trees.</li>
 <li> If need be, create an <Rclass>ArealSampling</Rclass> object with the specifications
   for the method.</li>
-<li> Combine the stem population and the sampling method population in the last two steps
+<li> Combine the stem population and the sampling method in the last two steps
   and form the population of <Rclass>InclusionZone</Rclass> objects.</li>
 <li> Create the sampling surface from the collection in the previous step.</li>
 </ol>
@@ -508,17 +524,17 @@ Container class object...
 
   Encapulating bounding box...
     min   max
-x 18.53 61.91
-y 13.76 61.49
+x 9.497 59.90
+y 8.432 63.92
 
   There are 25 logs in the population
-  Population log volume =  13.02 cubic meters
-  Population log surface area =  166.9 square meters
-  Population log coverage area =  53.09 square meters
-  Average volume/log =  0.5208 cubic meters
-  Average surface area/log =  6.675 square meters
-  Average coverage area/log =  2.123 square meters
-  Average length/log =  7.332 meters
+  Population log volume =  16.87 cubic meters
+  Population log surface area =  190.5 square meters
+  Population log coverage area =  60.6 square meters
+  Average volume/log =  0.6748 cubic meters
+  Average surface area/log =  7.619 square meters
+  Average coverage area/log =  2.424 square meters
+  Average length/log =  7.39 meters
 (**All statistics exclude NAs)
 </div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">gridColor</span> <span class="argument">=</span> <span class="string">'grey70'</span><span class="keyword">)</span>
 <span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">dLogs</span><span class="keyword">,</span> <span class="argument">add</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">)</span>
@@ -597,12 +613,12 @@ Inclusion zones are of class: perpendicularDistanceIZ
 Units of measurement:  metric
 Summary of inclusion zone areas in square meters...
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     var    SDev 
-  22.00   30.30   43.20   52.10   65.20  136.00  803.95   28.35 
+  28.70   36.90   56.00   67.50   85.80  160.00 1380.40   37.15 
 
 Encapulating bounding box...
-     min   max
-x 17.058 63.85
-y  5.902 65.02
+    min   max
+x 3.009 63.46
+y 6.187 66.91
 
 </div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">gridColor</span> <span class="argument">=</span> <span class="string">'grey70'</span><span class="keyword">)</span>
 <span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">dLogs.izs</span><span class="keyword">,</span> <span class="argument">add</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">)</span>
@@ -642,27 +658,27 @@ sampling surface object
 Inclusion zone objects: perpendicularDistanceIZ (with PP to: volume)
 Measurement units = metric
 Number of logs = 25
-True log volume = 13.02 cubic meters
-True log length = 183.3 meters
-True log surface area = 166.9 square meters
-True log coverage area = 53.09 square meters
+True log volume = 16.87 cubic meters
+True log length = 184.8 meters
+True log surface area = 190.5 square meters
+True log coverage area = 60.6 square meters
 True log biomass = NA
 True log carbon = NA
 
 Estimate attribute: volume
 Surface statistics...
-  mean = 12.99
-  bias = -0.02725
-  bias percent = -0.2093
-  sum = 261981
-  var = 824.4
-  st. dev. = 28.71
-  cv % = 221
-  surface max = 201.6
+  mean = 16.84
+  bias = -0.03354
+  bias percent = -0.1988
+  sum = 339511
+  var = 1078
+  st. dev. = 32.84
+  cv % = 195
+  surface max = 151.2
   total # grid cells = 20164
   grid cell resolution (x & y) = 0.5 meters
-  # of background cells (zero) = 16094
-  # of inclusion zone cells = 4070
+  # of background cells (zero) = 15167
+  # of inclusion zone cells = 4997
 
 </div><div class="source"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">dLogs.ss</span><span class="keyword">,</span> <span class="argument">useImage</span> <span class="argument">=</span> <span class="number">FALSE</span><span class="keyword">)</span>
 </div><img src="figures/ss-pdsVolume.png" class="plot" />
@@ -693,7 +709,7 @@ the volume estimate for each log is the same and it gets spread evenly over its 
 zone under <acronym>pds</acronym>. Also, since each log accounts for the same estimate
 (the volume factor), we get an even stair-step "heaping" of the surface where the
 inclusion zones intersect. This is the more normal case when you are sampling to estimate
-the "design attribute" that the method is optimized in terms of. The sausage protocol
+the "design attribute" that the method is optimized in terms of; the sausage protocol
 above is an exception to this rule.
 </p>
 
@@ -706,7 +722,7 @@ In the previous examples we have ignored standing trees and English units. Here 
 rectify this. The steps presented below are the same as those outlined in the previous
 section, except they are applied to standing trees (and of course, the vignettes have much
 more detail on each step). You can look at
-(i.e., <Rcode>print</Rcode>, <Rcode>plot</Rcode>, <Rcode>hist</Rcode>, etc.) the objects
+(e.g., <Rcode>print</Rcode>, <Rcode>plot</Rcode>, <Rcode>hist</Rcode>, etc.) the objects
 created below to get more familiar with the package&hellip;
 </p>
 
@@ -715,7 +731,7 @@ created below to get more familiar with the package&hellip;
 <span class="prompt">R&gt; </span><span class="symbol">buffTract.e</span> <span class="assignement">=</span> <span class="functioncall">bufferedTract</span><span class="keyword">(</span><span class="argument">bufferWidth</span> <span class="argument">=</span> <span class="number">30</span><span class="keyword">,</span> <span class="symbol">tract.e</span><span class="keyword">)</span>
 <span class="prompt">R&gt; </span><span class="symbol">sTrees</span> <span class="assignement">=</span> <span class="functioncall">standingTrees</span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span> <span class="symbol">buffTract.e</span><span class="keyword">,</span> <span class="argument">dbhs</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">6</span><span class="keyword">,</span> <span class="number">15</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">heights</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">30</span><span class="keyword">,</span> <span class="number">50</span><span class="keyword">)</span><span class="keyword">,</span>
 <span class="prompt">+ </span>                       <span class="argument">units</span> <span class="argument">=</span> <span class="string">'English'</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="symbol">aGauge</span> <span class="assignement">=</span> <span class="functioncall">angleGauge</span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span> <span class="argument">units</span> <span class="argument">=</span> <span class="string">'English'</span><span class="keyword">)</span>
+<span class="prompt">R&gt; </span><span class="symbol">aGauge</span> <span class="assignement">=</span> <span class="functioncall">angleGauge</span><span class="keyword">(</span><span class="argument">baf</span> <span class="argument">=</span> <span class="number">20</span><span class="keyword">,</span> <span class="argument">units</span> <span class="argument">=</span> <span class="string">'English'</span><span class="keyword">)</span>
 <span class="prompt">R&gt; </span><span class="symbol">sTrees.izs</span> <span class="assignement">=</span> <span class="functioncall">standingTreeIZs</span><span class="keyword">(</span><span class="symbol">sTrees</span><span class="keyword">,</span> <span class="argument">iZone</span> <span class="argument">=</span> <span class="string">'horizontalPointIZ'</span><span class="keyword">,</span>
 <span class="prompt">+ </span>                             <span class="argument">angleGauge</span> <span class="argument">=</span> <span class="symbol">aGauge</span><span class="keyword">)</span>
 <span class="prompt">R&gt; </span><span class="symbol">hps.ss</span> <span class="assignement">=</span> <span class="functioncall">sampSurf</span><span class="keyword">(</span><span class="symbol">sTrees.izs</span><span class="keyword">,</span> <span class="symbol">buffTract.e</span><span class="keyword">,</span> <span class="argument">estimate</span> <span class="argument">=</span> <span class="string">'Density'</span><span class="keyword">)</span>
@@ -754,9 +770,10 @@ perhaps you'll stumble across these in the use of this package.
 The examples presented assume some knowledge of the subject area with respect to areal
 sampling methods. Hopefully one can get an idea of what is involved in using the package
 and some uses it might be put to by comparing different (or new) methods on the sample
-stem populations. The vignettes provide much more detail and both they and the web pages
+stem populations. The vignettes provide much more detail and both they and the help pages
 have references to some of the more recent papers on both the sampling methods and the
-sampling surface concept. Please let me know if you've found <Rpkg>sampSurf</Rpkg> useful.
+sampling surface concept. Please let me know if you've found <Rpkg>sampSurf</Rpkg> useful,
+or find any problems.
 </p>
 
 
@@ -775,8 +792,9 @@ sampling surface concept. Please let me know if you've found <Rpkg>sampSurf</Rpk
 <div id="cleardiv"></div>
 
 <div id="footer">
-  <i>The examples in this page were generated using the very useful R package <Rpkg>knitr</Rpkg>.<br>
-  Last updated: 10-May-2012 (jhg)</i>
+  <i>The examples in this page were generated using the very useful R
+  package <a href="http://yihui.name/knitr/"><Rpkg>knitr</Rpkg></a>.<br>  Last updated:
+  11-May-2012 (jhg)</i>
 </div>
 
 </body>

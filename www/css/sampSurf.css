@@ -36,6 +36,13 @@ sq:before {content: open-quote }
 sq:after {content: close-quote }
 
 
+Code {  /* any other code like file names, command line stuff, etc. */
+       font-size: 90%;
+       font-family: monospace;
+       font-weight: 500;
+       font-style: oblique;
+      }
+
 
 
 
@@ -96,9 +103,14 @@ div#content {
     /*border: 1px solid gray;*/
 } 
 
+div#content h1 {
+    color: MidnightBlue;
+}
+
 div#content h2, h3 {
     /*font-size: 2em;*/
     color: MidnightBlue;
+    /*color: #2B547E;*/     /* = Steel Blue 4 */
     margin: 0;
     padding-top: .5em;
     /*font-weight: bold;*/
@@ -107,10 +119,10 @@ div#content h2, h3 {
 }
 
 #content a{ text-decoration: none; }
-#content a:link{ 	color: #000080; }    		   /* for unvisited links */
-#content a:visited{ 	color: red; } 	            /* for visited links */
+#content a:link{ 	color: MidnightBlue; }    		   /* for unvisited links */
+/*#content a:visited{ 	color: red; } */	            /* for visited links */
 #content a:hover { 	color: red; }  				   /* when link is clicked */
-#content a:active { 	color: navy; } 			   /* when mouse is over link */
+#content a:active { 	color: red; } 			   /* when mouse is over link */
 
 
 
