@@ -11,6 +11,7 @@
 \alias{izGrid,distanceLimitedPDSIZ,Tract-method}
 \alias{izGrid,distanceLimitedMCIZ,Tract-method}
 \alias{izGrid,circularPlotIZ,Tract-method}
+\alias{izGrid,horizontalLineIZ,Tract-method}
 
 \title{ Methods for "InclusionZoneGrid" object construction in Package `sampSurf'}
 
@@ -146,6 +147,13 @@
       This constructor is for the circular plot and horizontal point
 	  sampling (a subclass of "circularPlotIZ") methods for standing
 	  trees.  }
+
+	
+\item{\strong{\code{signature(izObject = "horizontalLineIZ", tract =
+	  "Tract")}}}{%\cr
+
+      This constructor is for the horizontal line sampling
+      ("\code{\linkS4class{horizontalLineIZ}}") method for standing trees.  }
 
 
 	

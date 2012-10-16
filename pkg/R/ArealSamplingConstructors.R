@@ -53,6 +53,12 @@ if(!isGeneric("angleGauge"))
              signature = c('baf')
             )
 
+if(!isGeneric("lineSegment")) 
+  setGeneric('lineSegment',  
+             function(length, orientation, ...) standardGeneric('lineSegment'),
+             signature = c('length', 'orientation')
+            )
+
           
 #================================================================================
 #  1. method for functions and class circularPlot...
@@ -270,18 +276,108 @@ function(baf,
 #
     angleRadians = 2*asin(sqrt(baf/unitArea))
     angleDegrees = .StemEnv$rad2Deg(angleRadians)
-
+    diopters = 100 * tan(angleRadians)
+    k = 2*sin(angleRadians/2)
+    
+#
+#   points & lines...
+#
     alpha = sqrt(unitArea/baf)
+    PRF = alpha/2                                    #ft/ft or m/m
+    prf = PRF/conv                                   #ft/in or m/cm
 
-    PRF = alpha/2          #ft/ft or m/m
-    prf = PRF/conv         #ft/in or m/cm
+#
+#   lines -- per ft or m segments...
+#
+    DF = sqrt(unitArea) * sqrt(baf)
+    df = DF*12
+    
 
-    ag = new('angleGauge', angleDegrees=angleDegrees, angleRadians=angleRadians,
+    ag = new('angleGauge', angleDegrees=angleDegrees, angleRadians=angleRadians, diopters=diopters, k=k,
               baf=baf, prf=prf, PRF=PRF, alpha=alpha,
+              df=df, DF=DF,
               description=description, units=units
              )
 
     return(ag)
 }   #angleGauge constructor
 )   #setMethod
+
+
+
+
+
+#================================================================================
+#  6. method for functions and class lineSegment...
+#
+setMethod('lineSegment',
+          signature(length = 'numeric', orientation = 'numeric'),
+function(length,
+         orientation,              #in degrees
+         units = 'metric',
+         spUnits = CRS(projargs=as.character(NA)),
+         centerPoint = c(x=0, y=0),   #centerPoint
+         description = 'line segment',
+         spID = paste('ls',.StemEnv$randomID(),sep=':'),
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+#   make sure the center is a named vector of length 2...
+#
+    if(any(is.na(match(c('x','y'),names(centerPoint)))))
+      stop('Please use names x and y for centerPoint vector')
+    if(length(centerPoint) != 2)
+      stop('Please supply one set of (x,y) coordinates for the plot center location.')
  
+  
+#
+#   some other checks...
+#
+    if(!is.numeric(length) || length <= 0)
+      stop('length must be positive!')
+    if(!is.numeric(orientation) || orientation < 0)
+      stop('line orientation must be in [0, 360] degrees!')
+    orientation = .StemEnv$deg2Rad(orientation)  #this will handle >360 reduction
+
+#
+#   now make the line segment in mattrix form first--heading due east...
+#
+    halfLen = length/2
+    lineSeg = cbind(c(-halfLen, halfLen), c(0, 0), c(1,1))
+    
+#
+#   rotate to north, then to correct position...
+#
+    rotAng = pi/2 - orientation
+
+    trMat = transfMatrix(rotAng, centerPoint)
+    lineSeg = lineSeg %*% trMat
+    dimnames(lineSeg) = list(NULL,c('x','y','hc'))
+
+#
+#   and make a SpatialLines object...
+#
+    LineSeg = Line(lineSeg[,-3])                             #sans hc
+    LinesSeg = Lines(list(LineSeg=LineSeg), ID=spID)
+    spLinesSeg = SpatialLines(list(LinesSeg=LinesSeg),      #takes a list of Polygons objects
+                                proj4string = spUnits                       
+                               )
+    
+#
+#   no id for center point, but it can be added to be the same as spID when
+#   we make a container class for the center points elsewhere...
+#
+    loc = matrix(centerPoint, nrow=1)
+    colnames(loc) = names(centerPoint)
+    location = SpatialPoints(loc, proj4string = spUnits)
+
+    ls = new('lineSegment', length=length, orientation=orientation, segment=spLinesSeg,
+             description=description, units=units,
+             location = location, spID=spID, spUnits=spUnits )
+
+    return(ls)
+}   #lineSegment constructor
+)   #setMethod
+

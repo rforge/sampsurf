@@ -24,6 +24,7 @@ recommended. The preferred method for creating new objects is via the
   In addition to those slots in class "ArealSampling," the following are defined\ldots
 	
   \describe{
+	
     \item{\code{angleDegrees}:}{Object of class \code{"numeric"}: The
       gauge angle in degrees, normally in the range 0 <
       \code{angleDegrees} <= 6.5 degrees. }
@@ -31,9 +32,13 @@ recommended. The preferred method for creating new objects is via the
     \item{\code{angleRadians}:}{Object of class \code{"numeric"}: The
       gauge angle in radians. }
 	
-    \item{\code{baf}:}{Object of class \code{"numeric"}: The
-      corresponding basal area factor in the appropriate units;
-      English=ft^2/acre, metric=m^2/ha. }
+    \item{\code{diopters}:}{Object of class \code{"numeric"}: The prism
+      angle in diopters (Delta).}
+	
+    \item{\code{k}:}{Object of class \code{"numeric"}: Angle gauge
+	  constant (dimensionless); i.e., \eqn{2 \times
+	  \sin(\frac{\eta}{2})}{2*sin(angleRadians/2)}, where
+	  \eqn{\eta}{angleRadians} is \code{angleRadians} above. }
 	
     \item{\code{prf}:}{Object of class \code{"numeric"}: The plot radius
       factor; English=ft/in, metric=m/cm. }
@@ -43,6 +48,17 @@ recommended. The preferred method for creating new objects is via the
 	
     \item{\code{alpha}:}{Object of class \code{"numeric"} The plot
     radius proportionality constant; English=ft/ft, metric=m/m.  }
+	  
+    \item{\code{baf}:}{Object of class \code{"numeric"}: The
+      corresponding basal area factor in the appropriate units;
+      English=ft\eqn{{}^2}/acre, metric=m\eqn{^2}/ha. }
+	  
+    \item{\code{df}:}{Object of class \code{"numeric"}: Diameter factor
+      for horizontal line sampling in inches or cm.}
+	  
+    \item{\code{DF}:}{Object of class \code{"numeric"}: Diameter factor
+      for horizontal line sampling in feet or meters.}
+	
   }
 }
 

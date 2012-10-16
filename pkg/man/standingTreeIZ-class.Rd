@@ -52,7 +52,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 
 \seealso{
   For subclasses, see: 
-  \code{\linkS4class{circularPlotIZ}},
+  \code{\linkS4class{circularPlotIZ}}, \code{\linkS4class{horizontalLineIZ}},
   and the \code{\linkS4class{standingTreeIZs}} container class.  
 }
 

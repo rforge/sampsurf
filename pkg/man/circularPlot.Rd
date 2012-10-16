@@ -6,10 +6,11 @@
 Generate Objects of Class "\code{\linkS4class{circularPlot}}"
 }
 
-\description{ This generic function has only one method used as a
-constructor function for objects that are of class
-"\code{\linkS4class{circularPlot}}". This method should be used in
-preference to \code{\link{new}} to insure a valid object. }
+\description{ This generic function has only one method
+(\code{\link{circularPlot-methods}}) used as a constructor function for
+objects that are of class "\code{\linkS4class{circularPlot}}". This
+method should be used in preference to \code{\link{new}} to insure a
+valid object. }
 
 \usage{
 circularPlot(radius, ...)
@@ -56,7 +57,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-cp=circularPlot(37.237, units='English', center=c(x=10,y=3))
+cp = circularPlot(37.237, units='English', center=c(x=10,y=3))
 summary(cp)
 plot(cp, axes=TRUE, showPlotCenter=TRUE, cex=2.5)
 }

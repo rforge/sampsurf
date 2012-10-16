@@ -19,14 +19,20 @@ constructor \code{\link{horizontalPointIZ}} to create new objects.
 
 \section{Slots}{
   
-  This class adds one slot to the "circularPlotIZ" class specification,
-  please see the superclasses (see below) for more definitions.
+  This class adds one slot to the "\code{\linkS4class{circularPlotIZ}}"
+  class specification, please see the superclasses (see below) for more
+  definitions.
   
-  \describe{ \item{\code{angleGauge}:}{Object of class
-    \code{"angleGauge"}: A subclass object from the
-    "\code{\linkS4class{ArealSampling}}" class. Please see the help for this
-    class for more information on the slots associated with angle
-    gauge objects. } } }
+  \describe{
+
+	\item{\code{angleGauge}:}{Object of class \code{"angleGauge"}: A
+      subclass object from the "\code{\linkS4class{ArealSampling}}"
+      class. Please see the help for the
+      "\code{\linkS4class{angleGauge}}" class for more information on
+      the slots associated with angle gauge objects. }
+
+  }
+}
 
 \section{Extends}{
 Class \code{"\linkS4class{circularPlotIZ}"}, directly.\cr
@@ -57,7 +63,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 
 
 \seealso{
-\code{"\linkS4class{circularPlotIZ}"}, and the \code{\linkS4class{standingTreeIZs}} container class
+\code{"\linkS4class{circularPlotIZ}"}, and the "\code{\linkS4class{standingTreeIZs}}" container class
 }
 
 \examples{

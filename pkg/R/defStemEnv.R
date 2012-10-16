@@ -55,10 +55,19 @@
 .StemEnv$smpHectare = 10000
 .StemEnv$sfpAcre = 43560
 
+#the following is ba in ft^2 or m^2 conversion, NOT the BAF for prism cruising!...
 .StemEnv$baFactor = c( English = pi/4, metric = pi/4)     #dbh in feet or meters
 #.StemEnv$baFactor = c( English = pi/(4*144), metric = pi/(4*10000) ) #dbh in inches or cm
 
 .StemEnv$angleGaugeMaxDegrees = 6.5   #maximum angle for angleGauge objects in ArealSampling Class
+
+#horizontal line sampling (hls) constants...
+.StemEnv$HLSSegment = c(English = 66, metric = 20) #hls segment base length in ft or m
+
+
+
+
+
 
 #
 # per unit area names for the list object slot in the InclusionZone class or subclasses;
@@ -449,6 +458,8 @@ rm(splineCoverageArea)                                                #and remov
 #================================================================================
 #
 #  converts degrees to radians on [0,2pi]...
+#
+#  or use simply angle%%360 ??...
 #
 .deg2Rad = function(angle) {
     twoPi = 2.0*pi

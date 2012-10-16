@@ -10,6 +10,7 @@
 #     4. perpendicularDistance: class for PDS (Jan 2011)
 #     5. distanceLimit: class for variable plot MC (Mar 2011)
 #     6. angleGauge: class for Bitterlich sampling methods
+#     7. lineSegment: class for numerous line-based sampling methods (3-Oct-2012)
 #
 #Author...									Date: 19-Aug-2010
 #	Jeffrey H. Gove
@@ -224,10 +225,16 @@ setClass('distanceLimited',
 setClass('angleGauge',
     representation(angleDegrees = 'numeric',        #gauge angle in degrees
                    angleRadians = 'numeric',        #gauge angle in radians
-                   baf = 'numeric',                 #basal area factor (ft^2/ac or m^2/ha)
+                   diopters = 'numeric',            #prism angle diopters (Delta)
+                   k = 'numeric',                   #gauge constant (dimensionless)
                    prf = 'numeric',                 #plot radius factor (ft/in or m/cm)
                    PRF = 'numeric',                 #prf (ft/ft or m/m) as in tree dbh units
-                   alpha = 'numeric'                #proportionality constant--dimensionless
+                   alpha = 'numeric',               #proportionality constanty (ft/ft or m/m)
+                   #points...
+                   baf = 'numeric',                 #basal area factor (ft^2/ac or m^2/ha)
+                   #lines: based on 1ft or 1m segments...
+                   df = 'numeric',                  #diameter factor in inches or cm
+                   DF = 'numeric'                   #diameter factor in ft or m
                   ),
     prototype = list(angleDegrees = 2.29,
                      angleRadians = 0.040,
@@ -245,3 +252,68 @@ setClass('angleGauge',
                } #validity check
 ) #class angleGauge
 
+
+
+
+
+
+
+#=================================================================================================
+#
+#  the lineSegment class is just a direct descendant of 'ArealSampling'...
+#
+#  potentially, the lineSegment class might be used to build more complicated structures like
+#  "L" or "Y" shaped transects sometimes used in LIS
+#
+setClass('lineSegment',
+    representation(orientation = 'numeric',         #line orientation clockwise from North==0 **RADIANS**
+                   length = 'numeric',              #line segment length
+                   segment = 'SpatialLines',        #sp lines of the segment
+                   location = 'SpatialPoints',      #line segment center location
+                   spID = 'character',              #short id name for polygon label
+                   spUnits = 'CRS'                  #sp units, character will change
+                  ),
+    prototype = list(orientation = -1,              #we don't want this to be a valid object here,
+                     length = 0,                    #let initialize assign...
+                     location = SpatialPoints(matrix(c(0,0), nrow=1, dimnames=list('1',c('x','y'))) ),
+                     spID = paste('ls', format(runif(1, 0,10000),digits=8), sep=':'),
+                     spUnits = CRS(projargs=as.character(NA)) 
+                    ),
+    contains = 'ArealSampling',                     #a subclass of the virtual 'ArealSampling' class
+    validity = function(object) {
+                 if(object@length <= 0)
+                   return('line segment length must be positive!')
+                 if(object@orientation < 0 || object@orientation > 2*pi)
+                   return('line segment orientation must be within [0, 2*pi] radians ([0,360] degrees)!')
+                 
+                 locNames = match(colnames(object@location), c('x','y'))
+                 if(any(is.na(locNames)))
+                   return('location names must be "x" and "y"!')
+      
+                 if(!is.na(object@spUnits@projargs) && object@spUnits@projargs == '+proj=longlat')
+                   return(paste('spUnits must be commensurate with units,',
+                                'please convert to non-geographic coordinate system!')
+                         )
+      
+                 return(TRUE)
+               } #validity check
+) #class lineSegment
+ 
+         
+#
+# initialize is called after the prototype values are set, so we can use them to
+# set flags for default initialization here, before validity checking...
+#
+setMethod('initialize', 'lineSegment',
+  function(.Object, ...) {
+
+    if(.Object@length <= 0)
+      .Object@length = runif(1, 1, 10)  #meters
+    if(.Object@orientation < 0 || object@orientation > 2*pi)
+      .Object@orientation = runif(1)*2*pi
+
+               
+    callNextMethod(.Object, ...)
+ } #function
+) #setMethod initialize lineSegment
+#=================================================================================================

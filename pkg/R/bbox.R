@@ -11,6 +11,7 @@
 #     5. circularPlot
 #     6. Tract
 #     7. sampSurf
+#     8. lineSegment  (3-Oct-2012)
 #
 #Author...									Date: 17-Sept-2010
 #	Jeffrey H. Gove
@@ -137,4 +138,15 @@ function(obj)
 )   #setMethod
    
 
+
+#================================================================================
+#  method for 'lineSegment' class...
+#
+setMethod('bbox',
+          signature(obj = 'lineSegment'),
+function(obj)
+{
+    return(bbox(obj@segment))
+}   #bbox for 'lineSegment' only
+)   #setMethod
 

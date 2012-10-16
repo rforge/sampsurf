@@ -71,6 +71,8 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
  distance limited sampling subclass.\cr
 % 
  "\code{\linkS4class{angleGauge}}" for horizontal point sampling subclass.
+% 
+ "\code{\linkS4class{lineSegment}}" for the line-based subclass.
 }
 \examples{
 showClass("ArealSampling")

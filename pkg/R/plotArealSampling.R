@@ -3,6 +3,10 @@
 #   Methods for generic plot() for class for ArealSampling and subclasses;
 #   this includes the container classes
 #
+#   1. ArealSampling base class
+#   2. circularPlot class
+#   3. lineSegment class    (3-Oct-2012)
+#
 #   Note in the plotting of Spatial objects, the xlab and ylab arguments
 #   do not seem to be passed through to plot, so no labels will be shown
 #   when these arguments are specified. To get labels, use title(xlab=,
@@ -90,4 +94,43 @@ function(x,
         
     return(invisible())
 }   #plot for 'circularPlot'
+)   #setMethod
+
+
+
+
+
+
+#================================================================================
+#  method for lineSegment subclass...
+#
+setMethod('plot',
+          signature(x = 'lineSegment', y='missing'),
+function(x, 
+         axes = FALSE,           #not a par() so can't be passed to callNextMethod, so separate it
+         pchLineCenter = 20,
+         showLineCenter = FALSE,
+         showLineSegment = TRUE,
+         lineColor = .StemEnv$izBorderColor, 
+         lineCenterColor = .StemEnv$izCenterColor,
+         asp = 1,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#  plots the lineSegment object...
+#------------------------------------------------------------------------------
+#
+    object = x
+
+    suppressWarnings(                                #for object-specific parameters not in par() ...
+    if(showLineSegment)
+      plot(object@segment, col=lineColor, axes=axes, asp=asp, ...)
+    )                 
+
+    if(showLineCenter)
+      callNextMethod(x=object, pchIZCenter=pchLineCenter, asp=asp, ...)
+        
+    return(invisible())
+}   #plot for 'lineSegment'
 )   #setMethod

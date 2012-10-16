@@ -13,6 +13,7 @@
 \alias{perimeter,perpendicularDistanceIZ-method}
 \alias{perimeter,distanceLimitedMCIZ-method}
 \alias{perimeter,circularPlotIZ-method}
+\alias{perimeter,horizontalLineIZ-method}
 \alias{perimeter,izContainer-method}
 \alias{perimeter,Tract-method}
 
@@ -101,6 +102,12 @@
 	Returns the spatial object associated with the perimeter of the
     inclusion zone. Also handles objects of subclass
     "\code{\linkS4class{horizontalPointIZ}}". }
+
+  \item{\strong{\code{signature(object = "horizontalLineIZ")}}}{ %\cr
+
+	Returns the spatial object associated with the perimeter of the
+    inclusion zone for objects of class
+    "\code{\linkS4class{horizontalLineIZ}}". }
 
   \item{\strong{\code{signature(object = "izContainer")}}}{% \cr
 

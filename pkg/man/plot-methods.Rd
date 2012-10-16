@@ -5,6 +5,7 @@
 \alias{plot,bufferedTract,missing-method}
 \alias{plot,chainSawIZ,missing-method}
 \alias{plot,circularPlot,missing-method}
+\alias{plot,lineSegment,missing-method}
 \alias{plot,downLog,missing-method}
 \alias{plot,downLogIZs,missing-method}
 \alias{plot,downLogs,missing-method}
@@ -18,6 +19,7 @@
 \alias{plot,distanceLimitedIZ,missing-method}
 \alias{plot,standUpIZ,missing-method}
 \alias{plot,circularPlotIZ,missing-method}
+\alias{plot,horizontalLineIZ,missing-method}
 \alias{plot,Stem,missing-method}
 \alias{plot,StemContainer,missing-method}
 \alias{plot,Tract,missing-method}
@@ -119,6 +121,7 @@ argument definition for the most part.
          plotCenterColor = .StemEnv$izCenterColor, 
          asp = 1,
          ... )}
+	   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{circularPlot} or any
@@ -152,6 +155,48 @@ argument definition for the most part.
 	} %itemize
  } %item
 
+
+ \item{\strong{\code{signature(x = "lineSegment", y = "missing")}}}{%\cr
+
+    This adds the necessary functionality to plot objects of class
+    "\code{\linkS4class{lineSegment}}".}
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x,
+         axes = FALSE, 
+         pchLineCenter = 20,
+         showLineCenter = FALSE,
+         showLineSegment = TRUE,
+         lineColor = .StemEnv$izBorderColor, 
+         lineCenterColor = .StemEnv$izCenterColor,
+         asp = 1,
+         ... ) }
+	   
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{lineSegment} or any
+	    subclass that might eventually be defined. }
+		 		 
+	  \item{\code{pchLineCenter}:}{ The \code{\link{pch}} value for the
+	    line center.}
+		 
+	  \item{\code{showLineCenter}:}{ \code{TRUE}: show the line center;
+	    \code{FALSE}: do not plot it.}
+		 		 
+	  \item{\code{lineColor}:}{ An \R color for the line.}
+		 		 
+	  \item{\code{lineCenterColor}:}{ An \R color for the line's center point.}
+		
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+		\code{\link[graphics]{plot}}.}
+	  
+	} %itemize
+ } %item
+		 
+		 		 
+
+
+	   
 
 } %describe
 } %section ArealSampling
@@ -551,8 +596,54 @@ argument definition for the most part.
 	} %itemize
  } %item
 		 
+  
 
+\item{\strong{\code{signature(x = "horizontalLineIZ", y = "missing")}}}{%\cr
+
+    This adds the necessary functionality to plot objects of class
+     "\code{\linkS4class{horizontalLineIZ}}".}
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x, 
+         axes = FALSE,  
+         showLineSegment = TRUE,
+         ltyLineSegment = 'dashed',
+         showTree = TRUE,
+         izColor = .StemEnv$izColor,
+         izBorder = .StemEnv$izBorderColor,
+         add = FALSE,
+         asp = 1,
+         ... ) }
+
+	   
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{horizontalLineIZ}. } 
+		 
+	  \item{\code{showLineSegment}:}{\code{TRUE}: show the line segment;
+	    \code{FALSE}: do not show it. }
+		 
+	  \item{\code{ltyLineSegment}:}{ A valid \code{lty} value of the
+	    \code{plot} parameter.}
 	  
+	  \item{\code{showTree}:}{ \code{TRUE}: plot the tree object;
+	    \code{FALSE}: do not show it.}
+		 		 
+	  \item{\code{izColor}:}{ An \R color for the interior of the
+	    inclusion zone.}
+		 
+	  \item{\code{izBorder}:}{ An \R color for the border/perimeter of
+	    the inclusion zone.}
+		 	  
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+		\code{\link[graphics]{plot}}, or to the plot methods for the
+		individual objects.}
+	  
+	} %itemize
+ } %item
+		 
+
+ 
 } %describe
 } %section InclusionZone
 %-------------------------------------------------------------------------

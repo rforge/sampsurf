@@ -6,6 +6,7 @@
 #     (3) perpendicularDistance class
 #     (4) distanceLimited class
 #     (5) angleGauge class
+#     (6) lineSegment class
 #
 #Author...									Date: 20-Aug-2010
 #	Jeffrey H. Gove
@@ -233,23 +234,83 @@ function(object,
       saUnits = ' square meters per hectare'
       prfUnits = ' meters per cm'
       PRFUnits = ' meters per meter'
+      lsLen = .StemEnv$HLSSegment['metric']
+      lineSeg = paste(lsLen, 'meters')
+      dfUnits = ' cm per hectare'
+      DFUnits = ' m per hectare'
     }
     else {
       saUnits = ' square feet per acre'
       prfUnits = ' feet per inch'
       PRFUnits = ' feet per foot'
+      lsLen = .StemEnv$HLSSegment['English']
+      lineSeg = paste(lsLen, 'feet')
+      dfUnits = ' inches per acre'
+      DFUnits = ' feet per acre'
     }
     
     cat('\nangleGauge...')
-    cat('\n  Angle (nu) in degrees = ', object@angleDegrees, sep='')
-    cat('\n  Angle (nu) in radians = ', object@angleRadians, sep='')
-    cat('\n  Basal area factor (baf) = ', object@baf, saUnits, sep='')
+    cat('\n  Angle (\u03BD) in degrees = ', object@angleDegrees, ' (',object@angleDegrees*60,' minutes)', sep='')
+    cat('\n  Angle (\u03BD) in radians = ', object@angleRadians, sep='')
+    cat('\n  Angle diopters (\u0394) = ', object@diopters, sep='')
+    cat('\n  Gauge constant (k) = ', object@k, sep='')
     cat('\n  Plot radius factor (prf) = ', object@prf, prfUnits,' (',object@PRF, PRFUnits,')',sep='')
-    cat('\n  This angle has a proportionality factor (alpha) = ',format(object@alpha,digits=3),
+    cat('\n  Plot proportionality factor (\u03B1) = ',format(object@alpha,digits=3),
         PRFUnits, sep='')
+    
+    cat('\n  --Points...')
+    cat('\n    Basal area factor (baf) = ', object@baf, saUnits, sep='')
+
+    cat('\n  --Lines...')
+    cat('\n    Diameter factor (df) = ', object@df/lsLen, dfUnits, ' for a line segement of ',lineSeg, sep='')
+    cat('\n    Diameter factor (DF) = ', object@DF/lsLen, DFUnits, ' for a line segement of ',lineSeg, sep='')
 
     cat('\n')
         
     return(invisible())
 }   #summary for 'angleGauge'
+) #setMethod
+
+
+
+
+#================================================================================
+# method for class "lineSegment" (3-Oct-2012)...
+#
+setMethod('summary',
+          signature(object = 'lineSegment'),
+function(object,
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   add a little to 'ArealSampling' method for 'lineSegment'...
+#------------------------------------------------------------------------------
+    callNextMethod()
+
+    cat('\nlineSegment...')
+    if(object@units == .StemEnv$msrUnits$metric) {
+      cat('\n  length = ', format(object@length, digits=5), ' meters',sep='')
+    }
+    else {
+      cat('\n  length = ', format(object@length, digits=5), ' feet',sep='')
+    }
+    cat('\n  orientation = ', object@orientation, ' radians', sep='')
+    cat(' (', format(.StemEnv$rad2Deg(object@orientation), digits=4), ' degrees) from North', sep='')
+    cat('\n  spatial units: ', object@spUnits@projargs)
+    cat('\n  spatial ID:', object@spID)
+    cat('\n  location (line segment center)...')
+    cat('\n    x coord: ', coordinates(object@location)[,'x'])
+    cat('\n    y coord: ', coordinates(object@location)[,'y'])
+
+#
+#   important check to see if any valid SpatialLines exists for the object...
+#
+    if(length(object@segment@lines) <= 0)  #check for object made with new()
+      cat('\n\n***No segment of "SpatialLines" -- please use the lineSegment constructor!\n')
+
+    cat('\n')
+        
+    return(invisible())
+}   #summary for 'lineSegment'
 ) #setMethod

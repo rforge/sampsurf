@@ -24,7 +24,8 @@
          spID = paste('hps',.StemEnv$randomID(),sep=':'),
          spUnits = CRS(projargs=as.character(NA)),
          ...)
-        }
+       }
+	   
     \itemize{
 				
 	  \item{\code{standingTree}:}{ An object of class

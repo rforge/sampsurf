@@ -31,7 +31,7 @@ exportClasses(Stem, downLog,   standingTree)
 exportClasses(StemContainer, downLogs, standingTrees)
 #ArealSampling...
 exportClasses(ArealSampling, circularPlot, pointRelascope, perpendicularDistance,
-              distanceLimited, angleGauge)
+              distanceLimited, angleGauge, lineSegment)
 #Tract...
 exportClasses(Tract, bufferedTract)
 #InclusionZone & izContainer...
@@ -40,7 +40,7 @@ exportClasses(InclusionZone, InclusionZoneGrid, csFullInclusionZoneGrid,
               pointRelascopeIZ, perpendicularDistanceIZ, omnibusPDSIZ,
               distanceLimitedMCIZ, distanceLimitedIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ, hybridDLPDSIZ)
-exportClasses(standingTreeIZ, circularPlotIZ, horizontalPointIZ)
+exportClasses(standingTreeIZ, circularPlotIZ, horizontalPointIZ, horizontalLineIZ)
 exportClasses(izContainer, downLogIZs,  standingTreeIZs)
 #sampSurf...
 exportClasses(sampSurf)
@@ -61,13 +61,14 @@ exportMethods(bbox, perimeter, plot3D, area)
 #Stem & StemContainer constructors...
 exportMethods(downLog, downLogs,   standingTree, standingTrees)
 #ArealSampling constructors...
-exportMethods(circularPlot, pointRelascope, perpendicularDistance, distanceLimited, angleGauge)
+exportMethods(circularPlot, pointRelascope, perpendicularDistance, distanceLimited,
+              angleGauge, lineSegment)
 #InclusionZone & izContainer constructors...
 exportMethods(standUpIZ, sausageIZ, chainSawIZ, pointRelascopeIZ,
               perpendicularDistanceIZ, omnibusPDSIZ,
               distanceLimitedMCIZ, distanceLimitedIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ, hybridDLPDSIZ)
-exportMethods(circularPlotIZ, horizontalPointIZ)
+exportMethods(circularPlotIZ, horizontalPointIZ, horizontalLineIZ)
 #izContainer constructors...
 exportMethods(izContainer, downLogIZs,  standingTreeIZs)
 #Tract constructors...

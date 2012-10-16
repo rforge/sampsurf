@@ -61,7 +61,9 @@ Support for standing trees includes the following methods\ldots
 
   \item Circular fixed area plots.
 %
-  \item Horizontal point sampling.
+  \item Horizontal point (angle gauge) sampling.
+%
+  \item Horizontal line (angle gauge) sampling.
 
 } %itemize
 
@@ -77,8 +79,8 @@ contributed by users).
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.6-4\cr
-Date: \tab 11-May-2012\cr
+Version: \tab 0.6-5\cr
+Date: \tab 16-Oct-2012\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
 }
@@ -120,6 +122,9 @@ find the vignettes on your help system, go to the index for the
 \pkg{sampSurf} package (see the link at the bottom of this page). The help
 files linked to below explain the various classes and methods in more
 detail, including slot and argument definitions.
+
+In addition, the project homepage at R-Forge has some simple examples
+that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 
 } %details
 
@@ -199,6 +204,8 @@ detail, including slot and argument definitions.
 	\code{\linkS4class{distanceLimited}} \tab A subclass of "ArealSampling" for distance limited sampling\cr
 	\code{\linkS4class{angleGauge}} \tab A subclass of
 	      "ArealSampling" for angle gauge (e.g., prism) sampling\cr
+	\code{\linkS4class{lineSegment}} \tab A subclass of "ArealSampling"
+	     for line-oriented sampling methods\cr
 	}
 
   }%ArealSampling
@@ -244,6 +251,8 @@ detail, including slot and argument definitions.
 	  sampling standing trees using circulat plots.\cr
 	\code{\linkS4class{horizontalPointIZ}} \tab Class for
 	  horizontal point sampling of standing trees.\cr
+	\code{\linkS4class{horizontalLineIZ}} \tab Class for
+	  horizontal line sampling of standing trees.\cr
 	%}
 	} %tabular
 
@@ -356,8 +365,8 @@ detail, including slot and argument definitions.
     \code{\link{perpendicularDistance}} \tab Constructs a perpendicular
       distance object \cr
     \code{\link{distanceLimited}} \tab Constructs a distance limited object\cr
-    \code{\link{angleGauge}} \tab Constructs an angle gauge object
-	  \cr
+    \code{\link{angleGauge}} \tab Constructs an angle gauge object\cr
+    \code{\link{lineSegment}} \tab Constructs a line segment object\cr
 	}
   }%ArealSampling
   
@@ -394,6 +403,8 @@ detail, including slot and argument definitions.
 	  object for the fixed-area circular plot sampling method \cr
 	\code{\link{horizontalPointIZ}} \tab Creates an "InclusionZone"
 	  object for the horizontal point (prism) sampling method \cr
+	\code{\link{horizontalLineIZ}} \tab Creates an "InclusionZone"
+	  object for the horizontal line sampling method \cr
   }
   }%InclusionZone
   
@@ -634,8 +645,8 @@ exhaustive.
   downed coarse woody debris. \emph{Forestry} \bold{84}:109--117.}
 %
 \item{}{Gove, J. H., Ducey, M. J. and Valentine, H. T. 2012. A distance
-  limited method for sampling downed coarse woody debris. \emph{In
-	Review}}
+  limited method for sampling downed coarse woody debris. \emph{Forest Ecology
+	and Management} \bold{282}:53--62. }
 %
 \item{}{Ducey, M. J., Williams, M. S., Gove, J. H., Roberge, S. and
   Kenning, R. S. 2012. Distance limited perpendicular distance sampling
@@ -645,7 +656,7 @@ exhaustive.
 \item{}{Gove, J. H., Ducey, M. J., Valentine, H. T. and Williams,
   M. S. 2012. A comprehensive comparison of perpendicular distance
   sampling methods for sampling down coarse woody
-  debris. \emph{Forestry} (In press).}
+  debris. \emph{Forestry} (In Press).}
 
 }%describe
 
