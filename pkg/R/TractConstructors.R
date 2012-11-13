@@ -307,7 +307,7 @@ function(bufferWidth,
 #   buffer rectangle as a matrix...
     bufferRect = matrix(c(bb[1,'min'] + bufferWidth, bb[1,'max'] - bufferWidth,
                           bb[2,'min'] + bufferWidth, bb[2,'max'] - bufferWidth),
-                        nr=2, byrow = TRUE,
+                        nrow=2, byrow = TRUE,
                         dimnames = list(c('x','y'),c('min','max'))
                        )
     lims = apply(bufferRect, 1, diff)

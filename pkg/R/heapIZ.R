@@ -42,11 +42,11 @@ function(izgObject,
 #---------------------------------------------------------------------------
 #
 #   get the estimate desired, then fill the grid cells with this attribute
-#   and expand the subgrid within the izgObject to the full tract size...
+#   and extend/expand the subgrid within the izgObject to the full tract size...
 #
     estimate = match.arg(estimate)
     grid = setValues(izgObject@grid, izgObject@data[,estimate]) #set desired attribute
-    grid = expand(grid, tract)                                  #new cells are assigned NA values
+    grid = extend(grid, tract)                                  #new cells are assigned NA values
     gv = getValues(grid)                                        #so we must change these
     k = ifelse(is.na(gv), 0, gv)                                #to zero for subsequent accumulation
     grid = setValues(grid, k)

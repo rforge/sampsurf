@@ -6,7 +6,7 @@
 #         cells can be within inclusion zones and have small (near zero)
 #         values. In determining which cells are background cells (zero-valued)
 #         vs. surface cells, we must therefore use the "digits" argument to
-#         the raster count() function because it in turn uses round() for the
+#         the raster freq() function because it in turn uses round() for the
 #         actual comparisons and we don't want small real values rounded to
 #         zero to be counted as background--see below.
 #
@@ -141,7 +141,7 @@ function(object,
     cat('\n  total # grid cells =', object@surfStats$nc)
     vals$gcRes = xres(object@tract)
     cat('\n  grid cell resolution (x & y) =', xres(object@tract), unitLen)
-    ncellZero = count(object@tract, 0, digits=15) #zero cells, note count rounds, use digits
+    ncellZero = freq(object@tract, 0, digits=15)               #zero cells, note freq rounds, use digits
     vals$gcBack = ncellZero
     cat('\n  # of background cells (zero) =', ncellZero)
     vals$gcIZ = object@surfStats$nc - ncellZero
