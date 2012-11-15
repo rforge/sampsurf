@@ -309,7 +309,7 @@ setMethod('initialize', 'lineSegment',
 
     if(.Object@length <= 0)
       .Object@length = runif(1, 1, 10)  #meters
-    if(.Object@orientation < 0 || object@orientation > 2*pi)
+    if(.Object@orientation < 0 || .Object@orientation > 2*pi)
       .Object@orientation = runif(1)*2*pi
 
                
