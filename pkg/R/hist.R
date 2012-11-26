@@ -68,8 +68,8 @@ function(x,
     if(zeroTrunc) 
       values = values[values>0]
     hg = hist(values, xlab=xlab, main=main, col=col, ...)
-    if(zeroTrunc)
-      cat('\nHistogram is zero-truncated:',count(x@tract, 0),'zeros excluded.\n')
+    if(zeroTrunc)                                         #zero cells, note freq rounds(), use digits
+      cat('\nHistogram is zero-truncated:',freq(x@tract, 0, digits=15),'zeros excluded.\n')  
 
     return(invisible(hg))
 

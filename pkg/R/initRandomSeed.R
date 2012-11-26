@@ -1,4 +1,4 @@
-initRandomSeed = function(startSeed=NA, runQuiet=TRUE)
+initRandomSeed = function(startSeed=NA, runQuiet=TRUE, ...)
 {
 #---------------------------------------------------------------------------
 # 
@@ -13,6 +13,7 @@ initRandomSeed = function(startSeed=NA, runQuiet=TRUE)
 #     startSeed = a single value, preferably integer; NULL or NA implies 
 #                 default, see comments above
 #     runQuiet = T: print some info; F: nothing
+#     ... = gobbled
 #
 #   Returns...
 #     the current seed either as newly set or continuing on (see comments below)

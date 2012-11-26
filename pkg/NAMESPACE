@@ -5,7 +5,8 @@ import(sp)
 #importFrom("sp", bbox, Spatial, SpatialGrid, SpatialGridDataFrame, plot)
 import(raster)
 #import(gpclib)
-importFrom("gpclib", intersect)  #this takes care of the plot warning
+#importFrom("gpclib", intersect)  #this takes care of the plot warning
+import(rgeos)
 
 
 #exportPattern("^[[:alpha:]]+")

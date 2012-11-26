@@ -8,7 +8,7 @@
 }
 
 \usage{
-initRandomSeed(startSeed = NA, runQuiet = TRUE)
+initRandomSeed(startSeed = NA, runQuiet = TRUE, ...)
 }
 
 %- maybe also 'usage' for other objects documented here.
@@ -18,6 +18,8 @@ initRandomSeed(startSeed = NA, runQuiet = TRUE)
   system clock time; otherwise, specify a scalar seed value start a new stream.}
 
   \item{runQuiet}{\code{TRUE}: no feedback; \code{FALSE}: show some results.}
+
+  \item{\dots}{ Not used, for gobbling arguments only. }
 }
 
 \details{ The default uniform \acronym{RNG} in \R

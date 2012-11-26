@@ -24,7 +24,10 @@
 #     1. for 'circularPlotIZ'              (Dec 2011)
 #     2. for 'horizontalPointIZ'           (Dec 2011)
 #
-#   Note that the sp, raster, and gpclib packages must be loaded.
+#   Note that the sp, raster, and rgeos packages must be installed.
+#   The gpclib package was originally used for the chainSawIZ method,
+#   but it has a restrictive license; rgeos turns out to be equivalent
+#   and performs just as well for what is required here.
 #
 #   In each case, all estimated quatities are calculated for the object;
 #   i.e., volume & Density; whatever else might be desired should
@@ -258,7 +261,7 @@ function(downLog,
     puaBlowup = unitArea/circularPlot@area 
 
 #
-#   this uses the gpclib routines for intersection of plot & log polygons...
+#   this uses the rgeos (or gpclib) routines for intersection of plot & log polygons...
 #
     gPlot = as(cpCoords, 'gpc.poly')                     #make a gpc polygon from the plot
     gLog = as(coordinates(downLog@spLog@polygons$pgsLog@Polygons$log), 'gpc.poly') #gpc polygon of the log 
