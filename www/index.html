@@ -23,7 +23,7 @@
   border:solid 1px #F7F7F7;
 }
 .source {
-  background-color: #fdf6e3;
+  background-color: #2f4f4f;
 }
 .rimage.left {
   text-align: left;
@@ -36,56 +36,56 @@
 }
 
 .source {
-  color: #657b83;
+  color: #f5deb3;
 }
 .background{
-  color: #fdf6e3 ;
+  color: #2f4f4f ;
 }
 .number{
-  color: #dc322f ;
+  color: #ff6347 ;
 }
 .functioncall{
   font-weight: 'bolder' ;
-  color: #cb4b16 ;
+  color: #b57847 ;
 }
 .string{
-  color: #dc322f ;
+  color: #7fffd4 ;
 }
 .keyword{
   font-weight: bolder ;
-  color: #cb4b16;
+  color: #4682b4;
 }
 .argument{
-  color: #657b83 ;
+  color: #f5deb3 ;
 }
 .comment{
-  color: #93a1a1 ;
+  color: #da70d6 ;
 }
 .roxygencomment{
-  color: #93a1a1;
+  color: #da70d6;
 }
 .formalargs{
-  color: #657b83;
+  color: #f5deb3;
 }
 .eqformalargs{
-  color: #657b83;
+  color: #f5deb3;
 }
 .assignement{
-  color: #657b83;
+  color: #f5deb3;
 }
 .package{
   font-weight: bolder;
-  color: #859900;
+  color: #98fb98;
 }
 .slot{
   font-style:italic;
-  color: #657b83;
+  color: #f5deb3;
 }
 .symbol{
-  color: #586e75 ;
+  color: #f5deb3 ;
 }
 .prompt{
-  color: #657b83 ;
+  color: #f5deb3 ;
 }
 </style>
   <meta name="description" content="sampSurf: sampling surface simulation" /> 
@@ -170,10 +170,11 @@ provide some help in getting started.
 fixed-area plots (which include the <sq>stand-up,</sq> <sq>sausage,</sq>
 and <sq>chainsaw</sq> methods or protocols), point relascope sampling, several variants of
 perpendicular distance sampling, as well as a new method called distance limited sampling
-and a Monte Carlo variant.  Support for standing trees has also been been added recently
+and a Monte Carlo variant.  Standing trees sampling methods are also supported
 with classes and methods for fixed-area circular plot and horizontal point and line
-sampling methods. The overall class structure is designed to support additions with
-relative ease, so more methods will appear in future releases (hopefully with some
+sampling methods, as well as critical height and some new importance sampling-based
+derivatives of the latter. The overall class structure is designed to support additions
+with relative ease, so more methods will appear in future releases (hopefully with some
 contributed by users). At the current release, there are more than 20 variants of sampling
 methods available in the package (see <Rcode>package?sampSurf</Rcode> and the vignettes
 for details).
@@ -208,9 +209,9 @@ R-Forge projects, they will be found. But <Rpkg>gpclib</Rpkg>, for example, is n
 R-Forge and therefore R will complain that it can not find it. Second, the packages that
 are available on R-Forge could be in some intermediate stage of update, so it is better to
 install the required packages from CRAN, with what is known to be a stable release. The
-dependencies are listed in the DESCRIPTION file for <Rpkg>sampSurf</Rpkg>; they are:
+dependencies are listed in the DESCRIPTION file for <Rpkg>sampSurf</Rpkg>, they are:
 <Rpkg>sp</Rpkg>, <Rpkg>raster</Rpkg>, <Rpkg>rasterVis</Rpkg>,
-<Rpkg>gpclib</Rpkg> and <Rpkg>boot</Rpkg>, with <Rpkg>rgl</Rpkg> suggested but not
+<Rpkg>rgeos</Rpkg> and <Rpkg>boot</Rpkg>, with <Rpkg>rgl</Rpkg> suggested but not
 necessary unless you want to look at the sampling surfaces in 3D. Therefore, I would
 recommend that you use the normal
 <Rcode>install.packages()</Rcode> on all these packages so that you get the latest stable
@@ -219,13 +220,15 @@ version from CRAN. Here is what I would try (in this order)&hellip;<br><br>
 <Rcode>install.packages("sp")</Rcode><br>
 <Rcode>install.packages("raster")</Rcode><br>
 <Rcode>install.packages("rasterVis")</Rcode><br>
-<Rcode>install.packages("gpclib")</Rcode><br>
+<Rcode>install.packages("rgeos")</Rcode><br>
 <Rcode>install.packages("boot")</Rcode><br>
 <Rcode>install.packages("sampSurf", repos="http://R-Forge.R-project.org")</Rcode><br><br>
 
 This should do it and get the correct stable releases from CRAN prior to installing
-<Rpkg>sampSurf</Rpkg>. Please note the limited use license restriction
-on <Rpkg>gpclib</Rpkg> (see this package on CRAN).
+<Rpkg>sampSurf</Rpkg>. Please note that as of <Rpkg>sampSurf</Rpkg> version 0.6-6
+(26-Nov-2012), <Rpkg>rgeos</Rpkg> has replaced <Rpkg>gpclib</Rpkg> due to the limited use
+license restriction on the latter (see this package on CRAN). Please see the instructions
+for installing  <Rpkg>rgeos</Rpkg> if any problems arise.
 </p>
 
 
@@ -350,9 +353,9 @@ The first component that is always required for a completed sampling surface is 
 object with defined extents and resolution&hellip;
 </p>
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">sampSurf</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="symbol">tract.m</span> <span class="assignement">=</span> <span class="functioncall">Tract</span><span class="keyword">(</span><span class="functioncall">c</span><span class="keyword">(</span><span class="argument">x</span> <span class="argument">=</span> <span class="number">71</span><span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="number">71</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">cellSize</span> <span class="argument">=</span> <span class="number">0.5</span><span class="keyword">)</span>  <span class="comment">#in meters</span>
-<span class="prompt">R&gt; </span><span class="symbol">buffTract.m</span> <span class="assignement">=</span> <span class="functioncall">bufferedTract</span><span class="keyword">(</span><span class="argument">bufferWidth</span> <span class="argument">=</span> <span class="number">10</span><span class="keyword">,</span> <span class="symbol">tract.m</span><span class="keyword">)</span>
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="functioncall">require</span>(sampSurf)
+tract.m = <span class="functioncall">Tract</span>(<span class="functioncall">c</span>(x = 71, y = 71), cellSize = 0.5)  #<span class="keyword">in</span> meters
+buffTract.m = <span class="functioncall">bufferedTract</span>(bufferWidth = 10, tract.m)
 </pre></div></div></div>
 
 
@@ -371,14 +374,14 @@ with the desired number of, in this case, downed logs (first argument). The samp
 method to apply to the logs is passed in the <Rcode>iZone</Rcode> argument; e.g.,&hellip;
 </p>
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="symbol">sausageLen.ss</span> <span class="assignement">=</span> <span class="functioncall">sampSurf</span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span> <span class="argument">tract</span> <span class="argument">=</span> <span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">iZone</span> <span class="argument">=</span> <span class="string">'sausageIZ'</span><span class="keyword">,</span>
-<span class="prompt">+ </span>                         <span class="argument">plotRadius</span> <span class="argument">=</span> <span class="number">3</span><span class="keyword">,</span> <span class="argument">estimate</span> <span class="argument">=</span> <span class="string">'Length'</span><span class="keyword">,</span>
-<span class="prompt">+ </span>                         <span class="argument">buttDiams</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span> <span class="number">50</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">logLens</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">2</span><span class="keyword">,</span> <span class="number">8</span><span class="keyword">)</span><span class="keyword">)</span>
+<div class="chunk" id="sausageLen"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; sausageLen.ss = <span class="functioncall">sampSurf</span>(20, tract = buffTract.m, iZone = <span class="string">'sausageIZ'</span>, 
++                          plotRadius = 3, estimate = <span class="string">'Length'</span>, 
++                          buttDiams = <span class="functioncall">c</span>(20, 50), logLens = <span class="functioncall">c</span>(2, 8))
 </pre></div><div class="output"><pre class="knitr r">
 Number of logs in collection = 20
 Heaping log: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
-</pre></div><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">sausageLen.ss</span><span class="keyword">,</span> <span class="argument">useImage</span> <span class="argument">=</span> <span class="number">FALSE</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage default"><img src="figures/ss-sausageLen.png"  class="plot" /></div></div>
+</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(sausageLen.ss, useImage = <span class="keyword">FALSE</span>)
+</pre></div></div><div class="rimage default"><img src="figures/ss-sausageLen.png" title="plot of chunk sausageLen" alt="plot of chunk sausageLen" class="plot" /></div></div>
 
 
 <p> Notice that you can specify the default log dimensions (e.g., <Rcode>buttDiams</Rcode>
@@ -399,7 +402,7 @@ Heaping log: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
  A summary of the object is often useful&hellip;
 </p>
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="symbol">sausageLen.ss</span>
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; sausageLen.ss
 </pre></div><div class="output"><pre class="knitr r">
 Object of class: sampSurf
 ------------------------------------------------------------
@@ -423,11 +426,10 @@ extent      : 0, 71, 0, 71  (xmin, xmax, ymin, ymax)
 coord. ref. : NA 
 data source : in memory
 names       : surf 
-values      : 0, 1113  (min, max)
+values      : 0, 1132  (min, max)
 
 Buffer width =  10
-
-</pre></div><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">sausageLen.ss</span><span class="keyword">)</span>
+</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">summary</span>(sausageLen.ss)
 </pre></div><div class="output"><pre class="knitr r">
 Object of class: sampSurf
 ------------------------------------------------------------
@@ -437,28 +439,27 @@ sampling surface object
 Inclusion zone objects: sausageIZ
 Measurement units = metric
 Number of logs = 20
-True log volume = 7.266 cubic meters
-True log length = 97.69 meters
-True log surface area = 90.45 square meters
-True log coverage area = 28.75 square meters
+True log volume = 5.829 cubic meters
+True log length = 92.26 meters
+True log surface area = 78.17 square meters
+True log coverage area = 24.86 square meters
 True log biomass = NA
 True log carbon = NA
 
 Estimate attribute: Length
 Surface statistics...
-  mean = 97.6
-  bias = -0.09491
-  bias percent = -0.09716
-  sum = 1967907
-  var = 45242
-  st. dev. = 212.7
-  cv % = 217.9
-  surface max = 1113
+  mean = 92.34
+  bias = 0.07604
+  bias percent = 0.08242
+  sum = 1861864
+  var = 42443
+  st. dev. = 206
+  cv % = 223.1
+  surface max = 1132
   total # grid cells = 20164
   grid cell resolution (x & y) = 0.5 meters
-  # of background cells (zero) = 16211
-  # of inclusion zone cells = 3953
-
+  # of background cells (zero) = 16364
+  # of inclusion zone cells = 3800
 </pre></div></div></div>
 
 
@@ -478,10 +479,10 @@ zones overlap&hellip;
 
 
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">rgl</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="functioncall">plot3D</span><span class="keyword">(</span><span class="symbol">sausageLen.ss</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="functioncall">par3d</span><span class="keyword">(</span><span class="argument">zoom</span> <span class="argument">=</span> <span class="number">0.8</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage center"><img src="figures/ss-sausageLen-rgl.png"  class="plot" /></div></div>
+<div class="chunk" id="sausageLen-rgl"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">require</span>(rgl)
+R&gt; <span class="functioncall">plot3D</span>(sausageLen.ss)
+R&gt; <span class="functioncall">par3d</span>(zoom = 0.8)
+</pre></div></div><div class="rimage center"><img src="figures/ss-sausageLen-rgl.png" title="plot of chunk sausageLen-rgl" alt="plot of chunk sausageLen-rgl" class="plot" /></div></div>
 
 
 
@@ -528,8 +529,8 @@ another down coarse woody debris sampling method known as perpendicular distance
 (<acronym>pds</acronym>). Start by creating a population of down logs&hellip;
 </p>
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="symbol">dLogs</span> <span class="assignement">=</span> <span class="functioncall">downLogs</span><span class="keyword">(</span><span class="number">25</span><span class="keyword">,</span> <span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">buttDiams</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">25</span><span class="keyword">,</span> <span class="number">50</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">logLens</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">5</span><span class="keyword">,</span> <span class="number">10</span><span class="keyword">)</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="symbol">dLogs</span>
+<div class="chunk" id="dLogs"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; dLogs = <span class="functioncall">downLogs</span>(25, buffTract.m, buttDiams = <span class="functioncall">c</span>(25, 50), logLens = <span class="functioncall">c</span>(5, 10)) 
+R&gt; dLogs
 </pre></div><div class="output"><pre class="knitr r">
 Object of class: downLogs
 ------------------------------------------------------------
@@ -539,22 +540,22 @@ Container class object...
   Units of measurement:  metric
 
   Encapulating bounding box...
-     min   max
-x 11.712 64.74
-y  8.712 63.11
+    min   max
+x 9.839 63.09
+y 9.507 58.88
 
   There are 25 logs in the population
-  Population log volume =  14.03 cubic meters
-  Population log surface area =  170 square meters
-  Population log coverage area =  54.08 square meters
-  Average volume/log =  0.5612 cubic meters
-  Average surface area/log =  6.799 square meters
-  Average coverage area/log =  2.163 square meters
-  Average length/log =  7.16 meters
+  Population log volume =  12.78 cubic meters
+  Population log surface area =  159.7 square meters
+  Population log coverage area =  50.81 square meters
+  Average volume/log =  0.5112 cubic meters
+  Average surface area/log =  6.389 square meters
+  Average coverage area/log =  2.032 square meters
+  Average length/log =  6.876 meters
 (**All statistics exclude NAs)
-</pre></div><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">gridColor</span> <span class="argument">=</span> <span class="string">'grey70'</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">dLogs</span><span class="keyword">,</span> <span class="argument">add</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage default"><img src="figures/ss-dLogs.png"  class="plot" /></div></div>
+</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(buffTract.m, gridColor = <span class="string">'grey70'</span>)
+R&gt; <span class="functioncall">plot</span>(dLogs, add = <span class="keyword">TRUE</span>)
+</pre></div></div><div class="rimage default"><img src="figures/ss-dLogs.png" title="plot of chunk dLogs" alt="plot of chunk dLogs" class="plot" /></div></div>
 
 
 <p>
@@ -570,8 +571,8 @@ that contains the information about that sampling method in the form of design p
 for the distance limit. This is most easily done in terms of a
 "K<sub><acronym>pds</acronym></sub> factor" for the method&hellip;
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="symbol">pds.m</span> <span class="assignement">=</span> <span class="functioncall">perpendicularDistance</span><span class="keyword">(</span><span class="number">50</span><span class="keyword">,</span> <span class="argument">description</span> <span class="argument">=</span> <span class="string">"PDS parameters"</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="symbol">pds.m</span>
+<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; pds.m = <span class="functioncall">perpendicularDistance</span>(50, description = <span class="string">"PDS parameters"</span>)
+R&gt; pds.m
 </pre></div><div class="output"><pre class="knitr r">
 Object of class: perpendicularDistance
 ------------------------------------------------------------
@@ -614,10 +615,10 @@ following creates a container of all the individual inclusion zone objects. It d
 by applying the <Rcode>perpendicularDistanceIZ</Rcode> constructor method to each log in
 the collection&hellip;
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="symbol">dLogs.izs</span> <span class="assignement">=</span> <span class="functioncall">downLogIZs</span><span class="keyword">(</span><span class="symbol">dLogs</span><span class="keyword">,</span> <span class="argument">iZone</span> <span class="argument">=</span> <span class="string">'perpendicularDistanceIZ'</span><span class="keyword">,</span> <span class="argument">pds</span> <span class="argument">=</span> <span class="symbol">pds.m</span><span class="keyword">,</span>
-<span class="prompt">+ </span>                       <span class="argument">pdsType</span> <span class="argument">=</span> <span class="string">'volume'</span><span class="keyword">,</span>
-<span class="prompt">+ </span>                       <span class="argument">description</span> <span class="argument">=</span> <span class="string">'pds inclusion zones for dLogs'</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="symbol">dLogs.izs</span>
+<div class="chunk" id="dLogs-izs"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; dLogs.izs = <span class="functioncall">downLogIZs</span>(dLogs, iZone = <span class="string">'perpendicularDistanceIZ'</span>, pds = pds.m,
++                        pdsType = <span class="string">'volume'</span>,
++                        description = <span class="string">'pds inclusion zones <span class="keyword">for</span> dLogs'</span>)
+R&gt; dLogs.izs
 </pre></div><div class="output"><pre class="knitr r">
 Container object of class: downLogIZs
 ------------------------------------------------------------
@@ -628,16 +629,15 @@ Inclusion zones are of class: perpendicularDistanceIZ
 Units of measurement:  metric
 Summary of inclusion zone areas in square meters...
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     var    SDev 
-  16.90   34.30   55.40   56.10   78.10  105.00  698.47   26.43 
+  19.00   31.20   41.60   51.10   72.70   97.90  610.43   24.71 
 
 Encapulating bounding box...
     min   max
-x 6.099 69.13
-y 8.689 64.27
-
-</pre></div><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">buffTract.m</span><span class="keyword">,</span> <span class="argument">gridColor</span> <span class="argument">=</span> <span class="string">'grey70'</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">dLogs.izs</span><span class="keyword">,</span> <span class="argument">add</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage default"><img src="figures/ss-dLogs-izs.png"  class="plot" /></div></div>
+x 9.230 64.81
+y 4.277 65.79
+</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(buffTract.m, gridColor = <span class="string">'grey70'</span>)
+R&gt; <span class="functioncall">plot</span>(dLogs.izs, add = <span class="keyword">TRUE</span>)
+</pre></div></div><div class="rimage default"><img src="figures/ss-dLogs-izs.png" title="plot of chunk dLogs-izs" alt="plot of chunk dLogs-izs" class="plot" /></div></div>
 
 
 <p>
@@ -658,11 +658,11 @@ Of course now the last step is simply to create the sampling surface from the ob
 have built in the previous steps. The sampling surface will be for volume in this
 case&hellip;
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="symbol">dLogs.ss</span> <span class="assignement">=</span> <span class="functioncall">sampSurf</span><span class="keyword">(</span><span class="symbol">dLogs.izs</span><span class="keyword">,</span> <span class="symbol">buffTract.m</span><span class="keyword">)</span>
+<div class="chunk" id="pdsVolume"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; dLogs.ss = <span class="functioncall">sampSurf</span>(dLogs.izs, buffTract.m)
 </pre></div><div class="output"><pre class="knitr r">
 Number of logs in collection = 25
 Heaping log: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,
-</pre></div><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">summary</span><span class="keyword">(</span><span class="symbol">dLogs.ss</span><span class="keyword">)</span>
+</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">summary</span>(dLogs.ss)
 </pre></div><div class="output"><pre class="knitr r">
 Object of class: sampSurf
 ------------------------------------------------------------
@@ -672,30 +672,29 @@ sampling surface object
 Inclusion zone objects: perpendicularDistanceIZ (with PP to: volume)
 Measurement units = metric
 Number of logs = 25
-True log volume = 14.03 cubic meters
-True log length = 179 meters
-True log surface area = 170 square meters
-True log coverage area = 54.08 square meters
+True log volume = 12.78 cubic meters
+True log length = 171.9 meters
+True log surface area = 159.7 square meters
+True log coverage area = 50.81 square meters
 True log biomass = NA
 True log carbon = NA
 
 Estimate attribute: volume
 Surface statistics...
-  mean = 13.97
-  bias = -0.05614
-  bias percent = -0.4001
-  sum = 281792
-  var = 830.8
-  st. dev. = 28.82
-  cv % = 206.3
+  mean = 12.73
+  bias = -0.04739
+  bias percent = -0.3708
+  sum = 256738
+  var = 891.1
+  st. dev. = 29.85
+  cv % = 234.5
   surface max = 201.6
   total # grid cells = 20164
   grid cell resolution (x & y) = 0.5 meters
-  # of background cells (zero) = 15714
-  # of inclusion zone cells = 4450
-
-</pre></div><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">dLogs.ss</span><span class="keyword">,</span> <span class="argument">useImage</span> <span class="argument">=</span> <span class="number">FALSE</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage default"><img src="figures/ss-pdsVolume.png"  class="plot" /></div></div>
+  # of background cells (zero) = 16388
+  # of inclusion zone cells = 3776
+</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(dLogs.ss, useImage = <span class="keyword">FALSE</span>)
+</pre></div></div><div class="rimage default"><img src="figures/ss-pdsVolume.png" title="plot of chunk pdsVolume" alt="plot of chunk pdsVolume" class="plot" /></div></div>
 
 
 <p>
@@ -706,10 +705,10 @@ visualize the surface using <Rpkg>rgl</Rpkg>&hellip;
 
 
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">rgl</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="functioncall">plot3D</span><span class="keyword">(</span><span class="symbol">dLogs.ss</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="functioncall">par3d</span><span class="keyword">(</span><span class="argument">zoom</span> <span class="argument">=</span> <span class="number">0.8</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage center"><img src="figures/ss-pdsVol-rgl.png"  class="plot" /></div></div>
+<div class="chunk" id="pdsVol-rgl"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">require</span>(rgl)
+R&gt; <span class="functioncall">plot3D</span>(dLogs.ss)
+R&gt; <span class="functioncall">par3d</span>(zoom = 0.8)
+</pre></div></div><div class="rimage center"><img src="figures/ss-pdsVol-rgl.png" title="plot of chunk pdsVol-rgl" alt="plot of chunk pdsVol-rgl" class="plot" /></div></div>
 
 
 
@@ -739,29 +738,29 @@ created below to get more familiar with the package&hellip;
 </p>
 
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="symbol">tract.e</span> <span class="assignement">=</span> <span class="functioncall">Tract</span><span class="keyword">(</span><span class="functioncall">c</span><span class="keyword">(</span><span class="argument">x</span> <span class="argument">=</span> <span class="number">208</span><span class="keyword">,</span> <span class="argument">y</span> <span class="argument">=</span> <span class="number">209</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">units</span> <span class="argument">=</span> <span class="string">'English'</span><span class="keyword">,</span> <span class="argument">cellSize</span> <span class="argument">=</span> <span class="number">1</span><span class="keyword">)</span> <span class="comment">#feet here</span>
-<span class="prompt">R&gt; </span><span class="symbol">buffTract.e</span> <span class="assignement">=</span> <span class="functioncall">bufferedTract</span><span class="keyword">(</span><span class="argument">bufferWidth</span> <span class="argument">=</span> <span class="number">30</span><span class="keyword">,</span> <span class="symbol">tract.e</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="symbol">sTrees</span> <span class="assignement">=</span> <span class="functioncall">standingTrees</span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span> <span class="symbol">buffTract.e</span><span class="keyword">,</span> <span class="argument">dbhs</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">6</span><span class="keyword">,</span> <span class="number">15</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">heights</span> <span class="argument">=</span> <span class="functioncall">c</span><span class="keyword">(</span><span class="number">30</span><span class="keyword">,</span> <span class="number">50</span><span class="keyword">)</span><span class="keyword">,</span>
-<span class="prompt">+ </span>                       <span class="argument">units</span> <span class="argument">=</span> <span class="string">'English'</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="symbol">aGauge</span> <span class="assignement">=</span> <span class="functioncall">angleGauge</span><span class="keyword">(</span><span class="argument">baf</span> <span class="argument">=</span> <span class="number">20</span><span class="keyword">,</span> <span class="argument">units</span> <span class="argument">=</span> <span class="string">'English'</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="symbol">sTrees.izs</span> <span class="assignement">=</span> <span class="functioncall">standingTreeIZs</span><span class="keyword">(</span><span class="symbol">sTrees</span><span class="keyword">,</span> <span class="argument">iZone</span> <span class="argument">=</span> <span class="string">'horizontalPointIZ'</span><span class="keyword">,</span>
-<span class="prompt">+ </span>                             <span class="argument">angleGauge</span> <span class="argument">=</span> <span class="symbol">aGauge</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="symbol">hps.ss</span> <span class="assignement">=</span> <span class="functioncall">sampSurf</span><span class="keyword">(</span><span class="symbol">sTrees.izs</span><span class="keyword">,</span> <span class="symbol">buffTract.e</span><span class="keyword">,</span> <span class="argument">estimate</span> <span class="argument">=</span> <span class="string">'Density'</span><span class="keyword">)</span>
+<div class="chunk" id="hpsSS"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; tract.e = <span class="functioncall">Tract</span>(<span class="functioncall">c</span>(x = 208, y = 209), units = <span class="string">'English'</span>, cellSize = 1) #feet here
+R&gt; buffTract.e = <span class="functioncall">bufferedTract</span>(bufferWidth = 30, tract.e)
+R&gt; sTrees = <span class="functioncall">standingTrees</span>(20, buffTract.e, dbhs = <span class="functioncall">c</span>(6, 15), heights = <span class="functioncall">c</span>(30, 50),
++                        units = <span class="string">'English'</span>)
+R&gt; aGauge = <span class="functioncall">angleGauge</span>(baf = 20, units = <span class="string">'English'</span>)
+R&gt; sTrees.izs = <span class="functioncall">standingTreeIZs</span>(sTrees, iZone = <span class="string">'horizontalPointIZ'</span>, 
++                              angleGauge = aGauge)
+R&gt; hps.ss = <span class="functioncall">sampSurf</span>(sTrees.izs, buffTract.e, estimate = <span class="string">'Density'</span>)
 </pre></div><div class="output"><pre class="knitr r">
 Number of trees in collection = 20
 Heaping tree: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
-</pre></div><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">plot</span><span class="keyword">(</span><span class="symbol">hps.ss</span><span class="keyword">,</span> <span class="argument">useImage</span> <span class="argument">=</span> <span class="number">FALSE</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage default"><img src="figures/ss-hpsSS.png"  class="plot" /></div></div>
+</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(hps.ss, useImage = <span class="keyword">FALSE</span>)
+</pre></div></div><div class="rimage default"><img src="figures/ss-hpsSS.png" title="plot of chunk hpsSS" alt="plot of chunk hpsSS" class="plot" /></div></div>
 
 
 
 
 
 
-<div class="chunk"><div class="rcode"><div class="source"><pre class="knitr r"><span class="prompt">R&gt; </span><span class="functioncall">require</span><span class="keyword">(</span><span class="symbol">rgl</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="functioncall">plot3D</span><span class="keyword">(</span><span class="symbol">hps.ss</span><span class="keyword">)</span>
-<span class="prompt">R&gt; </span><span class="functioncall">par3d</span><span class="keyword">(</span><span class="argument">zoom</span> <span class="argument">=</span> <span class="number">0.8</span><span class="keyword">)</span>
-</pre></div></div><div class="rimage center"><img src="figures/ss-hps-rgl.png"  class="plot" /></div></div>
+<div class="chunk" id="hps-rgl"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">require</span>(rgl)
+R&gt; <span class="functioncall">plot3D</span>(hps.ss)
+R&gt; <span class="functioncall">par3d</span>(zoom = 0.8)
+</pre></div></div><div class="rimage center"><img src="figures/ss-hps-rgl.png" title="plot of chunk hps-rgl" alt="plot of chunk hps-rgl" class="plot" /></div></div>
 
 
 
@@ -804,7 +803,7 @@ or find any problems.
 <div id="footer">
   <i>The examples in this page were generated using the very useful R
   package <a href="http://yihui.name/knitr/"><Rpkg>knitr</Rpkg></a>.<br>  Last updated:
-  11-May-2012 (jhg)</i>
+  4-Mar-2013 (jhg)</i>
 </div>
 
 </body>
