@@ -9,8 +9,8 @@
 #        ...downLogIZ subclass constructors...
 #
 #     1. a constructor for 'standUpIZ'
-#     2. for 'chainSawIZ'
-#     3. for 'sausageIZ'
+#     2. for 'sausageIZ'
+#     3. for 'chainSawIZ'
 #
 #     4. special, for the full chainSawIZ zone contained within a sausage
 #        shaped inclusion zone. No other protocol will have this mess.

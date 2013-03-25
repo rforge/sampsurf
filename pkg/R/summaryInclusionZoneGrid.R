@@ -50,20 +50,18 @@ function(object,
     idx = ifelse(is.na(gridValues), FALSE, TRUE)    #mask out background cells
     df = object@data[idx,]
     #NAs in biomass and carbon will create extra entries in summary, so delete them as necessary...
-    warnBC =FALSE
-    if(all(is.na(df[,'biomass']))) {
-      df = df[, -match('biomass', colnames(df))]
-      warnBC = TRUE
-    }
-    if(all(is.na(df[,'carbon']))) {
-      df = df[, -match('carbon', colnames(df))]
-      warnBC = TRUE
-    }
-    print(apply(df, 2, summary, digits=4))
-    if(warnBC) {
+    jj = apply(df, 2, function(x) all(is.na(x))) #also remove any other NA column with no estimates
+    naNames = names(jj)[jj]
+    if(length(naNames) > 0)                            #note, we could end up with just one column
+      df = df[,-match(naNames, names(jj)), drop=FALSE] #which will convert to vector by default!!
+
+    print(apply(df, 2, summary), digits=4)
+    if(!any(is.na(match(c('biomass','carbon'), naNames)))) {
       cat('--Note: either biomass or carbon (or both) had all NAs because no conversion')
-      cat('\n        factor was suppled, these columns have been deleted above.')
+      cat('\n        factor was supplied, these columns have been deleted above.')
     }
+    if(length(setdiff(naNames,c('biomass','carbon'))) > 0)
+      cat('\n        Other columns with all NAs have also been removed.')
 
     cat('\n\n  Encapulating bounding box...\n')
     print(object@bbox)

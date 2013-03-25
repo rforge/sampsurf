@@ -504,7 +504,7 @@ function(object,
         )
 {
 #------------------------------------------------------------------------------
-#   add a little to 'InclusionZone' & 'standingTreeIZ' methods for 'horizontalPointIZ'...
+#   add a little to 'circularPlotIZ' method for 'horizontalPointIZ'...
 #------------------------------------------------------------------------------
     callNextMethod()
     

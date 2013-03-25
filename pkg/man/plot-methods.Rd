@@ -19,6 +19,11 @@
 \alias{plot,distanceLimitedIZ,missing-method}
 \alias{plot,standUpIZ,missing-method}
 \alias{plot,circularPlotIZ,missing-method}
+\alias{plot,horizontalPointIZ,missing-method}
+\alias{plot,criticalHeightIZ,missing-method}
+\alias{plot,importanceCHSIZ,missing-method}
+\alias{plot,antitheticICHSIZ,missing-method}
+\alias{plot,pairedAICHSIZ,missing-method}
 \alias{plot,horizontalLineIZ,missing-method}
 \alias{plot,Stem,missing-method}
 \alias{plot,StemContainer,missing-method}
@@ -563,7 +568,12 @@ argument definition for the most part.
 
     This adds the necessary functionality to plot objects of class
     "\code{\linkS4class{circularPlotIZ}}" as well as those of its
-    subclass "\code{\linkS4class{horizontalPointIZ}}".}
+    subclass "\code{\linkS4class{horizontalPointIZ}}". In addition, the
+    following subclasses derived from \dQuote{horizontalPointIZ} also
+    use this method: "\code{\linkS4class{criticalHeightIZ}}",
+    "\code{\linkS4class{importanceCHSIZ}}",
+    "\code{\linkS4class{antitheticICHSIZ}}", and
+    "\code{\linkS4class{pairedAICHSIZ}}".}
   
   \item{}{\bold{usage\ldots}
     \preformatted{function(x, 

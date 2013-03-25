@@ -83,7 +83,8 @@ function(object,
     for(i in seq_len(numIZs)) {
       if(!is(object[[i]], 'InclusionZone'))     #catch objects that may not be in the correct form
         stop('All list elements must be a subclass of "InclusionZone"!')
-      bboxArray[,,i] = bbox(perimeter(object[[i]]))
+      ###bboxArray[,,i] = bbox(perimeter(object[[i]])) #changed to below 21-Mar-2013, SU method could chop logs
+      bboxArray[,,i] = bbox(object[[i]])               #that were larger than the IZ and near the plot border
     }
     dimnames(bboxArray) = dimnames(bbox(object[[1]])) #page dim doesn't matter
     bbox = bboxSum(bboxArray)                         #extend the bboxes to overall

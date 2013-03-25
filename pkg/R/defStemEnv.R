@@ -73,7 +73,7 @@
 # per unit area names for the list object slot in the InclusionZone class or subclasses;
 # I have perhaps made this too difficult, but one can assign the slots based on the names
 # of the list, while the values could someday change; e.g.
-# eval(parse(text=paste('list(',.StemEnv$puaEstimates$volumeCubic,'=3)')))
+# eval(parse(text=paste('list(',.StemEnv$puaEstimates$volume,'=3)')))
 # will do it...
 #
 .StemEnv$puaEstimates = list(volume = 'volume',                    #cubic volume in correct units
@@ -114,6 +114,10 @@
 .StemEnv$pdsTypes = c('volume', 'surfaceArea', 'coverageArea')  #main PPS variable
 
 
+#
+#   critical height and importance variants of CHS...
+#
+.StemEnv$referenceCHSIZ = c('butt', 'dbh') #reference height for critical height inclusion zone
 
 #
 #   some plausible species codes/names--note that they can be any character string...

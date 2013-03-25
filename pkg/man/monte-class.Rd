@@ -16,12 +16,11 @@
   examples of how this class would be used.
 }
 
-\section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("monte",
-  ...)}. However, there is a constructor generic by the same name with
-methods for creating objects. This is to be preferred over the use of
-\code{new} since the objects returned from the constructor are
-guaranteeted to be valid. 
+\section{Objects from the Class}{ Objects can be created by calls of the
+form \code{new("monte", ...)}. However, use of the constructor generic
+"\code{\link{monte}}" with methods for creating objects is
+recommended. This is to be preferred over the use of \code{new} since
+the objects returned from the constructor are guaranteeted to be valid.
 }
 
 \section{Slots}{

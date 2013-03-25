@@ -64,6 +64,8 @@ Support for standing trees includes the following methods\ldots
   \item Horizontal point (angle gauge) sampling.
 %
   \item Horizontal line (angle gauge) sampling.
+%
+  \item Critical height sampling (and importance sampling variants).
 
 } %itemize
 
@@ -79,8 +81,8 @@ contributed by users).
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.6-5\cr
-Date: \tab 16-Oct-2012\cr
+Version: \tab 0.6-8\cr
+Date: \tab 25-Mar-2013\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
 }
@@ -253,6 +255,14 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 	  horizontal point sampling of standing trees.\cr
 	\code{\linkS4class{horizontalLineIZ}} \tab Class for
 	  horizontal line sampling of standing trees.\cr
+	\code{\linkS4class{criticalHeightIZ}} \tab Class for
+	  critical height sampling of standing trees.\cr
+	\code{\linkS4class{importanceCHSIZ}} \tab Class for importance
+	  critical height sampling of standing trees.\cr
+	\code{\linkS4class{antitheticICHSIZ}} \tab Class for antithetic importance
+	  critical height sampling of standing trees.\cr
+	\code{\linkS4class{pairedAICHSIZ}} \tab Class for paired antithetic importance
+	  critical height sampling of standing trees.\cr
 	%}
 	} %tabular
 
@@ -405,6 +415,14 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 	  object for the horizontal point (prism) sampling method \cr
 	\code{\link{horizontalLineIZ}} \tab Creates an "InclusionZone"
 	  object for the horizontal line sampling method \cr
+	\code{\link{criticalHeightIZ}} \tab Creates an "InclusionZone"
+	  object for the critical height (CH) sampling method \cr
+	\code{\link{importanceCHSIZ}} \tab Creates an "InclusionZone"
+	  object for the importance critical height sampling method \cr
+	\code{\link{antitheticICHSIZ}} \tab Creates an "InclusionZone"
+	  object for the antithetic importance CH sampling method \cr
+	\code{\link{pairedAICHSIZ}} \tab Creates an "InclusionZone"
+	  object for the paired antithetic importance CH sampling method \cr
   }
   }%InclusionZone
   
@@ -615,8 +633,8 @@ Jeffrey H. Gove
 
 
 \references{ The first two references describe the sampling surface
-method in detail. The rest provide some examples of its use and are not
-exhaustive.
+method in detail. The rest provide some examples of its use, or document
+some of the methods in the package, and are not exhaustive.
 
 \describe{
 %
@@ -649,14 +667,19 @@ exhaustive.
 	and Management} \bold{282}:53--62. }
 %
 \item{}{Ducey, M. J., Williams, M. S., Gove, J. H., Roberge, S. and
-  Kenning, R. S. 2012. Distance limited perpendicular distance sampling
+  Kenning, R. S. 2013. Distance limited perpendicular distance sampling
   for coarse woody material: Theory and field results. \emph{Forestry}
-  (In press).}
+  \bold{86}:119--128}
 %
 \item{}{Gove, J. H., Ducey, M. J., Valentine, H. T. and Williams,
-  M. S. 2012. A comprehensive comparison of perpendicular distance
+  M. S. 2013. A comprehensive comparison of perpendicular distance
   sampling methods for sampling down coarse woody
-  debris. \emph{Forestry} (In Press).}
+  debris. \emph{Forestry} \bold{86}:129--143.}
+%
+\item{}{Lynch,T. B. and Gove, J. H. 2013. An antithetic variate to
+  facilitate upper-stem height measurements for critical height sampling
+  and fixed-radius plot sampling with importance
+  sampling. \emph{Canadian Journal of Forest Research} (forthcoming). }
 
 }%describe
 

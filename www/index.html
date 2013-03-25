@@ -165,6 +165,7 @@ functions. Running the examples (with R's <Rcode>example()</Rcode> command) will
 provide some help in getting started.
 </p>
 
+<!--
 <p>
 <Rpkg>sampSurf</Rpkg> is quite functional, and has support for down logs sampled on
 fixed-area plots (which include the <sq>stand-up,</sq> <sq>sausage,</sq>
@@ -175,13 +176,50 @@ with classes and methods for fixed-area circular plot and horizontal point and l
 sampling methods, as well as critical height and some new importance sampling-based
 derivatives of the latter. The overall class structure is designed to support additions
 with relative ease, so more methods will appear in future releases (hopefully with some
-contributed by users). At the current release, there are more than 20 variants of sampling
+contributed by users). At the current release, there are 28 variants of sampling
 methods available in the package (see <Rcode>package?sampSurf</Rcode> and the vignettes
 for details).
 </p>
+-->
+
+<p>
+<Rpkg>sampSurf</Rpkg> has classes and methods to support a number of different sampling
+protocols for both down logs and standing trees. The overall class structure is designeto
+support additions with relative ease, so more methods will appear in future releases
+(hopefully with some contributed by users). At the current release, there are 28 variants
+of sampling methods available in the package (each of the PDS methods below allows
+sampling with probability proportional to either volume, coverage or surface area)&hellip;
+</p>
 
 
+<ul>
+  <li><h4>Down Logs</h4>
+    <ol>
+       <li>Fixed-area plots:  <sq>stand-up,</sq> <sq>sausage,</sq> and <sq>chainsaw</sq>
+           protocols</li>
+       <li>Point-relascope sampling</li>
+       <li>Perpendicular distance sampling (PDS)</li>
+       <li>Omnibus PDS</li>
+       <li>Distance-limited PDS: canonical, hybrid and omnibus protocols</li>
+       <li>Distance-limited sampling: traditional and crude Monte Carlo protocols</li>
+    </ol>
+  </li>
+  <li><h4>Standing Trees</h4>
+    <ol>
+       <li>Fixed-area plots</li>
+       <li>Horizontal point sampling</li>
+       <li>Horizontal line sampling</li>
+       <li>Critical height sampling</li>
+       <li>Importance critical height sampling</li>
+       <li>Antithetic importance critical height sampling</li>
+       <li>Paired antithetic importance critical height sampling</li>
+    </ol>
+  </li>
+</ul>
 
+For more information on how each of these is implemented within <Rpkg>sampSurf</Rpkg> please
+see <Rcode>package?sampSurf</Rcode> and the vignettes. The examples below also provide
+an illustration of some of these methods.
 
 
 <!-- ============================================================================================== -->
@@ -205,30 +243,35 @@ that <Rpkg>sampSurf</Rpkg> is dependent upon to also be installed. Unfortunately
 installing the dependencies in this way may be a little difficult. First, I believe that
 the dependencies are only searched for on R-Forge, and not CRAN (you could add more repos
 to the list to compensate). Since <Rpkg>raster</Rpkg> and <Rpkg>rgl</Rpkg> are both
-R-Forge projects, they will be found. But <Rpkg>gpclib</Rpkg>, for example, is not on
-R-Forge and therefore R will complain that it can not find it. Second, the packages that
-are available on R-Forge could be in some intermediate stage of update, so it is better to
-install the required packages from CRAN, with what is known to be a stable release. The
-dependencies are listed in the DESCRIPTION file for <Rpkg>sampSurf</Rpkg>, they are:
-<Rpkg>sp</Rpkg>, <Rpkg>raster</Rpkg>, <Rpkg>rasterVis</Rpkg>,
-<Rpkg>rgeos</Rpkg> and <Rpkg>boot</Rpkg>, with <Rpkg>rgl</Rpkg> suggested but not
-necessary unless you want to look at the sampling surfaces in 3D. Therefore, I would
-recommend that you use the normal
+R-Forge projects, they will be found. But <Rpkg>boot</Rpkg>, for example, is evidently not
+on R-Forge and therefore R will complain that it can not find it. Second, the packages
+that are available on R-Forge could be in some intermediate stage of update, so it is
+better to install the required packages from CRAN, with what is known to be a stable
+release (including <Rpkg>sampSurf</Rpkg>). The dependencies are listed in the DESCRIPTION
+file for <Rpkg>sampSurf</Rpkg>, they are:
+<Rpkg>sp</Rpkg>, <Rpkg>raster</Rpkg>, <Rpkg>rasterVis</Rpkg>, and <Rpkg>boot</Rpkg>. In
+ addition, both <Rpkg>rgeos</Rpkg> and <Rpkg>rgl</Rpkg> are suggested but not necessary
+ unless you want to use the <sq>chainsaw</sq> method or look at the sampling surfaces in
+ 3D, respectively. Therefore, I would recommend that you use the normal
 <Rcode>install.packages()</Rcode> on all these packages so that you get the latest stable
 version from CRAN. Here is what I would try (in this order)&hellip;<br><br>
 
 <Rcode>install.packages("sp")</Rcode><br>
 <Rcode>install.packages("raster")</Rcode><br>
 <Rcode>install.packages("rasterVis")</Rcode><br>
-<Rcode>install.packages("rgeos")</Rcode><br>
 <Rcode>install.packages("boot")</Rcode><br>
 <Rcode>install.packages("sampSurf", repos="http://R-Forge.R-project.org")</Rcode><br><br>
 
-This should do it and get the correct stable releases from CRAN prior to installing
-<Rpkg>sampSurf</Rpkg>. Please note that as of <Rpkg>sampSurf</Rpkg> version 0.6-6
+<em>Optional&hellip;</em><br>
+<Rcode>install.packages("rgeos")</Rcode><br>
+<Rcode>install.packages("rgl")</Rcode><br><br>
+
+The above should do it, while getting the correct stable releases from CRAN prior to
+installing <Rpkg>sampSurf</Rpkg> (again, it's probably best to install the CRAN version
+of <Rpkg>sampSurf</Rpkg> too). Please note that as of <Rpkg>sampSurf</Rpkg> version 0.6-6
 (26-Nov-2012), <Rpkg>rgeos</Rpkg> has replaced <Rpkg>gpclib</Rpkg> due to the limited use
 license restriction on the latter (see this package on CRAN). Please see the instructions
-for installing  <Rpkg>rgeos</Rpkg> if any problems arise.
+for installing <Rpkg>rgeos</Rpkg> if any problems arise.
 </p>
 
 
@@ -308,6 +351,9 @@ from CRAN, as it is built with the package there.
 
      for themes see: knit_theme$get() for a list of themes, 
      they are from: http://eclipsecolorthemes.org/ 
+
+     ***Note that the highlight package was discontinued/orphaned in CRAN, so
+     use.highlight=TRUE is no longer applicable in opts_knit$set below. 4-Mar-2013
 -->
 
 
@@ -353,9 +399,9 @@ The first component that is always required for a completed sampling surface is 
 object with defined extents and resolution&hellip;
 </p>
 
-<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="functioncall">require</span>(sampSurf)
-tract.m = <span class="functioncall">Tract</span>(<span class="functioncall">c</span>(x = 71, y = 71), cellSize = 0.5)  #<span class="keyword">in</span> meters
-buffTract.m = <span class="functioncall">bufferedTract</span>(bufferWidth = 10, tract.m)
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">require</span>(sampSurf)
+R&gt; tract.m = <span class="functioncall">Tract</span>(<span class="functioncall">c</span>(x = 71, y = 71), cellSize = 0.5)  #meters
+R&gt; buffTract.m = <span class="functioncall">bufferedTract</span>(bufferWidth = 10, tract.m)
 </pre></div></div></div>
 
 
@@ -426,7 +472,7 @@ extent      : 0, 71, 0, 71  (xmin, xmax, ymin, ymax)
 coord. ref. : NA 
 data source : in memory
 names       : surf 
-values      : 0, 1132  (min, max)
+values      : 0, 1381  (min, max)
 
 Buffer width =  10
 </pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">summary</span>(sausageLen.ss)
@@ -439,27 +485,27 @@ sampling surface object
 Inclusion zone objects: sausageIZ
 Measurement units = metric
 Number of logs = 20
-True log volume = 5.829 cubic meters
-True log length = 92.26 meters
-True log surface area = 78.17 square meters
-True log coverage area = 24.86 square meters
+True log volume = 6.155 cubic meters
+True log length = 86.33 meters
+True log surface area = 77.29 square meters
+True log coverage area = 24.57 square meters
 True log biomass = NA
 True log carbon = NA
 
 Estimate attribute: Length
 Surface statistics...
-  mean = 92.34
-  bias = 0.07604
-  bias percent = 0.08242
-  sum = 1861864
-  var = 42443
-  st. dev. = 206
-  cv % = 223.1
-  surface max = 1132
+  mean = 86.11
+  bias = -0.2169
+  bias percent = -0.2513
+  sum = 1736384
+  var = 45265
+  st. dev. = 212.8
+  cv % = 247.1
+  surface max = 1381
   total # grid cells = 20164
   grid cell resolution (x & y) = 0.5 meters
-  # of background cells (zero) = 16364
-  # of inclusion zone cells = 3800
+  # of background cells (zero) = 16741
+  # of inclusion zone cells = 3423
 </pre></div></div></div>
 
 
@@ -541,17 +587,17 @@ Container class object...
 
   Encapulating bounding box...
     min   max
-x 9.839 63.09
-y 9.507 58.88
+x 7.434 62.76
+y 8.717 62.27
 
   There are 25 logs in the population
-  Population log volume =  12.78 cubic meters
-  Population log surface area =  159.7 square meters
-  Population log coverage area =  50.81 square meters
-  Average volume/log =  0.5112 cubic meters
-  Average surface area/log =  6.389 square meters
-  Average coverage area/log =  2.032 square meters
-  Average length/log =  6.876 meters
+  Population log volume =  14.23 cubic meters
+  Population log surface area =  174.7 square meters
+  Population log coverage area =  55.59 square meters
+  Average volume/log =  0.5692 cubic meters
+  Average surface area/log =  6.989 square meters
+  Average coverage area/log =  2.223 square meters
+  Average length/log =  7.323 meters
 (**All statistics exclude NAs)
 </pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(buffTract.m, gridColor = <span class="string">'grey70'</span>)
 R&gt; <span class="functioncall">plot</span>(dLogs, add = <span class="keyword">TRUE</span>)
@@ -629,12 +675,12 @@ Inclusion zones are of class: perpendicularDistanceIZ
 Units of measurement:  metric
 Summary of inclusion zone areas in square meters...
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     var    SDev 
-  19.00   31.20   41.60   51.10   72.70   97.90  610.43   24.71 
+  24.60   39.30   52.80   56.90   73.10  141.00  607.34   24.64 
 
 Encapulating bounding box...
     min   max
-x 9.230 64.81
-y 4.277 65.79
+x 6.359 70.03
+y 5.015 63.96
 </pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(buffTract.m, gridColor = <span class="string">'grey70'</span>)
 R&gt; <span class="functioncall">plot</span>(dLogs.izs, add = <span class="keyword">TRUE</span>)
 </pre></div></div><div class="rimage default"><img src="figures/ss-dLogs-izs.png" title="plot of chunk dLogs-izs" alt="plot of chunk dLogs-izs" class="plot" /></div></div>
@@ -672,27 +718,27 @@ sampling surface object
 Inclusion zone objects: perpendicularDistanceIZ (with PP to: volume)
 Measurement units = metric
 Number of logs = 25
-True log volume = 12.78 cubic meters
-True log length = 171.9 meters
-True log surface area = 159.7 square meters
-True log coverage area = 50.81 square meters
+True log volume = 14.23 cubic meters
+True log length = 183.1 meters
+True log surface area = 174.7 square meters
+True log coverage area = 55.59 square meters
 True log biomass = NA
 True log carbon = NA
 
 Estimate attribute: volume
 Surface statistics...
-  mean = 12.73
-  bias = -0.04739
-  bias percent = -0.3708
-  sum = 256738
-  var = 891.1
-  st. dev. = 29.85
-  cv % = 234.5
-  surface max = 201.6
+  mean = 14.21
+  bias = -0.02093
+  bias percent = -0.1471
+  sum = 286530
+  var = 825.2
+  st. dev. = 28.73
+  cv % = 202.2
+  surface max = 151.2
   total # grid cells = 20164
   grid cell resolution (x & y) = 0.5 meters
-  # of background cells (zero) = 16388
-  # of inclusion zone cells = 3776
+  # of background cells (zero) = 15534
+  # of inclusion zone cells = 4630
 </pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(dLogs.ss, useImage = <span class="keyword">FALSE</span>)
 </pre></div></div><div class="rimage default"><img src="figures/ss-pdsVolume.png" title="plot of chunk pdsVolume" alt="plot of chunk pdsVolume" class="plot" /></div></div>
 
@@ -803,7 +849,7 @@ or find any problems.
 <div id="footer">
   <i>The examples in this page were generated using the very useful R
   package <a href="http://yihui.name/knitr/"><Rpkg>knitr</Rpkg></a>.<br>  Last updated:
-  4-Mar-2013 (jhg)</i>
+  25-Mar-2013(jhg)</i>
 </div>
 
 </body>

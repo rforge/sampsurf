@@ -13,6 +13,11 @@
 \alias{perimeter,perpendicularDistanceIZ-method}
 \alias{perimeter,distanceLimitedMCIZ-method}
 \alias{perimeter,circularPlotIZ-method}
+\alias{perimeter,horizontalPointIZ-method}
+\alias{perimeter,criticalHeightIZ-method}
+\alias{perimeter,importanceCHSIZ-method}
+\alias{perimeter,antitheticICHSIZ-method}
+\alias{perimeter,pairedAICHSIZ-method}
 \alias{perimeter,horizontalLineIZ-method}
 \alias{perimeter,izContainer-method}
 \alias{perimeter,Tract-method}
@@ -100,8 +105,13 @@
   \item{\strong{\code{signature(object = "circularPlotIZ")}}}{ %\cr
 
 	Returns the spatial object associated with the perimeter of the
-    inclusion zone. Also handles objects of subclass
-    "\code{\linkS4class{horizontalPointIZ}}". }
+    inclusion zone. Also handles objects of subclasses
+    "\code{\linkS4class{horizontalPointIZ}}",
+    "\code{\linkS4class{criticalHeightIZ}}",
+    "\code{\linkS4class{importanceCHSIZ}}",
+    "\code{\linkS4class{antitheticICHSIZ}}", and
+    "\code{\linkS4class{pairedAICHSIZ}}". 
+  }
 
   \item{\strong{\code{signature(object = "horizontalLineIZ")}}}{ %\cr
 

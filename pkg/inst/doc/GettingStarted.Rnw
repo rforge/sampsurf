@@ -106,12 +106,21 @@ library(sampSurf)
 \subsection{Dependancies}
 
 The \Rpackage{sampSurf} package depends on several other packages, which should be
-installed automatically with the command given above. In addition, it `suggests' the
-\Rpackage{rgl} package, which must be installed separately. The \Rpackage{rgl} package
-allows one to visualize the sampling surface in three dimensions and is not necessary for
-basic functionality, so installation is optional. To look at the different
-graphics in \Rpackage{sampSurf} using \Rpackage{rgl}, the \Rpackage{rasterVis} package is
-now required as well, but will be installed automatically when installing \Rpackage{sampSurf}.
+installed automatically with the command given above. In addition, it `suggests' both the
+\Rpackage{rgl} and \Rpackage{rgeos} packages, which must be installed separately. The
+\Rpackage{rgl} package allows one to visualize the sampling surface in three dimensions
+and is not necessary for basic functionality, so installation is optional. To look at the
+different graphics in \Rpackage{sampSurf} using \Rpackage{rgl}, the \Rpackage{rasterVis}
+package is now required as well, but will be installed automatically when installing
+\Rpackage{sampSurf}. The \Rpackage{rgeos}\footnote{The \Rpackage{gpclib} package was
+  originally used, but \Rpackage{rgeos} has replaced it due to the license restrictions on
+  the former.} package is only used for the so-called ``chainsaw'' protocol of sampling
+with fixed-area plots; therefore, if you want to use this protocol, you must install the
+package.  The system dependencies for both \Rpackage{rgl} and \Rpackage{rgeos} might also
+be more than some people want to deal with for installation, so this is another reason to
+make it optional, allowing the majority of \Rpackage{sampSurf} functionality without these
+if desired.
+
 
 
 
@@ -238,6 +247,7 @@ e.g., \url{http://software.rc.fas.harvard.edu/mirrors/R/}, and then choose the
 
 \section{Summary}
 
-This has just been a short primer to get you going. I hope you find \Rpackage{sampSurf} useful.
+This has just been a short primer to get you going. I hope you find \Rpackage{sampSurf}
+useful.
  
 \end{document} 

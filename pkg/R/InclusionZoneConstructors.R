@@ -218,7 +218,14 @@ function(downLog,
 #   in general, but in sampling surface simulations, only plots whose centers
 #   fall within the sausage-shaped inclusion zone should be passed here, so
 #   unless someone tries to use this for some other purpose, it will not matter.
-#------------------------------------------------------------------------------  
+#------------------------------------------------------------------------------
+#
+#   rgeos is suggested, make sure the user has it available...
+#
+    if(!require(rgeos))
+      stop('The \"rgeos\" package must be installed to use the chainSaw method!')
+
+  
 #
 #   get bbox from the downLog object...
 #

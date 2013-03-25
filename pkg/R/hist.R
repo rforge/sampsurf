@@ -6,6 +6,8 @@
 #   1. "izContainer" -- inclusion zone areas
 #   2. "sampSurf" -- the surface estimate at each grid cell
 #   3. "downLogs" -- several different attibutes available
+#   4. "standingTrees" -- same
+#   5. "InclusionZoneGrid" -- like "sampSurf" (7-Feb-2013)
 #
 #Author...									Date: 10-May-2011
 #	Jeffrey H. Gove
@@ -170,3 +172,51 @@ function(x,
 }    #hist for 'standingTrees'
 ) #setMethod
      
+
+
+
+
+#================================================================================
+#  5. method for class "InclusionZoneGrid"...
+#
+setMethod('hist',
+          signature(x = 'InclusionZoneGrid'),
+function(x,
+         zeroTrunc = TRUE,              #exclude zeros? (background cells)
+         estimate = 'volume',           #see matching below
+         main = NA,
+         xlab = NA,
+         col = 'gray90',
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#   this just plots the sampling distribution histogram w/ or w/o zeros
+#------------------------------------------------------------------------------
+#
+#   note that for the legal names below, we are not using names(.StemEnv$puaEstimates),
+#   but are allowing whatever the creator of the particular samlping object put in
+#   the data frame; thus, we are not using match.arg() here either...
+#
+    legalNames =  colnames(x@data)          
+    edx = pmatch(estimate,legalNames)
+    if(is.na(edx))
+      stop('estimate must be one of:',paste(legalNames,collapse=','))
+    else
+      estimate = legalNames[edx]
+    if(is.na(xlab))
+      xlab = estimate
+    
+    values = x@data[,estimate]
+    if(zeroTrunc)                     #background cells
+      values = values[values>0]
+    if(all(is.na(values)))
+      stop('All values for ',estimate,' are NA')
+    hg = hist(values, xlab=xlab, main=main, col=col, ...)
+    if(zeroTrunc)                                         #zero cells, note freq rounds(), use digits
+      cat('\nHistogram is zero-truncated:',length(x@data[,estimate])-length(values),'zeros excluded.\n')  
+
+    return(invisible(hg))
+
+}    #hist for 'InclusionZoneGrid'
+) #setMethod

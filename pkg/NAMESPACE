@@ -4,9 +4,17 @@ importFrom(graphics, plot, hist)
 import(sp)
 #importFrom("sp", bbox, Spatial, SpatialGrid, SpatialGridDataFrame, plot)
 import(raster)
+
+
+#note that gpclib has now been replaced by rgeos...
+#
 #import(gpclib)
 #importFrom("gpclib", intersect)  #this takes care of the plot warning
-import(rgeos)
+#
+# I've made rgeos a "suggested" package as it is only used for the chainSaw method
+# and that is not a commonly used technique. Also, installing the system requirements
+# for rgeos may not be what many people want to play with...
+#import(rgeos)
 
 
 #exportPattern("^[[:alpha:]]+")
@@ -15,7 +23,7 @@ import(rgeos)
 export(.StemEnv)            #for now, eventually hide it <<*******
 export(initRandomSeed, transparentColorBase)
 
-export(sampleLogs, boltDimensions, taperInterpolate, sampleTrees)
+export(sampleLogs, boltDimensions, sampleTrees)
 export(bboxCheck, bboxToPoly, bboxSum)
 export(spCircle)
 
@@ -41,7 +49,8 @@ exportClasses(InclusionZone, InclusionZoneGrid, csFullInclusionZoneGrid,
               pointRelascopeIZ, perpendicularDistanceIZ, omnibusPDSIZ,
               distanceLimitedMCIZ, distanceLimitedIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ, hybridDLPDSIZ)
-exportClasses(standingTreeIZ, circularPlotIZ, horizontalPointIZ, horizontalLineIZ)
+exportClasses(standingTreeIZ, circularPlotIZ, horizontalPointIZ, horizontalLineIZ, criticalHeightIZ)
+exportClasses(importanceCHSIZ, antitheticICHSIZ, pairedAICHSIZ)
 exportClasses(izContainer, downLogIZs,  standingTreeIZs)
 #sampSurf...
 exportClasses(sampSurf)
@@ -69,7 +78,8 @@ exportMethods(standUpIZ, sausageIZ, chainSawIZ, pointRelascopeIZ,
               perpendicularDistanceIZ, omnibusPDSIZ,
               distanceLimitedMCIZ, distanceLimitedIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ, hybridDLPDSIZ)
-exportMethods(circularPlotIZ, horizontalPointIZ, horizontalLineIZ)
+exportMethods(circularPlotIZ, horizontalPointIZ, horizontalLineIZ, criticalHeightIZ)
+exportMethods(importanceCHSIZ, antitheticICHSIZ, pairedAICHSIZ)
 #izContainer constructors...
 exportMethods(izContainer, downLogIZs,  standingTreeIZs)
 #Tract constructors...
@@ -82,6 +92,8 @@ exportMethods(sampSurf)
 #exportMethods(Plot)
 #monte constructors...
 exportMethods(montePop, monte, monteNTSample, monteBSSample)
+#Other...
+exportMethods(taperInterpolate)
 
 
 

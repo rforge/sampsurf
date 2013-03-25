@@ -4,6 +4,7 @@
 %\alias{hist,ANY-method}
 %\alias{hist,downLogs-method}
 \alias{hist,izContainer-method}
+\alias{hist,InclusionZoneGrid-method}
 \alias{hist,RasterLayer-method}
 \alias{hist,RasterStackBrick-method}
 \alias{hist,sampSurf-method}
@@ -94,6 +95,45 @@ graphics documentation for details.
 		 
 	  \item{\code{x}:}{ An object that is a subclass of
 	    \dQuote{izContainer}, such as \dQuote{downLogIZs}. }
+	  
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+	    \code{\link[graphics]{hist}}.}
+	} %itemize
+ } %item
+
+
+
+ \item{\strong{\code{signature(x = "InclusionZoneGrid")}}}{
+
+   Creates a histogram of the desired attribute for the object. Please
+   note that it is not uncommon for the surface to be flat, which means
+   all grid cells have the same value, so that a histogram is really
+   meaningless. Use this on classes of objects where the surface
+   (attribute estimate) varies within an individual inclusion zone. }
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{function(x,
+         zeroTrunc = TRUE,
+         estimate = 'volume',
+         main = NA,
+         xlab = NA,
+         col = 'gray90',
+         ... )}
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is a subclass of
+	    \dQuote{InclusionZoneGrid}. }
+	  		 
+	  \item{\code{zeroTrunc}:}{ \code{TRUE}: exclude background (zero)
+	    cells; \code{FALSE}: include them.}
+		 
+	  \item{\code{main}:}{ The title is blank by default.}
+	  		 
+	  \item{\code{xlab}:}{ The x label is taken from the \code{estimate}
+	    argument by default.}
+	  		 
+	  \item{\code{estimate}:}{ The attribute of interest that the
+	     histogram will represent. }
 	  
 	  \item{\dots :}{ Other graphics arguments to be passed on to
 	    \code{\link[graphics]{hist}}.}

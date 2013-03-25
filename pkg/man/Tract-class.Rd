@@ -12,7 +12,7 @@
 %\alias{izGrid,standUpIZ,Tract-method}
 %\alias{perimeter,Tract-method}
 %\alias{plot,Tract,missing-method}
-\alias{plot3D,Tract-method}
+%\alias{plot3D,Tract-method}
 %\alias{sampSurf,downLogIZs,Tract-method}
 %\alias{sampSurf,numeric,Tract-method}
 \alias{show,Tract-method}
