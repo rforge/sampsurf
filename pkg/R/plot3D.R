@@ -74,7 +74,7 @@ function(x,
 setMethod('plot3D',
           signature(x = 'InclusionZoneGrid'),
 function(x,
-         estimate = c('bHeight',names(.StemEnv$puaEstimates)),
+         estimate = names(.StemEnv$puaEstimates),
          col = .StemEnv$blue.colors, #pass the actual function here, not a call!
          ...
         )
