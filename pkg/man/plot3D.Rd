@@ -2,7 +2,7 @@
 \alias{plot3D}
 \alias{plot3D-method}
 %\alias{plot3D,sampSurf-method}  %in sampSurf-class.Rd
-%\alias{plot3D,Tract-method}     %in Tract-class.Rd
+\alias{plot3D,Tract-method}     %in Tract-class.Rd
 \alias{plot3D,InclusionZoneGrid-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 
