@@ -207,6 +207,10 @@ Each of the vignettes can be opened as shown above. They are outlined briefly as
     to \Rclass{sampSurf} objects, so their definitions may be moved into a separate package
     in the future, with only \Rclass{sampSurf} support left here.}
     
+  \item \emph{MonteCarloSampling:} This vignette describes the classes and methods that
+    can be used on \Rclass{Stem} subclass objects for volume estimation by Monte Carlo
+    methods. 
+    
   \item \emph{sampSurfExtensions:} If you want to know more about how to add your own
     sampling method to the package, this is where to look. It is advisable that you
     familiarize yourself with the above vignettes first before undertaking programming a
