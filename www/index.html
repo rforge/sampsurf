@@ -184,10 +184,10 @@ for details).
 
 <p>
 <Rpkg>sampSurf</Rpkg> has classes and methods to support a number of different sampling
-protocols for both down logs and standing trees. The overall class structure is designeto
+protocols for both down logs and standing trees. The overall class structure is designed to
 support additions with relative ease, so more methods will appear in future releases
-(hopefully with some contributed by users). At the current release, there are 28 variants
-of sampling methods available in the package (each of the PDS methods below allows
+(hopefully with some contributed by users). At the current release, there over 30 variants
+of sampling methods available in the package (e.g., each of the PDS methods below allows
 sampling with probability proportional to either volume, coverage or surface area)&hellip;
 </p>
 
@@ -208,6 +208,7 @@ sampling with probability proportional to either volume, coverage or surface are
     <ol>
        <li>Fixed-area plots</li>
        <li>Horizontal point sampling</li>
+       <li>Horizontal point sampling with Monte Carlo subsampling (see below)</li>
        <li>Horizontal line sampling</li>
        <li>Critical height sampling</li>
        <li>Importance critical height sampling</li>
@@ -217,9 +218,21 @@ sampling with probability proportional to either volume, coverage or surface are
   </li>
 </ul>
 
+<p>
+A recent addition to the package is the ability to sample down logs or standing trees for
+volume using Monte Carlo methods. These include crude Monte Carlo, importance sampling,
+control variate sampling, and antithetic versions of each. These are not areal methods,
+and apply directly to the stem objects themselves, so stem-based simulations can be
+conducted independently of an areal method. However, they can also be added to any areal
+method for a two-stage approach. For example, this has been incorporated in horizontal
+point sampling for standing trees.
+</p>
+
+<p>
 For more information on how each of these is implemented within <Rpkg>sampSurf</Rpkg> please
 see <Rcode>package?sampSurf</Rcode> and the vignettes. The examples below also provide
 an illustration of some of these methods.
+</p>
 
 
 <!-- ============================================================================================== -->
@@ -334,6 +347,9 @@ itself. These can also be downloaded here from the R-Forge versions if desired&h
       <em>Extending <Rclass>sampSurf</Rclass> Package</em></a></li>
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/monte.pdf?root=sampsurf">
       <em><Rclass>monte</Rclass>: When is n Sufficiently Large?</em></a></li>
+<!--  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/MonteCarloSampling.pdf?root=sampsurf">
+      <em>Monte Carlo Sampling Methods in <Rclass>sampSurf</Rclass></em></a></li> -->
+      <li><em>Monte Carlo Sampling Methods in <Rclass>sampSurf</Rclass></em> (available soon)</li>
 </ol>
 
 The <em>Getting Started with Package <Rpkg>sampSurf</Rpkg></em> vignette is available only
@@ -849,7 +865,7 @@ or find any problems.
 <div id="footer">
   <i>The examples in this page were generated using the very useful R
   package <a href="http://yihui.name/knitr/"><Rpkg>knitr</Rpkg></a>.<br>  Last updated:
-  25-Mar-2013(jhg)</i>
+  6-Aug-2013(jhg)</i>
 </div>
 
 </body>
