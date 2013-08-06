@@ -2,8 +2,9 @@
 \docType{methods}
 \alias{standUpIZ-methods}
 \alias{standUpIZ,downLog,numeric-method}
+
 \title{ Method for "standUpIZ" object construction in Package
-  `sampSurf'}
+  \pkg{sampSurf} }
 
 \description{
  This is the one method for generic function \code{\link{standUpIZ}} in
@@ -19,12 +20,13 @@
 	  "numeric")}}}{} 
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(downLog,
-         plotRadius,
-         description = 'inclusion zone for "standup" method',
-         spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
-         spUnits = CRS(projargs=as.character(NA)),
-         ... )}
+    \preformatted{standUpIZ(downLog,
+          plotRadius,
+          description = 'inclusion zone for "standup" method',
+          spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
+          spUnits = CRS(projargs=as.character(NA)),
+          ... )}
+		
     \itemize{
 		
 	  \item{\code{downLog}:}{ An object of class

@@ -19,13 +19,13 @@
 
 
   \item{}{\bold{usage\ldots}
-    \preformatted{function(standingTree,
-         angleGauge,
-         referenceHeight = .StemEnv$referenceCHSIZ,
-         description = 'inclusion zone for paired antithetic ICH sampling method',
-         spID = paste('paichs',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         ...) }
+    \preformatted{pairedAICHSIZ(standingTree,
+              angleGauge,
+              referenceHeight = .StemEnv$referenceCHSIZ,
+              description = 'inclusion zone for paired antithetic ICH sampling method',
+              spID = paste('paichs',.StemEnv$randomID(),sep=':'),
+              spUnits = CRS(projargs=as.character(NA)),
+              ...) }
 	   
     \itemize{
 			

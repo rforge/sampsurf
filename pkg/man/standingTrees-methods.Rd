@@ -30,9 +30,9 @@
 	this constructor. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         description = '',
-	      ... )}
+    \preformatted{standingTrees(object,
+              description = '',
+              ... )}
 	   
 	   
 	\itemize{
@@ -60,7 +60,8 @@
 	a field sample of trees.  }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object, units = 'metric', ... )}
+    \preformatted{standingTrees(object, units = 'metric', ... )}
+	
 	\itemize{
 	  \item{\code{object}:}{ A data frame as discussed above.}
 	  
@@ -82,7 +83,8 @@
   second (\code{container}) argument. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object, container, units = 'metric', ... )}
+    \preformatted{standingTrees(object, container, units = 'metric', ... )}
+	
 	\itemize{
 	  \item{\code{object}:}{ A numeric (truncated to integer) object specifying the number
         of trees to generate as discussed above.}
@@ -109,11 +111,12 @@
   bounding box and the appropriate constructor is used (see below).}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         xlim = c(0,100), 
-         ylim = c(0,50),
-         units = 'metric',
-         ...)}
+    \preformatted{standingTrees(object,
+              xlim = c(0,100), 
+              ylim = c(0,50),
+              units = 'metric',
+              ...)}
+			
 	\itemize{
 	  \item{\code{object}:}{ See explanation in the following constructor
 		method.}
@@ -144,15 +147,16 @@
   \code{\link{sampleTrees}}. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         container,
-         units = 'metric',
-         dbhs = c(8, 40),                    #cm for object construction!
-         topDiams = c(0.4, 0.9),            #proportion multiplier
-         heights = c(5,15),
-         solidTypes = c(1,10),
-         species = .StemEnv$species,
-         ...) }  
+    \preformatted{standingTrees(object,
+              container,
+              units = 'metric',
+              dbhs = c(8, 40),                    #cm for object construction!
+              topDiams = c(0.4, 0.9),            #proportion multiplier
+              heights = c(5,15),
+              solidTypes = c(1,10),
+              species = .StemEnv$species,
+              ...) }
+			
 	\itemize{
 	  \item{\code{object}:}{ A numeric (truncated to integer) object specifying the number
         of trees to generate as discussed above.}

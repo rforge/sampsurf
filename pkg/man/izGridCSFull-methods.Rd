@@ -3,7 +3,7 @@
 \alias{izGridCSFull-methods}
 \alias{izGridCSFull,InclusionZoneGrid,Tract-method}
 
-\title{ Methods for "csFullInclusionZoneGrid" object construction in Package `sampSurf' }
+\title{ Methods for "csFullInclusionZoneGrid" object construction in Package \pkg{sampSurf} }
 
 \description{ The following method will construct valid objects of class
   "\code{\linkS4class{csFullInclusionZoneGrid}}" for the full-log
@@ -17,11 +17,12 @@
 	  = "Tract")}}}{} 
    
   \item{}{\bold{usage\ldots}
-    \preformatted{function(izGridSausage,
-         tract,
-         description = 'Full chainSaw-sausage inclusion zone grid object',
-         runQuiet = FALSE,
-         ... )}
+    \preformatted{izGridCSFull(izGridSausage,
+             tract,
+             description = 'Full chainSaw-sausage inclusion zone grid object',
+             runQuiet = FALSE,
+             ... )}
+		   
 	\itemize{
 		 
 	  \item{\code{izGridSausage}:}{ An object of class

@@ -15,11 +15,17 @@
 \alias{plot,sausageIZ,missing-method}
 \alias{plot,pointRelascopeIZ,missing-method}
 \alias{plot,perpendicularDistanceIZ,missing-method}
+\alias{plot,omnibusPDSIZ,missing-method}
 \alias{plot,distanceLimitedPDSIZ,missing-method}
+\alias{plot,omnibusDLPDSIZ,missing-method}
+\alias{plot,hybridDLPDSIZ,missing-method}
 \alias{plot,distanceLimitedIZ,missing-method}
 \alias{plot,standUpIZ,missing-method}
 \alias{plot,circularPlotIZ,missing-method}
 \alias{plot,horizontalPointIZ,missing-method}
+\alias{plot,horizontalPointCMCIZ,missing-method}
+\alias{plot,horizontalPointISIZ,missing-method}
+\alias{plot,horizontalPointCVIZ,missing-method}
 \alias{plot,criticalHeightIZ,missing-method}
 \alias{plot,importanceCHSIZ,missing-method}
 \alias{plot,antitheticICHSIZ,missing-method}
@@ -28,6 +34,9 @@
 \alias{plot,Stem,missing-method}
 \alias{plot,StemContainer,missing-method}
 \alias{plot,Tract,missing-method}
+\alias{plot,crudeMonteCarlo,missing-method}
+\alias{plot,mcsContainer,missing-method}
+\alias{plot,antitheticContainer,missing-method}
 
 \title{ Methods for \pkg{graphics} Function \code{plot} in Package \sQuote{sampSurf} }
 
@@ -64,7 +73,12 @@ share the same definition in each method and are defined as\dots
 Some of the routines may specify a different default for these depending
 upon the desired outcome. Obviously, the defaults can be overridden, and
 they can be used in routines where they are not explicitly part of the
-argument definition for the most part. 
+argument definition for the most part.
+
+For the most part, the methods below are organized alphabetically in
+sections based on the class. The exception is the stem-based Monte Carlo
+subsampling methods, which are at the end (areal versions are, however,
+treated within the \dQuote{InclusionZone} section).
 
 }%section
 
@@ -88,11 +102,12 @@ argument definition for the most part.
     through \code{\link{callNextMethod}}).}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         pchIZCenter = 20,
-         izCenterColor = .StemEnv$izCenterColor,
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     pchIZCenter = 20,
+     izCenterColor = .StemEnv$izCenterColor,
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is a subclass of \dQuote{ArealSampling}. }
@@ -116,16 +131,16 @@ argument definition for the most part.
     "\code{\linkS4class{circularPlot}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE, 
-         izColor = .StemEnv$izColor,
-         pchPlotCenter = 3, 
-         showPlotCenter = FALSE,
-         showPerimeter = TRUE,
-         borderColor = .StemEnv$izBorderColor, 
-         plotCenterColor = .StemEnv$izCenterColor, 
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE, 
+     izColor = .StemEnv$izColor,
+     pchPlotCenter = 3, 
+     showPlotCenter = FALSE,
+     showPerimeter = TRUE,
+     borderColor = .StemEnv$izBorderColor, 
+     plotCenterColor = .StemEnv$izCenterColor, 
+     asp = 1,
+     ... )}
 	   
 	\itemize{
 		 
@@ -167,15 +182,15 @@ argument definition for the most part.
     "\code{\linkS4class{lineSegment}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x,
-         axes = FALSE, 
-         pchLineCenter = 20,
-         showLineCenter = FALSE,
-         showLineSegment = TRUE,
-         lineColor = .StemEnv$izBorderColor, 
-         lineCenterColor = .StemEnv$izCenterColor,
-         asp = 1,
-         ... ) }
+    \preformatted{plot(x,
+     axes = FALSE, 
+     pchLineCenter = 20,
+     showLineCenter = FALSE,
+     showLineSegment = TRUE,
+     lineColor = .StemEnv$izBorderColor, 
+     lineCenterColor = .StemEnv$izCenterColor,
+     asp = 1,
+     ... ) }
 	   
 	\itemize{
 		 
@@ -229,10 +244,11 @@ argument definition for the most part.
     signature (but only through \code{\link{callNextMethod}}).  }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,        
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE,        
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is a subclass of \dQuote{InclusionZone}. }
@@ -250,14 +266,15 @@ argument definition for the most part.
     "\code{\linkS4class{standUpIZ}}". }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE, 
-         showLog = TRUE,
-         izColor = .StemEnv$izColor,
-         izBorder = .StemEnv$izBorderColor,
-         add = FALSE,  
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE, 
+     showLog = TRUE,
+     izColor = .StemEnv$izColor,
+     izBorder = .StemEnv$izBorderColor,
+     add = FALSE,  
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{standUpIZ} or
@@ -287,14 +304,15 @@ argument definition for the most part.
     "\code{\linkS4class{sausageIZ}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,
-         showLog = TRUE,
-         izColor = .StemEnv$izColor,
-         izBorder = .StemEnv$izBorderColor,
-         add = FALSE, 
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE,
+     showLog = TRUE,
+     izColor = .StemEnv$izColor,
+     izBorder = .StemEnv$izBorderColor,
+     add = FALSE, 
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{sausageIZ} or
@@ -325,21 +343,22 @@ argument definition for the most part.
     "\code{\linkS4class{chainSawIZ}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,  
-         showLog = TRUE,
-         izColor = .StemEnv$izColor,
-         izBorder = .StemEnv$izBorderColor,
-         showSliver = TRUE,
-         ltySliver = 'dashed',
-         sliverBorder = 'black',
-         sliverColor = transparentColorBase('coral', .StemEnv$alphaTrans),
-         showBolt = TRUE,
-         ltyBolt = 'dotted',
-         boltBorder =  transparentColorBase('grey20', .StemEnv$alphaTrans),
-         add = FALSE,
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE,  
+     showLog = TRUE,
+     izColor = .StemEnv$izColor,
+     izBorder = .StemEnv$izBorderColor,
+     showSliver = TRUE,
+     ltySliver = 'dashed',
+     sliverBorder = 'black',
+     sliverColor = transparentColorBase('coral', .StemEnv$alphaTrans),
+     showBolt = TRUE,
+     ltyBolt = 'dotted',
+     boltBorder =  transparentColorBase('grey20', .StemEnv$alphaTrans),
+     add = FALSE,
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{chainSawIZ} or
@@ -391,17 +410,17 @@ argument definition for the most part.
     "\code{\linkS4class{pointRelascopeIZ}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,    
-         showLog = TRUE,
-         izColor = .StemEnv$izColor,
-         izBorder = .StemEnv$izBorderColor,
-         add = FALSE,    
-         asp = 1,
-         showDualCenters = FALSE, 
-         dcColor = .StemEnv$izBorderColor, 
-         ... )
-}
+    \preformatted{plot(x, 
+     axes = FALSE,    
+     showLog = TRUE,
+     izColor = .StemEnv$izColor,
+     izBorder = .StemEnv$izBorderColor,
+     add = FALSE,    
+     asp = 1,
+     showDualCenters = FALSE, 
+     dcColor = .StemEnv$izBorderColor, 
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{pointRelascopeIZ} or
@@ -436,15 +455,15 @@ argument definition for the most part.
     "\code{\linkS4class{omnibusPDSIZ}}").}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,  
-         showLog = TRUE,
-         izColor = .StemEnv$izColor,
-         izBorder = .StemEnv$izBorderColor,
-         add = FALSE,  
-         asp = 1,
-         ... )
-}
+    \preformatted{plot(x, 
+     axes = FALSE,  
+     showLog = TRUE,
+     izColor = .StemEnv$izColor,
+     izBorder = .StemEnv$izBorderColor,
+     add = FALSE,  
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{perpendicularDistanceIZ} or
@@ -471,26 +490,27 @@ argument definition for the most part.
 
     This adds the necessary functionality to plot objects of class
     "\code{\linkS4class{distanceLimitedPDSIZ}}" and subclasses (e.g.,
-    "\code{\linkS4class{omnibusDLPDSIZ}}"). Please note that the different
-    components of the inclusion zone can be displayed to show the
-    transition between protocols (if any). In addition, the overall
+    "\code{\linkS4class{omnibusDLPDSIZ}}" and
+    "\code{\linkS4class{hybridDLPDSIZ}}"). Please note that the
+    different components of the inclusion zone can be displayed to show
+    the transition between protocols (if any). In addition, the overall
     "\code{\linkS4class{perpendicularDistanceIZ}}" zone can also be
     displayed, showing what the inclusion zone would look like if the
     entire log were treated under the PDS protocol. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,  
-         showLog = TRUE,
-         izColor = .StemEnv$izColor,
-         izBorder = .StemEnv$izBorderColor,
-         add = FALSE,  
-         asp = 1,
-         showFullPDSIZ = FALSE,
-         showDLSPart = FALSE,
-         showPDSPart = FALSE,
-         ... )
-}
+    \preformatted{plot(x, 
+     axes = FALSE,  
+     showLog = TRUE,
+     izColor = .StemEnv$izColor,
+     izBorder = .StemEnv$izBorderColor,
+     add = FALSE,  
+     asp = 1,
+     showFullPDSIZ = FALSE,
+     showDLSPart = FALSE,
+     showPDSPart = FALSE,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{distanceLimitedPDSIZ} or
@@ -533,15 +553,15 @@ argument definition for the most part.
     "\code{\linkS4class{distanceLimitedMCIZ}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,  
-         showLog = TRUE,
-         izColor = .StemEnv$izColor,
-         izBorder = .StemEnv$izBorderColor,
-         add = FALSE,  
-         asp = 1,
-         ... )
-}
+    \preformatted{plot(x, 
+     axes = FALSE,  
+     showLog = TRUE,
+     izColor = .StemEnv$izColor,
+     izBorder = .StemEnv$izBorderColor,
+     add = FALSE,  
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{distanceLimitedIZ} or
@@ -570,20 +590,24 @@ argument definition for the most part.
     "\code{\linkS4class{circularPlotIZ}}" as well as those of its
     subclass "\code{\linkS4class{horizontalPointIZ}}". In addition, the
     following subclasses derived from \dQuote{horizontalPointIZ} also
-    use this method: "\code{\linkS4class{criticalHeightIZ}}",
+    use this method:
+	"\code{\linkS4class{horizontalPointCMCIZ}}",
+	"\code{\linkS4class{horizontalPointISIZ}}",
+	"\code{\linkS4class{horizontalPointCVIZ}}"
+	"\code{\linkS4class{criticalHeightIZ}}",
     "\code{\linkS4class{importanceCHSIZ}}",
     "\code{\linkS4class{antitheticICHSIZ}}", and
     "\code{\linkS4class{pairedAICHSIZ}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,  
-         showTree = TRUE,
-         izColor = .StemEnv$izColor,
-         izBorder = .StemEnv$izBorderColor,
-         add = FALSE,  
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE,  
+     showTree = TRUE,
+     izColor = .StemEnv$izColor,
+     izBorder = .StemEnv$izBorderColor,
+     add = FALSE,  
+     asp = 1,
+     ... )}
 	   
 	\itemize{
 		 
@@ -614,16 +638,16 @@ argument definition for the most part.
      "\code{\linkS4class{horizontalLineIZ}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,  
-         showLineSegment = TRUE,
-         ltyLineSegment = 'dashed',
-         showTree = TRUE,
-         izColor = .StemEnv$izColor,
-         izBorder = .StemEnv$izBorderColor,
-         add = FALSE,
-         asp = 1,
-         ... ) }
+    \preformatted{plot(x, 
+     axes = FALSE,  
+     showLineSegment = TRUE,
+     ltyLineSegment = 'dashed',
+     showTree = TRUE,
+     izColor = .StemEnv$izColor,
+     izBorder = .StemEnv$izBorderColor,
+     add = FALSE,
+     asp = 1,
+     ... ) }
 
 	   
 	\itemize{
@@ -683,18 +707,19 @@ argument definition for the most part.
 	  "\code{\linkS4class{InclusionZoneGrid}}". }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = TRUE,
-         gridColor = .StemEnv$blue.colors(1000),
-         asp = 1,
-         izColor = NA,
-         gridLines = TRUE,
-         gridLineColor = .StemEnv$gridLineColor,
-         gridCenters = FALSE, 
-         gridCenterColor = .StemEnv$gridCenterColor,
-         estimate = names(.StemEnv$puaEstimates),
-         lwdGrid = 1, 
-         ... )}
+    \preformatted{plot(x, 
+     axes = TRUE,
+     gridColor = .StemEnv$blue.colors(1000),
+     asp = 1,
+     izColor = NA,
+     gridLines = TRUE,
+     gridLineColor = .StemEnv$gridLineColor,
+     gridCenters = FALSE, 
+     gridCenterColor = .StemEnv$gridCenterColor,
+     estimate = names(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
+     lwdGrid = 1, 
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{InclusionZoneGrid} or
@@ -728,7 +753,10 @@ argument definition for the most part.
 	    centers.} 
 		 
 	  \item{\code{estimate}:}{ A character variable corresponding to the
-	  desired estimate: either "cubicVolume" (default) or "Density" at present.}
+	  desired estimate attribute; these include 'volume', 'Length'
+	  (logs), 'Density', 'surfaceArea', 'coverageArea' (logs),
+	  'basalArea' (trees), 'biomass' and 'carbon'. The sample 'depth'
+	  surface is now also available.}
 		 
 	  \item{\code{lwdGrid}:}{ The graphics parameter line width (see:
 	  \code{\link{par}}) for the grid lines.}
@@ -774,11 +802,12 @@ argument definition for the most part.
     for standing tree components.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,  
-         add = FALSE, 
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE,  
+     add = FALSE, 
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of subclass \dQuote{izContainer}. }
@@ -814,10 +843,11 @@ argument definition for the most part.
     \pkg{raster} package.  }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         showIZs = TRUE,
-         izColor = NA,  
-         ... )}
+    \preformatted{plot(x, 
+     showIZs = TRUE,
+     izColor = NA,  
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{sampSurf} or
@@ -863,10 +893,11 @@ argument definition for the most part.
     \code{\link{callNextMethod}}). }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         pchStemLocation = 20,    
-         stemLocationColor = .StemEnv$logAttributeColor,
-         ... )}
+    \preformatted{plot(x, 
+     pchStemLocation = 20,    
+     stemLocationColor = .StemEnv$logAttributeColor,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{Stem} or
@@ -892,18 +923,18 @@ argument definition for the most part.
     "\code{\linkS4class{downLog}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x,
-         axes = FALSE, 
-         logColor = .StemEnv$logColor,	 
-         showLogCenter = FALSE,
-         pchLogCenter = 3,     
-         logCenterColor = .StemEnv$logAttributeColor,
-         showNeedle = FALSE,
-         logNeedleColor = .StemEnv$logAttributeColor,
-         logBorderColor = .StemEnv$logBorderColor,   
-         asp = 1,
-         ...
-        )}
+    \preformatted{plot(x,
+     axes = FALSE, 
+     logColor = .StemEnv$logColor,	 
+     showLogCenter = FALSE,
+     pchLogCenter = 3,     
+     logCenterColor = .StemEnv$logAttributeColor,
+     showNeedle = FALSE,
+     logNeedleColor = .StemEnv$logAttributeColor,
+     logBorderColor = .StemEnv$logBorderColor,   
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object of class \dQuote{downLog} or any
@@ -943,16 +974,16 @@ argument definition for the most part.
     "\code{\linkS4class{standingTree}}".}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x,
-         axes = FALSE,  #not a par() so can't be passed to callNextMethod, so separate it
-         treeColor = .StemEnv$treeColor,
-         showLocation = TRUE,
-         pchLocation = 3,       #20 is also good
-         locationColor = .StemEnv$treeAttributeColor,
-         treeBorderColor = .StemEnv$treeBorderColor,   #log perimeter color
-         asp = 1,
-         ...
-        )}
+    \preformatted{plot(x,
+     axes = FALSE,
+     treeColor = .StemEnv$treeColor,
+     showLocation = TRUE,
+     pchLocation = 3,       #20 is also good
+     locationColor = .StemEnv$treeAttributeColor,
+     treeBorderColor = .StemEnv$treeBorderColor,   #log perimeter color
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object of class \dQuote{downLog} or any
@@ -1002,11 +1033,12 @@ argument definition for the most part.
     overall extents for the plot area. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE, 
-         add = FALSE, 
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE, 
+     add = FALSE, 
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{Stem} or
@@ -1028,11 +1060,12 @@ argument definition for the most part.
     collection.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,
-         add = FALSE,
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE,
+     add = FALSE,
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 		 
 	  \item{\code{x}:}{ An object that is of class 
@@ -1055,11 +1088,12 @@ argument definition for the most part.
     collection.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         axes = FALSE,
-         add = FALSE,
-         asp = 1,
-         ... )}
+    \preformatted{plot(x, 
+     axes = FALSE,
+     add = FALSE,
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 		 
 	  \item{\code{x}:}{ An object that is of class 
@@ -1093,12 +1127,13 @@ argument definition for the most part.
     the plotting is done through calls to those methods. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x,
-         axes = TRUE,  
-         gridColor = .StemEnv$blue.colors(1000),
-         asp = 1,
-         useImage = TRUE,
-         ... )}
+    \preformatted{plot(x,
+     axes = TRUE,  
+     gridColor = .StemEnv$blue.colors(1000),
+     asp = 1,
+     useImage = TRUE,
+     ... )}
+	   
 	\itemize{
 		 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{Tract} or
@@ -1138,13 +1173,14 @@ argument definition for the most part.
   buffer. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x,
-         bufferColor = transparentColorBase('blanchedalmond', .StemEnv$alphaTrans),
-         axes = TRUE, 
-         gridColor = .StemEnv$blue.colors(1000),      
-         lwd = 2,
-         asp = 1,
-         ... )}
+    \preformatted{plot(x,
+     bufferColor = transparentColorBase('blanchedalmond', .StemEnv$alphaTrans),
+     axes = TRUE, 
+     gridColor = .StemEnv$blue.colors(1000),      
+     lwd = 2,
+     asp = 1,
+     ... )}
+   
 	\itemize{
 		 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{bufferedTract} or
@@ -1178,5 +1214,93 @@ argument definition for the most part.
 
 
 
+
+%-------------------------------------------------------------------------
+\section{\emph{The \dQuote{MonteCarloSampling} Class}}{
+
+\describe{
+
+  \item{\strong{\code{signature(x = "crudeMonteCarlo", y = "missing")}}}{%\cr
+
+	The \dQuote{importanceSampling} and \dQuote{controlVariate} sampling
+	classes use this method as well. }
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{plot(x,
+     axes = FALSE,
+     renderAs = c('profile', 'crossSection'),
+     isHeightColor = .StemEnv$isHeightColor,
+     ... )}
+	   
+	\itemize{
+		 		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{crudeMonteCarlo} or
+	    subclass thereof. }
+		 		 
+	  \item{\code{renderAs}:}{ 'profile' to see the sampling locations
+	    along the stem in a profile view; 'crossSection' will display a
+	    cross-sectional view of the same information. }
+		 		 
+	  \item{\code{isHeightColor}:}{ A legal \R color to use for drawing
+	    the sampling point locations.} 
+		 
+	  \item{\code{\dots}:}{ Other graphical arguments to be passed on to
+	    \code{plot}. }
+	  
+	} %itemize
+ } %item
+
+
+} %describe
+} %section MonteCarloSampling
+%-------------------------------------------------------------------------
+
+
+
+
+
+%-------------------------------------------------------------------------
+\section{\emph{The \dQuote{mcsContainer} Class}}{
+
+\describe{
+
+  \item{\strong{\code{signature(x = "mcsContainer", y = "missing")}}}{%\cr
+
+	Display the true versus estimated volumes graphically. Please note
+	that this method applies to objects of class
+	\dQuote{antitheticContainer} as well.
+
+  }
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{plot(x,
+     xlab = 'Estimated volume',
+     ylab = 'True volume',
+     showDiagonal = TRUE,
+     ... )}
+	   
+	\itemize{
+		 		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{mcsContainer}. }
+		 		 
+	  \item{\code{showDiagonal}:}{ \code{TRUE}: Plot the 1:1 line for
+	    reference. }
+		 
+	  \item{\code{\dots}:}{ Other graphical arguments to be passed on to
+	    \code{plot}. }
+	  
+	} %itemize
+ } %item
+
+
+} %describe
+} %section mcsContainer
+%-------------------------------------------------------------------------
+
+
+
+
+	
+		
 \keyword{methods}
 \keyword{ ~~ other possible keyword(s) ~~ }

@@ -5,7 +5,7 @@
 \alias{bbox,sampSurf-method}
 %\alias{hist,sampSurf-method}
 %\alias{perimeter,sampSurf-method}
-\alias{plot3D,sampSurf-method}
+%\alias{plot3D,sampSurf-method}
 %\alias{plot,sampSurf,missing-method}
 \alias{show,sampSurf-method}
 \alias{summary,sampSurf-method}

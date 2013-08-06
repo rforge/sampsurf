@@ -22,9 +22,10 @@
   "\code{\linkS4class{downLogIZ}}" objects. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         description = '',
-         ... )}
+    \preformatted{downLogIZs(object,
+           description = '',
+           ... )}
+		 
 	 \itemize{
 	   
 	   \item{\code{object}:}{ A list object containing the collection of
@@ -48,10 +49,11 @@
 
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         iZone,
-         description = '',
-         ... )}
+    \preformatted{downLogIZs(object,
+           iZone,
+           description = '',
+           ... )}
+		 
 	 \itemize{
 	   
 	   \item{\code{object}:}{ A valid "\code{\linkS4class{downLogs}}"

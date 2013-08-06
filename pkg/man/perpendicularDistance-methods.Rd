@@ -21,10 +21,10 @@ construction. It is detailed below.
     follows\ldots }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(kpds,
-         units = 'metric',
-         description = 'perpendicular distance method',
-         ...) }
+    \preformatted{perpendicularDistance(kpds,
+                      units = 'metric',
+                      description = 'perpendicular distance method',
+                      ...) }
 	   
 	\itemize{
 	  \item{\code{kpds}:}{ The \emph{Kpds} factor in appropriate units.}

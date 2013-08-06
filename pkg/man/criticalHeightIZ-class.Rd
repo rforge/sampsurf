@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{criticalHeightIZ-class}
-\alias{izGrid,criticalHeightIZ,Tract-method}
+%\alias{izGrid,criticalHeightIZ,Tract-method}
 \alias{summary,criticalHeightIZ-method}
 
 \title{Class \code{"criticalHeightIZ"}}

@@ -4,7 +4,7 @@
 \alias{standingTree,data.frame-method}
 \alias{standingTree,missing-method}
 
-\title{ Methods for \code{standingTree} Object Construction }
+\title{ Methods for \code{standingTree} Object Construction in Package \pkg{sampSurf} }
 
 \description{
  There are currently two available methods for the generic
@@ -34,27 +34,27 @@
 
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(
-         dbh = 20,                     #cm
-         topDiam = 0,                  #cm
-         height = 15,                  #meters
-         nSegs = 20,
-         solidType = 3,                #must have some taper model for butt diam
-         treeVol = NULL,
-         surfaceArea = NULL,
-         biomass = NA,
-         vol2wgt = NA,
-         carbon = NA,
-         wgt2carbon = NA,
-         centerOffset = c(x=0, y=0),   #tree base-pith center offset
-         species = '',
-         treeID = paste('tree',.StemEnv$randomID(),sep=':'),
-         description = NULL,
-         userExtra = NULL,
-         units = 'metric',
-         spUnits = CRS(projargs=as.character(NA)),
-         runQuiet = TRUE,
-         ... )}
+    \preformatted{standingTree(
+             dbh = 20,                     #cm
+             topDiam = 0,                  #cm
+             height = 15,                  #meters
+             nSegs = 20,
+             solidType = 3,                #must have some taper model for butt diam
+             treeVol = NULL,
+             surfaceArea = NULL,
+             biomass = NA,
+             vol2wgt = NA,
+             carbon = NA,
+             wgt2carbon = NA,
+             centerOffset = c(x=0, y=0),   #tree base-pith center offset
+             species = '',
+             treeID = paste('tree',.StemEnv$randomID(),sep=':'),
+             description = NULL,
+             userExtra = NULL,
+             units = 'metric',
+             spUnits = CRS(projargs=as.character(NA)),
+             runQuiet = TRUE,
+             ... )}
 	   
     \itemize{
 	  
@@ -153,23 +153,23 @@
   
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object
-         solidType = NULL,             #defaults to null for passed taper
-         treeVol = NULL,
-         surfaceArea = NULL,
-         biomass = NA,
-         vol2wgt = NA,
-         carbon = NA,
-         wgt2carbon = NA,
-         centerOffset = c(x=0, y=0),   #tree base-pith center offset
-         species = '',
-         treeID = paste('tree',.StemEnv$randomID(),sep=':'),
-         description = NULL,
-         userExtra = NULL,
-         units = 'metric',
-         spUnits = CRS(projargs=as.character(NA)),
-         runQuiet = TRUE,
-         ...)}
+    \preformatted{standingTree(object
+             solidType = NULL,             #defaults to null for passed taper
+             treeVol = NULL,
+             surfaceArea = NULL,
+             biomass = NA,
+             vol2wgt = NA,
+             carbon = NA,
+             wgt2carbon = NA,
+             centerOffset = c(x=0, y=0),   #tree base-pith center offset
+             species = '',
+             treeID = paste('tree',.StemEnv$randomID(),sep=':'),
+             description = NULL,
+             userExtra = NULL,
+             units = 'metric',
+             spUnits = CRS(projargs=as.character(NA)),
+             runQuiet = TRUE,
+             ...)}
 	   
     \itemize{
 		 		 
@@ -196,7 +196,7 @@
 
 \note{
   It may not be immediately apparent how the taper data in the data
-  frame is to be structured, if you have this data available either from
+  frame is to be structured if you have this data available either from
   measurements, or from a different taper equation. The best way to
   check this out is to simply create a dummy "standingTree" object and then
   \code{show} or \code{print} it for a summary, which will show the

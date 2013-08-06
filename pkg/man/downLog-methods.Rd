@@ -4,7 +4,9 @@
 \alias{downLog,missing-method}
 \alias{downLog,data.frame-method}
 
-\title{  Methods for "downLog" Object Construction}
+\title{  Methods for "downLog" Object Construction in package
+  \pkg{sampSurf} }
+
 \description{
  There are currently two available methods for the generic
  \code{\link{downLog}}. These methods generate objects of class
@@ -30,29 +32,29 @@
     differently than the arguments).}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(
-         buttDiam = 5,                 #cm
-         topDiam = 0,                  #cm
-         logLen = 5,                   #meters
-         nSegs = 20,
-         solidType = 3,                #defaults to 3  
-         logAngle = 0,                 #canonical position
-         logVol = NULL,
-         surfaceArea = NULL,
-         coverageArea = NULL,
-         biomass = NA,
-         vol2wgt = NA,
-         carbon = NA,
-         wgt2carbon = NA,
-         centerOffset = c(x=0, y=0),   #log center offset
-         species = '',
-         logID = paste('log',format(runif(1),digits=6),sep=':'),
-         description = NULL,
-         userExtra = NULL,
-         units = 'metric',
-         spUnits = CRS(projargs=as.character(NA)),
-         runQuiet = TRUE,
-         ...)}
+    \preformatted{downLog(
+        buttDiam = 5,                 #cm
+        topDiam = 0,                  #cm
+        logLen = 5,                   #meters
+        nSegs = 20,
+        solidType = 3,                #defaults to 3  
+        logAngle = 0,                 #canonical position
+        logVol = NULL,
+        surfaceArea = NULL,
+        coverageArea = NULL,
+        biomass = NA,
+        vol2wgt = NA,
+        carbon = NA,
+        wgt2carbon = NA,
+        centerOffset = c(x=0, y=0),   #log center offset
+        species = '',
+        logID = paste('log',format(runif(1),digits=6),sep=':'),
+        description = NULL,
+        userExtra = NULL,
+        units = 'metric',
+        spUnits = CRS(projargs=as.character(NA)),
+        runQuiet = TRUE,
+        ...)}
 	   
     \itemize{
 	  
@@ -158,25 +160,25 @@
   
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object
-         solidType = NULL,             #defaults to null for passed taper
-         logAngle = 0,                 #canonical
-         logVol = NULL,
-         surfaceArea = NULL,
-         coverageArea = NULL,
-         biomass = NA,
-         vol2wgt = NA,
-         carbon = NA,
-         wgt2carbon = NA,
-         centerOffset = c(x=0, y=0),   #log center offset
-         species = '',
-         logID = paste('log',format(runif(1),digits=6),sep=':'),
-         description = NULL,
-         userExtra = NULL,
-         units = 'metric',
-         spUnits = CRS(projargs=as.character(NA)),
-         runQuiet = TRUE,
-         ...)}
+    \preformatted{downLog(object,
+        solidType = NULL,             #defaults to null for passed taper
+        logAngle = 0,                 #canonical
+        logVol = NULL,
+        surfaceArea = NULL,
+        coverageArea = NULL,
+        biomass = NA,
+        vol2wgt = NA,
+        carbon = NA,
+        wgt2carbon = NA,
+        centerOffset = c(x=0, y=0),   #log center offset
+        species = '',
+        logID = paste('log',format(runif(1),digits=6),sep=':'),
+        description = NULL,
+        userExtra = NULL,
+        units = 'metric',
+        spUnits = CRS(projargs=as.character(NA)),
+        runQuiet = TRUE,
+        ...)}
 	   
     \itemize{
 		 
@@ -203,7 +205,7 @@
 
 \note{
   It may not be immediately apparent how the taper data in the data
-  frame is to be structured, if you have this data available either from
+  frame is to be structured if you have this data available either from
   measurements, or from a different taper equation. The best way to
   check this out is to simply create a dummy "downLog" object and then
   \code{show} or \code{print} it for a summary, which will show the

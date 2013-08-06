@@ -19,13 +19,13 @@
 
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(standingTree,
-         plotRadius,
-         description = 'inclusion zone for circular plot method',
-         spID = paste('cp',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         ...
-        )}
+    \preformatted{circularPlotIZ(standingTree,
+               plotRadius,
+               description = 'inclusion zone for circular plot method',
+               spID = paste('cp',.StemEnv$randomID(),sep=':'),
+               spUnits = CRS(projargs=as.character(NA)),
+               ... )}
+			 
     \itemize{
 				
 	  \item{\code{standingTree}:}{ An object of class

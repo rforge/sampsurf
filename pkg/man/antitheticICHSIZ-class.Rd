@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{antitheticICHSIZ-class}
-\alias{izGrid,antitheticICHSIZ,Tract-method}
+%\alias{izGrid,antitheticICHSIZ,Tract-method}
 
 \title{Class \code{"antitheticICHSIZ"}}
 

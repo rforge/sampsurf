@@ -22,14 +22,14 @@ construction. It is detailed below.
     follows\ldots }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(length,
-         orientation,
-         units = 'metric',
-         spUnits = CRS(projargs=as.character(NA)),
-         centerPoint = c(x=0, y=0),  
-         description = 'line segment',
-         spID = paste('ls',.StemEnv$randomID(),sep=':'),
-         ...) }
+    \preformatted{lineSegment(length,
+            orientation,
+            units = 'metric',
+            spUnits = CRS(projargs=as.character(NA)),
+            centerPoint = c(x=0, y=0),  
+            description = 'line segment',
+            spID = paste('ls',.StemEnv$randomID(),sep=':'),
+            ...) }
 	   
 	\itemize{
 		 

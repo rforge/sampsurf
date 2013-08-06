@@ -19,14 +19,14 @@
   "numeric")}}}{}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(downLog,
-         plotRadius,
-         nptsHalfCircle = 50,         
-         description = 'inclusion zone for dowed log "sausage" sampling method',
-         spID = unlist(strsplit(tempfile('sausageIZ:',''),'\\/'))[2],
-         spUnits = CRS(projargs=as.character(NA)),
-         ...
-        )}
+    \preformatted{sausageIZ(downLog,
+          plotRadius,
+          nptsHalfCircle = 50,         
+          description = 'inclusion zone for dowed log "sausage" sampling method',
+          spID = unlist(strsplit(tempfile('sausageIZ:',''),'\\/'))[2],
+          spUnits = CRS(projargs=as.character(NA)),
+          ... )}
+		 
     \itemize{
 				
 	  \item{\code{downLog}:}{ An object of class

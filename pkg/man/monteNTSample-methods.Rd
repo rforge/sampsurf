@@ -23,14 +23,14 @@ The following methods will construct valid objects of class
 
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(population,
-         n = c(10),
-         mcSamples = 100,
-         alpha = 0.05, 
-         replace = TRUE,
-         startSeed = NA,
-         runQuiet = TRUE,
-         ... )}
+    \preformatted{monteNTSample(population,
+              n = c(10),
+              mcSamples = 100,
+              alpha = 0.05, 
+              replace = TRUE,
+              startSeed = NA,
+              runQuiet = TRUE,
+              ... )}
 	   
 	\itemize{
 		 

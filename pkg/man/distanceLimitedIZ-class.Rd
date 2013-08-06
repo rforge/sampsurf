@@ -2,8 +2,8 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{distanceLimitedIZ-class}
-\alias{izGrid,distanceLimitedIZ,Tract-method}
-\alias{perimeter,distanceLimitedIZ-method}
+%\alias{izGrid,distanceLimitedIZ,Tract-method}
+%\alias{perimeter,distanceLimitedIZ-method}
 %\alias{plot,distanceLimitedIZ,missing-method}
 \alias{summary,distanceLimitedIZ-method}
 

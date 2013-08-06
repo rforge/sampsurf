@@ -7,6 +7,7 @@
 \alias{numericNULL-class}
 \alias{monteNTSampleOrNULL-class}
 \alias{monteBSSampleOrNULL-class}
+\alias{horizontalPointMonteCarloSamplingIZ-class}
 
 \title{Class Unions in \pkg{sampSurf} }
 
@@ -37,7 +38,15 @@ Here are the class unions in the \pkg{sampSurf} package and their usage.
   
   \item{\code{monteBSSampleOrNULL}:}{ Used where a class of either
     \dQuote{monteBSSample} (or subclass) or \code{NULL} is appropriate.}
-   
+  
+  \item{\code{horizontalPointMonteCarloSamplingIZ}:}{ This is used to
+    collect all of the classes that allow Monte Carlo subsampling within
+    a horizontal point first stage sample. The class is only used to
+    make it simpler to have one \code{izGrid} function apply to all of
+    the methods. Note that this does not include the critical
+    height-based Monte Carlo methods. }
+
+	
 }
 }
 

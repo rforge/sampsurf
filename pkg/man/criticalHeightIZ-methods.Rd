@@ -20,13 +20,13 @@
 
 
   \item{}{\bold{usage\ldots}
-    \preformatted{function(standingTree,
-         angleGauge,
-         referenceHeight = .StemEnv$referenceCHSIZ,
-         description = 'inclusion zone for critical height sampling method',
-         spID = paste('chs',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         ... ) }
+    \preformatted{criticalHeightIZ(standingTree,
+                 angleGauge,
+                 referenceHeight = .StemEnv$referenceCHSIZ,
+                 description = 'inclusion zone for critical height sampling method',
+                 spID = paste('chs',.StemEnv$randomID(),sep=':'),
+                 spUnits = CRS(projargs=as.character(NA)),
+                 ... ) }
 	   
     \itemize{
 			

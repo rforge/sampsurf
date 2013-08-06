@@ -17,14 +17,14 @@
 \item{\strong{\code{signature(downLog = "downLog", pds = "perpendicularDistance", dls = "dlsNumeric")}}}{}
 
   \item{}{\bold{usage\ldots}
-    \preformatted{function(downLog,
-         pds,
-         dls,
-         description = 'inclusion zone for down log hybrid distance limited PDS',
-         spID = paste('hdlpds',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         pdsType = .StemEnv$pdsTypes,
-         ... )}
+    \preformatted{hybridDLPDSIZ(downLog,
+              pds,
+              dls,
+              description = 'inclusion zone for down log hybrid distance limited PDS',
+              spID = paste('hdlpds',.StemEnv$randomID(),sep=':'),
+              spUnits = CRS(projargs=as.character(NA)),
+              pdsType = .StemEnv$pdsTypes,
+              ... )}
 	   
     \itemize{
 				

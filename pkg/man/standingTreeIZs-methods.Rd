@@ -25,9 +25,10 @@
   
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         description = '',
-         ... )}
+    \preformatted{standingTreeIZs(object,
+                description = '',
+                ... )}
+			  
 	 \itemize{
 	   
 	   \item{\code{object}:}{ A list object containing the collection of
@@ -50,10 +51,11 @@
 
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         iZone,
-         description = '',
-         ... )}
+    \preformatted{standingTreeIZs(object,
+                iZone,
+                description = '',
+                ... )}
+			  
 	 \itemize{
 	   
 	   \item{\code{object}:}{ A valid "\code{\linkS4class{standingTrees}}"

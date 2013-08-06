@@ -22,10 +22,10 @@ construction. It is detailed below.
     follows\ldots }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(angleDegrees,
-         units = 'metric',
-         description = 'point relascope method',
-         ...) }
+    \preformatted{pointRelascope(angleDegrees,
+               units = 'metric',
+               description = 'point relascope method',
+               ...) }
 	   
 	   
 	\itemize{

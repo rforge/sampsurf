@@ -19,12 +19,12 @@
 \item{\strong{\code{signature(downLog = "downLog", dls = "distanceLimited")}}}{}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(downLog,
-         dls,
-         description = 'inclusion zone for down log DLMC sampling',
-         spID = paste('dlmc',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-        ... )}
+    \preformatted{distanceLimitedMCIZ(downLog,
+                    dls,
+                    description = 'inclusion zone for down log DLMC sampling',
+                    spID = paste('dlmc',.StemEnv$randomID(),sep=':'),
+                    spUnits = CRS(projargs=as.character(NA)),
+                    ... )}
 	   
     \itemize{
 				

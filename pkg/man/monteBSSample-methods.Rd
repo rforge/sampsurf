@@ -23,15 +23,15 @@ for more details and examples.
 	 "\code{\linkS4class{montePop}}" as the signature argument. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(population,
-         n = c(10),
-         mcSamples = 100,
-         R = 100,
-         alpha = 0.05, 
-         replace = TRUE,
-         startSeed = NA,
-         runQuiet = TRUE,
-         ... )}
+    \preformatted{monteBSSample(population,
+              n = c(10),
+              mcSamples = 100,
+              R = 100,
+              alpha = 0.05, 
+              replace = TRUE,
+              startSeed = NA,
+              runQuiet = TRUE,
+              ... )}
 	   
 	\itemize{
 		 

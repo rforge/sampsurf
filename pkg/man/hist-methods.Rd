@@ -8,6 +8,8 @@
 \alias{hist,RasterLayer-method}
 \alias{hist,RasterStackBrick-method}
 \alias{hist,sampSurf-method}
+\alias{hist,mcsContainer-method}
+\alias{hist,antitheticContainer-method}
 
 \title{ Methods for \pkg{graphics} Function \code{hist} in Package
   \pkg{sampSurf} }
@@ -34,13 +36,14 @@ graphics documentation for details.
     container collection as specified by the \code{logAttr} argument.}  
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         logAttr = c('logLen','buttDiam','topDiam','logAngle','solidType','logVol',
-                     'surfaceArea','coverageArea','biomass','carbon'),
-         xlab = logAttr,
-         main = NA,
-         col = 'gray90',
-         ... )}
+    \preformatted{hist(x, 
+     logAttr = c('logLen','buttDiam','topDiam','logAngle','solidType','logVol',
+                 'surfaceArea','coverageArea','biomass','carbon'),
+     xlab = logAttr,
+     main = NA,
+     col = 'gray90',
+     ... )}
+
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{downLogs}. }
@@ -60,13 +63,14 @@ graphics documentation for details.
     container collection as specified by the \code{treeAttr} argument.}  
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         treeAttr = c('height','buttDiam','dbh','topDiam','solidType','treeVol',
-                      'surfaceArea','biomass','carbon'),
-         xlab = treeAttr,
-         main = NA,
-         col = 'gray90',
-         ... )}
+    \preformatted{hist(x, 
+     treeAttr = c('height','buttDiam','dbh','topDiam','solidType','treeVol',
+                  'surfaceArea','biomass','carbon'),
+     xlab = treeAttr,
+     main = NA,
+     col = 'gray90',
+     ... )}
+	
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{standingTrees}. }
@@ -86,11 +90,12 @@ graphics documentation for details.
    container---this will work for all subclasses of \dQuote{izContainer}. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         xlab = 'Inclusion Zone Area',
-         main = NA,
-         col = 'gray90',
-         ... )}
+    \preformatted{hist(x, 
+     xlab = 'Inclusion Zone Area',
+     main = NA,
+     col = 'gray90',
+     ... )}
+	
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is a subclass of
@@ -112,13 +117,14 @@ graphics documentation for details.
    (attribute estimate) varies within an individual inclusion zone. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x,
-         zeroTrunc = TRUE,
-         estimate = 'volume',
-         main = NA,
-         xlab = NA,
-         col = 'gray90',
-         ... )}
+    \preformatted{hist(x,
+     zeroTrunc = TRUE,
+     estimate = 'volume',
+     main = NA,
+     xlab = NA,
+     col = 'gray90',
+     ... )}
+	
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is a subclass of
@@ -148,12 +154,13 @@ graphics documentation for details.
    the individual cell values.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, 
-         zeroTrunc = TRUE,
-         xlab = x@estimate,
-         main = NA,
-         col = 'gray90',
-         ... )}
+    \preformatted{hist(x, 
+     zeroTrunc = TRUE,
+     xlab = x@estimate,
+     main = NA,
+     col = 'gray90',
+     ... )}
+	
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is of class \dQuote{sampSurf}. }
@@ -168,6 +175,46 @@ graphics documentation for details.
  
 
 
-}}
+} %describe
+
+\subsection{Monte Carlo methods}{
+
+  
+\describe{
+
+  \item{\strong{\code{signature(x = "mcsContainer")}}}{
+
+	Histograms of the relative error or volume variance over the
+	collection are supported. Please note
+	that this method applies to objects of class
+	\dQuote{antitheticContainer} as well.}
+
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{hist(x,
+     stat = c('relErrPct', 'volVar'),
+     xlab = stat,
+     main = NA,
+     col = 'gray90',
+     ... )}
+	
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{mcsContainer}. }
+		 
+	  \item{\code{stat}:}{ Relative error in percent on volume (default), or
+	    variance on volume.}
+	  
+	  \item{\dots :}{ Other graphics arguments to be passed on to
+	    \code{\link[graphics]{hist}}.}
+	  
+	} %itemize
+  } %item
+
+  } %describe
+
+ } %subsection MC
+
+} %section-methods
 \keyword{methods}
 \keyword{ ~~ other possible keyword(s) ~~ }

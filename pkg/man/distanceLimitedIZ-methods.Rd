@@ -21,12 +21,12 @@
 
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(downLog,
-         dls,
-         description = 'inclusion zone for down log DL sampling',
-         spID = paste('dl',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-        ... )}
+    \preformatted{distanceLimitedIZ(downLog,
+                  dls,
+                  description = 'inclusion zone for down log DL sampling',
+                  spID = paste('dl',.StemEnv$randomID(),sep=':'),
+                  spUnits = CRS(projargs=as.character(NA)),
+                  ... )}
 	   
     \itemize{
 				

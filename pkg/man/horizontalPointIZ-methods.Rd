@@ -18,13 +18,12 @@
 \item{\strong{\code{signature(standingTree = "standingTree", angleGauge = "angleGauge")}}}{}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(standingTree,
-         angleGauge,
-         description = 'inclusion zone for horizontal point sampling method',
-         spID = paste('hps',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         ...)
-       }
+    \preformatted{horizontalPointIZ(standingTree,
+                  angleGauge,
+                  description = 'inclusion zone for horizontal point sampling method',
+                  spID = paste('hps',.StemEnv$randomID(),sep=':'),
+                  spUnits = CRS(projargs=as.character(NA)),
+                  ...) }
 	   
     \itemize{
 				

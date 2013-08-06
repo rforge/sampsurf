@@ -19,13 +19,13 @@
 \item{\strong{\code{signature(standingTree = "standingTree", angleGauge = "angleGauge")}}}{}
 
   \item{}{\bold{usage\ldots}
-    \preformatted{function(standingTree,
-         angleGauge,
-         referenceHeight = .StemEnv$referenceCHSIZ,
-         description = 'inclusion zone for importance CH sampling method',
-         spID = paste('ichs',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         ...) }
+    \preformatted{importanceCHSIZ(standingTree,
+                angleGauge,
+                referenceHeight = .StemEnv$referenceCHSIZ,
+                description = 'inclusion zone for importance CH sampling method',
+                spID = paste('ichs',.StemEnv$randomID(),sep=':'),
+                spUnits = CRS(projargs=as.character(NA)),
+                ...) }
 	   
     \itemize{
 			

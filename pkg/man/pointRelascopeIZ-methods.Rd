@@ -19,13 +19,13 @@
 "pointRelascope")}}}{}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(downLog,
-         prs,
-         nptsCircle = 100,          
-         description = 'inclusion zone for down log point relascope sampling method',
-         spID = paste('prsIZ',format(runif(1,0,10000),digits=8),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         ... )}
+    \preformatted{pointRelascopeIZ(downLog,
+                 prs,
+                 nptsCircle = 100,          
+                 description = 'inclusion zone for down log point relascope sampling method',
+                 spID = paste('prsIZ',format(runif(1,0,10000),digits=8),sep=':'),
+                 spUnits = CRS(projargs=as.character(NA)),
+                 ... )}
 	   
     \itemize{
 				

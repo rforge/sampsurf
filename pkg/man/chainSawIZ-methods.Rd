@@ -2,8 +2,9 @@
 \docType{methods}
 \alias{chainSawIZ-methods}
 \alias{chainSawIZ,downLog,numeric-method}
+
 \title{ Method for "chainSawIZ" object construction in Package
-  `sampSurf' }
+  \pkg{sampSurf} }
 
 \description{
  This is the one methods for generic function \code{\link{chainSawIZ}} in
@@ -20,13 +21,14 @@
      }%for space
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(downLog,
-         plotRadius,
-         plotCenter = c(x=0, y=0),
-         description = 'inclusion zone for "chainsaw" method',
-         spID = unlist(strsplit(tempfile('cs:',''),'\\/'))[2],
-         spUnits = CRS(projargs=as.character(NA)),
-         ... )}
+    \preformatted{chainSawIZ(downLog,
+           plotRadius,
+           plotCenter = c(x=0, y=0),
+           description = 'inclusion zone for "chainsaw" method',
+           spID = unlist(strsplit(tempfile('cs:',''),'\\/'))[2],
+           spUnits = CRS(projargs=as.character(NA)),
+           ... )}
+		  
     \itemize{
 				
 	  \item{\code{downLog}:}{ An object of class

@@ -22,7 +22,7 @@
       represented as a numeric vector.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(popVals,
+    \preformatted{montePop(popVals,
          zeroTruncate = FALSE,
          n = NA,
          description = 'Monte Carlo Population Object',
@@ -57,7 +57,7 @@
 	  signature argument are as defined for the previous method.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(popVals,
+    \preformatted{montePop(popVals,
          zeroTruncate = FALSE,
          n = NA,
          description = 'Monte Carlo Population Object: sampSurf',

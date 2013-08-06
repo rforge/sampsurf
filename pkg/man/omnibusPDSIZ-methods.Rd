@@ -18,13 +18,13 @@
 \item{\strong{\code{signature(downLog = "downLog", pds = "omnibusPDS")}}}{}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(downLog,
-         pds,
-         description = 'inclusion zone for down log perpendicular distance sampling',
-         spID = paste('pds',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         pdsType = .StemEnv$pdsTypes,
-         ... )}
+    \preformatted{omnibusPDSIZ(downLog,
+             pds,
+             description = 'inclusion zone for down log perpendicular distance sampling',
+             spID = paste('pds',.StemEnv$randomID(),sep=':'),
+             spUnits = CRS(projargs=as.character(NA)),
+             pdsType = .StemEnv$pdsTypes,
+             ... )}
 	   
     \itemize{
 				

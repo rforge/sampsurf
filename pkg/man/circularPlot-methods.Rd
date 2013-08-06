@@ -19,14 +19,14 @@ construction. It is detailed below. }
     with other optional aruments described as follows\ldots }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(radius,
-         units = 'metric',
-         spUnits = CRS(projargs=as.character(NA)),
-         centerPoint = c(x=0, y=0),  
-         description = 'fixed area circular plot',
-         nptsPerimeter = 100,
-         spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
-         ...) }
+    \preformatted{circularPlot(radius,
+             units = 'metric',
+             spUnits = CRS(projargs=as.character(NA)),
+             centerPoint = c(x=0, y=0),  
+             description = 'fixed area circular plot',
+             nptsPerimeter = 100,
+             spID = unlist(strsplit(tempfile('cp:',''),'\\/'))[2],
+             ...) }
 	   
 	\itemize{
 	  \item{\code{radius}:}{ The fixed-plot

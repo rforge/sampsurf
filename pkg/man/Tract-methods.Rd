@@ -33,15 +33,16 @@
 	error).}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(cellSize,
-         cellDims = c(x=100, y=100), 
-         cellCenter = NULL,
-         units = 'metric',
-         data = 0,
-         spUnits = CRS(projargs=as.character(NA)),
-         description = 'object of class Tract',
-         runQuiet = FALSE,
-         ... )}
+    \preformatted{Tract(cellSize,
+      cellDims = c(x=100, y=100), 
+      cellCenter = NULL,
+      units = 'metric',
+      data = 0,
+      spUnits = CRS(projargs=as.character(NA)),
+      description = 'object of class Tract',
+      runQuiet = FALSE,
+      ... )}
+	
 	\itemize{
 	  \item{\code{cellSize}:}{ The size of the individual grid cells in the
 		appropriate units. Note particularly that the restriction has
@@ -96,14 +97,15 @@
     constructors.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object = c(x=10, y=10),
-         cellSize,
-         units = 'metric',
-         data = 0,
-         spUnits = CRS(projargs=as.character(NA)),
-         description = 'object of class Tract',
-         runQuiet = FALSE,
-         ... )}
+    \preformatted{Tract(object = c(x=10, y=10),
+      cellSize,
+      units = 'metric',
+      data = 0,
+      spUnits = CRS(projargs=as.character(NA)),
+      description = 'object of class Tract',
+      runQuiet = FALSE,
+      ... )}
+	
 	\itemize{
 	  \item{\code{object}:}{ A length two vector with names \code{c("x",
         "y")} specifying the maximal extents of the tract in these
@@ -129,14 +131,14 @@
     bounding box specification.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object, 
-         cellSize,
-         units = 'metric',
-         data = 0,
-         spUnits = CRS(projargs=as.character(NA)),
-         description = 'object of class Tract',
-         runQuiet = FALSE,
-         ... )}
+    \preformatted{Tract(object, 
+      cellSize,
+      units = 'metric',
+      data = 0,
+      spUnits = CRS(projargs=as.character(NA)),
+      description = 'object of class Tract',
+      runQuiet = FALSE,
+      ... )}
 	 
 	\itemize{
 	  \item{\code{object}:}{ A 2x2 matrix with rownames
@@ -158,11 +160,11 @@
     \dQuote{RasterLayer}.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object, 
-         units = 'metric',
-         description = 'object of class Tract',
-         runQuiet = FALSE,
-         ... )}
+    \preformatted{Tract(object, 
+      units = 'metric',
+      description = 'object of class Tract',
+      runQuiet = FALSE,
+      ... )}
 	 
 	\itemize{
 	  \item{\code{object}:}{ A valid object of type

@@ -24,14 +24,14 @@
   \code{orientation} arguments\ldots
 
   \item{}{\bold{usage\ldots}
-    \preformatted{function(standingTree,
-         angleGauge,
-         lineLength,
-         orientation = 0, 
-         description = 'inclusion zone for horizontal line sampling method',
-         spID = paste('hls',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         ... ) }
+    \preformatted{horizontalLineIZ(standingTree,
+                 angleGauge,
+                 lineLength,
+                 orientation = 0, 
+                 description = 'inclusion zone for horizontal line sampling method',
+                 spID = paste('hls',.StemEnv$randomID(),sep=':'),
+                 spUnits = CRS(projargs=as.character(NA)),
+                 ... ) }
 	   
     \itemize{
 				

@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{importanceCHSIZ-class}
-\alias{izGrid,importanceCHSIZ,Tract-method}
+%\alias{izGrid,importanceCHSIZ,Tract-method}
 
 \title{Class \code{"importanceCHSIZ"}}
 

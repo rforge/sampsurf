@@ -4,7 +4,7 @@
 \alias{distanceLimited,numeric-method}
 
 \title{  Methods for \dQuote{distanceLimited} Object Construction in Package
-  \sQuote{sampSurf}
+  \pkg{sampSurf}
 }
 
 \description{ There is currently only one method based on the
@@ -22,10 +22,10 @@ construction. It is detailed below.
     follows\ldots }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(distanceLimit,
-         units = 'metric',
-         description = 'distance limited method',
-         ...) }
+    \preformatted{distanceLimited(distanceLimit,
+                units = 'metric',
+                description = 'distance limited method',
+                ...) }
 	   
 	\itemize{
 	  \item{\code{distanceLimit}:}{ The distance limit in appropriate

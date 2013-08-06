@@ -17,14 +17,14 @@
 
 \item{\strong{\code{signature(downLog = "downLog", pds = "perpendicularDistance", dls = "dlsNumeric")}}}{}
   \item{}{\bold{usage\ldots}
-    \preformatted{function(downLog,
-         pds,
-         dls,
-         description = 'inclusion zone for down log omnibus distance limited PDS',
-         spID = paste('odlpds',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         pdsType = .StemEnv$pdsTypes,
-         ... )}
+    \preformatted{omnibusDLPDSIZ(downLog,
+               pds,
+               dls,
+               description = 'inclusion zone for down log omnibus distance limited PDS',
+               spID = paste('odlpds',.StemEnv$randomID(),sep=':'),
+               spUnits = CRS(projargs=as.character(NA)),
+               pdsType = .StemEnv$pdsTypes,
+               ... )}
 	   
     \itemize{
 				

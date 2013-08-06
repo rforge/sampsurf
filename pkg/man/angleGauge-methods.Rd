@@ -18,10 +18,10 @@ construction. It is detailed below.
 	This method takes the basal area factor as the key argument\ldots}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(baf,
-         units = 'metric',
-         description = 'angle gauge method',
-         ...) }
+    \preformatted{angleGauge(baf,
+           units = 'metric',
+           description = 'angle gauge method',
+           ...) }
 	   
 	\itemize{
 	  \item{\code{baf}:}{ The basal area factor.}

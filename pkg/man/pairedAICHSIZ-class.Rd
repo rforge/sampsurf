@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{pairedAICHSIZ-class}
-\alias{izGrid,pairedAICHSIZ,Tract-method}
+%\alias{izGrid,pairedAICHSIZ,Tract-method}
 
 \title{Class \code{"pairedAICHSIZ"}}
 

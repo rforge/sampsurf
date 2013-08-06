@@ -30,18 +30,18 @@
    called by all the others. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         zeroTruncate = TRUE,
-         n = object@n,
-         mcSamples = 100,
-         type = c('both', 'normalTheory', 'bootstrap'),
-         R = 100, 
-         alpha = 0.05, 
-         description = 'Monte Carlo Object',
-         replace = TRUE,
-         startSeed = NA,
-         runQuiet = TRUE,
-         ... )}
+    \preformatted{monte(object,
+      zeroTruncate = TRUE,
+      n = object@n,
+      mcSamples = 100,
+      type = c('both', 'normalTheory', 'bootstrap'),
+      R = 100, 
+      alpha = 0.05, 
+      description = 'Monte Carlo Object',
+      replace = TRUE,
+      startSeed = NA,
+      runQuiet = TRUE,
+      ... )}
 	   
 	\itemize{
 		 
@@ -97,18 +97,18 @@
    "\code{\linkS4class{numeric}}"; i.e., a numeric vector. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         zeroTruncate = TRUE,
-         n = c(10),
-         mcSamples = 100,
-         type = c('both', 'normalTheory', 'bootstrap'),
-         R = 100, 
-         alpha = 0.05, 
-         description = 'Monte Carlo Object',
-         replace = TRUE,
-         startSeed = NA,
-         runQuiet = TRUE,
-         ... )}
+    \preformatted{monte(object,
+      zeroTruncate = TRUE,
+      n = c(10),
+      mcSamples = 100,
+      type = c('both', 'normalTheory', 'bootstrap'),
+      R = 100, 
+      alpha = 0.05, 
+      description = 'Monte Carlo Object',
+      replace = TRUE,
+      startSeed = NA,
+      runQuiet = TRUE,
+      ... )}
 	   
 	\itemize{
 		 
@@ -126,18 +126,18 @@
    from the cell values in the object.}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         zeroTruncate = TRUE,
-         n = c(10),
-         mcSamples = 100,
-         type = c('both', 'normalTheory', 'bootstrap'),
-         R = 100, 
-         alpha = 0.05, 
-         description = 'Monte Carlo Object',
-         replace = TRUE,
-         startSeed = NA,
-         runQuiet = TRUE,
-         ... )}
+    \preformatted{monte(object,
+      zeroTruncate = TRUE,
+      n = c(10),
+      mcSamples = 100,
+      type = c('both', 'normalTheory', 'bootstrap'),
+      R = 100, 
+      alpha = 0.05, 
+      description = 'Monte Carlo Object',
+      replace = TRUE,
+      startSeed = NA,
+      runQuiet = TRUE,
+      ... )}
 	   
 	\itemize{
 		 

@@ -24,9 +24,9 @@
 	  object to this constructor to generate the surface. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object, 
+    \preformatted{sampSurf(object, 
          tract,
-         estimate = unlist(.StemEnv$puaEstimates),
+         estimate = unlist(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
          wantChainSaw = FALSE,
          description = 'sampling surface object',
          runQuiet = FALSE,
@@ -39,9 +39,10 @@
 	  \item{\code{tract}:}{ An object of class "Tract" or subclass.}
 		 
 	  \item{\code{estimate}:}{ A character variable corresponding to the
-	  desired estimate attribute; these include 'volume', 'Length' (logs),
-	  'Density', 'surfaceArea', 'coverageArea' (logs), 'basalArea'
-	  (trees), 'biomass' and 'carbon'.}
+	  desired estimate attribute; these include 'volume', 'Length'
+	  (logs), 'Density', 'surfaceArea', 'coverageArea' (logs),
+	  'basalArea' (trees), 'biomass' and 'carbon'. The sample 'depth'
+	  surface is now also available.}
 		
 	  \item{\code{wantChainSaw}:}{ \code{TRUE}: if the full chainsaw
 	    method is desired; \code{FALSE}: if not (default).}
@@ -72,7 +73,7 @@
 	  surface. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object, 
+    \preformatted{sampSurf(object, 
          tract,
          iZone, 
          estimate = unlist(.StemEnv$puaEstimates),

@@ -27,7 +27,7 @@
 
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(x, ... )}
+    \preformatted{area(x, ... )}
 	\itemize{
 		 
 	  \item{\code{x}:}{ An object that is a subclass of \dQuote{InclusionZone}. }

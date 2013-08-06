@@ -29,9 +29,9 @@
 	this constructor. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
+    \preformatted{downLogs(object,
          description = '',
-	      ... )}
+         ... )}
 	   
 	\itemize{
 	  \item{\code{object}:}{ A \code{list} as discussed above.}
@@ -58,7 +58,7 @@
 	sample of logs.  }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object, units = 'metric', ... )}
+    \preformatted{downLogs(object, units = 'metric', ... )}
 	\itemize{
 	  \item{\code{object}:}{ A data frame as discussed above.}
 	  
@@ -81,7 +81,7 @@
   second (\code{container}) argument. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object, container, units = 'metric', ... )}
+    \preformatted{downLogs(object, container, units = 'metric', ... )}
 	\itemize{
 	  \item{\code{object}:}{ A numeric (truncated to integer) object specifying the number
         of logs to generate as discussed above.}
@@ -109,7 +109,7 @@
   bounding box and the appropriate constructor is used (see below). }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
+    \preformatted{downLogs(object,
          xlim = c(0,100), 
          ylim = c(0,50),
          units = 'metric',
@@ -143,7 +143,7 @@
   \code{\link{sampleLogs}}. }
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
+    \preformatted{downLogs(object,
          container,
          units = 'metric',
          buttDiams = c(8, 40), 

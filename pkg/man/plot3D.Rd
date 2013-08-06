@@ -2,8 +2,8 @@
 \alias{plot3D}
 \alias{plot3D-method}
 %\alias{plot3D,sampSurf-method}  %in sampSurf-class.Rd
-\alias{plot3D,Tract-method}     %in Tract-class.Rd
-\alias{plot3D,InclusionZoneGrid-method}
+%\alias{plot3D,Tract-method}     %in Tract-class.Rd
+%\alias{plot3D,InclusionZoneGrid-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 
 \title{ Interactive 3D Plot of Objects From Package \dQuote{sampSurf} }
@@ -31,11 +31,11 @@
 %  \item{\dots}{ Please see the Details section that follows.}
 %}
 
-\details{ This is not the generic, that is defined in
-  rasterVis::\code{plot3D} and should be referred to for
-  more details on both possible arguments and functionality. Because the
-  \code{plot3D} methods in the \dQuote{sampSurf} package are all the
-  same in their arguments as the above, they are not detailed elsewhere.  }
+\details{ This is not the generic function, that is defined in
+  rasterVis::\code{\link[rasterVis]{plot3D}}, which should be referred to for
+  more details on both possible base arguments and functionality. Please
+  also see the \code{\link{plot3D-methods}} for other possible arguments
+  added for \dQuote{sampSurf} class functionality.  }
 
 \value{ Nothing returned.}
 

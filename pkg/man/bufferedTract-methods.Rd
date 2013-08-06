@@ -21,11 +21,10 @@ There is only one existing method available for the
       This method takes the form shown below\ldots}
 
   \item{}{\bold{usage\ldots}
-    \preformatted{function(bufferWidth,
-         tract,
-         runQuiet = FALSE,
-         ...
-       )}
+    \preformatted{bufferedTract(bufferWidth,
+              tract,
+              runQuiet = FALSE,
+              ... )}
 	 
 	\itemize{
 	  \item{\code{bufferWidth}:}{ The width of the buffer in the

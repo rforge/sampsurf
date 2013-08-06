@@ -20,13 +20,13 @@
 
 
   \item{}{\bold{usage\ldots}
-    \preformatted{function(standingTree,
-         angleGauge,
-         referenceHeight = .StemEnv$referenceCHSIZ,
-         description = 'inclusion zone for antithetic ICH sampling method',
-         spID = paste('aichs',.StemEnv$randomID(),sep=':'),
-         spUnits = CRS(projargs=as.character(NA)),
-         ...) }
+    \preformatted{antitheticICHSIZ(standingTree,
+                 angleGauge,
+                 referenceHeight = .StemEnv$referenceCHSIZ,
+                 description = 'inclusion zone for antithetic ICH sampling method',
+                 spID = paste('aichs',.StemEnv$randomID(),sep=':'),
+                 spUnits = CRS(projargs=as.character(NA)),
+                 ...) }
 	   
     \itemize{
 			

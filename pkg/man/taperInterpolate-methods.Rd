@@ -26,10 +26,10 @@
 \item{\strong{\code{signature(object = "downLog")}}}{}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         whichSense = c('diameter', 'length'),
-         pts = NULL,
-         ...) }
+    \preformatted{taperInterpolate(object,
+                 whichSense = c('diameter', 'length'),
+                 pts = NULL,
+                 ...) }
 	   
 	\itemize{
 
@@ -54,10 +54,10 @@
      Please do not use this method, use the other two which call it correctly\ldots}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         whichSense = c('diameter', 'length', 'height'),
-         pts = NULL,
-         ...) }
+    \preformatted{taperInterpolate(object,
+                 whichSense = c('diameter', 'length', 'height'),
+                 pts = NULL,
+                 ...) }
 	   
 	\itemize{
 
@@ -83,10 +83,10 @@
 \item{\strong{\code{signature(object = "standingTree")}}}{}
   
   \item{}{\bold{usage\ldots}
-    \preformatted{function(object,
-         whichSense = c('diameter', 'height'),
-         pts = NULL,
-         ...) }
+    \preformatted{taperInterpolate(object,
+                 whichSense = c('diameter', 'height'),
+                 pts = NULL,
+                 ...) }
 	   
 	\itemize{
 
