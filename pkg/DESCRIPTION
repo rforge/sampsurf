@@ -1,8 +1,8 @@
 Package: sampSurf
 Type: Package
 Title: Sampling Surface Simulation for Areal Sampling Methods
-Version: 0.6-8
-Date: 25-Mar-2013
+Version: 0.7-0
+Date: 1-Aug-2013
 Author: Jeffrey H. Gove
 Maintainer: Jeffrey H. Gove <jgove@fs.fed.us>
 Depends: R (>= 2.13.1), methods(>= 2.13.1), sp(>= 0.9-84), raster(>= 1.9-5), rasterVis(>= 0.10-3),
@@ -44,5 +44,9 @@ Collate: zzz.R transparentColorBase.R initRandomSeed.R boltDimensions.R
          monteClass.R monteConstructors.R summaryMonte.R showMonte.R histMonte.R
          horizontalLineSampling.R
          criticalHeightSampling.R antitheticCHS.R
-         taperInterpolate.R
+         taperInterpolate.R getID.R segmentVolume.R
+         MonteCarloContainer.R
+         MonteCarloClass.R  MonteCarloConstructors.R MonteCarloProxy.R
+         showMonteCarlo.R summaryMonteCarlo.R plotMonteCarlo.R
+         horizontalPointMCSampling.R
 URL: http://sampsurf.r-forge.r-project.org/

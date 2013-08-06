@@ -16,13 +16,17 @@
 #     7. for 'distanceLimitedPDSIZ'        (Feb-Mar 2011)
 #     8. for 'omnibusDLPDSIZ'              (Mar 2011)
 #     9. for 'hybridDLPDSIZ'               (July 2011)
-#    10. for 'distanceLimitedMCIZ'         (Mar 2011)
-#    11. for 'distanceLimitedIZ'           (May 2011)
+#    10. for 'distanceLimitedIZ'           (Mar 2011)
+#    11. for 'distanceLimitedMCIZ'         (May 2011)
 #
 #        ...standingTreeIZ subclass constructors...
 #
 #     1. for 'circularPlotIZ'              (Dec 2011)
 #     2. for 'horizontalPointIZ'           (Dec 2011)
+#
+#   Note: I adopted a new strategy after HPS was added, new sampling methods
+#         have all their respective code for all classes in one file. 
+#         Please see those files for their InclusionZone constructors.
 #
 #   Note that the sp, raster, and rgeos packages must be installed.
 #   The gpclib package was originally used for the chainSawIZ method,
@@ -1347,7 +1351,7 @@ function(downLog,
        
 #================================================================================
 #  11. method for functions and class distanceLimitedMCIZ; everything is the same
-#      as under dls, except the per nuit area estimates for all but Density
+#      as under dls, except the per unit area estimates for all but Density
 #      and Length...
 #
 setMethod('distanceLimitedMCIZ',

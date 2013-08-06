@@ -54,7 +54,8 @@ setClass('InclusionZoneGrid',
                  if(any( apply(object@bbox,1,function(x) if(x['min'] >= x['max']) TRUE else FALSE) ))
                    return('in slot bbox, "min" must be less than "max" for x and y!')
 
-                 dfNames = match(colnames(object@data), names(.StemEnv$puaEstimates))
+                 dfNames = match(colnames(object@data), c(names(.StemEnv$puaEstimates),
+                                                          names(.StemEnv$ppEstimates)) )
                  if(any(is.na(dfNames)))
                    return('slot data colnames must contain all the per unit area estimate names')
                    

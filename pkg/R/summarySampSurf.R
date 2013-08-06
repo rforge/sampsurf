@@ -70,8 +70,11 @@ function(object,
     }
     
     cat('\nInclusion zone objects:', class(object@izContainer@iZones[[1]]) )
-    if(.hasSlot(object@izContainer@iZones[[1]], 'pdsType'))
-       cat(' (with PP to: ',object@izContainer@iZones[[1]]@pdsType,')',sep='')
+    if(.hasSlot(object@izContainer@iZones[[1]], 'pdsType'))                  #for PDS PPS derivatives
+      cat(' (with PP to: ',object@izContainer@iZones[[1]]@pdsType,')',sep='')
+    if(.hasSlot(object@izContainer@iZones[[1]], 'antithetic'))               #for Monte Carlo Sampling derivatives
+      if(object@izContainer@iZones[[1]]@antithetic)                          #distinguish antithetic variants
+        cat(' (antithetic)')
     cat('\nMeasurement units =', object@tract@units)
 
 #

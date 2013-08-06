@@ -33,7 +33,7 @@ function(x,
          gridLineColor = .StemEnv$gridLineColor,
          gridCenters = FALSE,                         #can be too busy
          gridCenterColor = .StemEnv$gridCenterColor,
-         estimate = names(.StemEnv$puaEstimates),
+         estimate = names(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
          lwdGrid = 1,                                 #lwd for gridLines
          ...
         )

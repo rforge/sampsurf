@@ -90,7 +90,7 @@ function(object,
       rlen = range(length)
       rpts = range(pts)
       if(rpts[1]<rlen[1] || rpts[2]>rlen[2])
-        stop('Some interpolated points are off the log!')
+        stop('Some interpolated points are off the stem!')
 
       if(!is.null(solidType)) 
         diams = .StemEnv$wbTaper(buttDiam, topDiam, totLength, nSegs=1,
@@ -103,7 +103,7 @@ function(object,
       rdiam = range(diameter)
       rpts = range(pts)
       if(rpts[1]<rdiam[1] || rpts[2]>rdiam[2])
-        stop('Some interpolated points are off the log!')
+        stop('Some interpolated points are off the stem!')
 
       if(!is.null(solidType))                        #use inverted .StemEnv$wbTaper equation
         lengths = totLength*(1 - ((pts - topDiam)/(buttDiam - topDiam))^(solidType/2)) 

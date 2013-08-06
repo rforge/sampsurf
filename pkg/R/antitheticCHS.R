@@ -327,13 +327,22 @@ function(izObject,
           u.a[1] = uCrit - 0.5
         u.a[2] = 1 - u.a[1]
         b.a[1] = B*(1-sqrt(1-u.a[1]))
-        b.a[2] = B*(1-sqrt(u.a[1]))                                   #==B*(1-sqrt(1-u.a[2]))
-        d.a = sqrt(b.a/baFactor)                                      #and their associated diameters
-        bHeight = ifelse(d.a < topDiam, height,                       #allow for trees with broken tops 
-                      taperInterpolate(standingTree, 'height', d.a))  #get height at diameter corresponding to 'b.a'
+        b.a[2] = B*(1-sqrt(u.a[1]))                                 #==B*(1-sqrt(1-u.a[2]))
+        d.a = sqrt(b.a/baFactor)                                    #and their associated diameters
+        # don't use the following ifelse, it evaluates the whole d.a vector in taperInterpolate and can
+        # fail if one of the diameters meets the TRUE condition!...
+        #bHeight = ifelse(d.a <= topDiam, height,                      #allow for trees with broken tops 
+        #              taperInterpolate(standingTree, 'height', d.a))  #get height at diameter corresponding to 'b.a'
+        bHeight = rep(0,2)
+        for(j in 1:2) {                                             #this is safer, if slower
+          if(d.a[j] <= topDiam)                                     #allow for trees with broken tops
+            bHeight[j] = height  
+          else                                                      #get height at diameter corresponding to 'b.a'
+            bHeight[j] = taperInterpolate(standingTree, 'height', d.a[j])
+        }
         if(referenceHeight == 'butt')
           volume = 0.25*baf*(bHeight[1]/sqrt(1-u.a[1]) + bHeight[2]/sqrt(u.a[1]) )
-        if(referenceHeight == 'dbh')                              #correction for breast-height reference
+        if(referenceHeight == 'dbh')                                #correction for breast-height reference
           volume = 0.25*baf*((bHeight[1]-dbhHgt)/sqrt(1-u.a[1]) +
                              (bHeight[2]-dbhHgt)/sqrt(u.a[1]) + 4*csaFlare*dbhHgt/B)
       } #paired

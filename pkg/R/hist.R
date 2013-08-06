@@ -194,8 +194,9 @@ function(x,
 #   this just plots the sampling distribution histogram w/ or w/o zeros
 #------------------------------------------------------------------------------
 #
-#   note that for the legal names below, we are not using names(.StemEnv$puaEstimates),
-#   but are allowing whatever the creator of the particular samlping object put in
+#   note that for the legal names below, we are not using, e.g.,
+#   estimate = names(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
+#   but are allowing whatever the creator of the particular sampling object put in
 #   the data frame; thus, we are not using match.arg() here either...
 #
     legalNames =  colnames(x@data)          

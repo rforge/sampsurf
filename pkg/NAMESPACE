@@ -26,15 +26,19 @@ export(initRandomSeed, transparentColorBase)
 export(sampleLogs, boltDimensions, sampleTrees)
 export(bboxCheck, bboxToPoly, bboxSum)
 export(spCircle)
+export(getID)
 
 export(izGridConstruct) #for now, eventually hide it?
 export(gridCellEnhance) #ibid
 
+export(getProxy)    #proxy functions for Monte Carlo subsampling
+ 
 
 
-#
+#--------------------------------------------------------------------------------------
 # Classes export section...
 #
+
 #Stem & StemContainer...
 exportClasses(Stem, downLog,   standingTree)
 exportClasses(StemContainer, downLogs, standingTrees)
@@ -56,10 +60,18 @@ exportClasses(izContainer, downLogIZs,  standingTreeIZs)
 exportClasses(sampSurf)
 #monte...
 exportClasses(montePop, monteSample, monteNTSample, monteBSSample, monte)
+#Monte Carlo Methods...
+exportClasses(MonteCarloSampling, crudeMonteCarlo, importanceSampling, controlVariate, antitheticSampling)
+exportClasses(mcsContainer, antitheticContainer)
+#Monte Carlo Subsampling within areal methods...
+exportClasses(MonteCarloSamplingIZ)
+exportClasses(horizontalPointCMCIZ, horizontalPointISIZ, horizontalPointCVIZ)
+#lapSurf...
+#exportClasses(lapSurf)
 
 
 
-#
+#--------------------------------------------------------------------------------------
 # methods export section...
 #
 
@@ -92,10 +104,15 @@ exportMethods(sampSurf)
 #exportMethods(Plot)
 #monte constructors...
 exportMethods(montePop, monte, monteNTSample, monteBSSample)
+#Monte Carlo Sampling constructors...
+exportMethods(crudeMonteCarlo, importanceSampling, controlVariate, antitheticSampling)
+exportMethods(mcsContainer, antitheticContainer)
+#Monte Carlo Subsampling within areal methods...
+exportMethods(horizontalPointCMCIZ, horizontalPointISIZ, horizontalPointCVIZ)
 #Other...
-exportMethods(taperInterpolate)
-
-
+exportMethods(taperInterpolate, segmentVolume)
+#lapSurf constructors...
+#exportMethods(lapSurf)
 
 
 

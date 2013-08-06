@@ -92,6 +92,10 @@ function(radius,
 #
     if(radius <= 0)
       stop('radius must be positive!')
+    if(nptsPerimeter < 20) {
+      warning('Using less than 20 points for the circle perimeter is not recommended--set to 20')
+      nptsPerimeter = 20
+    }
 
     area = pi*radius*radius
 

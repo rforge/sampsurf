@@ -44,6 +44,9 @@ function(object,
 #   just a simple summary of common items from virtual class...
 #------------------------------------------------------------------------------
     cat('\nObject of class:', class(object))
+    if(.hasSlot(object, 'antithetic'))                    #for Monte Carlo Sampling derivatives
+      if(object@antithetic)                               #distinguish antithetic variants
+        cat(' (antithetic)')
     .StemEnv$underLine(60)
     if(!is.na(object@description))
       cat(object@description, fill=60)

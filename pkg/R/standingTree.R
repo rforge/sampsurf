@@ -201,7 +201,8 @@ function(object,
 #
 #   now for dbh--assume circular cross-section...
 #
-    sp.dbh = spCircle(dbh/2, spUnits, centerOffset, spID=paste('dbh',treeID,sep='.'), ...)
+    sp.dbh = spCircle(radius=dbh/2, spUnits=spUnits, centerPoint=centerOffset,
+                      spID=paste('dbh',treeID,sep='.'), ...)
     spDBH = sp.dbh$spCircle
     names(spDBH@polygons) = 'pgsDBH'
     names(spDBH@polygons$pgsDBH@Polygons) = 'pgDBH'

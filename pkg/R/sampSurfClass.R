@@ -40,7 +40,7 @@ setClass('sampSurf',
                     ),
     validity = function(object) {
 
-                 if(!(object@estimate %in% .StemEnv$puaEstimates))
+                 if(!(object@estimate %in% c(.StemEnv$puaEstimates, .StemEnv$ppEstimates) ))
                    return('Invalid per unit area estimate in class sampSurf!')
 
 #                check comparable units within tract and inclusion zones...

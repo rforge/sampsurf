@@ -35,7 +35,7 @@ setMethod('heapIZ',
           signature(izgObject = 'InclusionZoneGrid', tract='Tract'),
 function(izgObject,
          tract,
-         estimate = unlist(.StemEnv$puaEstimates),
+         estimate = unlist(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
          ...
         )
 {

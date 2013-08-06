@@ -74,14 +74,37 @@ function(x,
 setMethod('plot3D',
           signature(x = 'InclusionZoneGrid'),
 function(x,
-         estimate = names(.StemEnv$puaEstimates),
+         estimate = 'volume', 
          col = .StemEnv$blue.colors, #pass the actual function here, not a call!
          ...
         )
 {
 #------------------------------------------------------------------------------
 #
-    estimate = match.arg(estimate)
+#   note that for the legal names below, we are not using, e.g.,
+#   estimate = names(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
+#   but are allowing whatever the creator of the particular sampling object put in
+#   the data frame; thus, we are not using match.arg() here either...
+#
+    legalNames =  colnames(x@data)          
+    edx = pmatch(estimate,legalNames)
+    if(is.na(edx))
+      stop('estimate must be one of:',paste(legalNames,collapse=','))
+    else
+      estimate = legalNames[edx]
+    #estimate = match.arg(estimate)
+
+#
+#   check to see if this attribute has any estimates...
+#    
+    values = x@data[,estimate]
+    values = values[values>0]
+    if(all(is.na(values)))
+      stop('All values for ',estimate,' are NA')
+
+#
+#   go ahead and plot it...
+#
     x@grid = setValues(x@grid, x@data[,estimate]) 
     suppressWarnings({                              #for non-plot arguments in ...    
       plot3D(x@grid, col=col, ...)                  #no next method

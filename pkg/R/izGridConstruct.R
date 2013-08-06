@@ -55,13 +55,15 @@ izGridConstruct = function(izObject,
     izg = izGrid(iz.bbox, tract)                       #get the minimal bounding grid
 
 #
-#   grid with NAs outside the overlay region and zeros inside...
+#   grid with NAs outside (background) the overlay (inclusion zone) region and zeros inside...
 #
-    #grid = polygonsToRaster(perimeter(izObject), izg, mask=TRUE, silent=TRUE)  ##replaced by rasterize
+    #grid = polygonsToRaster(perimeter(izObject), izg, mask=TRUE, silent=TRUE)  ##replaced by rasterize...
     grid = rasterize(perimeter(izObject), izg, mask=TRUE, silent=TRUE)
 
 #
-#   a data frame with each pua estimate...
+#   a data frame with each pua estimate; now we make the background 0 (rather than NA) and
+#   fill the inclusion zone with the appropriate estimate (which can be NA if it does not
+#   exist for a particular method)...
 #
     nr = ncell(grid)
     npua = length(izObject@puaEstimates)
@@ -71,6 +73,8 @@ izGridConstruct = function(izObject,
     gridVals = getValues(grid)
     for(i in seq_len(npua)) 
       df[,i] = ifelse(is.na(gridVals), 0, izObject@puaEstimates[[i]])
+
+    df$depth = ifelse(is.na(gridVals), 0, 1)   #sample or overlap zone depth   #****
 
 #
 #   combine them for the overall bbox...

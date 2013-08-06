@@ -42,7 +42,7 @@ setMethod('sampSurf',
           signature(object = 'izContainer', tract='Tract'), 
 function(object, 
          tract,
-         estimate = unlist(.StemEnv$puaEstimates),
+         estimate = unlist(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
          wantChainSaw = FALSE,
          description = 'sampling surface object',
          runQuiet = FALSE,
@@ -84,13 +84,13 @@ function(object,
     if(is(object, 'downLogIZs')) {
       isLogs = TRUE
       stemName = 'log'
-      if(!estimate %in% .StemEnv$validEstimates$downLogs)
+      if(!estimate %in% c(.StemEnv$validEstimates$downLogs, .StemEnv$ppEstimates))
         stop(paste(estimate,'is not a valid attribute for downLogs'))
     }
     else {
       isLogs = FALSE
       stemName = 'tree'
-      if(!estimate %in% .StemEnv$validEstimates$standingTrees)
+      if(!estimate %in% c(.StemEnv$validEstimates$standingTrees, .StemEnv$ppEstimates))
         stop(paste(estimate,'is not a valid attribute for standingTrees'))
     }
 
@@ -199,7 +199,7 @@ setMethod('sampSurf',
 function(object, 
          tract,
          iZone,
-         estimate = unlist(.StemEnv$puaEstimates),
+         estimate = unlist(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
          wantChainSaw = FALSE,               #always the exception
          description = 'sampling surface object',
          runQuiet = FALSE,

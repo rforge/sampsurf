@@ -37,6 +37,9 @@ function(object,
     numIZs = length(object@iZones)
     cat('There are',numIZs,'inclusion zones in the population')
     cat('\nInclusion zones are of class:', class(object@iZones[[1]]))
+    if(.hasSlot(object@iZones[[1]], 'antithetic'))                    #for Monte Carlo Sampling derivatives
+      if(object@iZones[[1]]@antithetic)                               #distinguish antithetic variants
+        cat(' (antithetic)')
     cat('\nUnits of measurement: ', object@units)
     
     izAreas = sapply(object@iZones, area)
