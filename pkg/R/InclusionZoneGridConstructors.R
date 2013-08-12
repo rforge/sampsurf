@@ -27,6 +27,10 @@
 #     1. for 'circularPlotIZ'
 #        for 'horizontalPointIZ', nothing is required, it uses 'circularPlotIZ'
 #
+#   Note: I adopted a new strategy after HPS was added, new sampling methods
+#         have all their respective code for all classes in one file. 
+#         Please see those files for their InclusionZoneGrid constructors.
+#
 #   Of course, if chainSaw was not so strange, we would only require one
 #   method for every different technique! (Well except for omnibus, and
 #   other methods with varying height IZs...)
@@ -625,9 +629,12 @@ function(izObject,
             est = colnames(data)
             data[pdsTo.idx, est] = df[pdsFrom.idx, est]                   #variable within each est
           }
-        else
-          for(est in colnames(data)) 
-            data[pdsTo.idx, est] = izObject@pdsPart@puaEstimates[[est]] #constant for each est 
+        else {
+          cnames = colnames(data)
+          cnames = cnames[cnames!=.StemEnv$ppEstimates$depth]           #no depth in puaEstimates below
+          for(est in cnames) 
+            data[pdsTo.idx, est] = izObject@pdsPart@puaEstimates[[est]] #constant for each est
+        }
 
         griz@data = data
 
