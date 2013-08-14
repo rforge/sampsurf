@@ -347,7 +347,7 @@ function(object,
               trueVol = stemVol,
               relErrPct = relErrPct,
               proxy = proxy,
-              startSeed = ifelse(is.na(startSeed), as.real(NA), startSeed)
+              startSeed = ifelse(is.na(startSeed), as.double(NA), startSeed)
     )
     
 #

@@ -13,7 +13,9 @@
 }
 
 \usage{
-izGridConstruct(izObject, tract, description = "sausageIZ inclusion zone grid object", wholeIZ = TRUE, ...)
+izGridConstruct(izObject, tract,
+                description = "sausageIZ inclusion zone grid object",
+                wholeIZ = TRUE, ...)
 }
 
 %- maybe also 'usage' for other objects documented here.
