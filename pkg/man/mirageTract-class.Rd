@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{mirageTract-class}
-\alias{izGridMirage,InclusionZone,mirageTract-method}
+%\alias{izGridMirage,InclusionZone,mirageTract-method}
 
 \title{Class \code{"mirageTract"}}
 

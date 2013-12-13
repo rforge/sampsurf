@@ -11,6 +11,7 @@
 \alias{plot,downLogs,missing-method}
 \alias{plot,InclusionZone,missing-method}
 \alias{plot,InclusionZoneGrid,missing-method}
+\alias{plot,mirageInclusionZoneGrid,missing-method}
 \alias{plot,sampSurf,missing-method}
 \alias{plot,sausageIZ,missing-method}
 \alias{plot,pointRelascopeIZ,missing-method}

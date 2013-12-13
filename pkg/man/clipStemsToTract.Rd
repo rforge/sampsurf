@@ -80,10 +80,6 @@ the tract boundary if desired.
 	are inside) with the offending stems either removed or clipped.}
 }
 
-\references{
-%% ~put references to the literature/web site here ~
-}
-
 \author{
 Jeffrey H. Gove %, \email{jhgove@unh.edu}
 }
