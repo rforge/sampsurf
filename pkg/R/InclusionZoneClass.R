@@ -15,13 +15,15 @@
 #     3. standUpIZ: the standup method of sampling down cwd
 #     4. chainSawIZ; the chain saw method for sampling down cwd
 #     5. sausageIZ: the sausage method of sampling down cwd
-#     6. pointRelascopeIZ: the point relascope method for sampling down cwd
-#     7. perpendicularDistanceIZ: normal PDS
-#     8. omnibusPDSIZ: for omnibus estimation under normal PDS
-#     9. distanceLimitedIZ: for canonical distance limited sampling (dls)
-#    10. distanceLimitedMCIZ: DLMC
-#    11. distanceLimitedPDSIZ: for canonical DLPDS
-#    12. omnibusDLPDSIZ: combines omnibus PDS component with DLMC component
+#     6. fullChainSawIZ: the FCS has sausage IZ
+#     7. pointRelascopeIZ: the point relascope method for sampling down cwd
+#     8. perpendicularDistanceIZ: normal PDS
+#     9. omnibusPDSIZ: for omnibus estimation under normal PDS
+#    10. distanceLimitedIZ: for canonical distance limited sampling (dls)
+#    11. distanceLimitedMCIZ: DLMC
+#    12. distanceLimitedPDSIZ: for canonical DLPDS
+#    13. omnibusDLPDSIZ: combines omnibus PDS component with DLMC component
+#    14. hybridDLPDSIZ: DLMC & canonical PDS
 #
 #   Search for "standingTreeIZ" to find the definitions for standing trees at
 #   the end of this file.
@@ -237,13 +239,28 @@ setClass('sausageIZ',
 
 
 
+#=================================================================================================
+#
+#  6. the fullChainSaw class is a direct descendant of 'sausageIZ'...
+#
+#     This class was formalized with associated changes in the constructors, izGrid constructors,
+#     and sampSurf 30-Sept-2013. This was done to get rid of the special code (since it just uses
+#     a sausage IZ) and make the package totally OOP in this regard.
+#
+setClass('fullChainSawIZ',
+    contains = 'sausageIZ',                                  #a subclass of the 'sausageIZ' class
+) #class fullChainSawIZ 
+
+
+
+
 
 
 
 
 #=================================================================================================
 #
-#  6. the pointRelascope class is a direct descendant of 'downLogIZ'...
+#  7. the pointRelascope class is a direct descendant of 'downLogIZ'...
 #
 #     I'll call the "mastercard" double/dual circle (blob) just "dual"...
 #
@@ -288,7 +305,7 @@ setClass('pointRelascopeIZ',
 
 #=================================================================================================
 #
-#  7. the perpendicularDistanceIZ class is a direct descendant of 'downLogIZ'...
+#  8. the perpendicularDistanceIZ class is a direct descendant of 'downLogIZ'...
 #
 #
 #     below: hc = homogeneous coordinates
@@ -334,7 +351,7 @@ setClass('perpendicularDistanceIZ',
 
 #=================================================================================================
 #
-#  8. the omnibusPDSIZ class is a direct descendant of 'perpendicularDistanceIZ'...
+#  9. the omnibusPDSIZ class is a direct descendant of 'perpendicularDistanceIZ'...
 #
 #
 #     added: 4-Feb-2011
@@ -350,7 +367,7 @@ setClass('omnibusPDSIZ',
 
 #=================================================================================================
 #
-#  9. the distanceLimitedIZ class is a direct descendant of 'downLogIZ'...
+#  10. the distanceLimitedIZ class is a direct descendant of 'downLogIZ'...
 #
 #
 #     below: hc = homogeneous coordinates
@@ -381,7 +398,7 @@ setClass('distanceLimitedIZ',
 
 #=================================================================================================
 #
-#  10. the distanceLimitedMCIZ class is a direct descendant of 'distanceLimitedIZ'; the dates
+#  11. the distanceLimitedMCIZ class is a direct descendant of 'distanceLimitedIZ'; the dates
 #      below are off compared with the parent because I actually developed the MC version first,
 #      then added the distanceLimtedIZ class, this necessitated switching the defintion so
 #      that the parent was the base for this class of objects
@@ -399,7 +416,7 @@ setClass('distanceLimitedMCIZ',
 
 #=================================================================================================
 #
-#  11. the distanceLimitedPDSIZ class is a direct descendant of 'perpendicularDistanceIZ'...
+#  12. the distanceLimitedPDSIZ class is a direct descendant of 'perpendicularDistanceIZ'...
 #
 #      Two class unions are defined below to allow the slots to be either filled with something
 #      of the correct class, or be empty with NULL
@@ -434,7 +451,7 @@ setClass('distanceLimitedPDSIZ',
 
 #=================================================================================================
 #
-#  12. the omnibusDLPDSIZ class is a direct descendant of 'distanceLimitedPDSIZ'...
+#  13. the omnibusDLPDSIZ class is a direct descendant of 'distanceLimitedPDSIZ'...
 #
 #      combines DL with omnibus PDS
 #
@@ -450,9 +467,9 @@ setClass('omnibusDLPDSIZ',
 
 #=================================================================================================
 #
-#  13. the hbridDLPDSIZ class is a direct descendant of 'distanceLimitedPDSIZ'...
+#  14. the hybridDLPDSIZ class is a direct descendant of 'distanceLimitedPDSIZ'...
 #
-#      combines DL with omnibus PDS
+#      combines DL with canonical PDS
 #
 #     added: 26-July-2011
 #

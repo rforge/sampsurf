@@ -4,6 +4,7 @@ importFrom(graphics, plot, hist)
 import(sp)
 #importFrom("sp", bbox, Spatial, SpatialGrid, SpatialGridDataFrame, plot)
 import(raster)
+#importFrom("rasterVis", plot3D)
 
 
 #note that gpclib has now been replaced by rgeos...
@@ -46,16 +47,18 @@ exportClasses(StemContainer, downLogs, standingTrees)
 exportClasses(ArealSampling, circularPlot, pointRelascope, perpendicularDistance,
               distanceLimited, angleGauge, lineSegment)
 #Tract...
-exportClasses(Tract, bufferedTract)
-#InclusionZone & izContainer...
-exportClasses(InclusionZone, InclusionZoneGrid, csFullInclusionZoneGrid,
-              downLogIZ, standUpIZ, sausageIZ, chainSawIZ,
+exportClasses(Tract, bufferedTract, mirageTract)
+#InclusionZone & izContainer (see also MC subsampling below)...
+exportClasses(InclusionZone,
+              downLogIZ, standUpIZ, sausageIZ, chainSawIZ, fullChainSawIZ,
               pointRelascopeIZ, perpendicularDistanceIZ, omnibusPDSIZ,
               distanceLimitedMCIZ, distanceLimitedIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ, hybridDLPDSIZ)
 exportClasses(standingTreeIZ, circularPlotIZ, horizontalPointIZ, horizontalLineIZ, criticalHeightIZ)
 exportClasses(importanceCHSIZ, antitheticICHSIZ, pairedAICHSIZ)
 exportClasses(izContainer, downLogIZs,  standingTreeIZs)
+#InclusionZoneGrid...
+exportClasses(InclusionZoneGrid, csFullInclusionZoneGrid, mirageInclusionZoneGrid)
 #sampSurf...
 exportClasses(sampSurf)
 #monte...
@@ -86,8 +89,8 @@ exportMethods(downLog, downLogs,   standingTree, standingTrees)
 exportMethods(circularPlot, pointRelascope, perpendicularDistance, distanceLimited,
               angleGauge, lineSegment)
 #InclusionZone & izContainer constructors...
-exportMethods(standUpIZ, sausageIZ, chainSawIZ, pointRelascopeIZ,
-              perpendicularDistanceIZ, omnibusPDSIZ,
+exportMethods(standUpIZ, sausageIZ, chainSawIZ, fullChainSawIZ, 
+              pointRelascopeIZ, perpendicularDistanceIZ, omnibusPDSIZ,
               distanceLimitedMCIZ, distanceLimitedIZ,
               distanceLimitedPDSIZ, omnibusDLPDSIZ, hybridDLPDSIZ)
 exportMethods(circularPlotIZ, horizontalPointIZ, horizontalLineIZ, criticalHeightIZ)
@@ -95,9 +98,9 @@ exportMethods(importanceCHSIZ, antitheticICHSIZ, pairedAICHSIZ)
 #izContainer constructors...
 exportMethods(izContainer, downLogIZs,  standingTreeIZs)
 #Tract constructors...
-exportMethods(Tract, bufferedTract)
+exportMethods(Tract, bufferedTract, mirageTract)
 #InclusionZoneGrid constructors...
-exportMethods(izGrid, izGridCSFull)
+exportMethods(izGrid, izGridMirage) #30-Sept-2013: removed izGridCSFull
 exportMethods(heapIZ)
 #sampSurf constructors...
 exportMethods(sampSurf)
@@ -110,7 +113,7 @@ exportMethods(mcsContainer, antitheticContainer)
 #Monte Carlo Subsampling within areal methods...
 exportMethods(horizontalPointCMCIZ, horizontalPointISIZ, horizontalPointCVIZ)
 #Other...
-exportMethods(taperInterpolate, segmentVolume)
+exportMethods(taperInterpolate, segmentVolume, clipStemsToTract)
 #lapSurf constructors...
 #exportMethods(lapSurf)
 

@@ -1,8 +1,8 @@
 Package: sampSurf
 Type: Package
 Title: Sampling Surface Simulation for Areal Sampling Methods
-Version: 0.7-0
-Date: 1-Aug-2013
+Version: 0.7-2
+Date: 4-Dec-2013
 Author: Jeffrey H. Gove
 Maintainer: Jeffrey H. Gove <jgove@fs.fed.us>
 Depends: R (>= 2.13.1), methods(>= 2.13.1), sp(>= 0.9-84), raster(>= 1.9-5), rasterVis(>= 0.10-3),
@@ -28,6 +28,7 @@ Collate: zzz.R transparentColorBase.R initRandomSeed.R boltDimensions.R
          InclusionZoneClass.R InclusionZoneConstructors.R
          izContainer.R izContainerConstructors.R
          InclusionZoneGridClass.R InclusionZoneGridConstructors.R izGridConstruct.R
+         mirage.R
          sampSurfClass.R sampSurfConstructors.R
          hist.R 
          plotStem.R plotStemContainer.R plotArealSampling.R plotInclusionZone.R
@@ -41,6 +42,7 @@ Collate: zzz.R transparentColorBase.R initRandomSeed.R boltDimensions.R
          heapIZ.R
          gridCellEnhance.R
          plot3D.R
+         clipStemsToTract.R
          monteClass.R monteConstructors.R summaryMonte.R showMonte.R histMonte.R
          horizontalLineSampling.R
          criticalHeightSampling.R antitheticCHS.R

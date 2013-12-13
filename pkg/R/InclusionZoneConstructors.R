@@ -10,14 +10,15 @@
 #     1. a constructor for 'standUpIZ'     (Aug 2010)
 #     2. for 'chainSawIZ'                  (Fall 2010)
 #     3. for 'sausageIZ'                   (Fall 2010)
-#     4. for 'pointRelascopeIZ'            (Jan 2011)
-#     5. for 'perpendicularDistanceIZ'     (Jan 2011)
-#     6. for 'omnibusPDSIZ'                (Feb 2011)
-#     7. for 'distanceLimitedPDSIZ'        (Feb-Mar 2011)
-#     8. for 'omnibusDLPDSIZ'              (Mar 2011)
-#     9. for 'hybridDLPDSIZ'               (July 2011)
-#    10. for 'distanceLimitedIZ'           (Mar 2011)
-#    11. for 'distanceLimitedMCIZ'         (May 2011)
+#     4. for 'fullChainSawIZ'              (Sept 2013)
+#     5. for 'pointRelascopeIZ'            (Jan 2011)
+#     6. for 'perpendicularDistanceIZ'     (Jan 2011)
+#     7. for 'omnibusPDSIZ'                (Feb 2011)
+#     8. for 'distanceLimitedPDSIZ'        (Feb-Mar 2011)
+#     9. for 'omnibusDLPDSIZ'              (Mar 2011)
+#    10. for 'hybridDLPDSIZ'               (July 2011)
+#    11. for 'distanceLimitedIZ'           (Mar 2011)
+#    12. for 'distanceLimitedMCIZ'         (May 2011)
 #
 #        ...standingTreeIZ subclass constructors...
 #
@@ -63,6 +64,12 @@
 #if(!isGeneric("sausageIZ")) 
   setGeneric('sausageIZ',  
              function(downLog, plotRadius, ...) standardGeneric('sausageIZ'),
+             signature = c('downLog', 'plotRadius')
+            )
+
+#if(!isGeneric("fullChainSawIZ")) 
+  setGeneric('fullChainSawIZ',  
+             function(downLog, plotRadius, ...) standardGeneric('fullChainSawIZ'),
              signature = c('downLog', 'plotRadius')
             )
 
@@ -127,8 +134,7 @@ function(downLog,
          plotRadius,
          description = 'inclusion zone for "standup" method',
          spID = paste('su',.StemEnv$randomID(),sep=':'),
-         #spID = unlist(strsplit(tempfile('saus:',''),'\\/'))[2],
-         #spID = paste('saus',format(runif(1,0,10000),digits=8),sep='.'),
+         #spID = unlist(strsplit(tempfile('su:',''),'\\/'))[2],
          spUnits = CRS(projargs=as.character(NA)),
          ...
         )
@@ -449,12 +455,57 @@ function(downLog,
 
 
 
+
     
 
 
        
 #================================================================================
-#  4. method for functions and class pointRelascopeIZ...
+#  4. method for functions and class fullChainSawIZ -- it just calls its parent
+#     for a suasageIZ...
+#
+setMethod('fullChainSawIZ',
+          signature(downLog = 'downLog', plotRadius = 'numeric'),
+function(downLog,
+         plotRadius,
+         nptsHalfCircle = 50,          #number of points in each end's half circle
+         description = 'Inclusion zone for "fullChainSaw" sampling method',
+         spID = paste('fcs', .StemEnv$randomID(), sep=':'),
+         spUnits = CRS(projargs = as.character(NA)),
+         ...
+        )
+{
+#------------------------------------------------------------------------------
+#
+    sausIZ = sausageIZ(downLog = downLog,
+                       plotRadius = plotRadius,
+                       nptsHalfCircle = nptsHalfCircle,
+                       description = description,
+                       spID = spID,
+                       spUnits = spUnits,
+                       ...)
+
+    fcsIZ = as(sausIZ, 'fullChainSawIZ')
+
+#
+#   volume depends on position, so assign NA here, same for carbon & biomass, also Length,
+#   surface and coverage are bolt-based, these are computed in izGrid; Density is okay,
+#   see chainSawSliver for details...
+#
+    fcsIZ@puaEstimates[c('volume', 'Length', 'surfaceArea', 'coverageArea', 'biomass', 'carbon')] = NA_real_
+
+    return(fcsIZ)
+}   #fullChainSawIZ constructor
+)   #setMethod
+                   
+
+
+    
+
+
+       
+#================================================================================
+#  5. method for functions and class pointRelascopeIZ...
 #
 setMethod('pointRelascopeIZ',
           signature(downLog = 'downLog', prs = 'pointRelascope'),
@@ -594,7 +645,7 @@ function(downLog,
 
        
 #================================================================================
-#  5. method for functions and class perpendicularDistanceIZ...
+#  6. method for functions and class perpendicularDistanceIZ...
 #
 setMethod('perpendicularDistanceIZ',
           signature(downLog = 'downLog', pds = 'perpendicularDistance'),
@@ -712,7 +763,7 @@ function(downLog,
 
        
 #================================================================================
-#  6. method for class omnibusPDSIZ construction--just call parent method...
+#  7. method for class omnibusPDSIZ construction--just call parent method...
 #
 setMethod('omnibusPDSIZ',
           signature(downLog = 'downLog', pds = 'perpendicularDistance'),
@@ -767,7 +818,7 @@ function(downLog,
        
 #================================================================================
 #
-#  7. DLPDS...
+#  8. DLPDS...
 #
 #  method for class distanceLimitedPDSIZ construction using a "distanceLimited"
 #  object...
@@ -1043,7 +1094,7 @@ function(downLog,
 
        
 #================================================================================
-#  8. method for class omnibusDLPDSIZ construction--just call parent method...
+#  9. method for class omnibusDLPDSIZ construction--just call parent method...
 #
 setMethod('omnibusDLPDSIZ',
           signature(downLog = 'downLog', pds = 'perpendicularDistance', dls = 'dlsNumeric'),
@@ -1149,7 +1200,7 @@ function(downLog,
 
        
 #================================================================================
-#  9. method for class hybridDLPDSIZ construction--just call parent method...
+#  10. method for class hybridDLPDSIZ construction--just call parent method...
 #
 #     this code is very similar to omnibusDLPDSIZ, which was written first, here
 #     we have distanceLimitedMCIZ + canonicalPDSIZ iz components...
@@ -1249,7 +1300,7 @@ function(downLog,
 
        
 #================================================================================
-# 10. method for functions and class distanceLimitedIZ...
+# 11. method for functions and class distanceLimitedIZ...
 #
 setMethod('distanceLimitedIZ',
           signature(downLog = 'downLog', dls = 'distanceLimited'), #change second argument!!
@@ -1350,7 +1401,7 @@ function(downLog,
 
        
 #================================================================================
-#  11. method for functions and class distanceLimitedMCIZ; everything is the same
+#  12. method for functions and class distanceLimitedMCIZ; everything is the same
 #      as under dls, except the per unit area estimates for all but Density
 #      and Length...
 #

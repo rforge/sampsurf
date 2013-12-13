@@ -55,6 +55,13 @@
 .StemEnv$smpHectare = 10000
 .StemEnv$sfpAcre = 43560
 
+#used in, e.g., mirage, walkthrough...
+.StemEnv$cardinal = c('north', 'south', 'east', 'west')
+.StemEnv$Cardinal = c('North', 'South', 'East', 'West')
+
+
+
+
 #the following is ba in ft^2 or m^2 conversion, NOT the BAF for prism cruising!...
 .StemEnv$baFactor = c( English = pi/4, metric = pi/4)     #dbh in feet or meters
 #.StemEnv$baFactor = c( English = pi/(4*144), metric = pi/(4*10000) ) #dbh in inches or cm
@@ -84,7 +91,8 @@
                              coverageArea = 'coverageArea',        #projected coverage area--down logs
                              biomass = 'biomass',                  #could be green or dry
                              carbon = 'carbon',                    #carbon content
-                             basalArea = 'basalArea'               #basal area for standing trees
+                             basalArea = 'basalArea',              #basal area for standing trees
+                             variance = 'variance'                 #required for MC methods 
                             )
 #not pua or estimates, other sampling related attributes: pp stands for per point...
 .StemEnv$ppEstimates = list(depth = 'depth')                       #sample or overlap depth per point
@@ -116,11 +124,6 @@
 #
 .StemEnv$pdsTypes = c('volume', 'surfaceArea', 'coverageArea')  #main PPS variable
 
-
-#
-#   critical height and importance variants of CHS...
-#
-.StemEnv$referenceCHSIZ = c('butt', 'dbh') #reference height for critical height inclusion zone
 
 #
 #   some plausible species codes/names--note that they can be any character string...
@@ -173,6 +176,11 @@
 .StemEnv$gridLineColor = transparentColorBase('slategray',.StemEnv$alphaTrans)
 .StemEnv$gridCenterColor = transparentColorBase('firebrick4',.StemEnv$alphaTrans)
 
+
+#
+#   critical height and importance variants of CHS...
+#
+.StemEnv$referenceCHSIZ = c('butt', 'dbh') #reference height for critical height inclusion zone
 
 #
 #   Monte Carlo Sampling (importance, etc.)...

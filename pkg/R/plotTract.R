@@ -70,7 +70,7 @@ function(x,
 
 
 #================================================================================
-#  method for data frames and class Tract...
+#  method for bufferedTract...
 #
 setMethod('plot',
           signature(x = 'bufferedTract', y='missing'),

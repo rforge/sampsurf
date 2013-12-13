@@ -114,12 +114,15 @@ different graphics in \Rpackage{sampSurf} using \Rpackage{rgl}, the \Rpackage{ra
 package is now required as well, but will be installed automatically when installing
 \Rpackage{sampSurf}. The \Rpackage{rgeos}\footnote{The \Rpackage{gpclib} package was
   originally used, but \Rpackage{rgeos} has replaced it due to the license restrictions on
-  the former.} package is only used for the so-called ``chainsaw'' protocol of sampling
-with fixed-area plots; therefore, if you want to use this protocol, you must install the
-package.  The system dependencies for both \Rpackage{rgl} and \Rpackage{rgeos} might also
-be more than some people want to deal with for installation, so this is another reason to
-make it optional, allowing the majority of \Rpackage{sampSurf} functionality without these
-if desired.
+  the former.} package was previously only used for the so-called ``chainsaw'' protocol of
+sampling with fixed-area plots; therefore, if you wanted to use this protocol, you needed
+to install the package. However, as of version 0.7-2 it is also required for implementing
+the mirage method of boundary correction, therefore it must be installed if you want to
+use this correction method in simulations.\footnote{\Rpackage{rgeos} is still a suggested
+  method as not everyone will want to use the mirage method.}  The system dependencies for
+both \Rpackage{rgl} and \Rpackage{rgeos} might also be more than some people want to deal
+with for installation, so this is another reason to make it optional, allowing the
+majority of \Rpackage{sampSurf} functionality without these if desired.
 
 
 
@@ -246,7 +249,7 @@ function\footnote{This is \Sfour\ terminology, if it does not make sense right n
 The above can be followed for any classes in \Rpackage{sampSurf}. Please do see the above
 vignettes for extensive examples and documentation. Finally, the full system help
 available in PDF format can be downloaded from the \R\ website for the project at CRAN;
-e.g., \url{http://software.rc.fas.harvard.edu/mirrors/R/}, and then choose the
+e.g., \url{http://lib.stat.cmu.edu/R/CRAN/}, and then choose the
 \Rpackage{sampSurf} link.
 
 \section{Summary}

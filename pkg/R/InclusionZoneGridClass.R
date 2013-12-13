@@ -84,14 +84,19 @@ setClass('csFullInclusionZoneGrid',
     prototype = list(description = 'full chainsaw-sausage gridded inclusion zone',
                      chiz = list(),
                      bbox = matrix(rep(0,4), nrow=2, dimnames=list(c('x','y'), c('min','max'))),
-                     data = data.frame(matrix(NA, nr=0, nc=length(.StemEnv$puaEstimates),
-                            dimnames=list(character(0), names(.StemEnv$puaEstimates))) )
+                     data = data.frame(matrix(NA,
+                                              nrow = 0,
+                                              ncol = length(c(.StemEnv$puaEstimates,.StemEnv$ppEstimates)),
+                                              dimnames = list(character(0),
+                                                         names(c(.StemEnv$puaEstimates,.StemEnv$ppEstimates)))
+                                             ) #matrix
+                                      ) #df
                     ),
     sealed = TRUE,                           #no further changes or subclasses
     validity = function(object) {
-
-                 if(!is(object@iz, 'sausageIZ'))
-                   return('The underlying inclusion zone must be of class "sausageIZ".')
+                 #a check for "sausageIZ" would work below, but force it to be "fullChainSawIZ"...
+                 if(!is(object@iz, 'fullChainSawIZ'))
+                   return('The underlying inclusion zone must be of class "fullChainSawIZ".')
 
                  chizLen = length(object@chiz)
                  if(chizLen > 0) {

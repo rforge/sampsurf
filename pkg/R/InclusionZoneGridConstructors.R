@@ -11,10 +11,7 @@
 #     1. a constructor for 'standUpIZ'
 #     2. for 'sausageIZ'
 #     3. for 'chainSawIZ'
-#
-#     4. special, for the full chainSawIZ zone contained within a sausage
-#        shaped inclusion zone. No other protocol will have this mess.
-#
+#     4. for 'fullChainSawIZ'
 #     5. for 'pointRelascopeIZ'
 #     6. for 'perpendicularDistanceIZ'
 #     7. for 'omnibusPDSIZ'
@@ -51,12 +48,6 @@ setGeneric('izGrid',
              signature = c('izObject', 'tract')
             )
 
-#for the encompassing chainSaw-sausage protcol only...
-setGeneric('izGridCSFull',  
-           function(izGridSausage, tract, ...) standardGeneric('izGridCSFull'),
-             signature = c('izGridSausage', 'tract')
-            )
-
 
 
 
@@ -84,7 +75,7 @@ function(izObject,        #a bbox object
 #
     if(!useCrop) {
       bbex = extent(izObject)
-      j = intersectExtent(bbex, extent(tract) )   #get extent of overlap
+      j = intersectExtent(bbex, extent(tract) )   #get extent of overlap    !!!>this has been replaced by intersect()
       jj = alignExtent(j, tract)                  #and align to tract grid
     }
     else
@@ -235,6 +226,8 @@ function(izObject,
     gridVals = getValues(grid)
     for(i in seq_len(npua))
         df[,i] = ifelse(is.na(gridVals), 0, izObject@puaEstimates[[i]])
+
+    df$depth = ifelse(is.na(gridVals), 0, 1)   #sample or overlap zone depth   #****
         
 
 #
@@ -266,33 +259,34 @@ function(izObject,
 
           
 #================================================================================
-#  4. method for the full 'chainSawIZ' within the encompassing sausage inclusion
-#     zone and 'Tract' classes; this is probably going to be the only exception to
-#     the general InclusionZoneGrid class and constructors...
+#  4. method for 'fullChainSawIZ' within the encompassing "sausage" inclusion
+#     zone and 'Tract' classes...
 #
-setMethod('izGridCSFull',
-          signature(izGridSausage = 'InclusionZoneGrid', tract='Tract'),
-function(izGridSausage,
+#     Recall that 'fullChainSawIZ' is a direct subclass to 'sausageIZ' so this is
+#     really using the sausage inclusion zone...
+#
+setMethod('izGrid',
+          signature(izObject = 'fullChainSawIZ', tract='Tract'),
+function(izObject,
          tract,
-         description = 'Full chainSaw-sausage inclusion zone grid object',
+         description = 'Full chainSaw (sausage) inclusion zone grid object',
+         wholeIZ = TRUE,           #TRUE: grid the whole object; FALSE: just grid the IZ
          runQuiet = FALSE,
          ...
         )
 {
 #---------------------------------------------------------------------------
 #
-#   By default, the sausage InclusionZoneGrid object will have a grid that
-#   encompasses the entire inclusion zone and log. So we just need to apply
-#   the chain saw method to each grid cell within the sausage inclusion zone.
+#   First, create an InclusionZoneGrid object that encompasses the entire
+#   sausageIZ (fullChainSawIZ) inclusion zone and log. Then simply apply
+#   the chain saw (chainSawIZ) method to each grid cell within the sausage
+#   inclusion zone...
 #
-#   first, make sure we have a sausage-based InclusionZoneGrid object passed since
-#   the signature alone for this argument is too general...
-#
-    if(!is(izGridSausage@iz, 'sausageIZ'))
-      stop('Argument izGridSausage must be a sausage-based InclusionZoneGrid object!')
-
-    plotRadius = izGridSausage@iz@radius
-    downLog = izGridSausage@iz@downLog
+    izGridSausage = izGridConstruct(izObject=izObject, tract=tract, description=description,
+                                    wholeIZ=wholeIZ, ...)
+  
+    plotRadius = izObject@radius
+    downLog = izObject@downLog
 
     if(!runQuiet) 
       cat('\nThis can take some time...\ngrid cell: ')
@@ -306,17 +300,19 @@ function(izGridSausage,
     chiz = vector('list', numCells)
     names(chiz) = paste('izgCS',1:numCells,sep='.')
     mask = getValues(grid)              #vector valued
-    npua = length(izGridSausage@iz@puaEstimates)    
+    #npua = length(izGridSausage@iz@puaEstimates)    
+    npua = ncol(izGridSausage@data)    
     df = data.frame(matrix(0, nrow = numCells, ncol = npua)) #background grid defaults to zero
-    colnames(df) = names(izGridSausage@iz@puaEstimates)
+    #colnames(df) = names(izGridSausage@iz@puaEstimates)
+    colnames(df) = names(izGridSausage@data)
     for(i in seq_len(numCells)) {
       if(!runQuiet)
         cat(i,', ',sep='')
       if(!is.na(mask[i])) {
-        xy = xyFromCell(grid, i)[1,]                          #make it a vector
-        izCS = chainSawIZ(downLog, plotRadius=plotRadius, plotCenter = xy)
-        izgCS = izGrid(izCS, tract, wholeIZ = FALSE)           #one grid cell/point only!!!
-        df[i, ] = izgCS@data
+        xy = xyFromCell(grid, i)[1,]                                       #make it a vector
+        izCS = chainSawIZ(downLog, plotRadius=plotRadius, plotCenter = xy) #get point estimates
+        izgCS = izGrid(izCS, tract, wholeIZ = FALSE)                       #one grid cell/point only!!!
+        df[i, ] = izgCS@data                                               #nrow==1
         chiz[[i]] = izgCS
       }
       else

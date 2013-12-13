@@ -33,6 +33,8 @@ function(x,
 {
 #------------------------------------------------------------------------------
 #
+#   plot both...
+#
     suppressWarnings({                              #for non-plot arguments in ...    
       plot(x@tract, ...)
       if(showIZs)

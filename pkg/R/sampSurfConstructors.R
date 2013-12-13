@@ -36,14 +36,13 @@ setGeneric('sampSurf',
           
 #================================================================================
 #
-#   Takes a collection of Stem inclusion zones and a "Tract" object...
+# 1. Takes a collection of Stem inclusion zones and a "Tract" object...
 #
 setMethod('sampSurf',
           signature(object = 'izContainer', tract='Tract'), 
 function(object, 
          tract,
          estimate = unlist(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
-         wantChainSaw = FALSE,
          description = 'sampling surface object',
          runQuiet = FALSE,
          ...
@@ -55,27 +54,28 @@ function(object,
 #   other constructors should eventually call this one.
 #
 #   Arguments...
-#     wantChainSaw = TRUE: calculate the full chainSaw inclusion zone by
-#                    using the sausageIZ zones for each log--note that
-#                    iZone must be 'sausageIZ' for this to work; FALSE: one 
-#                    of the other methods.
 #
 #---------------------------------------------------------------------------
 #
-#   chainsaw is always the problem child...
+#   it doesn't make sense to use the point-based chainSawIZ, use fullChainSawIZ instead...
 #
-    if(wantChainSaw && !is(object@iZones[[1]], 'sausageIZ'))
-      stop('If you want the full chainsaw estimate, you must also specify sausage inclusion zones!')
     if(is(object@iZones[[1]], 'chainSawIZ'))                 #this request does not make sense
-      stop('You must use \"sausageIZ\" zones for the chainSaw method!')
+      stop('You must use \"fullChainSawIZ\" for the chainSaw method!')
+
+#
+#   check to see if we are using a boundary slopover correction method...
+#
+    bndCorrect = is(tract, 'mirageTract')   #|| is(tract, 'walkthroughTract')
 
 #
 #   throw a warning if any of the inclusion zones land outside the tract boundary...
 #
-    bb.iz = bbox(object)
-    bb.tr = bbox(tract)
-    if(any(bb.iz[,'min']<bb.tr[,'min']) || any(bb.iz[,'max']>bb.tr[,'max']))
-      warning('Some object inclusion zones lie outside the tract--this will impart a bias!!')
+    if(!bndCorrect) {  #*jhg*
+      bb.iz = bbox(object)
+      bb.tr = bbox(tract)
+      if(any(bb.iz[,'min']<bb.tr[,'min']) || any(bb.iz[,'max']>bb.tr[,'max']))
+        warning('Some object inclusion zones lie outside the tract--this will impart a bias!!')
+    }
 
 #
 #   let's see what we are dealing with here...
@@ -106,14 +106,10 @@ function(object,
     for(i in seq_len(nStems)) {
       if(!runQuiet)
         cat(i,',',sep='')
-      if(wantChainSaw && is(object@iZones[[1]], 'sausageIZ')) {   #need sausage inclusion zones for chainsaw
-        izg.sa = izGrid(object@iZones[[i]], tract)                #first: InclusionZoneGrid for sausage
-        izg = izGridCSFull(izg.sa, tract)                         #then: full chainsaw iz grid
-        if(i==1)
-          description = paste(description,'(Full chainsaw inclusion zone)',sep='\n')
-      }
-      else   
-        izg = izGrid(object@iZones[[i]], tract, ...)              #InclusionZoneGrid
+        if(bndCorrect) #*jhg*
+          izg = izGridMirage(object@iZones[[i]], tract, ...)        #InclusionZoneGrid mirage
+        else  
+          izg = izGrid(object@iZones[[i]], tract, ...)              #InclusionZoneGrid
       tract = heapIZ(izg, tract, estimate = estimate, ...)        #heap it up
     }
 
@@ -190,8 +186,8 @@ function(object,
           
 #================================================================================
 #
-#   Takes the number of stems and a "Tract" object, other arguments for, e.g.,
-#   downLogs, can be passed via "..."
+# 2. Takes the number of stems and a "Tract" object, other arguments for, e.g.,
+#    downLogs, can be passed via "..."
 #
 #
 setMethod('sampSurf',
@@ -200,7 +196,6 @@ function(object,
          tract,
          iZone,
          estimate = unlist(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
-         wantChainSaw = FALSE,               #always the exception
          description = 'sampling surface object',
          runQuiet = FALSE,
          ...
@@ -209,10 +204,9 @@ function(object,
 #---------------------------------------------------------------------------
 #
 #   Arguments...
-#     wantChainSaw = TRUE: calculate the full chainSaw inclusion zone by
-#                    using the sausageIZ zones for each log--note that
-#                    iZone must be 'sausageIZ' for this to work; FALSE: one 
-#                    of the other methods.
+#     iZone = a character string (or name) of a legal InclusionZone object,
+#             the routine will check to make sure it is applicable to the
+#             correct "Stem" subclass
 #
 #   a few checks...
 #
@@ -239,8 +233,8 @@ function(object,
     validNames = names(papa@subclasses)
     if(is.na(match(iZone, validNames)))
       stop('Invalid inclusion zone constructor name supplied: iZone = ',iZone)
-    if(iZone=='chainSawIZ')                          #catch this error too
-      stop('You must use \"sausageIZ\" zones for the chainSaw method!')
+    if(iZone=='chainSawIZ')               #catch this error too before going to default constructor
+      stop('You must use \"fullChainSawIZ\" zones for the chainSaw method!')
  
 
 #
@@ -258,7 +252,7 @@ function(object,
 #
 #   just apply the default constructor now...
 #
-    ss = sampSurf(izs, tract, estimate=estimate, wantChainSaw=wantChainSaw,
+    ss = sampSurf(izs, tract, estimate=estimate, 
                   description=description, runQuiet=runQuiet, ...)
 
     return(ss)
