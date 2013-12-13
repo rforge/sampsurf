@@ -73,7 +73,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 
 
 \seealso{
-  \code{\linkS4class{standUpIZ}}, \code{\linkS4class{sausageIZ}}; and
+  \code{\linkS4class{standUpIZ}}, \code{\linkS4class{sausageIZ}} \code{\linkS4class{fullChainSawIZ}} and
   the \code{\linkS4class{downLogIZs}} container class.
 }
 \examples{

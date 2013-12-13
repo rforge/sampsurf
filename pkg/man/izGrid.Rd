@@ -21,7 +21,7 @@ izGrid(izObject, tract, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{izObject}{ Signature object of a subclass of
-	"\code{\linkS4class{downLogIZ}}".}
+	"\code{\linkS4class{InclusionZone}}".}
 
   \item{tract}{ Signature object of class "\code{\linkS4class{Tract}}".}
 

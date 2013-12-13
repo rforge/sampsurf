@@ -4,7 +4,7 @@
 \alias{InclusionZoneGrid-class}
 \alias{bbox,InclusionZoneGrid-method}
 %\alias{heapIZ,InclusionZoneGrid,Tract-method}
-%\alias{izGridCSFull,InclusionZoneGrid,Tract-method}
+%\alias{izGrid,InclusionZoneGrid,Tract-method}
 %\alias{plot,InclusionZoneGrid,missing-method}
 \alias{show,InclusionZoneGrid-method}
 \alias{summary,InclusionZoneGrid-method}
@@ -74,9 +74,6 @@ found in \emph{"The InclusionZoneGrid Class"} vignette.
     \item{heapIZ}{\code{signature(izgObject = "InclusionZoneGrid", tract
 		= "Tract")}: Heap to form a sampling surface }
 	
-    \item{izGridCSFull}{\code{signature(izGridSausage =
-		"InclusionZoneGrid", tract = "Tract")}: Full chainsaw method }
-	
     \item{plot}{\code{signature(x = "InclusionZoneGrid", y =
 		"missing")}: Plot the grid }
 	
@@ -100,7 +97,10 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 
 \seealso{
 \code{\linkS4class{InclusionZone}}, \code{\linkS4class{Stem}},
-\code{\linkS4class{Tract}}, \code{\linkS4class{sampSurf}}, \code{\linkS4class{csFullInclusionZoneGrid}}
+\code{\linkS4class{Tract}}, \code{\linkS4class{sampSurf}},
+\code{\linkS4class{csFullInclusionZoneGrid}},
+\code{\linkS4class{mirageInclusionZoneGrid}}
+
 }
 
 \examples{

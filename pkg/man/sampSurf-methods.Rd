@@ -27,7 +27,6 @@
     \preformatted{sampSurf(object, 
          tract,
          estimate = unlist(c(.StemEnv$puaEstimates, .StemEnv$ppEstimates)),
-         wantChainSaw = FALSE,
          description = 'sampling surface object',
          runQuiet = FALSE,
          ... )}
@@ -43,9 +42,6 @@
 	  (logs), 'Density', 'surfaceArea', 'coverageArea' (logs),
 	  'basalArea' (trees), 'biomass' and 'carbon'. The sample 'depth'
 	  surface is now also available.}
-		
-	  \item{\code{wantChainSaw}:}{ \code{TRUE}: if the full chainsaw
-	    method is desired; \code{FALSE}: if not (default).}
 		
 	  \item{\code{description}:}{ A description of the object as a
 	    character string.}
@@ -77,7 +73,6 @@
          tract,
          iZone, 
          estimate = unlist(.StemEnv$puaEstimates),
-         wantChainSaw = FALSE,               
          description = 'sampling surface object',
          runQuiet = FALSE,
          ...
@@ -88,11 +83,7 @@
 	    (i.e., down logs) to generate in the population. }
 		 
 	  \item{\code{iZone}:}{ The type of inclusion zone or sampling
-	    method/protocol desired. Note that if you want the chainsaw
-	    method, you must specify a sausage inclusion zone and set
-	    \code{wantChainSaw} to \code{TRUE} as the entire whole-log
-	    inclusion zone is calculated for each log in the population (be
-	    prepared to wait a bit). The routine will determine whether to
+	    method/protocol desired. The routine will determine whether to
 	    generate logs or trees based on this argument.}
 	  
 	  \item{... :}{ Other arguments to be passed along to routines that

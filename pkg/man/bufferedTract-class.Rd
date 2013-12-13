@@ -70,7 +70,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\linkS4class{Tract}}
+\code{\linkS4class{Tract}}, \code{\linkS4class{mirageTract}}
 }
 
 \examples{

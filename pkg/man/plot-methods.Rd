@@ -827,6 +827,78 @@ treated within the \dQuote{InclusionZone} section).
 
 
 
+%-------------------------------------------------------------------------
+\section{\emph{The \dQuote{mirageInclusionZoneGrid} Class}}{
+
+\describe{
+
+\item{\strong{\code{signature(x = "mirageInclusionZoneGrid", y =
+	  "missing")}}}{%\cr
+
+    This method will call the superclass method for the desired
+    \dQuote{InclusionZoneGrid} object (see below). Please see the
+    superclass method for other arguments that can be passed on.}
+  
+  \item{}{\bold{usage\ldots}
+    \preformatted{plot(x,
+     tract = NULL,
+     tractBorder = 'red',
+     lwdTract = 1.25,
+     showExtended = FALSE,
+     showReflectedSlivers = FALSE,
+     colReflections = 'blue',
+     ... )}
+   
+	\itemize{
+		 
+	  \item{\code{x}:}{ An object that is of class \dQuote{mirageInclusionZoneGrid} or
+	    any subclass that might be eventualy defined. }
+		 
+	  \item{\code{tract}:}{ An object of class
+		"\code{\linkS4class{mirageTract}}".}
+		 
+	  \item{\code{tractBorder}:}{ The color to be used to plot the tract
+	    border polygon.}
+		 
+	  \item{\code{lwdTract}:}{ The line width for the tract border
+		polygon.}
+		 
+	  \item{\code{showExtended}:}{ \code{TRUE}: show the extended grid
+	    in the \code{izGrid.extended} slot of the object; \code{FALSE}:
+	    show the actual grid object with only cells internal to the
+	    tract. }
+		 
+	  \item{\code{showReflectedSlivers}:}{ \code{TRUE}: show the
+	    polygons associated with the external portions of the inclusion
+	    zone, but reflected back into the tract; \code{FALSE}: do not
+	    show these polygons. }
+		 
+	  \item{\code{colReflections}:}{ The color to be used in displaying
+	    the reflected sliver polygons if
+	    \code{showReflectedSlivers=TRUE}. }
+		 
+	  \item{\code{\dots}:}{ Other graphical arguments to be passed on to
+	    superclass method, or to \code{\link[graphics]{plot}}, or to the
+	    plot methods for the individual objects (i.e.,
+	    \dQuote{InclusionZone}, \dQuote{downLog}).}
+			  
+			  
+	} %itemize
+ } %item
+
+	
+
+} %describe
+} %section mirageInclusionZoneGrid
+%-------------------------------------------------------------------------
+
+
+
+
+
+
+
+	  
   
 
 %-------------------------------------------------------------------------

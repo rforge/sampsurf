@@ -79,10 +79,13 @@ objects means that these methods can be applied in conjunction with
 virtually any areal method. Horizontal point sampling is an example
 where both special and traditional Monte Carlo methods are available in
 the package.
+
+Boundary (slopover) correction is available either through buffering, or
+the mirage method at present. The the kind of \dQuote{Tract} that is
+used in the simulations will define which correction is desired.
   
 The class structure is designed to support additions with relative ease,
-so more methods will appear in future releases (hopefully with some
-contributed by users).
+so more methods will appear in future releases.
 
 }
 
@@ -91,8 +94,8 @@ contributed by users).
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.7-0\cr
-Date: \tab 1-Aug-2013\cr
+Version: \tab 0.7-2\cr
+Date: \tab 4-Dec-2013\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
 }
@@ -190,6 +193,8 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
   \tabular{ll}{
 	\code{\linkS4class{Tract}} \tab Land area holding the population of individuals \cr
 	\code{\linkS4class{bufferedTract}} \tab A "Tract" subclass with a buffer \cr
+	\code{\linkS4class{mirageTract}} \tab A "Tract" subclass with for
+	the mirage method \cr
   }
 
   The above classes are derived from the \code{\linkS4class{Raster}}
@@ -272,6 +277,8 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 	  of sampling down logs.\cr
 	\code{\linkS4class{chainSawIZ}} \tab Class for the "chainsaw" method
 	  of sampling down logs.\cr
+	\code{\linkS4class{fullChainSawIZ}} \tab Class for the \emph{full} "chainsaw" method
+	  of sampling down logs.\cr
 	\code{\linkS4class{pointRelascopeIZ}} \tab Class for the point relascope method
 	  of sampling down logs.\cr
 	\code{\linkS4class{perpendicularDistanceIZ}} \tab Class for the
@@ -347,6 +354,8 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 	  documentation for details \cr
 	\code{\linkS4class{csFullInclusionZoneGrid}} \tab Not for general
 	  use, see documentation for details \cr
+	\code{\linkS4class{mirageInclusionZoneGrid}} \tab Not for general use, see
+	  documentation for details \cr
 	}
   }%InclusionZoneGrid
   
@@ -366,6 +375,14 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
   extensions--for example, new sampling methods. 
 	
 } %classes
+
+
+
+
+
+
+
+
 
 
 %--------------------------------------------------------------------------
@@ -412,6 +429,8 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
     \code{\link{Tract}} \tab Constructor for "Tract" objects \cr 
 	\code{\link{bufferedTract}} \tab Constructs a
 	"bufferedTract" object\cr
+	\code{\link{mirageTract}} \tab Constructs a
+	"mirageTract" object\cr
   }
   }%Tract
 
@@ -467,7 +486,9 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 	\code{\link{sausageIZ}} \tab Creates an "InclusionZone"
 	  object for the 'sausage' sampling method \cr
 	\code{\link{chainSawIZ}} \tab Creates an "InclusionZone"
-	  object for the 'chainsaw sampling method \cr
+	  object for the 'chainsaw' sampling method \cr
+	\code{\link{fullChainSawIZ}} \tab Creates an "InclusionZone"
+	  object for the \emph{full} 'chainsaw' sampling method \cr
 	\code{\link{pointRelascopeIZ}} \tab Creates an "InclusionZone"
 	  object for the 'point relascope' sampling method \cr
 	\code{\link{perpendicularDistanceIZ}} \tab Creates an "InclusionZone"
@@ -525,10 +546,9 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
   \subsection{\dQuote{InclusionZoneGrid} class constructors\ldots}{
 
   \tabular{ll}{  	
-	\code{\link{izGrid}} \tab Creates an "InclusionZoneGrid"
-	  object\cr
-	\code{\link{izGridCSFull}} \tab Creates an "csFullInclusionZoneGrid"
-	object\cr
+	\code{\link{izGrid}} \tab Creates an "InclusionZoneGrid" or
+	  subclass object (i.e., "csFullInclusionZoneGrid")\cr
+	\code{\link{izGridMirage}} \tab Creates an "mirageInclusionZoneGrid" object.\cr
   }
   }%InclusionZoneGrid
 
@@ -585,13 +605,13 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 	  "\code{\linkS4class{SpatialPolygons}}" object\cr
 	\code{\link{bboxSum}} \tab	Calculate an overall \code{bbox} from and
 	  array of \code{bbox} matrices\cr
+	\code{\link{getID}} \tab Returns the IDs associated with objects\cr
+	\code{\link{getProxy}} \tab Return the desired proxy function for MC
+	  sampling\cr 
 	\code{\link{perimeter}} \tab Returns the perimeter of a spatial
 	  object, which can then be plotted\cr
 	\code{\link{spCircle}} \tab Returns a circular
 	"\code{\linkS4class{SpatialPolygons}}" object\cr
-	\code{\link{getID}} \tab Returns the IDs associated with objects\cr
-	\code{\link{getProxy}} \tab Return the desired proxy function for MC
-	  sampling\cr 
   } %tabular
   
 } %helper methods
@@ -625,19 +645,20 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
   \tabular{ll}{
 	\code{\link{boltDimensions}} \tab Calculates segment volumes,
 	  surface area, etc.\cr
+	\code{\link{clipStemsToTract}} \tab Clips or removes stems outside the tract\cr
 	\code{\link{gridCellEnhance}} \tab Draws grid lines and centers.\cr
 	\code{\link{heapIZ}} \tab Used to heap inclusion zone grids into a
 	  sampling surface.\cr
     \code{\link{initRandomSeed}} \tab Initialize \code{.Random.seed}.\cr
 	\code{\link{sampleLogs}} \tab Draws a simulated sample of down logs and
 	  returns a data frame. \cr
+	\code{\link{sampleTrees}} \tab Draws a simulated sample of standing
+	  trees and returns a data frame. \cr
 	\code{\link{segmentVolume}} \tab Calculates segment volumes for down
 	  logs or standing trees. \cr
     \code{\link{taperInterpolate}} \tab Interpolates diameters or
 	  lengths within down logs or standing trees.\cr
     \code{\link{transparentColorBase}} \tab Transparancy in base graphics.\cr
-	\code{\link{sampleTrees}} \tab Draws a simulated sample of standing
-	  trees and returns a data frame. \cr
 	
   } %tabular
      
@@ -686,6 +707,12 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 	  "NULL". \cr
     \code{\linkS4class{horizontalPointMonteCarloSamplingIZ}} \tab
 	  Accepts any of the MC and horizontal point sampling combinations.\cr
+	\code{\linkS4class{SPNULL}} \tab Accepts either class
+	  "SpatialPolygons" or "NULL". \cr
+	\code{\linkS4class{RLNULL}} \tab Accepts either class
+	  "RasterLayer" or "NULL". \cr
+	\code{\linkS4class{izgNULL}} \tab Accepts either class
+	  "InclusionZoneGrid" or "NULL". \cr
   } %tabular
   
 } %class unions  
@@ -768,8 +795,13 @@ some of the methods in the package, and are not exhaustive.
 %
 \item{}{Lynch,T. B. and Gove, J. H. 2013. An antithetic variate to
   facilitate upper-stem height measurements for critical height sampling
-  and fixed-radius plot sampling with importance
-  sampling. \emph{Canadian Journal of Forest Research} (forthcoming). }
+  with importance sampling. \emph{Canadian Journal of Forest Research}
+  (forthcoming). }
+%
+\item{}{Lynch,T. B. and Gove, J. H. 2014. The unbiasedness of a
+  generalized mirage boundary correction method for Monte Carlo
+  integration estimators of volume. \emph{To be announced}
+  (In review). }
 
 }%describe
 
@@ -778,9 +810,14 @@ some of the methods in the package, and are not exhaustive.
 
 
 \keyword{ package }
+
 \seealso{
-\code{\link{sp}}, \code{\link[raster:raster-package]{raster}}
+  The package makes extensive use of existing GIS packages within
+  \R. Please see the
+\code{\link{sp}} and \code{\link[raster:raster-package]{raster}} packages for
+  details on the underlying grid and polygon classes and methods.
 }
+
 %\examples{
 
 %}

@@ -21,6 +21,7 @@ sausageIZ(downLog, plotRadius, ...)
 	"\code{\linkS4class{downLog}}". }
   
   \item{plotRadius}{ Signature object for plot radius.}
+  
   \item{\dots}{ See methods.}
 }
 
@@ -36,7 +37,7 @@ A valid object of class "\code{\linkS4class{sausageIZ}}."
 
 \references{
 Gove, J. H. and Van Deusen, P. C. 2011. On fixed-area plot sampling for
-downed coarse woody debris. \emph{Forestry}. \emph{Forestry} \bold{84}:109--117.\cr
+downed coarse woody debris. \emph{Forestry} \bold{84}:109--117.\cr
 }
 
 \author{

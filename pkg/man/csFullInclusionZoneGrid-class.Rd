@@ -19,7 +19,7 @@
 Objects can be created by calls of the form
 \code{new("csFullInclusionZoneGrid", ...)}. However, this is not recommended
 because the objects are fairly complex. Instead, one can use the object
-constructor \code{\link{izGridCSFull}} to create new objects. More details are
+constructor \code{\link{izGrid}} to create new objects. More details are
 found in \emph{"The InclusionZoneGrid Class"} vignette.
 }
  
@@ -40,10 +40,10 @@ found in \emph{"The InclusionZoneGrid Class"} vignette.
 	
     \item{\code{iz}:}{Object of class \code{"InclusionZone"}: In this
       class, this slot contains the overall
-      "\code{\linkS4class{sausageIZ}}" inclusion zone object which
-      delineates the grid cells that intersect the log under protocol
-      1. Note that one can find the plot radius, etc. within the object
-      contained in this slot. }
+      "\code{\linkS4class{fullChainSawIZ}}" (sausage) inclusion zone
+      object which delineates the grid cells that intersect the log
+      under protocol 1. Note that one can find the plot radius,
+      etc. within the object contained in this slot. }
 	
   }
 }

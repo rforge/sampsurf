@@ -5,7 +5,7 @@
 \alias{bbox,Tract-method}
 %\alias{bufferedTract,numeric,Tract-method}
 %\alias{heapIZ,InclusionZoneGrid,Tract-method}
-%\alias{izGridCSFull,InclusionZoneGrid,Tract-method}
+%\alias{izGrid,InclusionZoneGrid,Tract-method}
 %\alias{izGrid,chainSawIZ,Tract-method}
 %\alias{izGrid,matrix,Tract-method}
 %\alias{izGrid,sausageIZ,Tract-method}
@@ -57,6 +57,9 @@ Class \code{"\linkS4class{BasicRaster}"}, by class "RasterLayer", distance 3.
 }
 
 \section{Methods}{
+
+  Examples of methods include, but are not limited to the following\ldots
+  
   \describe{
     \item{bbox}{\code{signature(obj = "Tract")}: Return object bounding
 	  box }
@@ -67,9 +70,8 @@ Class \code{"\linkS4class{BasicRaster}"}, by class "RasterLayer", distance 3.
     \item{heapIZ}{\code{signature(izgObject = "InclusionZoneGrid", tract
 		= "Tract")}: Heap into a sampling surface }
 	
-    \item{izGridCSFull}{\code{signature(izGridSausage =
-      "InclusionZoneGrid", tract = "Tract")}: Full chainsaw
-      InclusionZoneGrid }
+    \item{izGrid}{\code{signature(izObject = "fullChainSawIZ", tract =
+      "Tract")}: Full chainsaw InclusionZoneGrid }
 
     \item{izGrid}{\code{signature(izObject = "chainSawIZ", tract =
 		"Tract")}: \dQuote{InclusionZoneGrid} generic constructor }
@@ -112,7 +114,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\linkS4class{bufferedTract}}
+\code{\linkS4class{bufferedTract}}, \code{\linkS4class{mirageTract}}
 }
 
 \examples{

@@ -67,7 +67,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-  \code{\linkS4class{chainSawIZ}}, \code{\linkS4class{sausageIZ}}; and
+  \code{\linkS4class{chainSawIZ}}, \code{\linkS4class{sausageIZ}}, \code{\linkS4class{fullChainSawIZ}} and
   the \code{\linkS4class{downLogIZs}} container class.
 }
 

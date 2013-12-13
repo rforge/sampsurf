@@ -4,6 +4,7 @@
 %down logs...
 \alias{izGrid,chainSawIZ,Tract-method}
 \alias{izGrid,sausageIZ,Tract-method}
+\alias{izGrid,fullChainSawIZ,Tract-method}
 \alias{izGrid,standUpIZ,Tract-method}
 \alias{izGrid,pointRelascopeIZ,Tract-method}
 \alias{izGrid,perpendicularDistanceIZ,Tract-method}
@@ -34,10 +35,11 @@
 \title{ Methods for "InclusionZoneGrid" object construction in Package `sampSurf'}
 
 \description{ The following methods will construct valid objects of
-  class "\code{\linkS4class{InclusionZoneGrid}}" for different sampling
-  protocols or methods based on the "\code{\linkS4class{InclusionZone}}"
-  of the first signature argument. Please see \emph{"The
-  InclusionZoneGrid Class"} vignette for more details and examples. }
+  class "\code{\linkS4class{InclusionZoneGrid}}" (or subclass) for
+  different sampling protocols or methods based on the
+  "\code{\linkS4class{InclusionZone}}" of the first signature
+  argument. Please see \emph{"The InclusionZoneGrid Class"} vignette for
+  more details and examples.}
 
 \section{Methods}{
 
@@ -58,6 +60,8 @@
 	
 \describe{
 
+
+%---------------------------------
 \item{\strong{\code{signature(izObject = "standUpIZ", tract =
 	  "Tract")}}}{%\cr
 
@@ -80,14 +84,17 @@
 	  character string.}
 		 
 	  \item{\code{wholeIZ}:}{ \code{TRUE}: make a background grid
-	  covering the entire object including the stem and the inclusion
-	  zone; \code{FALSE}: make the grid cover just the inclusion zone. } 
+	    covering the entire object including the stem and the inclusion
+	    zone; \code{FALSE}: make the grid cover just the inclusion
+	    zone. }
 	  
 	  \item{... :}{ Other arguments to be passed along as described in
         the final constructor method below (matrix signature argumnent).}	  
 	} %itemize
  } %item
 
+
+%---------------------------------
 \item{\strong{\code{signature(izObject = "sausageIZ", tract =
 	  "Tract")}}}{%\cr
 
@@ -96,6 +103,8 @@
 	  above, with the exception of the first argument, which must be an
 	  object of class "\code{\linkS4class{sausageIZ}}". }
 
+	
+%---------------------------------
 \item{\strong{\code{signature(izObject = "chainSawIZ", tract =
 	  "Tract")}}}{%\cr
 
@@ -112,6 +121,21 @@
 	  instead the "\code{\linkS4class{csFullInclusionZoneGrid}}"
 	  class. }
 
+
+%---------------------------------
+\item{\strong{\code{signature(izObject = "fullChainSawIZ", tract =
+	  "Tract")}}}{%\cr
+
+      This constructor is for the full chainsaw method of sampling down
+	  logs. Everything is the same here as for the stand-up method
+	  above, with the exception of the first argument, which must be an
+	  object of class "\code{\linkS4class{fullChainSawIZ}}". Objects
+	  created by this constructor are of class
+	  "\code{\linkS4class{csFullInclusionZoneGrid}}," which is a
+	  subclass of "\code{\linkS4class{InclusionZoneGrid}}" }
+
+	
+%---------------------------------
 \item{\strong{\code{signature(izObject = "pointRelascopeIZ", tract =
 	  "Tract")}}}{%\cr
 
@@ -120,6 +144,7 @@
 	  above, with the exception of the first argument, which must be an
 	  object of class "\code{\linkS4class{pointRelascopeIZ}}". }
 
+%---------------------------------
 \item{\strong{\code{signature(izObject = "perpendicularDistanceIZ", tract =
 	  "Tract")}}}{%\cr
 
@@ -129,6 +154,7 @@
 	  object of class "\code{\linkS4class{perpendicularDistanceIZ}}". }
 
 	
+%---------------------------------
 \item{\strong{\code{signature(izObject = "omnibusPDSIZ", tract =
 	  "Tract")}}}{%\cr
 
@@ -143,6 +169,7 @@
         \code{FALSE}: some feedback on progress} 
     }	
 
+%---------------------------------
 \item{\strong{\code{signature(izObject = "distanceLimitedPDSIZ", tract =
 	  "Tract")}}}{%\cr
 
@@ -156,6 +183,7 @@
 	  "\code{\linkS4class{hybridDLPDSIZ}}". }
 	
 
+%---------------------------------
 \item{\strong{\code{signature(izObject = "distanceLimitedIZ", tract =
 	  "Tract")}}}{%\cr
 
@@ -164,6 +192,7 @@
 	  method above, with the exception of the first argument, which must
 	  be an object of class "\code{\linkS4class{distanceLimitedIZ}}". }
 
+%---------------------------------
 \item{\strong{\code{signature(izObject = "distanceLimitedMCIZ", tract =
 	  "Tract")}}}{%\cr
 

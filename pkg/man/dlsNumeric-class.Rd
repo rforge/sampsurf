@@ -8,6 +8,9 @@
 \alias{monteNTSampleOrNULL-class}
 \alias{monteBSSampleOrNULL-class}
 \alias{horizontalPointMonteCarloSamplingIZ-class}
+\alias{SPNULL-class}
+\alias{RLNULL-class}
+\alias{izgNULL-class}
 
 \title{Class Unions in \pkg{sampSurf} }
 
@@ -31,6 +34,15 @@ Here are the class unions in the \pkg{sampSurf} package and their usage.
     \dQuote{numeric} or \code{NULL} is appropriate. Currently, this is
     only used in the \code{solidType} slot of a \dQuote{downLog}
     object.}
+  
+  \item{\code{SPNULL}:}{ Used where a class of either
+    \dQuote{SpatialPolygons} or \code{NULL} is appropriate.}
+  
+  \item{\code{RLNULL}:}{ Used where a class of either
+    \dQuote{RasterLayer} or \code{NULL} is appropriate.}
+  
+  \item{\code{izgNULL}:}{ Used where a class of either
+    \dQuote{InclusionZoneGrid} or \code{NULL} is appropriate.}
 
   
   \item{\code{monteNTSampleOrNULL}:}{ Used where a class of either
