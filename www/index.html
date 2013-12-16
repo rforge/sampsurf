@@ -219,19 +219,27 @@ sampling with probability proportional to either volume, coverage or surface are
 </ul>
 
 <p>
-A recent addition to the package is the ability to sample down logs or standing trees for
-volume using Monte Carlo methods. These include crude Monte Carlo, importance sampling,
-control variate sampling, and antithetic versions of each. These are not areal methods,
-and apply directly to the stem objects themselves, so stem-based simulations can be
-conducted independently of an areal method. However, they can also be added to any areal
-method for a two-stage approach. For example, this has been incorporated in horizontal
-point sampling for standing trees.
+A recent addition to the package (in version 0.7-0) is the ability to sample down logs or
+standing trees for volume using Monte Carlo methods. These include crude Monte Carlo,
+importance sampling, control variate sampling, and antithetic versions of each. These are
+not areal methods, and apply directly to the stem objects themselves, so stem-based
+simulations can be conducted independently of an areal method. However, they can also be
+added to any areal method for a two-stage approach. For example, this has been
+incorporated in horizontal point sampling for standing trees.
 </p>
 
 <p>
-For more information on how each of these is implemented within <Rpkg>sampSurf</Rpkg> please
-see <Rcode>package?sampSurf</Rcode> and the vignettes. The examples below also provide
-an illustration of some of these methods.
+Furthermore, as of version 0.7-2, the mirage method is available in addition to buffering
+for correction of boundary slopover. As in the buffer method, mirage correction is
+accomplished by running a simulation on a special mirage <Rclass>Tract</Rclass> subclass
+object. That is, for buffering, a <Rclass>bufferedTract</Rclass> is used, whereas for
+mirage, a <Rclass>mirageTract</Rclass> is used. 
+</p>
+
+<p>
+For more information on how each of these sampling and boundary correction methods is
+implemented within <Rpkg>sampSurf</Rpkg> please see <Rcode>package?sampSurf</Rcode> and
+the vignettes. The examples below also provide an illustration of some of these methods.
 </p>
 
 
@@ -264,8 +272,9 @@ release (including <Rpkg>sampSurf</Rpkg>). The dependencies are listed in the DE
 file for <Rpkg>sampSurf</Rpkg>, they are:
 <Rpkg>sp</Rpkg>, <Rpkg>raster</Rpkg>, <Rpkg>rasterVis</Rpkg>, and <Rpkg>boot</Rpkg>. In
  addition, both <Rpkg>rgeos</Rpkg> and <Rpkg>rgl</Rpkg> are suggested but not necessary
- unless you want to use the <sq>chainsaw</sq> method or look at the sampling surfaces in
- 3D, respectively. Therefore, I would recommend that you use the normal
+ unless you want to use the <sq>chainsaw</sq> method (or mirage boundary correction), or
+ look at the sampling surfaces in 3D, respectively. Therefore, I would recommend that you
+ use the normal
 <Rcode>install.packages()</Rcode> on all these packages so that you get the latest stable
 version from CRAN. Here is what I would try (in this order)&hellip;<br><br>
 
@@ -329,14 +338,22 @@ itself. These can also be downloaded here from the R-Forge versions if desired&h
 </p>
 
 <ol>
+
+  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/extra/vignettes/GettingStarted.pdf?root=sampsurf">
+      <em>Getting Started with Package <Rclass>sampSurf</Rclass> </em></a></li>
+
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/Overview.pdf?root=sampsurf">
      <em>The <Rpkg>sampSurf</Rpkg> Package Overview</em></a></li>
+
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/ArealSamplingClass.pdf?root=sampsurf">
       <em>The <Rclass>ArealSampling</Rclass> Class</em></a></li>
+
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/StemClass.pdf?root=sampsurf">
       <em>The <Rclass>Stem</Rclass> Class</em></a></li>
+
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/TractClass.pdf?root=sampsurf">
       <em>The <Rclass>Tract</Rclass> Class</em></a></li>
+
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/InclusionZoneClass.pdf?root=sampsurf">
       <em>The <Rclass>InclusionZone</Rclass> Class</em></a></li>
 
@@ -345,20 +362,30 @@ itself. These can also be downloaded here from the R-Forge versions if desired&h
 
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/sampSurfClass.pdf?root=sampsurf">
       <em>The <Rclass>sampSurf</Rclass> Class</em></a></li>
-
-  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/sampSurfExtensions.pdf?root=sampsurf">
-      <em>Extending <Rclass>sampSurf</Rclass> Package</em></a></li>
-
-  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/monte.pdf?root=sampsurf">
-      <em><Rclass>monte</Rclass>: When is n Sufficiently Large?</em></a></li>
-
-  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/inst/doc/MonteCarloSampling.pdf?root=sampsurf">
-      <em>Monte Carlo Sampling Methods in <Rclass>sampSurf</Rclass></em></a></li>
-    <!--   <li><em>Monte Carlo Sampling Methods in <Rclass>sampSurf</Rclass></em> (available soon)</li> -->
 </ol>
 
-The <em>Getting Started with Package <Rpkg>sampSurf</Rpkg></em> vignette is available only
-from CRAN, as it is built with the package there.
+
+
+<p>
+In addition, I have decided to remove some of the vignettes from the actual package
+structure itself because of the amount of space they consume, or the fact that they may be
+of limited interest to most users. Thus, the vignettes below are <em>only</em> available
+here at R-Forge&hellip;
+</p>
+
+
+<ol>
+
+  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/extra/vignettes/monte.pdf?root=sampsurf">
+      <em><Rclass>monte</Rclass>: When is n Sufficiently Large?</em></a></li>
+
+  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/extra/vignettes/MonteCarloSampling.pdf?root=sampsurf">
+      <em>Monte Carlo Sampling Methods in <Rclass>sampSurf</Rclass></em></a></li> 
+
+  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/extra/vignettes/sampSurfExtensions.pdf?root=sampsurf">
+      <em>Extending <Rclass>sampSurf</Rclass> Package</em></a></li>
+
+</ol>
 
 
 
@@ -870,7 +897,7 @@ or find any problems.
 <div id="footer">
   <i>The examples in this page were generated using the very useful R
   package <a href="http://yihui.name/knitr/"><Rpkg>knitr</Rpkg></a>.<br>  Last updated:
-  6-Aug-2013(jhg)</i>
+  16-Dec-2013 (jhg)</i>
 </div>
 
 </body>
