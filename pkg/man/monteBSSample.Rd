@@ -46,10 +46,16 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
 
 
 \examples{
+#
+# can take a little time, cut and paste
+# to try it...
+#
+\dontrun{
 mp = montePop(rnorm(100))
 mbss = monteBSSample(mp, n=c(10,20), R=100)
 mbss
 hist(mbss)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

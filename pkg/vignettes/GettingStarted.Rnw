@@ -163,8 +163,15 @@ vignettes from your installation. There are two steps as follows\dots
 RShowDoc('Overview', package='sampSurf')
 @ 
 
+As of \Rpackage{sampSurf} version 0.7-2, several of the vignettes listed below will now
+reside only on the package website at: \url{http://sampsurf.r-forge.r-project.org/}. 
+
+
 
 \subsection{Vignette summary}
+
+
+\subsubsection{Vignettes on CRAN}
 
 Each of the vignettes can be opened as shown above. They are outlined briefly as follows\dots
 
@@ -202,6 +209,16 @@ Each of the vignettes can be opened as shown above. They are outlined briefly as
   \item \emph{sampSurfClass:} This details the final product---generation of a sampling
     surface from simulation.
     
+\end{itemize} 
+
+
+\subsubsection{Vignettes on \R-Forge}
+
+You can download these vignettes directly from  \url{http://sampsurf.r-forge.r-project.org/}.
+    
+\begin{itemize} 
+
+    
   \item \emph{monte:} This set of classes was created to make it easy to do ``when is $n$
     sufficiently large?'' experiments. In other words, it allows repeated Monte Carlo
     sampling from a given \Rclass{sampSurf} object at different sample sizes and gives
@@ -220,6 +237,11 @@ Each of the vignettes can be opened as shown above. They are outlined briefly as
     new method.     
     
 \end{itemize} 
+
+
+
+
+
 
 \section{Help Files}
 

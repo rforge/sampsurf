@@ -4,7 +4,9 @@ importFrom(graphics, plot, hist)
 import(sp)
 #importFrom("sp", bbox, Spatial, SpatialGrid, SpatialGridDataFrame, plot)
 import(raster)
+import(rasterVis)
 #importFrom("rasterVis", plot3D)
+import(boot)
 
 
 #note that gpclib has now been replaced by rgeos...
@@ -16,8 +18,13 @@ import(raster)
 # and that is not a commonly used technique. Also, installing the system requirements
 # for rgeos may not be what many people want to play with...
 #import(rgeos)
+#Note: as of 0.7-2 it is also used for mirage correciton.
 
 
+
+#--------------------------------------------------------------------------------------
+# Environments, misc functions, etc.
+#
 #exportPattern("^[[:alpha:]]+")
 
 
