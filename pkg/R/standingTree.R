@@ -234,6 +234,12 @@ function(object,
                userExtra = userExtra,
                species = species
               )
+
+#
+#   check for consistency between slot attribute values and corresponding taper values...
+#
+    checkStemDimensions(tree)   #to within 1% by default
+
     
     return(tree)
 }   #standingTree method for data.frames

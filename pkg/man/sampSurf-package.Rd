@@ -644,7 +644,9 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 
   \tabular{ll}{
 	\code{\link{boltDimensions}} \tab Calculates segment volumes,
-	  surface area, etc.\cr
+	surface area, etc.\cr
+	\code{\link{checkStemDimensions}} \tab Checks for inconsistencies in
+	attribute slots. \cr
 	\code{\link{clipStemsToTract}} \tab Clips or removes stems outside the tract\cr
 	\code{\link{gridCellEnhance}} \tab Draws grid lines and centers.\cr
 	\code{\link{heapIZ}} \tab Used to heap inclusion zone grids into a
@@ -796,11 +798,11 @@ some of the methods in the package, and are not exhaustive.
 \item{}{Lynch,T. B. and Gove, J. H. 2013. An antithetic variate to
   facilitate upper-stem height measurements for critical height sampling
   with importance sampling. \emph{Canadian Journal of Forest Research}
-  (forthcoming). }
+  \bold{43}:1151--1161. }
 %
 \item{}{Lynch,T. B. and Gove, J. H. 2014. The unbiasedness of a
   generalized mirage boundary correction method for Monte Carlo
-  integration estimators of volume. \emph{To be announced}
+  integration estimators of volume. \emph{Canadian Journal of Forest Research}
   (In review). }
 
 }%describe

@@ -33,6 +33,7 @@ export(initRandomSeed, transparentColorBase)
 
 export(sampleLogs, boltDimensions, sampleTrees)
 export(bboxCheck, bboxToPoly, bboxSum)
+export(checkStemDimensions)
 export(spCircle)
 export(getID)
 

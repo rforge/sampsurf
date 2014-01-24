@@ -16,7 +16,7 @@ License: GPL (>= 3)
 LazyLoad: yes
 LazyData: yes
 Collate: zzz.R transparentColorBase.R initRandomSeed.R boltDimensions.R
-         bboxCheck.R bboxToPoly.R bboxSum.R
+         bboxCheck.R bboxToPoly.R bboxSum.R checkStemDimensions.R
          defStemEnv.R transfMatrix.R spCircle.R        
          sampleLogs.R sampleTrees.R
          sampSurfClassUnions.R

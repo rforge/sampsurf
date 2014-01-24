@@ -275,6 +275,11 @@ function(object,
               species = species
              )
 
+#
+#   check for consistency between slot attribute values and corresponding taper values...
+#
+    checkStemDimensions(log)   #to within 1% by default
+
     if(!runQuiet)
       cat('\n')
     
