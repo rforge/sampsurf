@@ -2,7 +2,7 @@ Package: sampSurf
 Type: Package
 Title: Sampling Surface Simulation for Areal Sampling Methods
 Version: 0.7-2
-Date: 4-Dec-2013
+Date: 27-Jan-2014
 Authors@R: c(person('Jeffrey H.', 'Gove', email='jgove@fs.fed.us', role=c('aut','cre')))
 Author: Jeffrey H. Gove
 Maintainer: Jeffrey H. Gove <jgove@fs.fed.us>

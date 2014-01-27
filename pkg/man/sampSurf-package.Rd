@@ -95,7 +95,7 @@ so more methods will appear in future releases.
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
 Version: \tab 0.7-2\cr
-Date: \tab 4-Dec-2013\cr
+Date: \tab 27-Jan-2014\cr
 License: \tab gpl\cr
 LazyLoad: \tab yes\cr
 }
