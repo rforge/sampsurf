@@ -10,7 +10,7 @@
 \usepackage{bbm}
 \usepackage{url}
 
-\usepackage{datetime}                   %for printing time
+%obsolete \usepackage{datetime}                   %for printing time
 
 \setlength{\parskip}{\baselineskip}     %between paragraphs
 
@@ -72,7 +72,7 @@
     \small \email{jgove@fs.fed.us} or \email{jhgove@unh.edu}              
     } 
 
-\date{\today\\ \footnotesize\ampmtime}
+%\date{\today\\ \footnotesize\ampmtime}
 
 \maketitle
 
