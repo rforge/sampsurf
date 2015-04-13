@@ -48,10 +48,12 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
   Class "\code{\linkS4class{chainSawIZ}}", and \code{\link{chainSawIZ-methods}}.
 }
 \examples{
+\dontrun{
 dl = downLog(buttDiam=40, solidType=4, logAngle=4*pi/3, logLen=6)
 iz.cs = chainSawIZ(dl, plotRadius=3, plotCenter=c(x=2,y=2), runQuiet=FALSE)
 summary(iz.cs)
 plot(iz.cs, axes=TRUE, showPlotCenter=TRUE, cex=2, showNeedle=TRUE)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
