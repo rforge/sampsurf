@@ -60,7 +60,8 @@ setClass('Tract',
                 # if(object@units=='English' && !is.na(object@spUnits@projargs))
                 #   return('English units are not compatible with metric projections!')
                  
-                 if(object@units=='English' && projection(object)!="NA" )
+                 #if(object@units=='English' && projection(object)!="NA" )
+                 if(object@units=='English' && !is.na(projection(object)) )
                    return('English units are not compatible with metric projections!')
 
                  
