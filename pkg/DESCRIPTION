@@ -1,8 +1,8 @@
 Package: sampSurf
 Type: Package
 Title: Sampling Surface Simulation for Areal Sampling Methods
-Version: 0.7-2
-Date: 27-Jan-2014
+Version: 0.7-3
+Date: 14-Apr-2015
 Author: Jeffrey H. Gove
 Maintainer: Jeffrey H. Gove <jgove@fs.fed.us>
 Depends: R (>= 2.13.1), methods(>= 2.13.1), sp(>= 0.9-84), raster(>= 1.9-5), rasterVis(>= 0.10-3),
