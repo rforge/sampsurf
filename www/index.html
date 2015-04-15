@@ -4,20 +4,21 @@
 <html lang="en">
 
 <head>
-<style type="text/css">.knitr.inline {
+<style type="text/css">
+.knitr.inline {
   background-color: #f7f7f7;
   border:solid 1px #B0B0B0;
 }
 .error {
 	font-weight: bold;
 	color: #FF0000;
-}, 
+},
 .warning {
 	font-weight: bold;
-} 
+}
 .message {
 	font-style: italic;
-} 
+}
 .source, .output, .warning, .error, .message {
 	padding: 0em 1em;
   border:solid 1px #F7F7F7;
@@ -34,58 +35,34 @@
 .rimage.center {
   text-align: center;
 }
-
-.source {
-  color: #f5deb3;
+.hl.num {
+  color: #ff6347;
 }
-.background{
-  color: #2f4f4f ;
+.hl.str {
+  color: #7fffd4;
 }
-.number{
-  color: #ff6347 ;
-}
-.functioncall{
-  font-weight: 'bolder' ;
-  color: #b57847 ;
-}
-.string{
-  color: #7fffd4 ;
-}
-.keyword{
-  font-weight: bolder ;
-  color: #4682b4;
-}
-.argument{
-  color: #f5deb3 ;
-}
-.comment{
-  color: #da70d6 ;
-}
-.roxygencomment{
+.hl.com {
   color: #da70d6;
 }
-.formalargs{
+.hl.opt {
   color: #f5deb3;
 }
-.eqformalargs{
+.hl.std {
   color: #f5deb3;
 }
-.assignement{
-  color: #f5deb3;
+.hl.kwa {
+  color: #4682b4;
+  font-weight: bold;
 }
-.package{
-  font-weight: bolder;
+.hl.kwb {
   color: #98fb98;
+  font-weight: bold;
 }
-.slot{
-  font-style:italic;
-  color: #f5deb3;
+.hl.kwc {
+  color: #b57847;
 }
-.symbol{
-  color: #f5deb3 ;
-}
-.prompt{
-  color: #f5deb3 ;
+.hl.kwd {
+  color: #b3caf5;
 }
 </style>
   <meta name="description" content="sampSurf: sampling surface simulation" /> 
@@ -381,9 +358,12 @@ here at R-Forge&hellip;
 
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/extra/vignettes/MonteCarloSampling.pdf?root=sampsurf">
       <em>Monte Carlo Sampling Methods in <Rclass>sampSurf</Rclass></em></a></li> 
+  
+  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/extra/vignettes/MirageMethod.pdf?root=sampsurf">
+      <em>The Mirage Method in <Rclass>sampSurf</Rclass></em></a></li>
 
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/extra/vignettes/sampSurfExtensions.pdf?root=sampsurf">
-      <em>Extending <Rclass>sampSurf</Rclass> Package</em></a></li>
+      <em>Extending the <Rclass>sampSurf</Rclass> Package</em></a></li>
 
 </ol>
 
@@ -403,6 +383,7 @@ here at R-Forge&hellip;
      ***Note that the highlight package was discontinued/orphaned in CRAN, so
      use.highlight=TRUE is no longer applicable in opts_knit$set below. 4-Mar-2013
 -->
+
 
 
 
@@ -441,17 +422,16 @@ other attribute surfaces, or different sampling methods.
 
 
 
-
 <p> 
 The first component that is always required for a completed sampling surface is a <Rclass>Tract</Rclass>
 object with defined extents and resolution&hellip;
 </p>
 
-<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">require</span>(sampSurf)
-R&gt; tract.m = <span class="functioncall">Tract</span>(<span class="functioncall">c</span>(x = 71, y = 71), cellSize = 0.5)  #meters
-R&gt; buffTract.m = <span class="functioncall">bufferedTract</span>(bufferWidth = 10, tract.m)
-</pre></div></div></div>
-
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">require</span><span class="hl std">(sampSurf)</span>
+<span class="hl std">R&gt; </span><span class="hl std">tract.m</span> <span class="hl kwb">=</span> <span class="hl kwd">Tract</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">71</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">71</span><span class="hl std">),</span> <span class="hl kwc">cellSize</span> <span class="hl std">=</span> <span class="hl num">0.5</span><span class="hl std">)</span>     <span class="hl com">#meters</span>
+<span class="hl std">R&gt; </span><span class="hl std">buffTract.m</span> <span class="hl kwb">=</span> <span class="hl kwd">bufferedTract</span><span class="hl std">(</span><span class="hl kwc">bufferWidth</span> <span class="hl std">=</span> <span class="hl num">10</span><span class="hl std">, tract.m)</span>
+</pre></div>
+</div></div>
 
 <p>
 In the above example, we have first made a <Rclass>Tract</Rclass> object in metric (SI) units with no
@@ -468,15 +448,17 @@ with the desired number of, in this case, downed logs (first argument). The samp
 method to apply to the logs is passed in the <Rcode>iZone</Rcode> argument; e.g.,&hellip;
 </p>
 
-<div class="chunk" id="sausageLen"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; sausageLen.ss = <span class="functioncall">sampSurf</span>(20, tract = buffTract.m, iZone = <span class="string">'sausageIZ'</span>, 
-+                          plotRadius = 3, estimate = <span class="string">'Length'</span>, 
-+                          buttDiams = <span class="functioncall">c</span>(20, 50), logLens = <span class="functioncall">c</span>(2, 8))
-</pre></div><div class="output"><pre class="knitr r">
+<div class="chunk" id="sausageLen"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">sausageLen.ss</span> <span class="hl kwb">=</span> <span class="hl kwd">sampSurf</span><span class="hl std">(</span><span class="hl num">20</span><span class="hl std">,</span> <span class="hl kwc">tract</span> <span class="hl std">= buffTract.m,</span> <span class="hl kwc">iZone</span> <span class="hl std">=</span> <span class="hl str">'sausageIZ'</span><span class="hl std">,</span>
+<span class="hl std">+ </span>                         <span class="hl kwc">plotRadius</span> <span class="hl std">=</span> <span class="hl num">3</span><span class="hl std">,</span> <span class="hl kwc">estimate</span> <span class="hl std">=</span> <span class="hl str">'Length'</span><span class="hl std">,</span>
+<span class="hl std">+ </span>                         <span class="hl kwc">buttDiams</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">20</span><span class="hl std">,</span> <span class="hl num">50</span><span class="hl std">),</span> <span class="hl kwc">logLens</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">,</span> <span class="hl num">8</span><span class="hl std">))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">
 Number of logs in collection = 20
 Heaping log: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
-</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(sausageLen.ss, useImage = <span class="keyword">FALSE</span>)
-</pre></div></div><div class="rimage default"><img src="figures/ss-sausageLen.png" title="plot of chunk sausageLen" alt="plot of chunk sausageLen" class="plot" /></div></div>
-
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(sausageLen.ss,</span> <span class="hl kwc">useImage</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figures/ss-sausageLen.png" title="plot of chunk sausageLen" alt="plot of chunk sausageLen" class="plot" /></div></div>
 
 <p> Notice that you can specify the default log dimensions (e.g., <Rcode>buttDiams</Rcode>
   for the range in large-end log diameters) that will be used in creating the synthetic
@@ -496,8 +478,9 @@ Heaping log: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
  A summary of the object is often useful&hellip;
 </p>
 
-<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; sausageLen.ss
-</pre></div><div class="output"><pre class="knitr r">
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">sausageLen.ss</span>
+</pre></div>
+<div class="output"><pre class="knitr r">
 Object of class: sampSurf
 ------------------------------------------------------------
 sampling surface object
@@ -523,8 +506,10 @@ names       : surf
 values      : 0, 1381  (min, max)
 
 Buffer width =  10
-</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">summary</span>(sausageLen.ss)
-</pre></div><div class="output"><pre class="knitr r">
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">summary</span><span class="hl std">(sausageLen.ss)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">
 Object of class: sampSurf
 ------------------------------------------------------------
 sampling surface object
@@ -554,8 +539,8 @@ Surface statistics...
   grid cell resolution (x & y) = 0.5 meters
   # of background cells (zero) = 16741
   # of inclusion zone cells = 3423
-</pre></div></div></div>
-
+</pre></div>
+</div></div>
 
 <p>
 Printing the object in the first line, displays the specification on the
@@ -572,13 +557,11 @@ zones overlap&hellip;
 
 
 
-
-<div class="chunk" id="sausageLen-rgl"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">require</span>(rgl)
-R&gt; <span class="functioncall">plot3D</span>(sausageLen.ss)
-R&gt; <span class="functioncall">par3d</span>(zoom = 0.8)
-</pre></div></div><div class="rimage center"><img src="figures/ss-sausageLen-rgl.png" title="plot of chunk sausageLen-rgl" alt="plot of chunk sausageLen-rgl" class="plot" /></div></div>
-
-
+<div class="chunk" id="sausageLen-rgl"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">require</span><span class="hl std">(rgl)</span>
+<span class="hl std">R&gt; </span><span class="hl kwd">plot3D</span><span class="hl std">(sausageLen.ss)</span>
+<span class="hl std">R&gt; </span><span class="hl kwd">par3d</span><span class="hl std">(</span><span class="hl kwc">zoom</span> <span class="hl std">=</span> <span class="hl num">0.8</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage center"><img src="figures/ss-sausageLen-rgl.png" title="plot of chunk sausageLen-rgl" alt="plot of chunk sausageLen-rgl" class="plot" /></div></div>
 
 
 
@@ -623,9 +606,10 @@ another down coarse woody debris sampling method known as perpendicular distance
 (<acronym>pds</acronym>). Start by creating a population of down logs&hellip;
 </p>
 
-<div class="chunk" id="dLogs"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; dLogs = <span class="functioncall">downLogs</span>(25, buffTract.m, buttDiams = <span class="functioncall">c</span>(25, 50), logLens = <span class="functioncall">c</span>(5, 10)) 
-R&gt; dLogs
-</pre></div><div class="output"><pre class="knitr r">
+<div class="chunk" id="dLogs"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">dLogs</span> <span class="hl kwb">=</span> <span class="hl kwd">downLogs</span><span class="hl std">(</span><span class="hl num">25</span><span class="hl std">, buffTract.m,</span> <span class="hl kwc">buttDiams</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">25</span><span class="hl std">,</span> <span class="hl num">50</span><span class="hl std">),</span> <span class="hl kwc">logLens</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">5</span><span class="hl std">,</span> <span class="hl num">10</span><span class="hl std">))</span>
+<span class="hl std">R&gt; </span><span class="hl std">dLogs</span>
+</pre></div>
+<div class="output"><pre class="knitr r">
 Object of class: downLogs
 ------------------------------------------------------------
 
@@ -647,10 +631,11 @@ y 8.717 62.27
   Average coverage area/log =  2.223 square meters
   Average length/log =  7.323 meters
 (**All statistics exclude NAs)
-</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(buffTract.m, gridColor = <span class="string">'grey70'</span>)
-R&gt; <span class="functioncall">plot</span>(dLogs, add = <span class="keyword">TRUE</span>)
-</pre></div></div><div class="rimage default"><img src="figures/ss-dLogs.png" title="plot of chunk dLogs" alt="plot of chunk dLogs" class="plot" /></div></div>
-
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(buffTract.m,</span> <span class="hl kwc">gridColor</span> <span class="hl std">=</span> <span class="hl str">'grey70'</span><span class="hl std">)</span>
+<span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(dLogs,</span> <span class="hl kwc">add</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figures/ss-dLogs.png" title="plot of chunk dLogs" alt="plot of chunk dLogs" class="plot" /></div></div>
 
 <p>
 We created a population of rather long, and large-diameter logs so they display nicely on
@@ -665,9 +650,10 @@ that contains the information about that sampling method in the form of design p
 for the distance limit. This is most easily done in terms of a
 "K<sub><acronym>pds</acronym></sub> factor" for the method&hellip;
 
-<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; pds.m = <span class="functioncall">perpendicularDistance</span>(50, description = <span class="string">"PDS parameters"</span>)
-R&gt; pds.m
-</pre></div><div class="output"><pre class="knitr r">
+<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">pds.m</span> <span class="hl kwb">=</span> <span class="hl kwd">perpendicularDistance</span><span class="hl std">(</span><span class="hl num">50</span><span class="hl std">,</span> <span class="hl kwc">description</span> <span class="hl std">=</span> <span class="hl str">'PDS parameters'</span><span class="hl std">)</span>
+<span class="hl std">R&gt; </span><span class="hl std">pds.m</span>
+</pre></div>
+<div class="output"><pre class="knitr r">
 Object of class: perpendicularDistance
 ------------------------------------------------------------
 PDS parameters
@@ -679,8 +665,8 @@ ArealSampling...
 perpendicularDistance...
   kPDS factor = 50 per meter [or dimensionless] for volume [surface/coverage area]
   volume [surface/coverage area] factor = 100 cubic meters [square meters] per hectare
-</pre></div></div></div>
-
+</pre></div>
+</div></div>
 
 <p> The default is for metric units as we can see in the object summary. The associated
 volume, surface and coverage areas are determined for this particular
@@ -709,11 +695,12 @@ following creates a container of all the individual inclusion zone objects. It d
 by applying the <Rcode>perpendicularDistanceIZ</Rcode> constructor method to each log in
 the collection&hellip;
 
-<div class="chunk" id="dLogs-izs"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; dLogs.izs = <span class="functioncall">downLogIZs</span>(dLogs, iZone = <span class="string">'perpendicularDistanceIZ'</span>, pds = pds.m,
-+                        pdsType = <span class="string">'volume'</span>,
-+                        description = <span class="string">'pds inclusion zones <span class="keyword">for</span> dLogs'</span>)
-R&gt; dLogs.izs
-</pre></div><div class="output"><pre class="knitr r">
+<div class="chunk" id="dLogs-izs"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">dLogs.izs</span> <span class="hl kwb">=</span> <span class="hl kwd">downLogIZs</span><span class="hl std">(dLogs,</span> <span class="hl kwc">iZone</span> <span class="hl std">=</span> <span class="hl str">'perpendicularDistanceIZ'</span><span class="hl std">,</span> <span class="hl kwc">pds</span> <span class="hl std">= pds.m,</span>
+<span class="hl std">+ </span>                       <span class="hl kwc">pdsType</span> <span class="hl std">=</span> <span class="hl str">'volume'</span><span class="hl std">,</span>
+<span class="hl std">+ </span>                       <span class="hl kwc">description</span> <span class="hl std">=</span> <span class="hl str">'pds inclusion zones for dLogs'</span><span class="hl std">)</span>
+<span class="hl std">R&gt; </span><span class="hl std">dLogs.izs</span>
+</pre></div>
+<div class="output"><pre class="knitr r">
 Container object of class: downLogIZs
 ------------------------------------------------------------
 pds inclusion zones for dLogs
@@ -729,10 +716,11 @@ Encapulating bounding box...
     min   max
 x 6.359 70.03
 y 5.015 63.96
-</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(buffTract.m, gridColor = <span class="string">'grey70'</span>)
-R&gt; <span class="functioncall">plot</span>(dLogs.izs, add = <span class="keyword">TRUE</span>)
-</pre></div></div><div class="rimage default"><img src="figures/ss-dLogs-izs.png" title="plot of chunk dLogs-izs" alt="plot of chunk dLogs-izs" class="plot" /></div></div>
-
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(buffTract.m,</span> <span class="hl kwc">gridColor</span> <span class="hl std">=</span> <span class="hl str">'grey70'</span><span class="hl std">)</span>
+<span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(dLogs.izs,</span> <span class="hl kwc">add</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figures/ss-dLogs-izs.png" title="plot of chunk dLogs-izs" alt="plot of chunk dLogs-izs" class="plot" /></div></div>
 
 <p>
 Note that the <Rcode>downLogIZs</Rcode> constructor method creates the collection, and can
@@ -752,12 +740,15 @@ Of course now the last step is simply to create the sampling surface from the ob
 have built in the previous steps. The sampling surface will be for volume in this
 case&hellip;
 
-<div class="chunk" id="pdsVolume"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; dLogs.ss = <span class="functioncall">sampSurf</span>(dLogs.izs, buffTract.m)
-</pre></div><div class="output"><pre class="knitr r">
+<div class="chunk" id="pdsVolume"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">dLogs.ss</span> <span class="hl kwb">=</span> <span class="hl kwd">sampSurf</span><span class="hl std">(dLogs.izs, buffTract.m)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">
 Number of logs in collection = 25
 Heaping log: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,
-</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">summary</span>(dLogs.ss)
-</pre></div><div class="output"><pre class="knitr r">
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">summary</span><span class="hl std">(dLogs.ss)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">
 Object of class: sampSurf
 ------------------------------------------------------------
 sampling surface object
@@ -787,9 +778,10 @@ Surface statistics...
   grid cell resolution (x & y) = 0.5 meters
   # of background cells (zero) = 15534
   # of inclusion zone cells = 4630
-</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(dLogs.ss, useImage = <span class="keyword">FALSE</span>)
-</pre></div></div><div class="rimage default"><img src="figures/ss-pdsVolume.png" title="plot of chunk pdsVolume" alt="plot of chunk pdsVolume" class="plot" /></div></div>
-
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(dLogs.ss,</span> <span class="hl kwc">useImage</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figures/ss-pdsVolume.png" title="plot of chunk pdsVolume" alt="plot of chunk pdsVolume" class="plot" /></div></div>
 
 <p>
 Note in the summary that the method is unbiased. And, as in the first example, we can
@@ -798,13 +790,11 @@ visualize the surface using <Rpkg>rgl</Rpkg>&hellip;
 
 
 
-
-<div class="chunk" id="pdsVol-rgl"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">require</span>(rgl)
-R&gt; <span class="functioncall">plot3D</span>(dLogs.ss)
-R&gt; <span class="functioncall">par3d</span>(zoom = 0.8)
-</pre></div></div><div class="rimage center"><img src="figures/ss-pdsVol-rgl.png" title="plot of chunk pdsVol-rgl" alt="plot of chunk pdsVol-rgl" class="plot" /></div></div>
-
-
+<div class="chunk" id="pdsVol-rgl"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">require</span><span class="hl std">(rgl)</span>
+<span class="hl std">R&gt; </span><span class="hl kwd">plot3D</span><span class="hl std">(dLogs.ss)</span>
+<span class="hl std">R&gt; </span><span class="hl kwd">par3d</span><span class="hl std">(</span><span class="hl kwc">zoom</span> <span class="hl std">=</span> <span class="hl num">0.8</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage center"><img src="figures/ss-pdsVol-rgl.png" title="plot of chunk pdsVol-rgl" alt="plot of chunk pdsVol-rgl" class="plot" /></div></div>
 
 
 
@@ -832,31 +822,31 @@ created below to get more familiar with the package&hellip;
 </p>
 
 
-<div class="chunk" id="hpsSS"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; tract.e = <span class="functioncall">Tract</span>(<span class="functioncall">c</span>(x = 208, y = 209), units = <span class="string">'English'</span>, cellSize = 1) #feet here
-R&gt; buffTract.e = <span class="functioncall">bufferedTract</span>(bufferWidth = 30, tract.e)
-R&gt; sTrees = <span class="functioncall">standingTrees</span>(20, buffTract.e, dbhs = <span class="functioncall">c</span>(6, 15), heights = <span class="functioncall">c</span>(30, 50),
-+                        units = <span class="string">'English'</span>)
-R&gt; aGauge = <span class="functioncall">angleGauge</span>(baf = 20, units = <span class="string">'English'</span>)
-R&gt; sTrees.izs = <span class="functioncall">standingTreeIZs</span>(sTrees, iZone = <span class="string">'horizontalPointIZ'</span>, 
-+                              angleGauge = aGauge)
-R&gt; hps.ss = <span class="functioncall">sampSurf</span>(sTrees.izs, buffTract.e, estimate = <span class="string">'Density'</span>)
-</pre></div><div class="output"><pre class="knitr r">
+<div class="chunk" id="hpsSS"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">tract.e</span> <span class="hl kwb">=</span> <span class="hl kwd">Tract</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">208</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">209</span><span class="hl std">),</span> <span class="hl kwc">units</span> <span class="hl std">=</span> <span class="hl str">'English'</span><span class="hl std">,</span> <span class="hl kwc">cellSize</span> <span class="hl std">=</span> <span class="hl num">1</span><span class="hl std">)</span> <span class="hl com">#feet here</span>
+<span class="hl std">R&gt; </span><span class="hl std">buffTract.e</span> <span class="hl kwb">=</span> <span class="hl kwd">bufferedTract</span><span class="hl std">(</span><span class="hl kwc">bufferWidth</span> <span class="hl std">=</span> <span class="hl num">30</span><span class="hl std">, tract.e)</span>
+<span class="hl std">R&gt; </span><span class="hl std">sTrees</span> <span class="hl kwb">=</span> <span class="hl kwd">standingTrees</span><span class="hl std">(</span><span class="hl num">20</span><span class="hl std">, buffTract.e,</span> <span class="hl kwc">dbhs</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">6</span><span class="hl std">,</span> <span class="hl num">15</span><span class="hl std">),</span> <span class="hl kwc">heights</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">30</span><span class="hl std">,</span> <span class="hl num">50</span><span class="hl std">),</span>
+<span class="hl std">+ </span>                       <span class="hl kwc">units</span> <span class="hl std">=</span> <span class="hl str">'English'</span><span class="hl std">)</span>
+<span class="hl std">R&gt; </span><span class="hl std">aGauge</span> <span class="hl kwb">=</span> <span class="hl kwd">angleGauge</span><span class="hl std">(</span><span class="hl kwc">baf</span> <span class="hl std">=</span> <span class="hl num">20</span><span class="hl std">,</span> <span class="hl kwc">units</span> <span class="hl std">=</span> <span class="hl str">'English'</span><span class="hl std">)</span>
+<span class="hl std">R&gt; </span><span class="hl std">sTrees.izs</span> <span class="hl kwb">=</span> <span class="hl kwd">standingTreeIZs</span><span class="hl std">(sTrees,</span> <span class="hl kwc">iZone</span> <span class="hl std">=</span> <span class="hl str">'horizontalPointIZ'</span><span class="hl std">,</span>
+<span class="hl std">+ </span>                             <span class="hl kwc">angleGauge</span> <span class="hl std">= aGauge)</span>
+<span class="hl std">R&gt; </span><span class="hl std">hps.ss</span> <span class="hl kwb">=</span> <span class="hl kwd">sampSurf</span><span class="hl std">(sTrees.izs, buffTract.e,</span> <span class="hl kwc">estimate</span> <span class="hl std">=</span> <span class="hl str">'Density'</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">
 Number of trees in collection = 20
 Heaping tree: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
-</pre></div><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">plot</span>(hps.ss, useImage = <span class="keyword">FALSE</span>)
-</pre></div></div><div class="rimage default"><img src="figures/ss-hpsSS.png" title="plot of chunk hpsSS" alt="plot of chunk hpsSS" class="plot" /></div></div>
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(hps.ss,</span> <span class="hl kwc">useImage</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figures/ss-hpsSS.png" title="plot of chunk hpsSS" alt="plot of chunk hpsSS" class="plot" /></div></div>
 
 
 
 
-
-
-<div class="chunk" id="hps-rgl"><div class="rcode"><div class="source"><pre class="knitr r">R&gt; <span class="functioncall">require</span>(rgl)
-R&gt; <span class="functioncall">plot3D</span>(hps.ss)
-R&gt; <span class="functioncall">par3d</span>(zoom = 0.8)
-</pre></div></div><div class="rimage center"><img src="figures/ss-hps-rgl.png" title="plot of chunk hps-rgl" alt="plot of chunk hps-rgl" class="plot" /></div></div>
-
-
+<div class="chunk" id="hps-rgl"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">require</span><span class="hl std">(rgl)</span>
+<span class="hl std">R&gt; </span><span class="hl kwd">plot3D</span><span class="hl std">(hps.ss)</span>
+<span class="hl std">R&gt; </span><span class="hl kwd">par3d</span><span class="hl std">(</span><span class="hl kwc">zoom</span> <span class="hl std">=</span> <span class="hl num">0.8</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage center"><img src="figures/ss-hps-rgl.png" title="plot of chunk hps-rgl" alt="plot of chunk hps-rgl" class="plot" /></div></div>
 
 
 
@@ -890,14 +880,13 @@ or find any problems.
 <!-- ============================================================================================== -->
 
 
-
    
 <div id="cleardiv"></div>
 
 <div id="footer">
   <i>The examples in this page were generated using the very useful R
   package <a href="http://yihui.name/knitr/"><Rpkg>knitr</Rpkg></a>.<br>  Last updated:
-  16-Dec-2013 (jhg)</i>
+  14-Apr-2015 (jhg)</i>
 </div>
 
 </body>
