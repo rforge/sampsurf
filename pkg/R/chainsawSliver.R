@@ -68,6 +68,9 @@ chainsawSliver = function(downLog,
 #   This code was converted from the fixed-radius plot study to be used in
 #   the sampSurf package, 30-Aug-2010, JHG.
 #
+#   14-April-2015: added explicit reference to rgeos in calling area.poly as
+#   it was causing problems with example checks on CRAN for some reason.
+#
 #Author...									Date: 15-June-2010
 #	Jeffrey H. Gove
 #	USDA Forest Service
