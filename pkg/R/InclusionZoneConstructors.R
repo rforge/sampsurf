@@ -928,7 +928,7 @@ function(downLog,
       dl.taper = downLog@taper[downLog@taper$diameter >= dl.diam,]  #taper below DL cutoff
       dl.taper = rbind(dl.taper, c(dl.diam, dl.length))             #with new "top"
       os.len = halfLen - dl.length/2                                #offset length to new center point from old
-      dl.centerOffset = full.centerOffset - (matrix(c(os.len,0,1),nr=1) %*% trMat)[,-3]
+      dl.centerOffset = full.centerOffset - (matrix(c(os.len,0,1), nrow = 1) %*% trMat)[,-3]
       names(dl.centerOffset) = c('x','y')
     }
 
@@ -993,7 +993,7 @@ function(downLog,
     pds.taper$length = pds.taper$length - dl.length                 #translate to butt at zero
 
     os.len = dl.length + diff(range(pds.taper$length))/2 - halfLen #offset length to new center point from old
-    pds.centerOffset = full.centerOffset + (matrix(c(os.len,0,1),nr=1) %*% trMat)[,-3]
+    pds.centerOffset = full.centerOffset + (matrix(c(os.len,0,1), nrow = 1) %*% trMat)[,-3]
     names(pds.centerOffset) = c('x','y')
     pds.dlog = downLog(pds.taper,
                        solidType = NULL, #downLog@solidType,

@@ -135,7 +135,7 @@ function(object,                            #number of trees to generate
     
 #   create bbox rectangle as a matrix from limits...
     sampleRect = matrix(c(xlim, ylim),
-                        nr=2, byrow = TRUE,
+                        nrow = 2, byrow = TRUE,
                         dimnames = list(c('x','y'),c('min','max'))
                        )
     sts = standingTrees(numTrees, sampleRect, units=units, ...)

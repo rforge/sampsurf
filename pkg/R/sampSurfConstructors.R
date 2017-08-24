@@ -215,24 +215,39 @@ function(object,
       stop('You must specify a positive number of stems in "object"!')
 
 #
-#   make sure the inclusion zone constructor is a valid available type...
+#   make sure the inclusion zone constructor is a valid available type from the list of
+#   possible subclasses of the papa/parent class for logs or trees.
+#
+#   Note that the subclass slot of a class (getClass()@subclass) does not list all possible
+#   subclasses in the case of multiple inheritance; specifically, the 'MonteCarloSamplingIZ' class
+#   is the first class in declaring, e.g., 'horizontalPointCMCIZ', and even though extend()
+#   correctly determines that it is a 'standingTreeIZ', getClass()@subclass does not list
+#   it as a subclass of 'standingTreeIZ', but only of 'MonteCarloSamplingIZ'. Thus the
+#   subtest below to get all of the applicable subclass names...
 #
     if(!is.character(iZone))                        #extends takes a character name
       iZone = deparse(substitute(iZone))
     if(extends(iZone, 'downLogIZ')) {
       isLogs = TRUE                                 #proper English
-      papa = getClass('downLogIZ')
+      validNames = names(getClass('downLogIZ')@subclasses) #valid subclass names
+      #currently, all Monte Carlo methods are design-based, so no need for sub check as in trees below
+      ##papa = getClass('downLogIZ')
     }
-    else if(extends(iZone, 'standingTreeIZ')) {
+    else if(extends(iZone, 'standingTreeIZ')) { 
       isLogs = FALSE
-      papa = getClass('standingTreeIZ')
+      validNames = names(getClass('standingTreeIZ')@subclasses)   #does not include multiple inheritance
+      #annex if needed for multiple inheritance; e.g., 'horizontalPointCMCIZ', etc. does not register above
+      if(extends(iZone, 'MonteCarloSamplingIZ'))
+        validNames = c(validNames, names(getClass('MonteCarloSamplingIZ')@subclasses))
+      ##papa = getClass('standingTreeIZ')
     }
     else                                  #catch non-InclusionZone subclass values...
       stop('Invalid inclusion zone constructor name supplied: iZone = ',iZone)
     #above test is not quite enough, iZone must actually be a subclass, not the parent itself...     
-    validNames = names(papa@subclasses)
+    ##validNames = names(papa@subclasses)
     if(is.na(match(iZone, validNames)))
-      stop('Invalid inclusion zone constructor name supplied: iZone = ',iZone)
+      stop('Invalid inclusion zone constructor name supplied: iZone = ',iZone,
+           '. Valid names are: ', paste(validNames, ''))
     if(iZone=='chainSawIZ')               #catch this error too before going to default constructor
       stop('You must use \"fullChainSawIZ\" zones for the chainSaw method!')
  

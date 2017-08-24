@@ -29,7 +29,11 @@ function(object)
 
     cat('\nInclusion zone objects:', class(object@izContainer@iZones[[1]]) )
     cat('\nEstimate:', object@estimate)
-    cat('\nNumber of logs =', length(object@izContainer@iZones) )
+    if(is(object@izContainer, 'downLogIZs'))
+      stemName = 'logs'
+    else
+      stemName = 'trees'
+    cat('\nNumber of', stemName, '=', length(object@izContainer@iZones) )
 
     cat('\n')
     print(object@tract)

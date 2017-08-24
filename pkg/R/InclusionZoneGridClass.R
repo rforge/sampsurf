@@ -37,7 +37,7 @@ setClass('InclusionZoneGrid',
                   ),
     prototype = list(description = 'gridded inclusion zone',  #some defaults for validity checking
                      bbox = matrix(rep(0,4), nrow=2, dimnames=list(c('x','y'), c('min','max'))),
-                     data = data.frame(matrix(NA, nr=0, nc=length(.StemEnv$puaEstimates),
+                     data = data.frame(matrix(NA, nrow = 0, nc=length(.StemEnv$puaEstimates),
                             dimnames=list(character(0), names(.StemEnv$puaEstimates))) )
                     ),
     validity = function(object) {

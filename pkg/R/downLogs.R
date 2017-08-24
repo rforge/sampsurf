@@ -134,7 +134,7 @@ function(object,                            #number of logs to generate
     
 #   create bbox rectangle as a matrix from limits...
     sampleRect = matrix(c(xlim, ylim),
-                        nr=2, byrow = TRUE,
+                        nrow = 2, byrow = TRUE,
                         dimnames = list(c('x','y'),c('min','max'))
                        )
     dls = downLogs(numLogs, sampleRect, units=units, ...)

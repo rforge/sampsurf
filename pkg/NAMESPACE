@@ -8,7 +8,19 @@ import(rasterVis)
 #importFrom("rasterVis", plot3D)
 import(boot)
 
+#added in 0.7-4 (24-Aug-2017) at the request of R CMD check ./sampSurf
+importFrom("grDevices", "col2rgb", "colors", "rgb")
+importFrom("graphics", "abline", "par", "points")
+importFrom("stats", "na.omit", "nlminb", "qt", "runif", "sd", "spline",
+           "uniroot", "var")
+importFrom("utils", "getFromNamespace")
+#also added for smithPlot...
+importFrom('latticeExtra', 'ggplot2like', 'ggplot2like.opts', 'custom.theme.2',
+           'theEconomist.opts', 'theEconomist.theme')
 
+
+
+#
 #note that gpclib has now been replaced by rgeos...
 #
 #import(gpclib)
@@ -18,7 +30,20 @@ import(boot)
 # and that is not a commonly used technique. Also, installing the system requirements
 # for rgeos may not be what many people want to play with...
 #import(rgeos)
-#Note: as of 0.7-2 it is also used for mirage correciton.
+#
+#Note: as of 0.7-2 rgeos is also used for mirage correction.
+#
+
+#
+#note that in the classes and methods sections below the "lapSurf" components are
+#commented out as they are not part of the public release of the package, but something
+#I have worked on in the past to enable more information from overlap zones. Please
+#feel free to contact the author for more information, including a vignette on its
+#use.
+#
+
+
+
 
 
 
@@ -41,6 +66,8 @@ export(izGridConstruct) #for now, eventually hide it?
 export(gridCellEnhance) #ibid
 
 export(getProxy)    #proxy functions for Monte Carlo subsampling
+
+export(smithPlot)   #H. F. Smith-type plots
  
 
 

@@ -75,7 +75,8 @@ function(izObject,        #a bbox object
 #
     if(!useCrop) {
       bbex = extent(izObject)
-      j = intersectExtent(bbex, extent(tract) )   #get extent of overlap    !!!>this has been replaced by intersect()
+      #j = intersectExtent(bbex, extent(tract) )   #get extent of overlap    !!!>replaced by intersect()...
+      j = intersect(bbex, extent(tract) )         #get extent of overlap
       jj = alignExtent(j, tract)                  #and align to tract grid
     }
     else

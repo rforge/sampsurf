@@ -13,6 +13,12 @@ gridCellEnhance = function(tract,
 #   accomplish this, we just convert our "Tract" object to an object of
 #   class "SpatialGridDataFrame" and use the built-in sp package routines.
 #
+#**>Update: Note that the folks at sp changed the plot function for
+#           'SpatialGridDataFrame' objects, it used to plot the lattice
+#           points and could just be called for the grid cell centers, now
+#           it plots the entire object! So I had to change this code slightly
+#           to get points back. JHG 9-Nov-2016
+#
 #   Arguments...
 #     tract = an object of class "Tract" or subclass--although a
 #             'Rasterlayer' object will work too.
@@ -60,7 +66,9 @@ gridCellEnhance = function(tract,
       lines(bb.sg[1,],rep(bb.sg[2,2],2),col=gridLineColor, lwd=lwdGrid) #top
     }
     if(gridCenters)
-      plot(sg, col=gridCenterColor, add=TRUE)
+      #plot(sg, col=gridCenterColor, add=TRUE) #no longer works, they changed the sp code 9-Nov-2016
+      #we could update below to allow other pch, etc., sometime; passing cex<1 is helpful...
+      points(coordinates(tract), pch='+', col=gridCenterColor, ...)
 
     return(invisible())
 }   #gridCellEnhance
