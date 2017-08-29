@@ -4,19 +4,20 @@ importFrom(graphics, plot, hist)
 import(sp)
 #importFrom("sp", bbox, Spatial, SpatialGrid, SpatialGridDataFrame, plot)
 import(raster)
-import(rasterVis)
-#importFrom("rasterVis", plot3D)
+#import(rasterVis)
+importFrom(rasterVis, plot3D)
 import(boot)
 
 #added in 0.7-4 (24-Aug-2017) at the request of R CMD check ./sampSurf
-importFrom("grDevices", "col2rgb", "colors", "rgb")
-importFrom("graphics", "abline", "par", "points")
-importFrom("stats", "na.omit", "nlminb", "qt", "runif", "sd", "spline",
-           "uniroot", "var")
-importFrom("utils", "getFromNamespace")
-#also added for smithPlot...
-importFrom('latticeExtra', 'ggplot2like', 'ggplot2like.opts', 'custom.theme.2',
-           'theEconomist.opts', 'theEconomist.theme')
+importFrom(grDevices, col2rgb, colors, rgb)
+importFrom(graphics, abline, par, points)
+importFrom(stats, na.omit, nlminb, qt, runif, sd, spline,
+           uniroot, var)
+importFrom(utils, getFromNamespace)
+importFrom(lattice, xyplot, trellis.par.get)
+#also added for smithPlot 0.7-4 (24-Aug-2017)...
+importFrom(latticeExtra, ggplot2like, ggplot2like.opts, custom.theme.2,
+           theEconomist.opts, theEconomist.theme)
 
 
 
