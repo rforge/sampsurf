@@ -107,7 +107,7 @@ smithPlot(hfs,
 %
 \item{}{Smith, H. F. 1938. An empirical law describing heterogeneity in the
   yields of agricultural crops. \emph{Journal of Agricultural Science},
-   \bold{28}:1-23.}
+   \bold{28}:1--23.}
 
 } %describe
 } %references

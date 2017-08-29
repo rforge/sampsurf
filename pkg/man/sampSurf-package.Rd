@@ -94,9 +94,9 @@ so more methods will appear in future releases.
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.7-2\cr
-Date: \tab 27-Jan-2014\cr
-License: \tab gpl\cr
+Version: \tab 0.7-4\cr
+Date: \tab 24-Aug-2017\cr
+License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }
 
@@ -140,6 +140,10 @@ detail, including slot and argument definitions.
 
 In addition, the project homepage at R-Forge has some simple examples
 that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
+
+A companion package, \pkg{ssWavelets}, that supports wavelet filtering
+of sampling surfaces is found at:
+\url{http://sswavelets.r-forge.r-project.org/}. 
 
 } %details
 
@@ -582,7 +586,10 @@ that might be helpful: \url{http://sampsurf.r-forge.r-project.org/}.
 	  package 'rgl'\cr 
 %when fixed, change this back to:	  \pkg{rgl}\cr 
 	\code{\link{show}} \tab  To succinctly print one of the package objects\cr
-	\code{\link{summary}} \tab  To summarize one of the package objects\cr
+	\code{\link{summary}} \tab  To summarize one of the package
+	objects\cr
+	\code{\link{smithPlot}} \tab Generate H. F. Smith plots for
+	simulation comparisions.\cr
   } %tabular
   
 } %summary and plotting
@@ -803,7 +810,10 @@ some of the methods in the package, and are not exhaustive.
 \item{}{Lynch,T. B. and Gove, J. H. 2014. The unbiasedness of a
   generalized mirage boundary correction method for Monte Carlo
   integration estimators of volume. \emph{Canadian Journal of Forest Research}
-  (In review). }
+  \bold{44}:810--819. }
+%
+\item{}{Gove, J. H. 2017. Some Refinements on the Comparison of Areal
+  Sampling Methods via Simulation. \emph{Forests}, Submitted.}
 
 }%describe
 
