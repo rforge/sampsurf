@@ -196,7 +196,7 @@ function(izObject,
     iz = izObject         
   
 #
-    require(rgeos)
+    requireNamespace('rgeos')
 
 #
 #   create individual SpatialLines objects from each side of the tract...
@@ -224,10 +224,10 @@ function(izObject,
 #
     gI = rep(FALSE, 4)
     names(gI) = .StemEnv$cardinal
-    gI['north'] = gIntersects(North, p.iz)
-    gI['south'] = gIntersects(South, p.iz)
-    gI['east'] = gIntersects(East, p.iz)
-    gI['west'] = gIntersects(West, p.iz)
+    gI['north'] = rgeos::gIntersects(North, p.iz)
+    gI['south'] = rgeos::gIntersects(South, p.iz)
+    gI['east'] = rgeos::gIntersects(East, p.iz)
+    gI['west'] = rgeos::gIntersects(West, p.iz)
     #are we are done?...
     if(!any(gI)) {
       griz = izGrid(iz, tract)
@@ -279,7 +279,7 @@ function(izObject,
         extRect['x','min'] = xmax(tr)
       extRect.poly = bboxToPoly(extRect)                         #make it a SpatialPolygons object
       #now create the sliver of the IZ outside the boundary (within the extended bbox rectangle)...
-      sliver.gi = gIntersection(extRect.poly, p.iz)    #returns a SpatialPolygons object of the external IZ sliver
+      sliver.gi = rgeos::gIntersection(extRect.poly, p.iz)  #returns a SpatialPolygons object of the external IZ sliver
       #check to see if the sliver overlaps any grid cell centers, as crop() will fail if not...
       suppressWarnings({jis = intersect(extent(izg@grid), sliver.gi)})
       if(is.null(jis)) 

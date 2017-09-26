@@ -155,11 +155,18 @@ smithPlot = function(hfs,
                        }
           )
 
+#
+#   this is silly, but in order to stop R CMD check from reporting this as a Note... 
+#   "smithPlot: no visible binding for global variable 'sampMeth'"
+#   we must add the following line of code (evidently, the check does not look
+#   for variable bindings in the data=df argument in xyplot below)...
+#
+    sampMeth = NULL  
  
 #
 #   create the lattice/trellis plot object...
 #
-    plt = xyplot(var ~ izArea, df, groups=sampMeth, 
+    plt = xyplot(var ~ izArea, data = df, groups = sampMeth, 
                  type = type, pch = pch,
                  ylab = ylab,
                  xlab = xlab,

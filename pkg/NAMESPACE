@@ -30,10 +30,16 @@ importFrom(latticeExtra, ggplot2like, ggplot2like.opts, custom.theme.2,
 # I've made rgeos a "suggested" package as it is only used for the chainSaw method
 # and that is not a commonly used technique. Also, installing the system requirements
 # for rgeos may not be what many people want to play with...
+#
+#Note: because rgeos is suggested, there is no need for importing at all.
+#
+#importFrom(rgeos, gIntersects, gIntersection)
 #import(rgeos)
 #
 #Note: as of 0.7-2 rgeos is also used for mirage correction.
 #
+
+
 
 #
 #note that in the classes and methods sections below the "lapSurf" components are

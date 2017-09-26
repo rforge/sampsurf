@@ -330,7 +330,7 @@ function(stems, tract, checkOnly=FALSE, runQuiet=TRUE, showPlot=FALSE, ... )
 #
 #   use rgeos for the log intersection tests in what follows, might as well load it now...
 #
-    require(rgeos)
+    requireNamespace('rgeos')
 
 #
 #   okay, get to work now...
@@ -377,10 +377,10 @@ function(stems, tract, checkOnly=FALSE, runQuiet=TRUE, showPlot=FALSE, ... )
       }
 
       #see if it intersects a boundary...
-      df[i, 'east'] = gIntersects(stem@slNeedleAxis, East)
-      df[i, 'west'] = gIntersects(stem@slNeedleAxis, West)
-      df[i, 'north'] = gIntersects(stem@slNeedleAxis, North)
-      df[i, 'south'] = gIntersects(stem@slNeedleAxis, South)
+      df[i, 'east'] = rgeos::gIntersects(stem@slNeedleAxis, East)
+      df[i, 'west'] = rgeos::gIntersects(stem@slNeedleAxis, West)
+      df[i, 'north'] = rgeos::gIntersects(stem@slNeedleAxis, North)
+      df[i, 'south'] = rgeos::gIntersects(stem@slNeedleAxis, South)
       if(any(unlist(df[i, cardinal])))
         df[i, 'intersect'] = TRUE
       #required extra check to catch logs straddling (diagonal) just outside corners
@@ -449,22 +449,22 @@ function(stems, tract, checkOnly=FALSE, runQuiet=TRUE, showPlot=FALSE, ... )
         needle = stem@slNeedleAxis
         xy.n = coordinates(needle)[[1]][[1]]                  #needle coordinates==endpoints
         if(nsew == 'north') {
-          xy = coordinates(gIntersection(needle, North))[1,]  #coordinates returns a matrix
+          xy = coordinates(rgeos::gIntersection(needle, North))[1,]  #coordinates returns a matrix
           xy.in = xy.n[which.min(xy.n[,'y']),]                #inside needle coords == min 'y' -- drop to vector
           testCondition = logAngle > pi                       #tests for butt outside the tract
         }
         else if(nsew == 'south') {
-          xy = coordinates(gIntersection(needle, South))[1,]
+          xy = coordinates(rgeos::gIntersection(needle, South))[1,]
           xy.in = xy.n[which.max(xy.n[,'y']),]                #inside needle coords == max 'y' -- drop to vector
           testCondition = logAngle < pi
         }
         else if(nsew == 'east') {
-          xy = coordinates(gIntersection(needle, East))[1,]
+          xy = coordinates(rgeos::gIntersection(needle, East))[1,]
           xy.in = xy.n[which.min(xy.n[,'x']),]                #inside needle coords == min 'x' -- drop to vector
           testCondition = cos(logAngle) < 0
         } 
         else if(nsew == 'west') {
-          xy = coordinates(gIntersection(needle, West))[1,]
+          xy = coordinates(rgeos::gIntersection(needle, West))[1,]
           xy.in = xy.n[which.max(xy.n[,'x']),]                #inside needle coords == max 'x' -- drop to vector
           testCondition = cos(logAngle) > 0
         }
