@@ -5,14 +5,14 @@
 
 <head>
 <style type="text/css">
-.knitr.inline {
+.knitr .inline {
   background-color: #f7f7f7;
   border:solid 1px #B0B0B0;
 }
 .error {
 	font-weight: bold;
 	color: #FF0000;
-},
+}
 .warning {
 	font-weight: bold;
 }
@@ -20,19 +20,19 @@
 	font-style: italic;
 }
 .source, .output, .warning, .error, .message {
-	padding: 0em 1em;
+	padding: 0 1em;
   border:solid 1px #F7F7F7;
 }
 .source {
   background-color: #2f4f4f;
 }
-.rimage.left {
+.rimage .left {
   text-align: left;
 }
-.rimage.right {
+.rimage .right {
   text-align: right;
 }
-.rimage.center {
+.rimage .center {
   text-align: center;
 }
 .hl.num {
@@ -97,6 +97,13 @@
   <li><a href="#Installation">Installation</a></li>
   <li><a href="#Examples">Examples</a></li>
 </ul><br><br>
+
+
+
+
+
+
+
 
 
 <!-- ============================================================================================== -->
@@ -218,6 +225,13 @@ For more information on how each of these sampling and boundary correction metho
 implemented within <Rpkg>sampSurf</Rpkg> please see <Rcode>package?sampSurf</Rcode> and
 the vignettes. The examples below also provide an illustration of some of these methods.
 </p>
+
+
+
+
+
+
+
 
 
 <!-- ============================================================================================== -->
@@ -353,6 +367,9 @@ here at R-Forge&hellip;
 
 <ol>
 
+  <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/extra/vignettes/sampSurfIntro.pdf?root=sampsurf">
+      <em><Rpkg>sampSurf</Rpkg>: Sampling Surface Simulation for Areal Sampling Designs in R</em></a></li>
+
   <li><a href="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/extra/vignettes/monte.pdf?root=sampsurf">
       <em><Rclass>monte</Rclass>: When is n Sufficiently Large?</em></a></li>
 
@@ -367,12 +384,17 @@ here at R-Forge&hellip;
 
 </ol>
 
+<p>
+  Perhaps the most helpful introduction to <Rpkg>sampSurf</Rpkg> is found in the first
+  vignette listed above. It provides more detail using extensive examples, on the
+  organization, capabilites use of <Rpkg>sampSurf</Rpkg>.
+</p>
 
 
 
 
 
-
+<!-- ============================================================================================== -->
 
 <!-- 
      The following sets global options for the document...
@@ -383,6 +405,35 @@ here at R-Forge&hellip;
      ***Note that the highlight package was discontinued/orphaned in CRAN, so
      use.highlight=TRUE is no longer applicable in opts_knit$set below. 4-Mar-2013
 -->
+
+
+
+
+<!-- 
+    Set the chace directory; if using htmlKnitr(), the working directory is set to
+    ~/Rwork/knitr, so the cache will be relative to this...
+-->
+		   
+
+
+
+
+<!--
+   15-April-2015
+ 
+   The following code will stop the automatic addition of a "-i" (where i is the number of
+   figures per code chunk) from being appended to figure file names. Since I only generate
+   one chunk per figure, and because I don't want to change everything to support the
+   "-i", I am using the code the was suggested by Yihui Xie at...
+
+   https://groups.google.com/forum/#!topic/knitr/0WFJmfIUZJA
+
+   It seems to work fine--simply comment it out if it is not desired anymore.
+-->
+
+
+
+
 
 
 
@@ -427,7 +478,7 @@ The first component that is always required for a completed sampling surface is 
 object with defined extents and resolution&hellip;
 </p>
 
-<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">require</span><span class="hl std">(sampSurf)</span>
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">require</span><span class="hl std">(sampSurf)</span>
 <span class="hl std">R&gt; </span><span class="hl std">tract.m</span> <span class="hl kwb">=</span> <span class="hl kwd">Tract</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">71</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">71</span><span class="hl std">),</span> <span class="hl kwc">cellSize</span> <span class="hl std">=</span> <span class="hl num">0.5</span><span class="hl std">)</span>     <span class="hl com">#meters</span>
 <span class="hl std">R&gt; </span><span class="hl std">buffTract.m</span> <span class="hl kwb">=</span> <span class="hl kwd">bufferedTract</span><span class="hl std">(</span><span class="hl kwc">bufferWidth</span> <span class="hl std">=</span> <span class="hl num">10</span><span class="hl std">, tract.m)</span>
 </pre></div>
@@ -478,7 +529,7 @@ Heaping log: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
  A summary of the object is often useful&hellip;
 </p>
 
-<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">sausageLen.ss</span>
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">sausageLen.ss</span>
 </pre></div>
 <div class="output"><pre class="knitr r">
 Object of class: sampSurf
@@ -503,7 +554,7 @@ extent      : 0, 71, 0, 71  (xmin, xmax, ymin, ymax)
 coord. ref. : NA 
 data source : in memory
 names       : surf 
-values      : 0, 1381  (min, max)
+values      : 0, 1380.7419  (min, max)
 
 Buffer width =  10
 </pre></div>
@@ -518,25 +569,25 @@ sampling surface object
 Inclusion zone objects: sausageIZ
 Measurement units = metric
 Number of logs = 20
-True log volume = 6.155 cubic meters
+True log volume = 6.1546085 cubic meters
 True log length = 86.33 meters
-True log surface area = 77.29 square meters
-True log coverage area = 24.57 square meters
+True log surface area = 77.289279 square meters
+True log coverage area = 24.565998 square meters
 True log biomass = NA
 True log carbon = NA
 
 Estimate attribute: Length
 Surface statistics...
-  mean = 86.11
-  bias = -0.2169
-  bias percent = -0.2513
-  sum = 1736384
-  var = 45265
-  st. dev. = 212.8
-  cv % = 247.1
-  surface max = 1381
+  mean = 86.11307
+  bias = -0.21693013
+  bias percent = -0.25128012
+  sum = 1736383.9
+  var = 45264.698
+  st. dev. = 212.75502
+  cv % = 247.06472
+  surface max = 1380.7419
   total # grid cells = 20164
-  grid cell resolution (x & y) = 0.5 meters
+  grid cell resolution (x &amp; y) = 0.5 meters
   # of background cells (zero) = 16741
   # of inclusion zone cells = 3423
 </pre></div>
@@ -563,7 +614,11 @@ zones overlap&hellip;
 </pre></div>
 </div><div class="rimage center"><img src="figures/ss-sausageLen-rgl.png" title="plot of chunk sausageLen-rgl" alt="plot of chunk sausageLen-rgl" class="plot" /></div></div>
 
-
+<!-- closing device is not required anymore
+<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="error"><pre class="knitr r">## Error in rgl.close(): No device opened
+</pre></div>
+</div></div>
+-->
 
 <p>
 Note that sampling for log length under the sausage sampling protocol of fixed-area plot
@@ -618,18 +673,18 @@ Container class object...
   Units of measurement:  metric
 
   Encapulating bounding box...
-    min   max
-x 7.434 62.76
-y 8.717 62.27
+        min       max
+x 7.4339276 62.758264
+y 8.7174424 62.270595
 
   There are 25 logs in the population
-  Population log volume =  14.23 cubic meters
-  Population log surface area =  174.7 square meters
-  Population log coverage area =  55.59 square meters
-  Average volume/log =  0.5692 cubic meters
-  Average surface area/log =  6.989 square meters
-  Average coverage area/log =  2.223 square meters
-  Average length/log =  7.323 meters
+  Population log volume =  14.230931 cubic meters
+  Population log surface area =  174.73371 square meters
+  Population log coverage area =  55.585258 square meters
+  Average volume/log =  0.56923725 cubic meters
+  Average surface area/log =  6.9893486 square meters
+  Average coverage area/log =  2.2234103 square meters
+  Average length/log =  7.3228 meters
 (**All statistics exclude NAs)
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(buffTract.m,</span> <span class="hl kwc">gridColor</span> <span class="hl std">=</span> <span class="hl str">'grey70'</span><span class="hl std">)</span>
@@ -650,7 +705,7 @@ that contains the information about that sampling method in the form of design p
 for the distance limit. This is most easily done in terms of a
 "K<sub><acronym>pds</acronym></sub> factor" for the method&hellip;
 
-<div class="chunk" id="unnamed-chunk-8"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">pds.m</span> <span class="hl kwb">=</span> <span class="hl kwd">perpendicularDistance</span><span class="hl std">(</span><span class="hl num">50</span><span class="hl std">,</span> <span class="hl kwc">description</span> <span class="hl std">=</span> <span class="hl str">'PDS parameters'</span><span class="hl std">)</span>
+<div class="chunk" id="unnamed-chunk-9"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl std">pds.m</span> <span class="hl kwb">=</span> <span class="hl kwd">perpendicularDistance</span><span class="hl std">(</span><span class="hl num">50</span><span class="hl std">,</span> <span class="hl kwc">description</span> <span class="hl std">=</span> <span class="hl str">'PDS parameters'</span><span class="hl std">)</span>
 <span class="hl std">R&gt; </span><span class="hl std">pds.m</span>
 </pre></div>
 <div class="output"><pre class="knitr r">
@@ -709,13 +764,15 @@ There are 25 inclusion zones in the population
 Inclusion zones are of class: perpendicularDistanceIZ
 Units of measurement:  metric
 Summary of inclusion zone areas in square meters...
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     var    SDev 
-  24.60   39.30   52.80   56.90   73.10  141.00  607.34   24.64 
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+ 24.594249  39.287022  52.811780  56.923725  73.104563 140.605338 
+       var       SDev 
+607.335010  24.644168 
 
 Encapulating bounding box...
-    min   max
-x 6.359 70.03
-y 5.015 63.96
+        min       max
+x 6.3594000 70.025991
+y 5.0145724 63.960017
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(buffTract.m,</span> <span class="hl kwc">gridColor</span> <span class="hl std">=</span> <span class="hl str">'grey70'</span><span class="hl std">)</span>
 <span class="hl std">R&gt; </span><span class="hl kwd">plot</span><span class="hl std">(dLogs.izs,</span> <span class="hl kwc">add</span> <span class="hl std">=</span> <span class="hl num">TRUE</span><span class="hl std">)</span>
@@ -757,25 +814,25 @@ sampling surface object
 Inclusion zone objects: perpendicularDistanceIZ (with PP to: volume)
 Measurement units = metric
 Number of logs = 25
-True log volume = 14.23 cubic meters
-True log length = 183.1 meters
-True log surface area = 174.7 square meters
-True log coverage area = 55.59 square meters
+True log volume = 14.230931 cubic meters
+True log length = 183.07 meters
+True log surface area = 174.73371 square meters
+True log coverage area = 55.585258 square meters
 True log biomass = NA
 True log carbon = NA
 
 Estimate attribute: volume
 Surface statistics...
   mean = 14.21
-  bias = -0.02093
-  bias percent = -0.1471
-  sum = 286530
-  var = 825.2
-  st. dev. = 28.73
-  cv % = 202.2
-  surface max = 151.2
+  bias = -0.020931233
+  bias percent = -0.14708266
+  sum = 286530.44
+  var = 825.22058
+  st. dev. = 28.726653
+  cv % = 202.15801
+  surface max = 151.23
   total # grid cells = 20164
-  grid cell resolution (x & y) = 0.5 meters
+  grid cell resolution (x &amp; y) = 0.5 meters
   # of background cells (zero) = 15534
   # of inclusion zone cells = 4630
 </pre></div>
@@ -796,7 +853,11 @@ visualize the surface using <Rpkg>rgl</Rpkg>&hellip;
 </pre></div>
 </div><div class="rimage center"><img src="figures/ss-pdsVol-rgl.png" title="plot of chunk pdsVol-rgl" alt="plot of chunk pdsVol-rgl" class="plot" /></div></div>
 
-
+<!-- closing device is not required anymore
+<div class="chunk" id="unnamed-chunk-11"><div class="rcode"><div class="error"><pre class="knitr r">## Error in rgl.close(): No device opened
+</pre></div>
+</div></div>
+-->
 
 <p>
 Because we are sampling with probability proportional to volume, and estimating volume,
@@ -848,7 +909,11 @@ Heaping tree: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
 </pre></div>
 </div><div class="rimage center"><img src="figures/ss-hps-rgl.png" title="plot of chunk hps-rgl" alt="plot of chunk hps-rgl" class="plot" /></div></div>
 
-
+<!-- closing device is not required anymore
+<div class="chunk" id="unnamed-chunk-13"><div class="rcode"><div class="error"><pre class="knitr r">## Error in rgl.close(): No device opened
+</pre></div>
+</div></div>
+-->
 
 <p>
 Note in the figures that larger trees represent fewer trees per acre, and thus have lower
