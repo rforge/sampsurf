@@ -1,10 +1,16 @@
 #---------------------------------------------------------------------------
 #
-#   Methods for coercion from some "Stem" class object to other forms.
+#   Methods for coercion from some "StemContainer" class object to other forms.
 #
 #   1. from=downLogs, to=data.frame
 #   2. from=standingTrees, to=data.frame (26-Oct-2011)  
 #
+#
+#**>Note: I added the conditional statements for the solidType fields in the 
+#         case where it is NULL, reflecting that the tree or log was built
+#         using sectional data. Please see the ChangeLog for 4-June-2019
+#         for more information. It was done to catch an error of assigning
+#         NULL to an individual data frame field. JHG.
 #
 #Author...									Date: 21-Oct-2010
 #	Jeffrey H. Gove
@@ -36,7 +42,10 @@ setAs('downLogs', 'data.frame',
             cf = .StemEnv$ft2in
           df[i,'buttDiam'] = dlogs@logs[[i]]@buttDiam * cf
           df[i,'topDiam'] = dlogs@logs[[i]]@topDiam * cf
-          df[i,'solidType'] = dlogs@logs[[i]]@solidType
+          if(is.null(dlogs@logs[[i]]@solidType))
+            df[i,'solidType'] = 'null'
+          else
+            df[i,'solidType'] = dlogs@logs[[i]]@solidType
           df[i,'x'] = dlogs@logs[[i]]@location@coords[,'x']
           df[i,'y'] = dlogs@logs[[i]]@location@coords[,'y']
           df[i,'logAngle'] = dlogs@logs[[i]]@logAngle
@@ -71,7 +80,10 @@ setAs('standingTrees', 'data.frame',
             cf = .StemEnv$ft2in
           df[i,'dbh'] = strees@trees[[i]]@dbh * cf
           df[i,'topDiam'] = strees@trees[[i]]@topDiam * cf
-          df[i,'solidType'] = strees@trees[[i]]@solidType
+          if(is.null(strees@trees[[i]]@solidType))
+            df[i,'solidType'] = 'null'
+          else
+            df[i,'solidType'] = strees@trees[[i]]@solidType
           df[i,'x'] = strees@trees[[i]]@location@coords[,'x']
           df[i,'y'] = strees@trees[[i]]@location@coords[,'y']
         }
