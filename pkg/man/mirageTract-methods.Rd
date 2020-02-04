@@ -34,4 +34,4 @@ There is only one existing method available for the
 }} %describe, section
 
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+%\keyword{ ~~ other possible keyword(s) ~~ }

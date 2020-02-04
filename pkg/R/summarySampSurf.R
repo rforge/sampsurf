@@ -60,7 +60,8 @@ function(object,
 #
 #   let's see what we are dealing with...
 #
-    if(class(object@izContainer) == 'downLogIZs') {
+    #if(class(object@izContainer) == 'downLogIZs') {  #doesn't admit inheritance!!
+    if(is(object@izContainer, 'downLogIZs')) {         #much better! 3-Feb-2020
       isLogs = TRUE
       stemName = 'log'
     }

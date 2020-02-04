@@ -40,4 +40,4 @@ There is only one existing method available for the
 
 
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+%\keyword{ ~~ other possible keyword(s) ~~ }

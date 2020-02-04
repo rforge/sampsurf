@@ -42,8 +42,10 @@ setClass('StemContainer',
                  if(!(object@units %in% .StemEnv$msrUnits))
                    return('units of measure must be "English" or "metric"')
 
-#                check on bbox matrix format...                 
-                 if(!class(object@bbox) == 'matrix')
+#                check on bbox matrix format...
+                 #matrix inherits from array (3-Feb-2020)...
+                 #if(!class(object@bbox) == 'matrix')  #bad practice!
+                 if(!is(object@bbox, 'matrix'))
                    return('bbox slot must be a 2x2 matrix')
                  bboxNames = match(rownames(object@bbox), c('x','y'))
                  if(any(is.na(bboxNames)))
@@ -96,7 +98,9 @@ setClass('downLogs',
                      return('At least one log has the wrong units!')
 
 #                check on bbox matrix format...                 
-                 if(!class(object@bbox) == 'matrix')
+                 #matrix inherits from array (3-Feb-2020)...
+                 #if(!class(object@bbox) == 'matrix')  #bad practice!
+                 if(!is(object@bbox, 'matrix'))
                    return('bbox slot must be a 2x2 matrix')
                  bboxNames = match(rownames(object@bbox), c('x','y'))
                  if(any(is.na(bboxNames)))

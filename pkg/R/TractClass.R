@@ -96,7 +96,9 @@ setClass('bufferedTract',
                    return('bufferRect can not have missing values!')
 
                  #essentially the same checks as in bboxCheck()...
-                 if(!class(object@bufferRect) == 'matrix')
+                 #matrix inherits from array (3-Feb-2020)...
+                 #if(!class(object@bufferRect) == 'matrix')   #bad practice!
+                 if(!is(object@bufferRect, 'matrix'))
                    return('bufferRect slot must be a 2x2 matrix')
                  bboxNames = match(rownames(object@bufferRect), c('x','y'))
                  if(any(is.na(bboxNames)))

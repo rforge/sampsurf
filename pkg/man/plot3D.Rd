@@ -49,7 +49,7 @@ Jeffrey H. Gove %, \email{jhgove@unh.edu}
   in the \dQuote{\code{rgl}} package. }
 
 \seealso{
-rasterVis::\code{\link[rasterVis]{plot3D}}, \code{\link[rgl]{r3d}} 
+rasterVis::\code{\link[rasterVis]{plot3D}}
 }
 
 \examples{
@@ -65,5 +65,5 @@ plot3D(ss)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+%% \keyword{ ~kwd1 }
+%% \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

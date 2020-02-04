@@ -73,4 +73,4 @@ for more details and examples.
 
 }}
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+%\keyword{ ~~ other possible keyword(s) ~~ }

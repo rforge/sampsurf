@@ -110,7 +110,7 @@ sampleLogs = function(nLogs = 2,
 #
 #   generate log centers within the sample rectangle...
 #
-    if(is.null(sampleRect) || is.na(sampleRect)) {
+    if(any(is.null(sampleRect)) || any(is.na(sampleRect))) {         #wrapped in any: 3-Feb-2020
       sampleRect = matrix(rep(0:1, 2), nrow=2,                       #dimensionless center points
                           byrow = TRUE,
                           dimnames = list(c('x','y'),c('min','max'))

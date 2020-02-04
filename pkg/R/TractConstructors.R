@@ -74,7 +74,7 @@ function(cellSize,
     names(cellSize) = c('x','y') #this sets up the names for x and y for the grid
     if(length(cellCenter) != 2)
       stop('cellCenter must be a numeric vector of length 2!')
-    if(is.null(cellCenter) || is.na(cellCenter))
+    if(any(is.null(cellCenter)) || any(is.na(cellCenter)))  #3-Feb-2020: wrapped in any
       cellCenter = cellSize/2
     if(length(cellDims) != 2)
       stop('cellDims argument must be a length 2 vector!')

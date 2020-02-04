@@ -41,4 +41,4 @@ subsampling procedure:  \code{\link{crudeMonteCarlo}}, \code{\link{importanceSam
 	  
 }}
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+%\keyword{ ~~ other possible keyword(s) ~~ }

@@ -239,7 +239,7 @@ function(object,
       segBnds[1] = 0
       segBnds[2] = height
     }
-    if(segBnds[1] < 0 || segBnds > height || segBnds[2] <= segBnds[1])
+    if(segBnds[1] < 0 || segBnds[2] > height || segBnds[2] <= segBnds[1])  #fixed 2nd: 3-Feb-2020
       stop('Illegal height bounds on stem in importance sampling!')
     n.s = as.integer(round(n.s))                   #integer to be consistent with length() below
     if(n.s < 1)

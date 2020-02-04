@@ -67,4 +67,4 @@ The following methods will construct valid objects of class
 }} %\section
 
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+%\keyword{ ~~ other possible keyword(s) ~~ }

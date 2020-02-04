@@ -80,7 +80,7 @@ function(object,
     totLength = object$totLength
     
 
-    if(is.null(pts) || is.na(pts) || length(pts) < 1)
+    if(any(is.null(pts)) || any(is.na(pts)) || length(pts) < 1) #wrapped in any: 3-Feb-2020
       stop('You must provide some points for interpolation!')
 
 #

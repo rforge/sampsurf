@@ -84,7 +84,9 @@ setClass('InclusionZone',
                  }
 
                  #essentially the same checks as in bboxCheck()...
-                 if(!class(object@bbox) == 'matrix')
+                 #matrix inherits from array (3-Feb-2020)...
+                 #if(!class(object@bbox) == 'matrix')  #bad practice!
+                 if(!is(object@bbox, 'matrix'))
                    return('bbox slot must be a 2x2 matrix')
                  bboxNames = match(rownames(object@bbox), c('x','y'))
                  if(any(is.na(bboxNames)))

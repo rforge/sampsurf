@@ -56,8 +56,10 @@ setClass('izContainer',
                      return('At least one inclusion zone has the wrong units!')
 
 #                check on bbox matrix format...                 
-                 if(!class(object@bbox) == 'matrix')
-                   return('bbox slot must be a 2x2 matrix')
+                 #matrix inherits from array (3-Feb-2020)...
+                 #if(!class(object@bbox) == 'matrix')  #bad practice!
+                 if(!is(object@bbox, 'matrix'))
+                  return('bbox slot must be a 2x2 matrix')
                  bboxNames = match(rownames(object@bbox), c('x','y'))
                  if(any(is.na(bboxNames)))
                    return('slot bbox rownames must be "x", "y"!')

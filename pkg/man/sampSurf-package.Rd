@@ -94,8 +94,8 @@ so more methods will appear in future releases.
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.7-4\cr
-Date: \tab 24-Aug-2017\cr
+Version: \tab 0.7-5\cr
+Date: \tab 3-Feb-2020\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }
@@ -813,7 +813,7 @@ some of the methods in the package, and are not exhaustive.
   \bold{44}:810--819. }
 %
 \item{}{Gove, J. H. 2017. Some Refinements on the Comparison of Areal
-  Sampling Methods via Simulation. \emph{Forests}, Submitted.}
+  Sampling Methods via Simulation. \emph{Forests} \bold{8,393}:1--24.}
 
 }%describe
 

@@ -217,4 +217,4 @@ graphics documentation for details.
 
 } %section-methods
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+%\keyword{ ~~ other possible keyword(s) ~~ }
