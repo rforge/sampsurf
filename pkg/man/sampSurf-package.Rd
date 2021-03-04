@@ -94,8 +94,8 @@ so more methods will appear in future releases.
 \tabular{ll}{
 Package: \tab sampSurf\cr
 Type: \tab Package\cr
-Version: \tab 0.7-5\cr
-Date: \tab 3-Feb-2020\cr
+Version: \tab 0.7-6\cr
+Date: \tab 4-Mar-2021\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }

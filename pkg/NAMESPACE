@@ -4,8 +4,12 @@ importFrom(graphics, plot, hist)
 import(sp)
 #importFrom("sp", bbox, Spatial, SpatialGrid, SpatialGridDataFrame, plot)
 import(raster)
+
 #import(rasterVis)
 importFrom(rasterVis, plot3D)
+#added in 0.7-6 (4-March-2021) as per section 1.5.6 in Writing R Extensions...
+importMethodsFrom(rasterVis, plot3D)
+
 import(boot)
 
 #added in 0.7-4 (24-Aug-2017) at the request of R CMD check ./sampSurf
@@ -75,6 +79,8 @@ export(gridCellEnhance) #ibid
 export(getProxy)    #proxy functions for Monte Carlo subsampling
 
 export(smithPlot)   #H. F. Smith-type plots
+
+#export(as)     #3-June-2019 should not be required!!
  
 
 

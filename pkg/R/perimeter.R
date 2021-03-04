@@ -22,6 +22,10 @@
 #    13. izContainer
 #    14. circularPlotIZ
 #
+#...Note: I commented out the !isGeneric because it was causging problems
+#         for Oscar Perpinan Lamiguero as a reverse-depends error in his
+#         new version of rasterVis. 4-March-2021
+#
 #Author...									Date: 21-Sept-2010
 #	Jeffrey H. Gove
 #	USDA Forest Service
@@ -31,14 +35,15 @@
 #	jhgove@unh.edu
 #	phone: 603-868-7667	fax: 603-868-7604
 #---------------------------------------------------------------------------
+#
 #   generic definition...
 #
-if(!isGeneric('perimeter')) {
+#if(!isGeneric('perimeter')) {  
   setGeneric('perimeter',  
              function(object, ...) standardGeneric('perimeter'),
              signature = c('object')
             )
-}
+#}
 
 
 
